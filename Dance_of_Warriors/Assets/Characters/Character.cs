@@ -54,6 +54,7 @@ public class Character : MonoBehaviour
 
 
     protected void moveCharacter(Vector3 direction)
+        //expects a vector pointing in the direction to travel in the global world
     {
         //the raycasting is useful for fast moving objects that the colliders can't deal with
 

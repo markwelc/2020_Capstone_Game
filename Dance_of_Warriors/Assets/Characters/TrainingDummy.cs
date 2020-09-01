@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrainingDummy : MonoBehaviour
+public class TrainingDummy : Character
 {
     // Start is called before the first frame update
     void Start()
