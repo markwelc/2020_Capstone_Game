@@ -21,9 +21,10 @@ public class Character : MonoBehaviour
     protected bool diagonal;//whether the player is moving diagonally
     [SerializeField] protected float jumpForce; //this is how strongly the character can jump
     protected bool canJump; //determines if the character can currently jump
-    //[SerializeField] protected int jumpHeight; //used to store the max height of the jump (uses the jumpLeft variable)
-    //[SerializeField] protected int jumpLeft; //how much jumping force the character has in them
-
+    [SerializeField] protected int dashing; //indicates both whether we are dashing (won't be zero if we are) and how much dash we have left (value)
+    [SerializeField] protected int dashLength; //indicates how long we should be dashing for
+    [SerializeField] protected float dashSpeed; //indicates the speed of the dash
+    protected Vector3 dashVector;//the direction and speed of our dash
 
 
     // Start is called before the first frame update
@@ -33,6 +34,8 @@ public class Character : MonoBehaviour
         characterTransform = this.GetComponent<Transform>(); //get transform
         characterCollider = this.GetComponent<Collider>(); //get collider
         health = maxHealth; //set health
+        dashing = 0;
+        dashVector = Vector3.zero;
     }
 
 
@@ -53,15 +56,14 @@ public class Character : MonoBehaviour
     }
 
 
-    protected void moveCharacter(Vector3 direction)
-        //expects a vector pointing in the direction to travel in the global world
+    protected void moveCharacter(Vector3 direcAndDist) //the input needs to contain both the direction and the distance
     {
         //the raycasting is useful for fast moving objects that the colliders can't deal with
 
-        Ray ray = new Ray(transform.position, direction); //shoot a ray from current position in direction of travel
+        Ray ray = new Ray(transform.position, direcAndDist); //shoot a ray from current position in direction of travel
         RaycastHit hit;
-        if (!Physics.Raycast(ray, out hit, (direction * speed * Time.deltaTime).magnitude)) //if the ray didn't hit anything within the range that we're moving
-            characterRigidbody.MovePosition((Vector3)transform.position + direction * speed * Time.deltaTime); //go ahead and move
+        if (!Physics.Raycast(ray, out hit, (direcAndDist * Time.deltaTime).magnitude)) //if the ray didn't hit anything within the range that we're moving
+            characterRigidbody.MovePosition((Vector3)transform.position + direcAndDist * Time.deltaTime); //go ahead and move
         else
         {
             characterRigidbody.MovePosition(hit.point);//otherwise, move to where the thing we hit was

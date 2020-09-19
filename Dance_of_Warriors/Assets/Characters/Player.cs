@@ -6,25 +6,45 @@ public class Player : Character
 {
 	protected override void handleMovement()
 	{
+        if (dashing <= 0) //if we're not in the middle of dashing
+        {
+            //if (Input.GetAxis("Forward_Backward") != 0 && Input.GetAxis("Left_Right") != 0) //if you're trying to go in two perpendicular directions
+            //    diagonal = true; //you're trying to move diagonally
+            //else
+            //    diagonal = false;
 
-		if (Input.GetAxis("Forward_Backward") != 0 && Input.GetAxis("Left_Right") != 0) //if you're trying to go in two perpendicular directions
-			diagonal = true; //you're trying to move diagonally
-		else
-			diagonal = false;
+            movement = new Vector3(Input.GetAxis("Left_Right"), 0, Input.GetAxis("Forward_Backward"));
+            movement = movementVectorAdjust(movement); //adjust the vector so that it is horizontal and relative to the player
+            //if (diagonal)
+            //    movement = movement * 0.7f; //if you're moving diagonally, you need to shorten the movement vector
 
-		movement = new Vector3(Input.GetAxis("Left_Right"), 0, Input.GetAxis("Forward_Backward"));
-        movement = movementVectorAdjust(movement);
-		if (diagonal)
-			movement = movement * 0.7f; //if you're moving diagonally, you need to shorten the movement vector
+            if (Input.GetAxis("Dash") != 0) //if we wanna start dashing
+            {
+                movement *= dashSpeed;
+                dashing = dashLength;
+                dashVector = movement; //movement has already been properly scaled
+            }
+            else
+            {
+                movement *= speed;
+                dashVector = movement;//again, movement has been properly scaled
+            }
+        }
+        else
+        {
+            dashing--;
+            movement = dashVector; //set direction and speed to whatever it was in the previous function call
+        }
 	}
 
     private Vector3 movementVectorAdjust(Vector3 original)
+        //This functions ensure that the movement vector is in the right direction and is a unit vector
     {
         //always convert to unit vectors as soon as possible
         Vector3 leftRight = original.x * characterTransform.right;
         Vector3 forwardBack = original.z * Vector3.Normalize(Vector3.ProjectOnPlane(characterTransform.forward, Vector3.up));
         Vector3 result = leftRight + forwardBack;
-        return result;
+        return Vector3.Normalize(result);
     }
 
 
