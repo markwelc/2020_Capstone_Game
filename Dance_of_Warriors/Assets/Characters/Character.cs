@@ -50,7 +50,7 @@ public class Character : MonoBehaviour
         if (health <= 0)
             die();
         else if (maxHealth < health) //if the character has too much health for some reason
-            health = maxHealth;
+            health = maxHealth; //reduce their health to the max possible
 
         moveCharacter(movement);
     }
