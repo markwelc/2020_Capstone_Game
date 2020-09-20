@@ -48,7 +48,7 @@ public class Player : Character
 
     protected override void handleJump()
     {
-		if (Input.GetAxis("Jump") != 0 && canJump) //if we want to jump and actually can
+		if (Input.GetAxis("Jump") != 0 && jumpPossible) //if we want to jump and actually can
 		{
 			//characterRigidbody.useGravity = false;
 			characterRigidbody.AddForce(transform.up * jumpForce);
@@ -77,5 +77,12 @@ public class Player : Character
 
         characterTransform.Rotate(mouseX * mouseSensitivity * Time.deltaTime, 0.0f, 0.0f, Space.Self); //I always want to look up and down relative to myself
         characterTransform.Rotate(0.0f, mouseY * mouseSensitivity * Time.deltaTime, 0.0f, Space.World); //but I always want to look left and right relative to the world
+    }
+
+
+    protected override void handleWeapons()
+    {
+        if (Input.GetAxis("Fire1") != 0)
+            weaponAccess.useWeapon();
     }
 }

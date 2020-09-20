@@ -90,7 +90,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: left alt
+    positiveButton: left shift
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000

@@ -66,6 +66,11 @@
     <Compile Include="Assets\Characters\Character.cs" />
     <Compile Include="Assets\Characters\Player.cs" />
     <Compile Include="Assets\Characters\TrainingDummy.cs" />
+    <Compile Include="Assets\Weapons\Guns\BulletController.cs" />
+    <Compile Include="Assets\Weapons\Guns\Bullet_Handgun.cs" />
+    <Compile Include="Assets\Weapons\Guns\Guns.cs" />
+    <Compile Include="Assets\Weapons\Guns\Handgun.cs" />
+    <Compile Include="Assets\Weapons\WeaponController.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/2019.4.9f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

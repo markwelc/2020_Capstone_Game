@@ -8,23 +8,30 @@ public class Character : MonoBehaviour
     //anything that's related to decision making should be in subclasses
     //for instance, bosses decide when/where to move very differently from the player, and so deciding when/where to move is in a subclass
 
-    public float maxHealth; //the amount of health that the character can have
-    public float health; //the amount of health that the character has
-
-    public float speed;//the default speed of the character
-
     protected Rigidbody characterRigidbody; //the character's rigidbody
     protected Transform characterTransform; //the character's transform
     protected Collider characterCollider; //the character's collider
 
+    public float healthMax; //the amount of health that the character can have
+    public float health; //the amount of health that the character has
+
+    public float speed;//the default speed of the character
+
+    //public float staminaMax; //the max amount of stamina the character can have
+    //protected float staminaCur; //the current amount of stamina the 
+
     protected Vector3 movement;//used to hold the direction that the character should move in
     protected bool diagonal;//whether the player is moving diagonally
+
     [SerializeField] protected float jumpForce; //this is how strongly the character can jump
-    protected bool canJump; //determines if the character can currently jump
+    protected bool jumpPossible; //determines if the character can currently jump
+
     [SerializeField] protected int dashing; //indicates both whether we are dashing (won't be zero if we are) and how much dash we have left (value)
     [SerializeField] protected int dashLength; //indicates how long we should be dashing for
     [SerializeField] protected float dashSpeed; //indicates the speed of the dash
     protected Vector3 dashVector;//the direction and speed of our dash
+
+    [SerializeField] protected WeaponController weaponAccess;
 
 
     // Start is called before the first frame update
@@ -33,7 +40,7 @@ public class Character : MonoBehaviour
         characterRigidbody = this.GetComponent<Rigidbody>(); //get rigidbody
         characterTransform = this.GetComponent<Transform>(); //get transform
         characterCollider = this.GetComponent<Collider>(); //get collider
-        health = maxHealth; //set health
+        health = healthMax; //set health
         dashing = 0;
         dashVector = Vector3.zero;
     }
@@ -49,8 +56,8 @@ public class Character : MonoBehaviour
 
         if (health <= 0)
             die();
-        else if (maxHealth < health) //if the character has too much health for some reason
-            health = maxHealth; //reduce their health to the max possible
+        else if (healthMax < health) //if the character has too much health for some reason
+            health = healthMax; //reduce their health to the max possible
 
         moveCharacter(movement);
     }
@@ -96,19 +103,19 @@ public class Character : MonoBehaviour
     protected virtual void die()
     {
         //this will get a good deal more complicated eventually, but right now it's simple
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
     }
 
 
     protected void OnCollisionEnter(Collision collision)
     {
         if (LayerMask.LayerToName(collision.gameObject.layer) == "staticEnvironment")
-            canJump = true;
+            jumpPossible = true;
     }
 
     protected void OnCollisionExit(Collision collision)
     {
         if (LayerMask.LayerToName(collision.gameObject.layer) == "staticEnvironment")
-            canJump = false;
+            jumpPossible = false;
     }
 }
