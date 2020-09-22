@@ -6,33 +6,16 @@ public class Player : Character
 {
 	protected override void handleMovement()
 	{
-        if (dashing <= 0) //if we're not in the middle of dashing
+        if (dashActionState == actionState.inactive) //if we're not in the middle of dashing
         {
-            movement = new Vector3(Input.GetAxis("Left_Right"), 0, Input.GetAxis("Forward_Backward"));
-            movement = movementVectorAdjust(movement); //adjust the vector so that it is horizontal and relative to the player
-
-            //stuff up to here seems to work since moving normally works
-
-            if (Input.GetAxis("Dash") != 0 && dashing == 0) //if we wanna start dashing
-                //there's an issue here where you can start dashing immediately after having finished the previous dash
-                //fixing this involves a lot of stuff that will be added in later
-            {
-                movement *= dashSpeed; //scales the movement vector
-                dashing = dashLength; //sets dashing to its max possible value
-                dashVector = movement;//save the current movement vector so that we have it next time this function is called
-                    //movement has already been properly scaled
-            }
-            else
-            {
-                movement *= speed; //scales the movement vector
-            }
+            standardMovement(); //we can go ahead and move normally
         }
         else
         {
-            dashing--; //decrement dashing
-            movement = dashVector; //set direction and speed to whatever it was in the previous function call
+            dashingMovement();
         }
 	}
+
 
     private Vector3 movementVectorAdjust(Vector3 original)
         //This function ensures that the movement vector is in the right direction and is a unit vector
@@ -43,6 +26,59 @@ public class Player : Character
             //we have to be sure that when the player tries to move forward, they move horizontally instead of the way that they are facing (in case they are facing upwards)
         Vector3 result = leftRight + forwardBack; //just add the vectors to get a resultant movement vector
         return Vector3.Normalize(result);//normalize it before returning
+    }
+
+    private void standardMovement()
+    {
+        movement = new Vector3(Input.GetAxis("Left_Right"), 0, Input.GetAxis("Forward_Backward"));
+        movement = movementVectorAdjust(movement); //adjust the vector so that it is horizontal and relative to the player
+
+        //stuff up to here seems to work since moving normally works
+
+        if (Input.GetAxis("Dash") != 0 && dashActionState == actionState.inactive) //if we wanna start dashing and we aren't in some part of a dash already
+        {
+            dashVector = movement;//save the current movement vector so that we have it next time this function is called
+
+            dashActionState++;
+            dashing = dashLength[(int)dashActionState - 1]; //set dashing to the value of the first element in dash length (telegraph length)
+
+            movement *= dashSpeed[(int)dashActionState - 1]; //scales the movement vector
+        }
+        else
+        {
+            movement *= speed; //scales the movement vector
+        }
+    }
+
+
+    private void dashingMovement()
+    {
+        movement = dashVector; //set direction and speed to whatever it was in the previous function call
+
+        if (dashActionState == actionState.telegraph && dashing <= 0) //if we're in the telegraph phase and need to switch
+        {
+            dashActionState++; //move to the next state
+            dashing = dashLength[(int)dashActionState - 1]; //set dashing to the appropriate value
+
+            movement *= dashSpeed[(int)dashActionState - 1]; //scale movement
+        }
+        else if (dashActionState == actionState.active && dashing <= 0) //if we're dashing and need to recover
+        {
+            dashActionState++; //move to the next state
+            dashing = dashLength[(int)dashActionState - 1]; //set dashing to the appropriate value
+
+            movement *= dashSpeed[(int)dashActionState - 1]; //scale movement
+        }
+        else if(dashActionState == actionState.recovery && dashing <= 0) //if we are done recovering
+        {
+            dashActionState = actionState.inactive; //move to the next state
+            dashing = 0; //set dashing to the appropriate value
+        }
+        else
+        {
+            dashing--;
+            movement *= dashSpeed[(int)dashActionState - 1]; //scale movement
+        }
     }
 
 

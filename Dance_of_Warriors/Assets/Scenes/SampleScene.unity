@@ -1187,8 +1187,12 @@ MonoBehaviour:
   speed: 10
   jumpForce: 175
   dashing: 0
-  dashLength: 10
-  dashSpeed: 50
+  dashLength: 140000001400000014000000
+  dashSpeed:
+  - 5
+  - 20
+  - 5
+  dashActionState: 0
   weaponAccess: {fileID: 1925164567}
   mouseSensitivity: 100
   clampAngle: 60

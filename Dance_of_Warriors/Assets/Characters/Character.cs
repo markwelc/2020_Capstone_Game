@@ -20,18 +20,23 @@ public class Character : MonoBehaviour
     //public float staminaMax; //the max amount of stamina the character can have
     //protected float staminaCur; //the current amount of stamina the 
 
+    protected enum actionState { inactive, telegraph, active, recovery }
+
     protected Vector3 movement;//used to hold the direction that the character should move in
     protected bool diagonal;//whether the player is moving diagonally
 
     [SerializeField] protected float jumpForce; //this is how strongly the character can jump
     protected bool jumpPossible; //determines if the character can currently jump
+    protected actionState jumpActionState; //this may not be needed to restrict jumping, but may be useful in graphics
 
-    [SerializeField] protected int dashing; //indicates both whether we are dashing (won't be zero if we are) and how much dash we have left (value)
-    [SerializeField] protected int dashLength; //indicates how long we should be dashing for
-    [SerializeField] protected float dashSpeed; //indicates the speed of the dash
+    [SerializeField] protected int dashing; //keeps track of where we are in the dash
+    [SerializeField] protected int[] dashLength; //lists the number of frames that each of the three phases should be active for
+    [SerializeField] protected float[] dashSpeed; //indicates the speed of the dash
     protected Vector3 dashVector;//the direction and speed of our dash
+    [SerializeField] protected actionState dashActionState;
 
     [SerializeField] protected WeaponController weaponAccess;
+    protected actionState toolActionState;
 
 
     // Start is called before the first frame update
@@ -41,8 +46,12 @@ public class Character : MonoBehaviour
         characterTransform = this.GetComponent<Transform>(); //get transform
         characterCollider = this.GetComponent<Collider>(); //get collider
         health = healthMax; //set health
-        dashing = 0;
         dashVector = Vector3.zero;
+
+        jumpActionState = actionState.inactive;
+        dashActionState = actionState.inactive;
+        toolActionState = actionState.inactive;
+        dashing = 0;
     }
 
 
