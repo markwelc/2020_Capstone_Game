@@ -4,7 +4,36 @@ using UnityEngine;
 
 public class Player : Character
 {
-	protected override void handleMovement()
+    /*[SerializeField]*/ protected float mouseSensitivity; //hopefully this can be replaced by something in the input manager
+    /*[SerializeField]*/ protected float clampAngle; //the max angle that the character can look up (negate to get the max angle the character can look down)
+
+
+    protected override void Start()
+    {
+        //define all variables here
+        //this might be dumb, not sure
+        healthMax = 10;
+        speed = 10;
+        jumpForce = 175;
+
+        dashLength = new int[3];
+        dashLength[0] = 20;
+        dashLength[1] = 20;
+        dashLength[2] = 20;
+
+        dashSpeed = new float[3];
+        dashSpeed[0] = 5;
+        dashSpeed[1] = 20;
+        dashSpeed[2] = 5;
+
+        mouseSensitivity = 100;
+        clampAngle = 60;
+
+        base.Start(); //call the regular start function
+    }
+
+
+    protected override void handleMovement()
 	{
         if (dashActionState == actionState.inactive) //if we're not in the middle of dashing
         {
@@ -104,8 +133,7 @@ public class Player : Character
 		//jumpLeft = 0;
 	}
 
-	[SerializeField] protected float mouseSensitivity; //hopefully this can be replaced by something in the input manager
-	[SerializeField] protected float clampAngle; //the max angle that the character can look up (negate to get the max angle the character can look down)
+	
     protected override void handleAngle()
     {
         float mouseX = Input.GetAxis("Mouse Y");

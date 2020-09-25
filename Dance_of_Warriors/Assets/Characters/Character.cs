@@ -12,10 +12,10 @@ public class Character : MonoBehaviour
     protected Transform characterTransform; //the character's transform
     protected Collider characterCollider; //the character's collider
 
-    public float healthMax; //the amount of health that the character can have
-    public float health; //the amount of health that the character has
+    protected float healthMax; //the amount of health that the character can have
+    protected float health; //the amount of health that the character has
 
-    public float speed;//the default speed of the character
+    protected float speed;//the default speed of the character
 
     //public float staminaMax; //the max amount of stamina the character can have
     //protected float staminaCur; //the current amount of stamina the 
@@ -25,22 +25,22 @@ public class Character : MonoBehaviour
     protected Vector3 movement;//used to hold the direction that the character should move in
     protected bool diagonal;//whether the player is moving diagonally
 
-    [SerializeField] protected float jumpForce; //this is how strongly the character can jump
+    /*[SerializeField]*/ protected float jumpForce; //this is how strongly the character can jump
     protected bool jumpPossible; //determines if the character can currently jump
     protected actionState jumpActionState; //this may not be needed to restrict jumping, but may be useful in graphics
 
-    [SerializeField] protected int dashing; //keeps track of where we are in the dash
-    [SerializeField] protected int[] dashLength; //lists the number of frames that each of the three phases should be active for
-    [SerializeField] protected float[] dashSpeed; //indicates the speed of the dash
+    /*[SerializeField]*/ protected int dashing; //keeps track of where we are in the dash
+    /*[SerializeField]*/ protected int[] dashLength; //lists the number of frames that each of the three phases should be active for
+    /*[SerializeField]*/ protected float[] dashSpeed; //indicates the speed of the dash
     protected Vector3 dashVector;//the direction and speed of our dash
-    [SerializeField] protected actionState dashActionState;
+    /*[SerializeField]*/ protected actionState dashActionState;
 
     [SerializeField] protected WeaponController weaponAccess;
     protected actionState toolActionState;
 
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         characterRigidbody = this.GetComponent<Rigidbody>(); //get rigidbody
         characterTransform = this.GetComponent<Transform>(); //get transform
