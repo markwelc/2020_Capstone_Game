@@ -38,7 +38,6 @@ public class Character : MonoBehaviour
     [SerializeField] protected WeaponController weaponAccess;
     protected actionState toolActionState;
 
-
     // Start is called before the first frame update
     protected virtual void Start()
     {
