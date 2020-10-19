@@ -65,9 +65,9 @@
   <ItemGroup>
     <Compile Include="Assets\Characters\CameraLook.cs" />
     <Compile Include="Assets\Characters\Character.cs" />
+    <Compile Include="Assets\Characters\NewPlayer.cs" />
     <Compile Include="Assets\Characters\Player.cs" />
     <Compile Include="Assets\Characters\TrainingDummy.cs" />
-    <Compile Include="Assets\NewPlayer.cs" />
     <Compile Include="Assets\Player Controls.cs" />
     <Compile Include="Assets\Weapons\Guns\BulletController.cs" />
     <Compile Include="Assets\Weapons\Guns\Bullet_Handgun.cs" />
