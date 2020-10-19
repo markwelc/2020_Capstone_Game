@@ -38,7 +38,6 @@ public class Character : MonoBehaviour
     [SerializeField] protected WeaponController weaponAccess;
     protected actionState toolActionState;
 
-
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -60,7 +59,7 @@ public class Character : MonoBehaviour
     {
         handleMovement();
         handleJump();
-        handleAngle();
+        handleAngle(); //Commented out as it overriding my angle
         handleWeapons();
 
         if (health <= 0)
