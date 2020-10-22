@@ -108,10 +108,7 @@ public class NewPlayer : Character
         // Essentially we are going in a current direction with respect to the camera view
         // Since input is a 2d vector, move.y is essentially what we want to use to move in the z axis
         // now aclculate our vector with respect to the camera
-        /*moveWithCamera = (cameraMain.forward * move.y + cameraMain.right * move.x);
-
-        moveWithCamera.y = 0f; // set y to there to be sure we dont move up or down
-        */
+        
         movement = (cameraMain.forward * move.y + cameraMain.right * move.x);
 
         movement.y = 0f; // set y to there to be sure we dont move up or down
@@ -136,6 +133,11 @@ public class NewPlayer : Character
             // This could using a lerp method to make it smoother I just haven't implemented it yet
             transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
         }
+
+
+        //instead of rotating the player to match the movement direction, we want to rotate the player to match the direction the camera is facing
+        //at least for now
+
     }
 
     /**
