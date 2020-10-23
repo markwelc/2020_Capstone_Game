@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 4}
-  m_MinSize: {x: 875, y: 863}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -97,7 +97,7 @@ MonoBehaviour:
     y: 0
     width: 1920
     height: 1117
-  m_MinSize: {x: 875, y: 863}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &5
 MonoBehaviour:
@@ -120,7 +120,7 @@ MonoBehaviour:
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
-  m_LastLoadedLayoutName: Cameron's Layout
+  m_LastLoadedLayoutName: 
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -453,8 +453,8 @@ MonoBehaviour:
     vZoomLockedByDefault: 0
     m_HBaseRangeMin: -623.5
     m_HBaseRangeMax: 623.5
-    m_VBaseRangeMin: -362.5
-    m_VBaseRangeMax: 362.5
+    m_VBaseRangeMin: -352
+    m_VBaseRangeMax: 352
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -471,11 +471,11 @@ MonoBehaviour:
     m_DrawArea:
       serializedVersion: 2
       x: 0
-      y: 0
+      y: 21
       width: 1247
-      height: 725
+      height: 704
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 623.5, y: 362.5}
+    m_Translation: {x: 623.5, y: 352}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
@@ -483,9 +483,9 @@ MonoBehaviour:
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
       x: -623.5
-      y: -362.5
+      y: -352
       width: 1247
-      height: 725
+      height: 704
     m_MinimalGUI: 1
   m_defaultScale: 1
   m_LastWindowPixelSize: {x: 1247, y: 725}
@@ -771,7 +771,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.115955584, y: -0.8365067, z: 0.1943717, w: -0.49903423}
     speed: 2
-    m_Value: {x: 0.115955584, y: 0.8365067, z: -0.1943717, w: 0.49903423}
+    m_Value: {x: -0.11595532, y: -0.8365048, z: 0.19437125, w: -0.4990331}
   m_Size:
     m_Target: 10.2610855
     speed: 2
