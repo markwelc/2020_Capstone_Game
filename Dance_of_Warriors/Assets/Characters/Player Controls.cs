@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Player Controls.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Characters/Player Controls.inputactions'
 
 using System;
 using System.Collections;
@@ -142,7 +142,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""id"": ""937ac829-7e98-402f-b9fa-1b75bd216d95"",
                     ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""InvertVector2(invertX=false)"",
                     ""groups"": """",
                     ""action"": ""Look"",
                     ""isComposite"": false,

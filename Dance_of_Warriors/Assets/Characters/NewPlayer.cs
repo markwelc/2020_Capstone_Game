@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem; //Need for new input system
+using UnityEngine.XR.WSA;
 
 public class NewPlayer : Character
 {
@@ -12,11 +13,14 @@ public class NewPlayer : Character
     protected float mouseSensitivity; //hopefully this can be replaced by something in the input manager
     /*[SerializeField]*/
     protected float clampAngle; //the max angle that the character can look up (negate to get the max angle the character can look down)
-    Rigidbody myRigid;
+    //Rigidbody myRigid;
     private Vector3 inputDirection;
     private Transform cameraMain;
     Vector3 moveWithCamera;
-    float turnSmoothVelocity;
+    //float turnSmoothVelocity;
+
+    [SerializeField] private Vector3 lookOffset; //this is subtracted from camera position and then the character always looks in the direction from this point to itself
+    [SerializeField] private float smoother; //this will slow down the speed at which the player looks toward where the camera's looking (the lower the value, the slower the movement)
 
     /**
      * On awake we initialize our controls to tell it what to do with each 
@@ -123,26 +127,29 @@ public class NewPlayer : Character
      */
     protected override void handleAngle()
     {
-        float targetAngle = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
-        // Get the new target angle to rotate to and convert to degrees
+        //float targetAngle = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
+        //// Get the new target angle to rotate to and convert to degrees
 
-        //Is the player moving? That way if still they can rotate and view the player
-        if (movement != Vector3.zero)
-        {
-            // Transform rotation
-            // This could using a lerp method to make it smoother I just haven't implemented it yet
-            transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
-        }
+        ////Is the player moving? That way if still they can rotate and view the player
+        //if (movement != Vector3.zero)
+        //{
+        //    // Transform rotation
+        //    // This could using a lerp method to make it smoother I just haven't implemented it yet
+        //    transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+        //}
 
 
         //instead of rotating the player to match the movement direction, we want to rotate the player to match the direction the camera is facing
         //at least for now
-
+        Vector3 directionVector = characterTransform.position - (cameraMain.position - lookOffset); //get a vector pointing from just below the camera's position to the player's position
+        var lookAt = Quaternion.LookRotation(directionVector, Vector3.up); //save that in a format that we can use to change characterTransform.rotation
+        characterTransform.rotation = Quaternion.Lerp(characterTransform.rotation, lookAt, Time.deltaTime * smoother); //change characterTransform.rotation, but do it slowly and steadily
     }
 
     /**
      * Handle player jump.
      * When button is hit this function launches
+     * Not overriding from parent as it already has an active listener
      * Not overriding from parent as it already has an active listener
      */
     private void Jump()
