@@ -63,7 +63,7 @@ public class NewPlayer : Character
         //this might be dumb, not sure
         healthMax = 10;
         speed = 10;
-        jumpForce = 175;
+        jumpForce = 300;
 
         dashLength = new int[3];
         dashLength[0] = 2;
@@ -117,6 +117,8 @@ public class NewPlayer : Character
         movement.y = 0f; // set y to there to be sure we dont move up or down
 
         movement *= speed;  //Move with speed
+        anim.SetFloat("speed", move.y, 1f, Time.deltaTime * 10f);
+        anim.SetFloat("turn", move.x, 1f, Time.deltaTime * 10f);
 
     }
 
@@ -148,6 +150,8 @@ public class NewPlayer : Character
         if (jumpPossible)
         {
             characterRigidbody.AddForce(transform.up * jumpForce);
+            anim.SetBool("isJumping", true);
+            isJumping = true;
         }
     }
     
@@ -159,6 +163,8 @@ public class NewPlayer : Character
 
         if (dashActionState == actionState.inactive)
         {
+            if (move.y > 0.01 || move.x > 0.01)
+                anim.SetTrigger("isDashing");
             movement.y = 0; // make sure no vertical movement
             dashVector = movement;//save the current movement vector so that we have it next time this function is called
 
@@ -197,6 +203,11 @@ public class NewPlayer : Character
         {
             dashing--;
             movement *= dashSpeed[(int)dashActionState - 1]; //scale movement
+        }
+        if (dashActionState == actionState.inactive)
+        {
+            anim.SetTrigger("doneDashing");
+            anim.SetBool("isDashing", false);
         }
     }
 

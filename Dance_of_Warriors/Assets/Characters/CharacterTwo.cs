@@ -12,7 +12,8 @@ public class CharacterTwo : MonoBehaviour
     protected CharacterController characterController;
     protected Transform characterTransform; //the character's transform
     protected Collider characterCollider; //the character's collider
-
+    protected Animator anim;
+    bool wasJumping = false;
     protected float healthMax; //the amount of health that the character can have
     protected float health; //the amount of health that the character has
 
@@ -54,6 +55,7 @@ public class CharacterTwo : MonoBehaviour
         characterCollider = this.GetComponent<Collider>(); //get collider
         health = healthMax; //set health
         dashVector = Vector3.zero;
+        anim = GetComponent<Animator>();
 
         jumpActionState = actionState.inactive;
         dashActionState = actionState.inactive;
@@ -90,6 +92,7 @@ public class CharacterTwo : MonoBehaviour
 
         Ray ray = new Ray(transform.position, direcAndDist); //shoot a ray from current position in direction of travel
         RaycastHit hit;
+        
         if (!Physics.Raycast(ray, out hit, (direcAndDist * Time.deltaTime).magnitude))
         {
 
@@ -107,8 +110,18 @@ public class CharacterTwo : MonoBehaviour
                     
                     jumpTime = 0f;
                     isJumping = false;
+                    wasJumping = true;
                 }
                 
+            }
+            if (wasJumping)
+            {
+                if (characterController.isGrounded)
+                {
+                    anim.SetBool("isJumping", false);
+                    anim.SetBool("doneJumping", true);
+                    wasJumping = false;
+                }
             }
             verticalSpeed -= 9.8f;
             direcAndDist.y = verticalSpeed;

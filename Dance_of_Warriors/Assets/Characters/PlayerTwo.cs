@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Cinemachine.Utility;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem; //Need for new input system
@@ -17,7 +18,7 @@ public class PlayerTwo : CharacterTwo
     private Transform cameraMain;
     Vector3 moveWithCamera;
     float turnSmoothVelocity;
-
+    
     /**
      * On awake we initialize our controls to tell it what to do with each 
      * 
@@ -57,7 +58,7 @@ public class PlayerTwo : CharacterTwo
     // Start is called before the first frame update
     protected override void Start()
     {
-
+       
         cameraMain = Camera.main.transform;  //Get our main camera that is to be followed with the rotation
         //define all variables here
         //this might be dumb, not sure
@@ -123,11 +124,23 @@ public class PlayerTwo : CharacterTwo
 
         movement = (forward * move.y + right * move.x);
 
+        // Debug.Log(move.y); // forward 1 backwards -1
+        //Debug.Log("speed");
+        //Debug.Log(move.y); // right 1, left -1
+        //Debug.Log("turn");
+        //Debug.Log(move.x); // right 1, left -1
+        
 
-        
-        
+        // forward and right = 0.7
+        // forward and left = -0.7
+
+
 
         movement *= speed;  //Move with speed
+        // Speed is like forward and back 
+        // The extra time stuff on the back is to help smooth
+        anim.SetFloat("speed", move.y, 1f, Time.deltaTime * 10f);
+        anim.SetFloat("turn", move.x, 1f, Time.deltaTime * 10f);
 
     }
 
@@ -165,7 +178,7 @@ public class PlayerTwo : CharacterTwo
             //characterController.Move(movement);
             isJumping = true;
 
-
+            anim.SetBool("isJumping", true);
         }
     }
 
@@ -175,8 +188,10 @@ public class PlayerTwo : CharacterTwo
     private void initiateDash()
     {
 
-        if (dashActionState == actionState.inactive)
+        if (dashActionState == actionState.inactive && characterController.isGrounded)
         {
+            if(move.y > 0.01 || move.x > 0.01)
+                anim.SetTrigger("isDashing");
             movement.y = 0; // make sure no vertical movement
             dashVector = movement;//save the current movement vector so that we have it next time this function is called
 
@@ -184,12 +199,13 @@ public class PlayerTwo : CharacterTwo
             dashing = dashLength[(int)dashActionState - 1]; //set dashing to the value of the first element in dash length (telegraph length)
 
             movement *= dashSpeed[(int)dashActionState - 1]; //scales the movement vector
+            
         }
     }
 
     private void dashingMovement()
     {
-
+        
         movement = dashVector; //set direction and speed to whatever it was in the previous function call
         movement.y = 0; // double check to make sure no vertical movement
         if (dashActionState == actionState.telegraph && dashing <= 0) //if we're in the telegraph phase and need to switch
@@ -215,6 +231,12 @@ public class PlayerTwo : CharacterTwo
         {
             dashing--;
             movement *= dashSpeed[(int)dashActionState - 1]; //scale movement
+            
+        }
+        if(dashActionState == actionState.inactive)
+        {
+            anim.SetTrigger("doneDashing");
+            anim.SetBool("isDashing", false);
         }
     }
 
