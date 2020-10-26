@@ -2185,6 +2185,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: cc2774dc8239ac549ade3eb6c20b4e98,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 1f6d637f908964b4f98f1f5b1dfa4156, type: 2}
+    - target: {fileID: 5866666021909216657, guid: cc2774dc8239ac549ade3eb6c20b4e98,
+        type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: cc2774dc8239ac549ade3eb6c20b4e98,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc2774dc8239ac549ade3eb6c20b4e98, type: 3}
 --- !u!114 &1494651718 stripped
@@ -2605,7 +2620,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1668924884}
-  m_LocalRotation: {x: 0.22217342, y: 0.000000023725331, z: -0.0000000054062492, w: 0.97500724}
+  m_LocalRotation: {x: 0.22217342, y: -0.00000002372534, z: 0.0000000054062634, w: 0.97500724}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3464,8 +3479,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 112
+  m_CollisionDetection: 3
 --- !u!136 &919132149164528417
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4698,10 +4713,10 @@ Animator:
   m_GameObject: {fileID: 919132149164528415}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: cc2774dc8239ac549ade3eb6c20b4e98, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
+  m_Controller: {fileID: 9100000, guid: 1f6d637f908964b4f98f1f5b1dfa4156, type: 2}
+  m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
