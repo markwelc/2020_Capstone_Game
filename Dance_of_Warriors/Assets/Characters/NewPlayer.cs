@@ -68,7 +68,7 @@ public class NewPlayer : Character
         //this might be dumb, not sure
         healthMax = 10;
         speed = 10;
-        jumpForce = 175;
+        jumpForce = 500;
 
         dashLength = new int[3];
         dashLength[0] = 2;
@@ -112,12 +112,10 @@ public class NewPlayer : Character
     {
         // Essentially we are going in a current direction with respect to the camera view
         // Since input is a 2d vector, move.y is essentially what we want to use to move in the z axis
-        // now aclculate our vector with respect to the camera
-        
-        movement = (cameraMain.forward * move.y + cameraMain.right * move.x);
-
+        // now calculate our vector with respect to the camera
+        movement = (Vector3.Normalize(Vector3.ProjectOnPlane(cameraMain.forward, Vector3.up)) * move.y + cameraMain.right * move.x);
+            //if the camera is looking down, cameraMain.forward is looking down. We need to project it onto a horizontal plane, normalize the result, then use that instead
         movement.y = 0f; // set y to there to be sure we dont move up or down
-
         movement *= speed;  //Move with speed
 
     }
@@ -130,11 +128,19 @@ public class NewPlayer : Character
     {
         if(!useFreeRotation || movement != Vector3.zero)
         {
+            characterRigidbody.constraints = RigidbodyConstraints.None; //unfreeze rotation
+            characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationX; //we always want rotation around x to be frozen
+
             //we want to rotate the player to match the direction the camera is facing
             //at least for now
             Vector3 directionVector = characterTransform.position - (cameraMain.position - lookOffset); //get a vector pointing from just below the camera's position to the player's position
             var lookAt = Quaternion.LookRotation(directionVector, Vector3.up); //save that in a format that we can use to change characterTransform.rotation
             characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, lookAt, Time.deltaTime * smoother); //change characterTransform.rotation, but do it slowly and steadily
+        }
+        else
+        {
+            characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ; //freeze rotation
+            characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationY;
         }
     }
 
@@ -142,13 +148,12 @@ public class NewPlayer : Character
      * Handle player jump.
      * When button is hit this function launches
      * Not overriding from parent as it already has an active listener
-     * Not overriding from parent as it already has an active listener
      */
     private void Jump()
     {
         if (jumpPossible)
         {
-            characterRigidbody.AddForce(transform.up * jumpForce);
+            characterRigidbody.AddForce(Vector3.up * jumpForce);
         }
     }
     
