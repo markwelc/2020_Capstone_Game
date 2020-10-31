@@ -9,6 +9,7 @@ public class PlayerTwo : CharacterTwo
 
     PlayerControls controls;    // Standard controls available to the player
     Vector2 move;               // This stores our movement from keyboard or left stick
+    Vector2 rotate;
     /*[SerializeField]*/
     protected float mouseSensitivity; //hopefully this can be replaced by something in the input manager
     /*[SerializeField]*/
@@ -18,7 +19,7 @@ public class PlayerTwo : CharacterTwo
     private Transform cameraMain;
     Vector3 moveWithCamera;
     float turnSmoothVelocity;
-    
+    public GameObject followTransform;
     /**
      * On awake we initialize our controls to tell it what to do with each 
      * 
@@ -31,6 +32,7 @@ public class PlayerTwo : CharacterTwo
         // Move is controlled with our left stick or keyboard being a 2d plane for direction so save that vector2 as move
         controls.Gameplay.Move.performed += ctx => move = ctx.ReadValue<Vector2>();
         controls.Gameplay.Move.canceled += ctx => move = Vector2.zero;              //Not moving anymore so set that vector2 to 0
+        
 
 
         controls.Gameplay.Jump.performed += ctx => Jump();      // In jump context call the jump function
@@ -150,7 +152,9 @@ public class PlayerTwo : CharacterTwo
      */
     protected override void handleAngle()
     {
-        float targetAngle = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
+        //followTransform.transform.rotation *= Quaternion.AngleAxis()
+       // float targetAngle = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
+        float newAngle = cameraMain.transform.rotation.eulerAngles.y;
         // Get the new target angle to rotate to and convert to degrees
 
         //Is the player moving? That way if still they can rotate and view the player
@@ -158,8 +162,10 @@ public class PlayerTwo : CharacterTwo
         {
             // Transform rotation
             // This could using a lerp method to make it smoother I just haven't implemented it yet
-            transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+            //transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, newAngle, 0), 15 * Time.fixedDeltaTime);
         }
+       
     }
 
     /**

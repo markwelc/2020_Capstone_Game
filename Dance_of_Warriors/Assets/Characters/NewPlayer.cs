@@ -112,11 +112,44 @@ public class NewPlayer : Character
 
         moveWithCamera.y = 0f; // set y to there to be sure we dont move up or down
         */
+        float dirSpeed;
         movement = (cameraMain.forward * move.y + cameraMain.right * move.x);
 
         movement.y = 0f; // set y to there to be sure we dont move up or down
+        /**
+         * Understanding walking
+         * move.y > 0 --> walking forward
+         * move.y < 0 --> walking backward
+         * move.x < 0 --> walking left
+         * move.x > 0 --> walking right
+         * move.x > 0 && move.y > 0 --> walking forward at right angle
+         * move.x < 0 && move.y > 0 --> walking forward at left angle
+         * move.x > 0 && move.y < 0 --> walking back at right angle
+         * move.x < 0 && move.y < 0 --> walking back at left angle
+         */
+        if (move.x != 0 && move.y > 0)
+        {
+            dirSpeed = speed / 1.4f;
+        }
+        else if ((move.x < -0.40 || move.x > 0.40) && move.y < 0)
+        {
+            dirSpeed = speed / 2f;
+        }
+        else if (move.x != 0)
+        {
+            dirSpeed = speed / 1.4f;
+        }
+        else if (move.y < 0)
+        {
+            dirSpeed = speed / 3f;
+        }
+        else
+        {
+            dirSpeed = speed;
+        }
+        
+        movement *= dirSpeed;  //Move with speed
 
-        movement *= speed;  //Move with speed
         anim.SetFloat("speed", move.y, 1f, Time.deltaTime * 10f);
         anim.SetFloat("turn", move.x, 1f, Time.deltaTime * 10f);
 
@@ -128,7 +161,9 @@ public class NewPlayer : Character
      */
     protected override void handleAngle()
     {
-        float targetAngle = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
+        //followTransform.transform.rotation *= Quaternion.AngleAxis()
+        // float targetAngle = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
+        float newAngle = cameraMain.transform.rotation.eulerAngles.y;
         // Get the new target angle to rotate to and convert to degrees
 
         //Is the player moving? That way if still they can rotate and view the player
@@ -136,8 +171,10 @@ public class NewPlayer : Character
         {
             // Transform rotation
             // This could using a lerp method to make it smoother I just haven't implemented it yet
-            transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+            //transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, newAngle, 0), 15 * Time.fixedDeltaTime);
         }
+       
     }
 
     /**
