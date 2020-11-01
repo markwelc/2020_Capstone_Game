@@ -15,5 +15,6 @@ public class Guns : WeaponController
         newBullet = Instantiate(bulletPrefab, UserFirepoint.position, Quaternion.Euler(angle)); //make the bullet
             //the bullet controller takes things from here
         newBullet.GetComponent<BulletController>().source = UserFirepoint.transform.parent.parent.GetComponent<Collider>(); //be sure to set the bullets parent
+        //newBullet.lifespan = 3000;
     }
 }

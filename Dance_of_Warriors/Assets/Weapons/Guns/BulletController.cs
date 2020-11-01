@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//private Camera fpsCam;
+
 public class BulletController : MonoBehaviour
 {
     private Rigidbody bulletRigidbody;
@@ -36,6 +38,7 @@ public class BulletController : MonoBehaviour
         {
             bulletRigidbody.MovePosition(hit.point);//otherwise, move to where the thing we hit was
         }
+        Destroy(this.gameObject, 2.5f);
     }
 
     void OnTriggerEnter(Collider col)

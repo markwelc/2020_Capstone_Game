@@ -61,6 +61,7 @@ public class Character : MonoBehaviour
         handleJump();
         handleAngle(); //Commented out as it overriding my angle
         handleWeapons();
+        handleZoom();
 
         if (health <= 0)
             die();
@@ -103,6 +104,11 @@ public class Character : MonoBehaviour
     }
 
     protected virtual void handleWeapons()
+    {
+        //do nothing
+    }
+
+    protected virtual void handleZoom()
     {
         //do nothing
     }
