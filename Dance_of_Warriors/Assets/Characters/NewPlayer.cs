@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem; //Need for new input system
+using UnityEngine.XR.WSA;
 
 public class NewPlayer : Character
 {
@@ -11,12 +12,16 @@ public class NewPlayer : Character
     /*[SerializeField]*/
     protected float mouseSensitivity; //hopefully this can be replaced by something in the input manager
     /*[SerializeField]*/
-    protected float clampAngle; //the max angle that the character can look up (negate to get the max angle the character can look down)
-    Rigidbody myRigid;
-    private Vector3 inputDirection;
+    //protected float clampAngle; //the max angle that the character can look up (negate to get the max angle the character can look down)
+    //Rigidbody myRigid;
+    //private Vector3 inputDirection;
     private Transform cameraMain;
-    Vector3 moveWithCamera;
-    float turnSmoothVelocity;
+    //Vector3 moveWithCamera;
+    //float turnSmoothVelocity;
+
+    [SerializeField] private Vector3 lookOffset; //this is subtracted from camera position and then the character always looks in the direction from this point to itself
+    [SerializeField] private float smoother; //this will slow down the speed at which the player looks toward where the camera's looking (the lower the value, the slower the movement)
+    [SerializeField] private bool useFreeRotation;
 
     /**
      * On awake we initialize our controls to tell it what to do with each 
@@ -63,7 +68,7 @@ public class NewPlayer : Character
         //this might be dumb, not sure
         healthMax = 10;
         speed = 10;
-        jumpForce = 175;
+        jumpForce = 500;
 
         dashLength = new int[3];
         dashLength[0] = 2;
@@ -76,7 +81,7 @@ public class NewPlayer : Character
         dashSpeed[2] = 5;
 
         mouseSensitivity = 100;
-        clampAngle = 60;
+        //clampAngle = 60;
 
         base.Start(); //call the regular start function
 
@@ -107,15 +112,10 @@ public class NewPlayer : Character
     {
         // Essentially we are going in a current direction with respect to the camera view
         // Since input is a 2d vector, move.y is essentially what we want to use to move in the z axis
-        // now aclculate our vector with respect to the camera
-        /*moveWithCamera = (cameraMain.forward * move.y + cameraMain.right * move.x);
-
-        moveWithCamera.y = 0f; // set y to there to be sure we dont move up or down
-        */
-        movement = (cameraMain.forward * move.y + cameraMain.right * move.x);
-
+        // now calculate our vector with respect to the camera
+        movement = (Vector3.Normalize(Vector3.ProjectOnPlane(cameraMain.forward, Vector3.up)) * move.y + cameraMain.right * move.x);
+            //if the camera is looking down, cameraMain.forward is looking down. We need to project it onto a horizontal plane, normalize the result, then use that instead
         movement.y = 0f; // set y to there to be sure we dont move up or down
-
         movement *= speed;  //Move with speed
 
     }
@@ -126,15 +126,21 @@ public class NewPlayer : Character
      */
     protected override void handleAngle()
     {
-        float targetAngle = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
-        // Get the new target angle to rotate to and convert to degrees
-
-        //Is the player moving? That way if still they can rotate and view the player
-        if (movement != Vector3.zero)
+        if(!useFreeRotation || movement != Vector3.zero)
         {
-            // Transform rotation
-            // This could using a lerp method to make it smoother I just haven't implemented it yet
-            transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+            characterRigidbody.constraints = RigidbodyConstraints.None; //unfreeze rotation
+            characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationX; //we always want rotation around x to be frozen
+
+            //we want to rotate the player to match the direction the camera is facing
+            //at least for now
+            Vector3 directionVector = characterTransform.position - (cameraMain.position - lookOffset); //get a vector pointing from just below the camera's position to the player's position
+            var lookAt = Quaternion.LookRotation(directionVector, Vector3.up); //save that in a format that we can use to change characterTransform.rotation
+            characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, lookAt, Time.deltaTime * smoother); //change characterTransform.rotation, but do it slowly and steadily
+        }
+        else
+        {
+            characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ; //freeze rotation
+            characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationY;
         }
     }
 
@@ -147,7 +153,7 @@ public class NewPlayer : Character
     {
         if (jumpPossible)
         {
-            characterRigidbody.AddForce(transform.up * jumpForce);
+            characterRigidbody.AddForce(Vector3.up * jumpForce);
         }
     }
     
