@@ -21,10 +21,10 @@ MonoBehaviour:
     y: 30
     width: 1213
     height: 628
-  m_MinSize: {x: 679, y: 492}
+  m_MinSize: {x: 680, y: 492}
   m_MaxSize: {x: 14003, y: 14042}
   vertical: 0
-  controlID: 60462
+  controlID: 1297
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -138,10 +138,10 @@ MonoBehaviour:
     y: 0
     width: 835
     height: 628
-  m_MinSize: {x: 402, y: 492}
+  m_MinSize: {x: 403, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 60437
+  controlID: 1298
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -163,10 +163,10 @@ MonoBehaviour:
     y: 0
     width: 835
     height: 284
-  m_MinSize: {x: 402, y: 221}
-  m_MaxSize: {x: 8002, y: 4021}
+  m_MinSize: {x: 403, y: 221}
+  m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 60438
+  controlID: 1275
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -224,7 +224,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 66fbffff
+      m_ExpandedIDs: e8b7ffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -313,9 +313,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.4512903, y: -1.6031743, z: -0.17379168}
+    m_Target: {x: -0.46220326, y: 0.6098001, z: 0.45258772}
     speed: 2
-    m_Value: {x: -0.4512903, y: -1.6031743, z: -0.17379168}
+    m_Value: {x: -0.46220326, y: 0.6098001, z: 0.45258772}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -361,13 +361,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.047826037, y: 0.7519917, z: -0.05493276, w: -0.6551756}
+    m_Target: {x: 0.057217635, y: 0.56748146, z: 0.039536115, w: -0.8204806}
     speed: 2
-    m_Value: {x: -0.047824804, y: 0.7519723, z: -0.054931343, w: -0.65515876}
+    m_Value: {x: 0.057215903, y: 0.5674643, z: 0.03953492, w: -0.82045573}
   m_Size:
-    m_Target: 0.9020311
+    m_Target: 3.0020308
     speed: 2
-    m_Value: 0.9020311
+    m_Value: 3.0020308
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -608,20 +608,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Characters/Character Model
+    - Assets/Characters
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Characters/Character Model
+  - Assets/Characters
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\tremp\Desktop\Capstone Project\2020_Capstone_Game\Dance_of_Warriors
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 3a3b0000
-    m_LastClickedID: 15162
-    m_ExpandedIDs: 00000000203b0000223b0000243b0000263b0000283b00003a3b0000
+    m_SelectedIDs: 8a4b0000
+    m_LastClickedID: 19338
+    m_ExpandedIDs: 00000000884b00008a4b00008c4b00008e4b0000904b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -649,7 +649,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000203b0000223b0000243b0000263b0000283b0000
+    m_ExpandedIDs: 00000000884b00008a4b00008c4b00008e4b0000904b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -674,9 +674,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: be390000
-    m_LastClickedInstanceID: 14782
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c62300008ed6ffff
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -798,5 +798,5 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_PreviewWindow: {fileID: 0}
-  m_LastInspectedObjectInstanceID: 14782
+  m_LastInspectedObjectInstanceID: -1
   m_LastVerticalScrollValue: 0
