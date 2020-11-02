@@ -128,22 +128,28 @@ public class NewPlayer : Character
      */
     protected override void handleAngle()
     {
-        if(!useFreeRotation || movement != Vector3.zero)
-        {
-            characterRigidbody.constraints = RigidbodyConstraints.None; //unfreeze rotation
-            characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationX; //we always want rotation around x to be frozen
+        /* if(!useFreeRotation || movement != Vector3.zero)
+         {
+             characterRigidbody.constraints = RigidbodyConstraints.None; //unfreeze rotation
+             characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationX; //we always want rotation around x to be frozen
 
-            //we want to rotate the player to match the direction the camera is facing
-            //at least for now
-            Vector3 directionVector = characterTransform.position - (cameraMain.position - lookOffset); //get a vector pointing from just below the camera's position to the player's position
-            var lookAt = Quaternion.LookRotation(directionVector, Vector3.up); //save that in a format that we can use to change characterTransform.rotation
-            characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, lookAt, Time.deltaTime * smoother); //change characterTransform.rotation, but do it slowly and steadily
-        }
-        else
+             //we want to rotate the player to match the direction the camera is facing
+             //at least for now
+             Vector3 directionVector = characterTransform.position - (cameraMain.position - lookOffset); //get a vector pointing from just below the camera's position to the player's position
+             var lookAt = Quaternion.LookRotation(directionVector, Vector3.up); //save that in a format that we can use to change characterTransform.rotation
+             characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, lookAt, Time.deltaTime * smoother); //change characterTransform.rotation, but do it slowly and steadily
+         }
+         else
+         {
+             characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ; //freeze rotation
+             characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationY;
+         }*/
+        float targetAngle = cameraMain.transform.rotation.eulerAngles.y;
+        if(movement != Vector3.zero)
         {
-            characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ; //freeze rotation
-            characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationY;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, targetAngle, 0), 15 * Time.fixedDeltaTime);
         }
+
     }
 
     /**
