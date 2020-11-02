@@ -11,7 +11,8 @@ public class Character : MonoBehaviour
     protected Rigidbody characterRigidbody; //the character's rigidbody
     protected Transform characterTransform; //the character's transform
     protected Collider characterCollider; //the character's collider
-
+    protected Animator anim;
+    protected bool isJumping = false;
     protected float healthMax; //the amount of health that the character can have
     protected float health; //the amount of health that the character has
 
@@ -41,6 +42,7 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        anim = GetComponent<Animator>();
         characterRigidbody = this.GetComponent<Rigidbody>(); //get rigidbody
         characterTransform = this.GetComponent<Transform>(); //get transform
         characterCollider = this.GetComponent<Collider>(); //get collider
@@ -68,6 +70,15 @@ public class Character : MonoBehaviour
             health = healthMax; //reduce their health to the max possible
 
         moveCharacter(movement);
+        if(jumpPossible)
+        {
+            if(isJumping)
+            {
+                anim.SetBool("isJumping", false);
+                anim.SetBool("doneJumping", true);
+                isJumping = false;
+            }
+        }
     }
 
 

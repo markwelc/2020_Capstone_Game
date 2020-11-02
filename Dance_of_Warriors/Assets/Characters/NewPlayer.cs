@@ -24,8 +24,8 @@ public class NewPlayer : Character
     [SerializeField] private bool useFreeRotation;
 
     /**
-     * On awake we initialize our controls to tell it what to do with each 
-     * 
+     * On awake we initialize our controls to tell it what to do with each
+     *
      */
     private void Awake()
     {
@@ -33,7 +33,7 @@ public class NewPlayer : Character
         controls = new PlayerControls();    // Initialize our controls object
 
         // Move is controlled with our left stick or keyboard being a 2d plane for direction so save that vector2 as move
-        controls.Gameplay.Move.performed += ctx => move = ctx.ReadValue<Vector2>();  
+        controls.Gameplay.Move.performed += ctx => move = ctx.ReadValue<Vector2>();
         controls.Gameplay.Move.canceled += ctx => move = Vector2.zero;              //Not moving anymore so set that vector2 to 0
 
 
@@ -62,13 +62,13 @@ public class NewPlayer : Character
     // Start is called before the first frame update
     protected override void Start()
     {
-        
+
         cameraMain = Camera.main.transform;  //Get our main camera that is to be followed with the rotation
         //define all variables here
         //this might be dumb, not sure
         healthMax = 10;
         speed = 10;
-        jumpForce = 500;
+        jumpForce = 300;
 
         dashLength = new int[3];
         dashLength[0] = 2;
@@ -106,8 +106,8 @@ public class NewPlayer : Character
 
     /**
      * Handles player movement in respect to the direction and camera
-     * gets our current move location and transforms the players position each frame 
-     */ 
+     * gets our current move location and transforms the players position each frame
+     */
     private void standardMovement()
     {
         // Essentially we are going in a current direction with respect to the camera view
@@ -117,6 +117,8 @@ public class NewPlayer : Character
             //if the camera is looking down, cameraMain.forward is looking down. We need to project it onto a horizontal plane, normalize the result, then use that instead
         movement.y = 0f; // set y to there to be sure we dont move up or down
         movement *= speed;  //Move with speed
+        anim.SetFloat("speed", move.y, 1f, Time.deltaTime * 10f);
+        anim.SetFloat("turn", move.x, 1f, Time.deltaTime * 10f);
 
     }
 
@@ -154,9 +156,11 @@ public class NewPlayer : Character
         if (jumpPossible)
         {
             characterRigidbody.AddForce(Vector3.up * jumpForce);
+            anim.SetBool("isJumping", true);
+            isJumping = true;
         }
     }
-    
+
     /**
      * Player attempts to dash, initiate dash telegraph
      */
@@ -165,6 +169,8 @@ public class NewPlayer : Character
 
         if (dashActionState == actionState.inactive)
         {
+            if (move.y > 0.01 || move.x > 0.01)
+                anim.SetTrigger("isDashing");
             movement.y = 0; // make sure no vertical movement
             dashVector = movement;//save the current movement vector so that we have it next time this function is called
 
@@ -203,6 +209,11 @@ public class NewPlayer : Character
         {
             dashing--;
             movement *= dashSpeed[(int)dashActionState - 1]; //scale movement
+        }
+        if (dashActionState == actionState.inactive)
+        {
+            anim.SetTrigger("doneDashing");
+            anim.SetBool("isDashing", false);
         }
     }
 
