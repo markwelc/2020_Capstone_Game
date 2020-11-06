@@ -8,6 +8,7 @@ public class BulletController : MonoBehaviour
     
     protected float speed;
     public float damage;
+    protected float lifespan;
 
     public Collider source;
 
@@ -15,6 +16,7 @@ public class BulletController : MonoBehaviour
     protected virtual void Start()
     {
         bulletRigidbody = this.GetComponent<Rigidbody>();
+        Destroy(this.gameObject, lifespan);
     }
 
     // Update is called once per frame

@@ -86,7 +86,7 @@ public class Character : MonoBehaviour
     {
         //the raycasting is useful for fast moving objects that the colliders can't deal with
 
-        Ray ray = new Ray(transform.position, direcAndDist); //shoot a ray from current position in direction of travel
+        Ray ray = new Ray(characterTransform.position, direcAndDist); //shoot a ray from current position in direction of travel
         RaycastHit hit;
         if (!Physics.Raycast(ray, out hit, (direcAndDist * Time.deltaTime).magnitude)) //if the ray didn't hit anything within the range that we're moving
             characterRigidbody.MovePosition((Vector3)transform.position + direcAndDist * Time.deltaTime); //go ahead and move
