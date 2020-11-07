@@ -39,7 +39,7 @@ public class NewPlayer : Character
 
         controls.Gameplay.Jump.performed += ctx => Jump();      // In jump context call the jump function
         controls.Gameplay.Dash.performed += ctx => initiateDash();       //Similar for dashing
-        controls.Gameplay.Fire.performed += ctx => shootWeapons();
+        controls.Gameplay.Fire.performed += ctx => useWeapons();
         controls.Gameplay.ChangeViewMode.performed += ctx => changeViewMode();
     }
 
@@ -71,14 +71,14 @@ public class NewPlayer : Character
         jumpForce = 300;
 
         dashLength = new int[3];
-        dashLength[0] = 2;
-        dashLength[1] = 2;
-        dashLength[2] = 2;
+        dashLength[0] = 10; //length of telegraph
+        dashLength[1] = 20; //length of action
+        dashLength[2] = 10; //length of recovery
 
         dashSpeed = new float[3];
-        dashSpeed[0] = 5;
-        dashSpeed[1] = 20;
-        dashSpeed[2] = 5;
+        dashSpeed[0] = speed / 2; //speed to move while in telegraph
+        dashSpeed[1] = speed * 2; //speed to move while dashing
+        dashSpeed[2] = speed / 2; //speed to move while in recovery
 
         mouseSensitivity = 100;
         //clampAngle = 60;
@@ -113,9 +113,11 @@ public class NewPlayer : Character
         // Essentially we are going in a current direction with respect to the camera view
         // Since input is a 2d vector, move.y is essentially what we want to use to move in the z axis
         // now calculate our vector with respect to the camera
-        movement = (Vector3.Normalize(Vector3.ProjectOnPlane(cameraMain.forward, Vector3.up)) * move.y + cameraMain.right * move.x);
+        movement = Vector3.ProjectOnPlane(cameraMain.forward, Vector3.up) * move.y + cameraMain.right * move.x;
             //if the camera is looking down, cameraMain.forward is looking down. We need to project it onto a horizontal plane, normalize the result, then use that instead
         movement.y = 0f; // set y to there to be sure we dont move up or down
+        movement = Vector3.Normalize(movement); //be sure movement is a normal vector
+
         movement *= speed;  //Move with speed
         anim.SetFloat("speed", move.y, 1f, Time.deltaTime * 10f);
         anim.SetFloat("turn", move.x, 1f, Time.deltaTime * 10f);
@@ -181,12 +183,16 @@ public class NewPlayer : Character
      */
     private void initiateDash()
     {
-
         if (dashActionState == actionState.inactive)
         {
+            Debug.Log("starting dash");
             if (move.y > 0.01 || move.x > 0.01)
                 anim.SetTrigger("isDashing");
+
+            movement = Vector3.ProjectOnPlane(cameraMain.forward, Vector3.up) * move.y + cameraMain.right * move.x; //figure out which direction to dash in
             movement.y = 0; // make sure no vertical movement
+            movement = Vector3.Normalize(movement); //be sure movement is a normal vector
+
             dashVector = movement;//save the current movement vector so that we have it next time this function is called
 
             dashActionState++;
@@ -219,23 +225,18 @@ public class NewPlayer : Character
         {
             dashActionState = actionState.inactive; //move to the next state
             dashing = 0; //set dashing to the appropriate value
+
+            anim.SetTrigger("doneDashing");
+            anim.SetBool("isDashing", false);
         }
         else
         {
             dashing--;
             movement *= dashSpeed[(int)dashActionState - 1]; //scale movement
         }
-        if (dashActionState == actionState.inactive)
-        {
-            anim.SetTrigger("doneDashing");
-            anim.SetBool("isDashing", false);
-        }
     }
 
-    private void shootWeapons()
-    {
-        weaponAccess.useWeapon();
-    }
+    
 
 
     private void changeViewMode()

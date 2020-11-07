@@ -33,7 +33,7 @@ public class Character : MonoBehaviour
     /*[SerializeField]*/ protected int dashing; //keeps track of where we are in the dash
     /*[SerializeField]*/ protected int[] dashLength; //lists the number of frames that each of the three phases should be active for
     /*[SerializeField]*/ protected float[] dashSpeed; //indicates the speed of the dash
-    protected Vector3 dashVector;//the direction and speed of our dash
+    protected Vector3 dashVector;//the direction of our dash
     /*[SerializeField]*/ protected actionState dashActionState;
 
     [SerializeField] protected WeaponController weaponAccess;
@@ -113,9 +113,14 @@ public class Character : MonoBehaviour
         characterTransform.eulerAngles = new Vector3(0, 0, 0); //set no particular angle
     }
 
-    protected virtual void handleWeapons()
+    protected virtual void handleWeapons() //decides when to use weapons
     {
         //do nothing
+    }
+
+    protected virtual void useWeapons() //actually goes and uses the weapon
+    {
+        weaponAccess.useWeapon();
     }
 
 
