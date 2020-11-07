@@ -21,7 +21,14 @@ public class Character : MonoBehaviour
     //public float staminaMax; //the max amount of stamina the character can have
     //protected float staminaCur; //the current amount of stamina the 
 
-    protected enum actionState { inactive, telegraph, active, recovery }
+    protected enum actionState 
+    { 
+        inactive,  //this means that the action is not happening
+        telegraph, //this means that the action hasn't started yet, but that will start in a moment and any advanced warning that the action will happen is shown
+        active, //this means that the action is happening
+        recovery, //this means that the action has finished but the immediate results of the action (e.g. the animations to play after the action) haven't finished
+        cooldown //this means that the action and all immediate effects have finished, so it looks like the inactive state, but the action may not be activated again
+    }
 
     protected Vector3 movement;//used to hold the direction that the character should move in
     protected bool diagonal;//whether the player is moving diagonally

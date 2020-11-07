@@ -70,15 +70,17 @@ public class NewPlayer : Character
         speed = 10;
         jumpForce = 300;
 
-        dashLength = new int[3];
+        dashLength = new int[4];
         dashLength[0] = 10; //length of telegraph
         dashLength[1] = 20; //length of action
         dashLength[2] = 10; //length of recovery
+        dashLength[3] = 40; //length of dash cool down
 
-        dashSpeed = new float[3];
-        dashSpeed[0] = speed / 2; //speed to move while in telegraph
+        dashSpeed = new float[4];
+        dashSpeed[0] = speed; //speed to move while in telegraph
         dashSpeed[1] = speed * 2; //speed to move while dashing
-        dashSpeed[2] = speed / 2; //speed to move while in recovery
+        dashSpeed[2] = speed; //speed to move while in recovery
+        dashSpeed[3] = 0; //this should never be used
 
         mouseSensitivity = 100;
         //clampAngle = 60;
@@ -99,7 +101,7 @@ public class NewPlayer : Character
         }
         else
         {
-            // Still dashing so continue that telegraph
+            // Still dashing so continue that
             dashingMovement();
         }
     }
@@ -219,20 +221,33 @@ public class NewPlayer : Character
             dashActionState++; //move to the next state
             dashing = dashLength[(int)dashActionState - 1]; //set dashing to the appropriate value
 
-            movement *= dashSpeed[(int)dashActionState - 1]; //scale movement
+            movement *= dashSpeed[(int)dashActionState - 1]; //scale movement (this is recovery speed)
         }
-        else if (dashActionState == actionState.recovery && dashing <= 0) //if we are done recovering
+        else if (dashActionState == actionState.recovery && dashing <= 0) //if we are recovering and need to go to the cool down
         {
-            dashActionState = actionState.inactive; //move to the next state
-            dashing = 0; //set dashing to the appropriate value
+            dashActionState++; //move to the next state
+            dashing = dashLength[(int)dashActionState - 1]; //set dashing to the appropriate value
+
+            standardMovement(); //at this point we just want to move normally (we're still dashing though, so we can't dash again)
+                //this lets us move in the frame that we switch to standardMovement
 
             anim.SetTrigger("doneDashing");
             anim.SetBool("isDashing", false);
         }
+        else if(dashActionState == actionState.cooldown && dashing <= 0)
+        {
+            dashActionState = actionState.inactive; //move to the inactive state
+            dashing = 0; //set dashing just to be safe and clean
+
+            standardMovement(); //call standard movement again just so that we can move in this frame
+        }
         else
         {
             dashing--;
-            movement *= dashSpeed[(int)dashActionState - 1]; //scale movement
+            if(dashActionState == actionState.cooldown)
+                standardMovement(); //we're in cooldown, so just do standard movement (but we still can't start another dash)
+            else
+                movement *= dashSpeed[(int)dashActionState - 1]; //scale movement
         }
     }
 
