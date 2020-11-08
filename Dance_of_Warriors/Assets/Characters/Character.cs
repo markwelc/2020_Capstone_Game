@@ -37,12 +37,6 @@ public class Character : MonoBehaviour
     protected bool jumpPossible; //determines if the character can currently jump
     protected actionState jumpActionState; //this may not be needed to restrict jumping, but may be useful in graphics
 
-    /*[SerializeField]*/ protected int dashing; //keeps track of where we are in the dash
-    /*[SerializeField]*/ protected int[] dashLength; //lists the number of frames that each of the three phases should be active for
-    /*[SerializeField]*/ protected float[] dashSpeed; //indicates the speed of the dash
-    protected Vector3 dashVector;//the direction of our dash
-    /*[SerializeField]*/ protected actionState dashActionState;
-
     [SerializeField] protected WeaponController weaponAccess;
     protected actionState toolActionState;
 
@@ -54,12 +48,9 @@ public class Character : MonoBehaviour
         characterTransform = this.GetComponent<Transform>(); //get transform
         characterCollider = this.GetComponent<Collider>(); //get collider
         health = healthMax; //set health
-        dashVector = Vector3.zero;
 
         jumpActionState = actionState.inactive;
-        dashActionState = actionState.inactive;
         toolActionState = actionState.inactive;
-        dashing = 0;
     }
 
 
@@ -113,6 +104,8 @@ public class Character : MonoBehaviour
     protected virtual void handleJump()
     {
         //do nothing
+        //ordinarily, this is the function that decides when to jumpt
+        //in the player character's case, this isn't really needed since you can just run the jump function when the hotkey is pressed
     }
 
     protected virtual void handleAngle()
@@ -138,6 +131,8 @@ public class Character : MonoBehaviour
     }
 
 
+
+    //these three functions determine whether the character may jump
     protected void OnCollisionEnter(Collision collision)
     {
         if (LayerMask.LayerToName(collision.gameObject.layer) == "staticEnvironment")
@@ -148,5 +143,10 @@ public class Character : MonoBehaviour
     {
         if (LayerMask.LayerToName(collision.gameObject.layer) == "staticEnvironment")
             jumpPossible = false;
+    }
+
+    protected virtual bool jumpAllowed()
+    {
+        return jumpPossible;
     }
 }

@@ -23,6 +23,16 @@ public class NewPlayer : Character
     [SerializeField] private float smoother; //this will slow down the speed at which the player looks toward where the camera's looking (the lower the value, the slower the movement)
     [SerializeField] private bool useFreeRotation;
 
+    /*[SerializeField]*/
+    protected int dashing; //keeps track of where we are in the dash
+    /*[SerializeField]*/
+    protected int[] dashLength; //lists the number of frames that each of the three phases should be active for
+    /*[SerializeField]*/
+    protected float[] dashSpeed; //indicates the speed of the dash
+    protected Vector3 dashVector;//the direction of our dash
+    /*[SerializeField]*/
+    protected actionState dashActionState;
+
     /**
      * On awake we initialize our controls to tell it what to do with each
      *
@@ -70,15 +80,19 @@ public class NewPlayer : Character
         speed = 10;
         jumpForce = 300;
 
+        dashVector = Vector3.zero;
+        dashActionState = actionState.inactive;
+        dashing = 0;
+
         dashLength = new int[4];
-        dashLength[0] = 10; //length of telegraph
-        dashLength[1] = 20; //length of action
-        dashLength[2] = 10; //length of recovery
-        dashLength[3] = 40; //length of dash cool down
+        dashLength[0] = 2; //length of telegraph
+        dashLength[1] = 15; //length of action
+        dashLength[2] = 2; //length of recovery
+        dashLength[3] = 200; //length of dash cool down
 
         dashSpeed = new float[4];
         dashSpeed[0] = speed; //speed to move while in telegraph
-        dashSpeed[1] = speed * 2; //speed to move while dashing
+        dashSpeed[1] = speed * 3; //speed to move while dashing
         dashSpeed[2] = speed; //speed to move while in recovery
         dashSpeed[3] = 0; //this should never be used
 
@@ -91,24 +105,36 @@ public class NewPlayer : Character
 
     /**
      * General movement override, called in fixed update each time from parent
+     * NOTE: this function doesn't start doing a certain type of movement.
+     *      This means that if, for instance, dashActionState is actionState.cooldown, we can
+     *          set it to actionState.inactive
+     *          call this function
+     *          set it back to actionState.cooldown
+     *      Thanks to this ability, we can call handleMovement from dashingMovement and know that handleMovement won't immediately turn around and call dashingMovement
+     *      In order for this to work, handleMovement can only ever see what kind of movement is happening right now, and do that
      */
     protected override void handleMovement()
     {
-        // Are we dashing atm?
-        if (dashActionState == actionState.inactive) //if we're not in the middle of dashing
+        if(dashActionState != actionState.inactive)
         {
-            standardMovement(); //we can go ahead and move normally
-        }
-        else
-        {
-            // Still dashing so continue that
             dashingMovement();
+        }
+        //else if(sprintActionState != actionState.inactive)
+        //{
+        //    sprintingMovement();
+        //}
+        else //no special kind of movement
+        {
+            standardMovement();
         }
     }
 
     /**
      * Handles player movement in respect to the direction and camera
      * gets our current move location and transforms the players position each frame
+     * 
+     * while this could override something from the Character class, it doesn't really need to because its purpose is to make handleMovement cleaner
+     * which, as far as the Character class is concerned, isn't needed
      */
     private void standardMovement()
     {
@@ -172,7 +198,7 @@ public class NewPlayer : Character
      */
     private void Jump()
     {
-        if (jumpPossible)
+        if (jumpAllowed())
         {
             characterRigidbody.AddForce(Vector3.up * jumpForce);
             anim.SetBool("isJumping", true);
@@ -185,9 +211,8 @@ public class NewPlayer : Character
      */
     private void initiateDash()
     {
-        if (dashActionState == actionState.inactive)
+        if (dashAllowed())
         {
-            Debug.Log("starting dash");
             if (move.y > 0.01 || move.x > 0.01)
                 anim.SetTrigger("isDashing");
 
@@ -228,34 +253,69 @@ public class NewPlayer : Character
             dashActionState++; //move to the next state
             dashing = dashLength[(int)dashActionState - 1]; //set dashing to the appropriate value
 
-            standardMovement(); //at this point we just want to move normally (we're still dashing though, so we can't dash again)
-                //this lets us move in the frame that we switch to standardMovement
-
             anim.SetTrigger("doneDashing");
             anim.SetBool("isDashing", false);
+
+            dashActionState = actionState.inactive;
+            handleMovement(); //at this point we just want to move normally
+                              //this lets us move in the frame that we switch to using regular movement
+            dashActionState = actionState.cooldown;
+                //this swapping of the value of dashActionState is explained in the else
         }
         else if(dashActionState == actionState.cooldown && dashing <= 0)
         {
             dashActionState = actionState.inactive; //move to the inactive state
             dashing = 0; //set dashing just to be safe and clean
 
-            standardMovement(); //call standard movement again just so that we can move in this frame
+            handleMovement(); //call this again just so that we can move in this frame
         }
         else
         {
             dashing--;
-            if(dashActionState == actionState.cooldown)
-                standardMovement(); //we're in cooldown, so just do standard movement (but we still can't start another dash)
+            if (dashActionState == actionState.cooldown)
+            {
+                dashActionState = actionState.inactive;
+                handleMovement(); //we're in cooldown, so just move normally
+                dashActionState = actionState.cooldown;
+                    //this swapping of dashActionState lets us call handleMovement without having to worry about it calling dashingMovement
+                    //handleMovement doesn't care that we're lying about what dashActionState should be
+            }
             else
                 movement *= dashSpeed[(int)dashActionState - 1]; //scale movement
         }
     }
 
-    
-
+   
 
     private void changeViewMode()
     {
         useFreeRotation = !useFreeRotation;
+    }
+
+
+    protected bool dashAllowed()
+    {
+        bool dashingPermits = dashActionState == actionState.inactive;
+        if (dashingPermits)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /**
+     * we need to override this cause we care about the value of dashActionState
+     */
+    protected override bool jumpAllowed()
+    {
+        bool dashingPermits = ((dashActionState == actionState.inactive) || (dashActionState == actionState.cooldown));
+        if (dashingPermits && jumpPossible)
+        {
+            return true;
+        }
+
+        return false;
     }
 }
