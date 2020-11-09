@@ -70,7 +70,7 @@ public class Character : MonoBehaviour
         moveCharacter(movement);
         if(isJumping)
         {
-            if(characterRigidbody.velocity.y < 0)
+            if(characterRigidbody.velocity.y < 0f)
             {
                 anim.SetBool("isJumping", false);
                 anim.SetBool("doneJumping", true);
