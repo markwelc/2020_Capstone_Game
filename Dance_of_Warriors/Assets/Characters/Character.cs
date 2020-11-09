@@ -43,7 +43,7 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
         characterRigidbody = this.GetComponent<Rigidbody>(); //get rigidbody
         characterTransform = this.GetComponent<Transform>(); //get transform
         characterCollider = this.GetComponent<Collider>(); //get collider
@@ -68,22 +68,23 @@ public class Character : MonoBehaviour
             health = healthMax; //reduce their health to the max possible
 
         moveCharacter(movement);
-        if(jumpPossible)
+        if(isJumping)
         {
-            if(isJumping)
+            if(characterRigidbody.velocity.y < 0f)
             {
                 anim.SetBool("isJumping", false);
                 anim.SetBool("doneJumping", true);
                 isJumping = false;
             }
         }
+        
     }
 
 
     protected void moveCharacter(Vector3 direcAndDist) //the input needs to contain both the direction and the distance
     {
         //the raycasting is useful for fast moving objects that the colliders can't deal with
-
+        direcAndDist.y = characterRigidbody.velocity.y;
         Ray ray = new Ray(characterTransform.position, direcAndDist); //shoot a ray from current position in direction of travel
         RaycastHit hit;
         if (!Physics.Raycast(ray, out hit, (direcAndDist * Time.deltaTime).magnitude)) //if the ray didn't hit anything within the range that we're moving
