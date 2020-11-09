@@ -181,7 +181,8 @@ public class NewPlayer : Character
         {
             characterRigidbody.constraints = RigidbodyConstraints.None; //unfreeze rotation
             characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationX; //we always want rotation around x to be frozen
-
+            characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ; //if you want x then you would want z as well
+            
             characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, targetAngle, 0), 15 * Time.fixedDeltaTime);
         }
         else
