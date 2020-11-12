@@ -33,6 +33,8 @@ public class NewPlayer : Character
     /*[SerializeField]*/
     protected actionState dashActionState;
 
+    [SerializeField] private LayerMask playerLayer;
+
     /**
      * On awake we initialize our controls to tell it what to do with each
      *
@@ -176,14 +178,30 @@ public class NewPlayer : Character
         //}
 
 
-        float targetAngle = cameraMain.transform.rotation.eulerAngles.y;
+        float targetAngleY = cameraMain.transform.rotation.eulerAngles.y;
+        float targetAngleX = cameraMain.transform.rotation.eulerAngles.x;
         if (!useFreeRotation || movement != Vector3.zero)
         {
             characterRigidbody.constraints = RigidbodyConstraints.None; //unfreeze rotation
-            characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationX; //we always want rotation around x to be frozen
-            characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ; //if you want x then you would want z as well
-            
-            characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, targetAngle, 0), 15 * Time.fixedDeltaTime);
+            //characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationX; //we always want rotation around x to be frozen
+            characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ; //rotation around the z axis should always be frozen
+
+            characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, targetAngleY, 0), 15 * Time.fixedDeltaTime); //rotate the whole character to look left and right
+
+            //shoot a raycast from the camera straight outwards
+            Ray ray = new Ray(cameraMain.transform.position, cameraMain.transform.forward);
+            RaycastHit hit = new RaycastHit();
+            if (Physics.Raycast(ray, out hit, 1000f, ~playerLayer)) //the ray hit something, so we aren't looking at empty space
+            {
+                Vector3 dirVector = hit.point - weaponPrefab.transform.position; //figure out which direction we should aim in (difference of two vectors)
+                weaponPrefab.transform.rotation = Quaternion.Slerp(weaponPrefab.transform.rotation, Quaternion.LookRotation(dirVector), 15 * Time.fixedDeltaTime);
+                    //aim in that direction
+            }
+            else //the ray didn't hit anything, so we're looking at empty space
+            {
+                weaponPrefab.transform.rotation = Quaternion.Slerp(weaponPrefab.transform.rotation, Quaternion.LookRotation(cameraMain.transform.forward), 15 * Time.fixedDeltaTime);
+                //just be parallel to the camera
+            }
         }
         else
         {

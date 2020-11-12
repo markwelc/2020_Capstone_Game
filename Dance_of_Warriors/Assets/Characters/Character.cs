@@ -38,6 +38,7 @@ public class Character : MonoBehaviour
     protected actionState jumpActionState; //this may not be needed to restrict jumping, but may be useful in graphics
 
     [SerializeField] protected WeaponController weaponAccess;
+    [SerializeField] protected GameObject weaponPrefab;
     protected actionState toolActionState;
 
     // Start is called before the first frame update
