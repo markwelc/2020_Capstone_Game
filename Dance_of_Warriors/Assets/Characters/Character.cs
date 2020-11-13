@@ -7,6 +7,7 @@ public class Character : MonoBehaviour
     //only use this class for things that are universal for all characters (the player, bosses, npcs, rats)
     //anything that's related to decision making should be in subclasses
     //for instance, bosses decide when/where to move very differently from the player, and so deciding when/where to move is in a subclass
+    // public LayerMask whatIsGround, whatIsPlayer;
 
     protected Rigidbody characterRigidbody; //the character's rigidbody
     protected Transform characterTransform; //the character's transform

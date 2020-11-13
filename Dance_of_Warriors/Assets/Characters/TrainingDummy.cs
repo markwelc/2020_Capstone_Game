@@ -30,26 +30,15 @@ public class TrainingDummy : Character
     // Start is called before the first frame update
     protected override void Start()
     {
-        // anim = GetComponent<Animator>();
-        // characterRigidbody = this.GetComponent<Rigidbody>(); //get rigidbody
-        // characterTransform = this.GetComponent<Transform>(); //get transform
-        // characterCollider = this.GetComponent<Collider>(); //get collider
-        // health = healthMax; //set health
-        // dashVector = Vector3.zero;
-
-        // jumpActionState = actionState.inactive;
-        // dashActionState = actionState.inactive;
-        // toolActionState = actionState.inactive;
-        // dashing = 0;
         healthMax = 5;
         speed = 5;
         jumpForce = 300;
 
-        // base.start();
+        base.Start();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
@@ -74,8 +63,11 @@ public class TrainingDummy : Character
 
     private void SearchWalkPoint()
     {
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
+        // float randomZ = Random.Range(-walkPointRange, walkPointRange);
+        // float randomX = Random.Range(-walkPointRange, walkPointRange);
+
+        float randomZ = Random.Range(-10, 10);
+        float randomX = Random.Range(-10, 10);
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
@@ -97,7 +89,8 @@ public class TrainingDummy : Character
         if(!alreadyAttacked)
         {
             Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 8f, ForceMode.Impulse);
+            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
@@ -133,3 +126,41 @@ public class TrainingDummy : Character
         // }
     // }
 }
+
+// using System.Collections;
+// using System.Collections.Generic;
+// using UnityEngine;
+// using UnityEngine.AI;
+
+// public class TrainingDummy : Character
+// {
+//     Transform playerTransform;
+//     UnityEngine.AI.NavMeshAgent myNav;
+//     public float checkRate = 0.001f;
+//     float nextCheck;
+
+//     protected override void Start()
+//     {
+//         if (GameObject.FindGameObjectWithTag("Enemy").activeInHierarchy)
+//         {
+//             playerTransform = GameObject.FindGameObjectWithTag("Enemy").transform;
+//         }
+
+//         myNav = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
+//     }
+
+//     private void Update()
+//     {
+//         if (Time.time > nextCheck)
+//         {
+//             nextCheck = Time.time + checkRate;
+//             FollowPlayer();
+//         }
+//     }
+
+//     private void FollowPlayer()
+//     {
+//         myNav.transform.LookAt(playerTransform);
+//         myNav.SetDestination(playerTransform.position);
+//     }
+// }
