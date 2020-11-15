@@ -11,7 +11,8 @@ public class Character : MonoBehaviour
     protected Rigidbody characterRigidbody; //the character's rigidbody
     protected Transform characterTransform; //the character's transform
     protected Collider characterCollider; //the character's collider
-
+    protected Animator anim;
+    protected bool isJumping = false;
     protected float healthMax; //the amount of health that the character can have
     protected float health; //the amount of health that the character has
 
@@ -20,7 +21,14 @@ public class Character : MonoBehaviour
     //public float staminaMax; //the max amount of stamina the character can have
     //protected float staminaCur; //the current amount of stamina the 
 
-    protected enum actionState { inactive, telegraph, active, recovery }
+    protected enum actionState 
+    { 
+        inactive,  //this means that the action is not happening
+        telegraph, //this means that the action hasn't started yet, but that will start in a moment and any advanced warning that the action will happen is shown
+        active, //this means that the action is happening
+        recovery, //this means that the action has finished but the immediate results of the action (e.g. the animations to play after the action) haven't finished
+        cooldown //this means that the action and all immediate effects have finished, so it looks like the inactive state, but the action may not be activated again
+    }
 
     protected Vector3 movement;//used to hold the direction that the character should move in
     protected bool diagonal;//whether the player is moving diagonally
@@ -29,28 +37,21 @@ public class Character : MonoBehaviour
     protected bool jumpPossible; //determines if the character can currently jump
     protected actionState jumpActionState; //this may not be needed to restrict jumping, but may be useful in graphics
 
-    /*[SerializeField]*/ protected int dashing; //keeps track of where we are in the dash
-    /*[SerializeField]*/ protected int[] dashLength; //lists the number of frames that each of the three phases should be active for
-    /*[SerializeField]*/ protected float[] dashSpeed; //indicates the speed of the dash
-    protected Vector3 dashVector;//the direction and speed of our dash
-    /*[SerializeField]*/ protected actionState dashActionState;
-
     [SerializeField] protected WeaponController weaponAccess;
+    [SerializeField] protected GameObject weaponPrefab;
     protected actionState toolActionState;
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        anim = GetComponentInChildren<Animator>();
         characterRigidbody = this.GetComponent<Rigidbody>(); //get rigidbody
         characterTransform = this.GetComponent<Transform>(); //get transform
         characterCollider = this.GetComponent<Collider>(); //get collider
         health = healthMax; //set health
-        dashVector = Vector3.zero;
 
         jumpActionState = actionState.inactive;
-        dashActionState = actionState.inactive;
         toolActionState = actionState.inactive;
-        dashing = 0;
     }
 
 
@@ -68,14 +69,24 @@ public class Character : MonoBehaviour
             health = healthMax; //reduce their health to the max possible
 
         moveCharacter(movement);
+        if(isJumping)
+        {
+            if(characterRigidbody.velocity.y < 0f)
+            {
+                anim.SetBool("isJumping", false);
+                anim.SetBool("doneJumping", true);
+                isJumping = false;
+            }
+        }
+        
     }
 
 
     protected void moveCharacter(Vector3 direcAndDist) //the input needs to contain both the direction and the distance
     {
         //the raycasting is useful for fast moving objects that the colliders can't deal with
-
-        Ray ray = new Ray(transform.position, direcAndDist); //shoot a ray from current position in direction of travel
+        direcAndDist.y = characterRigidbody.velocity.y;
+        Ray ray = new Ray(characterTransform.position, direcAndDist); //shoot a ray from current position in direction of travel
         RaycastHit hit;
         if (!Physics.Raycast(ray, out hit, (direcAndDist * Time.deltaTime).magnitude)) //if the ray didn't hit anything within the range that we're moving
             characterRigidbody.MovePosition((Vector3)transform.position + direcAndDist * Time.deltaTime); //go ahead and move
@@ -95,6 +106,8 @@ public class Character : MonoBehaviour
     protected virtual void handleJump()
     {
         //do nothing
+        //ordinarily, this is the function that decides when to jumpt
+        //in the player character's case, this isn't really needed since you can just run the jump function when the hotkey is pressed
     }
 
     protected virtual void handleAngle()
@@ -102,9 +115,14 @@ public class Character : MonoBehaviour
         characterTransform.eulerAngles = new Vector3(0, 0, 0); //set no particular angle
     }
 
-    protected virtual void handleWeapons()
+    protected virtual void handleWeapons() //decides when to use weapons
     {
         //do nothing
+    }
+
+    protected virtual void useWeapons() //actually goes and uses the weapon
+    {
+        weaponAccess.useWeapon();
     }
 
 
@@ -115,6 +133,8 @@ public class Character : MonoBehaviour
     }
 
 
+
+    //these three functions determine whether the character may jump
     protected void OnCollisionEnter(Collision collision)
     {
         if (LayerMask.LayerToName(collision.gameObject.layer) == "staticEnvironment")
@@ -125,5 +145,10 @@ public class Character : MonoBehaviour
     {
         if (LayerMask.LayerToName(collision.gameObject.layer) == "staticEnvironment")
             jumpPossible = false;
+    }
+
+    protected virtual bool jumpAllowed()
+    {
+        return jumpPossible;
     }
 }
