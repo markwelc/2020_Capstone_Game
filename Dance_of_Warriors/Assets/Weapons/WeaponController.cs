@@ -4,10 +4,34 @@ using UnityEngine;
 
 public class WeaponController : MonoBehaviour
 {
-    /*[SerializeField] private*/ public Handgun handgun;
+    public Handgun handgun;
+    //public bool handgunActive;
 
-    public virtual void useWeapon()
+    public Stick stick;
+   // public bool stickActive;
+
+    protected string animationName;
+
+    protected virtual void Start()
     {
-        handgun.useWeapon();
+        animationName = null;
+        //handgunActive = false;
+        //stickActive = false;
+    }
+
+    public virtual void useWeapon(string weaponName, out string animation)
+    {
+        switch(weaponName)
+        {
+            case "handgun":
+                handgun.useWeapon((string)null, out animation); //know the name of the gun when the function is running, so no need to pass it
+                break;
+            case "stick":
+                stick.useWeapon((string)null, out animation);
+                break;
+            default:
+                animation = null;
+                break;
+        }
     }
 }

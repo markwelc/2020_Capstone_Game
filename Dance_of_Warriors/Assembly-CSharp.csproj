@@ -64,7 +64,10 @@
      <Compile Include="Assets\Weapons\Guns\Bullet_Handgun.cs" />
      <Compile Include="Assets\Weapons\Guns\Guns.cs" />
      <Compile Include="Assets\Weapons\Guns\Handgun.cs" />
+     <Compile Include="Assets\Weapons\Melee\Melee.cs" />
+     <Compile Include="Assets\Weapons\Melee\Stick.cs" />
      <Compile Include="Assets\Weapons\WeaponController.cs" />
+     <None Include="Assets\Weapons\Melee\how_melee_attack_works.txt" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/2019.4.9f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

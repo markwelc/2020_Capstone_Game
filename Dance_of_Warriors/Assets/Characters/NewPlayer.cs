@@ -103,6 +103,7 @@ public class NewPlayer : Character
 
         base.Start(); //call the regular start function
 
+        equippedWeapon = "stick"; //this is given a default value that I want to override
     }
 
     /**

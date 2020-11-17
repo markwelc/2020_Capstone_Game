@@ -41,6 +41,8 @@ public class Character : MonoBehaviour
     [SerializeField] protected GameObject weaponPrefab;
     protected actionState toolActionState;
 
+    protected string equippedWeapon; //which weapon is currently equipped
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -52,6 +54,8 @@ public class Character : MonoBehaviour
 
         jumpActionState = actionState.inactive;
         toolActionState = actionState.inactive;
+
+        equippedWeapon = null; //by default, don't equip a weapon
     }
 
 
@@ -122,7 +126,11 @@ public class Character : MonoBehaviour
 
     protected virtual void useWeapons() //actually goes and uses the weapon
     {
-        weaponAccess.useWeapon();
+        string animation;
+        weaponAccess.useWeapon(equippedWeapon, out animation); //the first argument will probably be replaced with a default weapon that doesn't exist yet
+
+        if(animation != null)
+            anim.SetTrigger(animation);
     }
 
 

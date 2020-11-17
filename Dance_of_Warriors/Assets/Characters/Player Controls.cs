@@ -59,7 +59,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Change View Mode"",
+                    ""name"": ""ChangeViewMode"",
                     ""type"": ""Button"",
                     ""id"": ""c3f466d9-0397-4e0d-b257-fa369a18c920"",
                     ""expectedControlType"": ""Button"",
@@ -229,7 +229,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Change View Mode"",
+                    ""action"": ""ChangeViewMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -245,7 +245,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_Dash = m_Gameplay.FindAction("Dash", throwIfNotFound: true);
         m_Gameplay_Fire = m_Gameplay.FindAction("Fire", throwIfNotFound: true);
-        m_Gameplay_ChangeViewMode = m_Gameplay.FindAction("Change View Mode", throwIfNotFound: true);
+        m_Gameplay_ChangeViewMode = m_Gameplay.FindAction("ChangeViewMode", throwIfNotFound: true);
     }
 
     public void Dispose()
