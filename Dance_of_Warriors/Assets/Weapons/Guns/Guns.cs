@@ -8,7 +8,7 @@ public class Guns : WeaponController
     /*[SerializeField] private*/ public Transform UserFirepoint;
     private GameObject newBullet;
 
-    public override void useWeapon(string weaponName, out string animation)
+    public override void useWeapon(string weaponName, out string animation, out float[] states)
     {
         Vector3 angle = UserFirepoint.rotation.eulerAngles; //figure out the angle
 
@@ -17,5 +17,7 @@ public class Guns : WeaponController
         newBullet.GetComponent<BulletController>().source = UserFirepoint.transform.parent.parent.GetComponent<Collider>(); //be sure to set the bullets parent
 
         animation = animationName;
+        states = gunStates;
+
     }
 }

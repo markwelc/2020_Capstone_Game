@@ -11,6 +11,9 @@ public class WeaponController : MonoBehaviour
    // public bool stickActive;
 
     protected string animationName;
+    protected float[] gunStates;
+    //create an array to hold four values
+    //in handgun.cs AND stick.cs, set those four values
 
     protected virtual void Start()
     {
@@ -19,15 +22,16 @@ public class WeaponController : MonoBehaviour
         //stickActive = false;
     }
 
-    public virtual void useWeapon(string weaponName, out string animation)
+    public virtual void useWeapon(string weaponName, out string animation, out float[] states)
     {
+        states = new float[4];
         switch(weaponName)
         {
             case "handgun":
-                handgun.useWeapon((string)null, out animation); //know the name of the gun when the function is running, so no need to pass it
+                handgun.useWeapon((string)null, out animation, out states); //know the name of the gun when the function is running, so no need to pass it
                 break;
             case "stick":
-                stick.useWeapon((string)null, out animation);
+                stick.useWeapon((string)null, out animation, out states);
                 break;
             default:
                 animation = null;
