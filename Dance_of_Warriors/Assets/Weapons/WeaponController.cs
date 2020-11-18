@@ -18,7 +18,6 @@ public class WeaponController : MonoBehaviour
     protected virtual void Start()
     {
         animationName = null;
-        gunStates = new float[4];
         //handgunActive = false;
         //stickActive = false;
     }

@@ -106,6 +106,10 @@ public class NewPlayer : Character
         base.Start(); //call the regular start function
 
         equippedWeapon = "handgun"; //this is given a default value that I want to override
+
+        //trying to access the numbers in the states array.
+        //useStates = new float[4];
+        //useStates[0] = ?
     }
 
     /**
