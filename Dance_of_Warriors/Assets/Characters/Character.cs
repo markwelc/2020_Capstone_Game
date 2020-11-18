@@ -13,8 +13,23 @@ public class Character : MonoBehaviour
     protected Collider characterCollider; //the character's collider
     protected Animator anim;
     protected bool isJumping = false;
-    protected float healthMax; //the amount of health that the character can have
+    protected float healthMax = 100f; //the amount of health that the character can have
     protected float health; //the amount of health that the character has
+    // Initialize limbHealth
+    // Each limb has a health variable and bool to determine whether it is usable
+    // Usability reflects what it should do when its been damaged all the way
+    protected float rArmHealth;
+    protected bool rArmUsability;
+    protected float lArmHealth;
+    protected bool lArmUsability;
+    protected float rLegHealth;
+    protected bool rLegUsability;
+    protected float lLegHealth;
+    protected bool lLegUsability;
+    protected float bodyHealth;
+    protected bool bodyUsability;
+    protected float headHealth;
+    protected bool headUsability;
 
     protected float speed;//the default speed of the character
 
@@ -52,7 +67,23 @@ public class Character : MonoBehaviour
 
         jumpActionState = actionState.inactive;
         toolActionState = actionState.inactive;
-    }
+
+        //Initialize limb health
+        // For now just arbitary values for each health attribute
+        // Usability for these cause some case
+        rArmHealth = 40f;
+        rArmUsability = true;
+        lArmHealth = 40f;
+        lArmUsability = true;
+        rLegHealth = 40f;
+        rLegUsability = true;
+        lLegHealth = 40f;
+        lLegUsability = true;
+        bodyHealth = 40f;
+        bodyUsability = true;
+        headHealth = 40f;
+        headUsability = true;
+}
 
 
     // Update is called once per frame
@@ -135,13 +166,13 @@ public class Character : MonoBehaviour
 
 
     //these three functions determine whether the character may jump
-    protected void OnCollisionEnter(Collision collision)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
         if (LayerMask.LayerToName(collision.gameObject.layer) == "staticEnvironment")
             jumpPossible = true;
     }
 
-    protected void OnCollisionExit(Collision collision)
+    protected virtual void OnCollisionExit(Collision collision)
     {
         if (LayerMask.LayerToName(collision.gameObject.layer) == "staticEnvironment")
             jumpPossible = false;
