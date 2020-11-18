@@ -8,5 +8,10 @@ public class Stick : Melee
     {
         animationName = null;
         //stickActive = true;
+        weaponStates = new float[4];
+        weaponStates[0] = 0.0f;
+        weaponStates[1] = 0.0f;
+        weaponStates[2] = 0.0f;
+        weaponStates[3] = 0.0f;
     }
 }
