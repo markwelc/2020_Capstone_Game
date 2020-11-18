@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ public class Guns : WeaponController
 
         animation = animationName;
         states = gunStates;
+        //Debug.Log(states[0]);
 
     }
 }
