@@ -18,6 +18,6 @@ public class Guns : WeaponController
 
         animation = animationName;
         states = gunStates;
-        
+
     }
 }

@@ -127,7 +127,8 @@ public class Character : MonoBehaviour
     protected virtual void useWeapons() //actually goes and uses the weapon
     {
         string animation;
-        weaponAccess.useWeapon(equippedWeapon, out animation); //the first argument will probably be replaced with a default weapon that doesn't exist yet
+        float[] states;
+        weaponAccess.useWeapon(equippedWeapon, out animation, out states); //the first argument will probably be replaced with a default weapon that doesn't exist yet
 
         if(animation != null)
             anim.SetTrigger(animation);
