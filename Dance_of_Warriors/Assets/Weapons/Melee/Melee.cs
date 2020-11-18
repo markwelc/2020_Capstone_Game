@@ -9,10 +9,14 @@ public class Melee : WeaponController
     public Collider user; //the character using this weapon
    // private Transform weaponTransform;
 
-    public override void useWeapon(string weaponName, out string animation)
+    public override void useWeapon(string weaponName, out string animation, out gunStates)
     {
         //weaponTransform = this.GetComponent<Transform>();
         animation = animationName;
-       // weaponTransform.localScale += new Vector3(0, 0.5f, 0);
+        gunStates[0] = 0.0f;
+        gunStates[1] = 0.0f;
+        gunStates[2] = 0.0f;
+        gunStates[3] = 0.0f;
+        // weaponTransform.localScale += new Vector3(0, 0.5f, 0);
     }
 }

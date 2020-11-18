@@ -32,6 +32,7 @@ public class NewPlayer : Character
     protected Vector3 dashVector;//the direction of our dash
     /*[SerializeField]*/
     protected actionState dashActionState;
+    protected float[] useStates;
 
     [SerializeField] private LayerMask playerLayer;
 
@@ -103,7 +104,7 @@ public class NewPlayer : Character
 
         base.Start(); //call the regular start function
 
-        equippedWeapon = "stick"; //this is given a default value that I want to override
+        equippedWeapon = "handgun"; //this is given a default value that I want to override
     }
 
     /**
