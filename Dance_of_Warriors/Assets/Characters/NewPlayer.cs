@@ -34,6 +34,7 @@ public class NewPlayer : Character
     protected actionState dashActionState;
     protected float[] useStates;
 
+
     [SerializeField] private LayerMask playerLayer;
 
     /**

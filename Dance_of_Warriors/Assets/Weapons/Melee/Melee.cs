@@ -9,7 +9,7 @@ public class Melee : WeaponController
     public Collider user; //the character using this weapon
    // private Transform weaponTransform;
 
-    public override void useWeapon(string weaponName, out string animation, out gunStates)
+    public override void useWeapon(string weaponName, out string animation)
     {
         //weaponTransform = this.GetComponent<Transform>();
         animation = animationName;
