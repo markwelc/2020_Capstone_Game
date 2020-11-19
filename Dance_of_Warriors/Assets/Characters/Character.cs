@@ -13,24 +13,7 @@ public class Character : MonoBehaviour
     protected Collider characterCollider; //the character's collider
     protected Animator anim;
     protected bool isJumping = false;
-    protected float healthMax = 100f; //the amount of health that the character can have
-    protected float health; //the amount of health that the character has
-    // Initialize limbHealth
-    // Each limb has a health variable and bool to determine whether it is usable
-    // Usability reflects what it should do when its been damaged all the way
-    protected float rArmHealth;
-    protected bool rArmUsability;
-    protected float lArmHealth;
-    protected bool lArmUsability;
-    protected float rLegHealth;
-    protected bool rLegUsability;
-    protected float lLegHealth;
-    protected bool lLegUsability;
-    protected float bodyHealth;
-    protected bool bodyUsability;
-    protected float headHealth;
-    protected bool headUsability;
-
+    PlayerHealthController playerHealthManager;
     protected float speed;//the default speed of the character
 
     //public float staminaMax; //the max amount of stamina the character can have
@@ -63,41 +46,34 @@ public class Character : MonoBehaviour
         characterRigidbody = this.GetComponent<Rigidbody>(); //get rigidbody
         characterTransform = this.GetComponent<Transform>(); //get transform
         characterCollider = this.GetComponent<Collider>(); //get collider
-        health = healthMax; //set health
 
         jumpActionState = actionState.inactive;
         toolActionState = actionState.inactive;
-
-        //Initialize limb health
-        // For now just arbitary values for each health attribute
-        // Usability for these cause some case
-        rArmHealth = 40f;
-        rArmUsability = true;
-        lArmHealth = 40f;
-        lArmUsability = true;
-        rLegHealth = 40f;
-        rLegUsability = true;
-        lLegHealth = 40f;
-        lLegUsability = true;
-        bodyHealth = 40f;
-        bodyUsability = true;
-        headHealth = 40f;
-        headUsability = true;
-}
+        playerHealthManager = GetComponent<PlayerHealthController>();
+    }
 
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        // This is just to test to see communicationn between scripts
+        // Below is testing to make sure it works, you can check it out if you want
+        /*
+        playerHealthManager.TakeDamage("playerRightArm", 1f);
+        var unusableLimbs = playerHealthManager.getUnusableLimb();
+        for(int i = 0; i < unusableLimbs.Count; i++)
+        {
+            print(unusableLimbs[i]);
+        }
+        
+        var curHealth = playerHealthManager.getHealth();
+        print(curHealth);
+        */
         handleMovement();
         handleJump();
         handleAngle(); //Commented out as it overriding my angle
         handleWeapons();
 
-        if (health <= 0)
-            die();
-        else if (healthMax < health) //if the character has too much health for some reason
-            health = healthMax; //reduce their health to the max possible
 
         moveCharacter(movement);
         if(isJumping)
@@ -155,14 +131,6 @@ public class Character : MonoBehaviour
     {
         weaponAccess.useWeapon();
     }
-
-
-    protected virtual void die()
-    {
-        //this will get a good deal more complicated eventually, but right now it's simple
-        //Destroy(this.gameObject);
-    }
-
 
 
     //these three functions determine whether the character may jump

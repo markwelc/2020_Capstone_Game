@@ -78,7 +78,7 @@ public class NewPlayer : Character
         cameraMain = Camera.main.transform;  //Get our main camera that is to be followed with the rotation
         //define all variables here
         //this might be dumb, not sure
-        healthMax = 10;
+        
         speed = 10;
         jumpForce = 300;
 
