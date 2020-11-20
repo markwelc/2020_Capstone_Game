@@ -25,8 +25,10 @@ public class PlayerHealthController : MonoBehaviour
     protected float headHealth;
     protected bool headUsability;
 
+
     // Start is called before the first frame update
-    protected virtual void Start()
+    // Changed to awake. when initialized in start the first variable was always zero
+    private void Awake()
     {
         InItHealth();
 

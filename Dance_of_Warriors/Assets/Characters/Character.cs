@@ -14,6 +14,7 @@ public class Character : MonoBehaviour
     protected Animator anim;
     protected bool isJumping = false;
     PlayerHealthController playerHealthManager;
+    protected float health;
     protected float speed;//the default speed of the character
 
     //public float staminaMax; //the max amount of stamina the character can have
@@ -39,6 +40,8 @@ public class Character : MonoBehaviour
     [SerializeField] protected GameObject weaponPrefab;
     protected actionState toolActionState;
 
+    protected bool isDead;
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -49,7 +52,10 @@ public class Character : MonoBehaviour
 
         jumpActionState = actionState.inactive;
         toolActionState = actionState.inactive;
-        playerHealthManager = GetComponent<PlayerHealthController>();
+
+        playerHealthManager = gameObject.AddComponent<PlayerHealthController>();
+        health = playerHealthManager.getHealth();
+        isDead = false;
     }
 
 
@@ -65,10 +71,14 @@ public class Character : MonoBehaviour
         {
             print(unusableLimbs[i]);
         }
-        
-        var curHealth = playerHealthManager.getHealth();
-        print(curHealth);
         */
+        health = playerHealthManager.getHealth();
+        
+        if(health <= 0)
+        {
+            isDead = true;
+        }
+
         handleMovement();
         handleJump();
         handleAngle(); //Commented out as it overriding my angle
@@ -91,7 +101,11 @@ public class Character : MonoBehaviour
 
     protected void moveCharacter(Vector3 direcAndDist) //the input needs to contain both the direction and the distance
     {
+
         //the raycasting is useful for fast moving objects that the colliders can't deal with
+        print(isDead);
+        if (isDead)
+            direcAndDist = Vector3.zero;
         direcAndDist.y = characterRigidbody.velocity.y;
         Ray ray = new Ray(characterTransform.position, direcAndDist); //shoot a ray from current position in direction of travel
         RaycastHit hit;
@@ -149,5 +163,10 @@ public class Character : MonoBehaviour
     protected virtual bool jumpAllowed()
     {
         return jumpPossible;
+    }
+
+    public float getHealth()
+    {
+        return health;
     }
 }

@@ -180,11 +180,13 @@ public class NewPlayer : Character
 
         float targetAngleY = cameraMain.transform.rotation.eulerAngles.y;
         float targetAngleX = cameraMain.transform.rotation.eulerAngles.x;
-        if (!useFreeRotation || movement != Vector3.zero)
+        
+        if ((!useFreeRotation || movement != Vector3.zero) && !isDead)
         {
-            characterRigidbody.constraints = RigidbodyConstraints.None; //unfreeze rotation
+            // Removed these constraints for now because they were messing us up
+            //characterRigidbody.constraints = RigidbodyConstraints.None; //unfreeze rotation
             //characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationX; //we always want rotation around x to be frozen
-            characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ; //rotation around the z axis should always be frozen
+            //characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ; //rotation around the z axis should always be frozen
 
             characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, targetAngleY, 0), 15 * Time.fixedDeltaTime); //rotate the whole character to look left and right
 
