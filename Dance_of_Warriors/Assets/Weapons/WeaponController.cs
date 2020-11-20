@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class WeaponController : MonoBehaviour
 {
-    public Handgun handgun;
+    protected Handgun handgun;
     //public bool handgunActive;
 
-    public Stick stick;
+    protected Stick stick;
    // public bool stickActive;
 
     protected string animationName;
@@ -17,6 +17,8 @@ public class WeaponController : MonoBehaviour
 
     protected virtual void Start()
     {
+        handgun = this.GetComponentInChildren<Handgun>();
+        stick = this.GetComponentInChildren<Stick>();
         animationName = null;
         //handgunActive = false;
         //stickActive = false;
@@ -29,17 +31,19 @@ public class WeaponController : MonoBehaviour
         {
             case "handgun":
                 handgun.useWeapon(); //call the useWeapon function that doesn't care about most of the parameters
+                animation = handgun.animationName;
+                states = handgun.weaponStates;
                 break;
             case "stick":
                 stick.useWeapon();
+                animation = stick.animationName;
+                states = stick.weaponStates;
                 break;
             default:
                 animation = null;
+                states = null;
                 break;
         }
-
-        animation = animationName; //these both happen in every function
-        states = weaponStates;
     }
 
 

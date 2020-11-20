@@ -9,6 +9,7 @@ public class Melee : WeaponController
     public Collider user; //the character using this weapon
                           // private Transform weaponTransform;
 
+
     //public override void useWeapon(string weaponName, out string animation, out float[] states)
     //{
     //    //weaponTransform = this.GetComponent<Transform>();
@@ -21,8 +22,6 @@ public class Melee : WeaponController
 
     protected override void useWeapon()
     {
-        //weaponTransform = this.GetComponent<Transform>();
-
-        // weaponTransform.localScale += new Vector3(0, 0.5f, 0);
+        //don't do anything in particular
     }
 }

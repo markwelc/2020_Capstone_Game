@@ -38,10 +38,16 @@ public class Character : MonoBehaviour
     protected actionState jumpActionState; //this may not be needed to restrict jumping, but may be useful in graphics
 
     [SerializeField] protected WeaponController weaponAccess;
-    [SerializeField] protected GameObject weaponPrefab;
+    [SerializeField] protected GameObject weaponsPrefab;
+    protected GameObject gunsPrefab; //this is so that we can access only the guns
+    [SerializeField] protected GameObject gunsParent; //this will be the parent object of the gunsPrefab
+    protected GameObject meleePrefab; 
+    [SerializeField] protected GameObject meleeParent;
+    //[SerializeField] protected GameObject weaponGrip; //stores transform of where we want the weapon to be
     protected actionState toolActionState;
 
-    protected string equippedWeapon; //which weapon is currently equipped
+    [SerializeField] protected string[] availableWeapons;
+    protected int equippedWeapon; //which weapon is currently equipped
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -55,7 +61,18 @@ public class Character : MonoBehaviour
         jumpActionState = actionState.inactive;
         toolActionState = actionState.inactive;
 
-        equippedWeapon = null; //by default, don't equip a weapon
+        gunsPrefab = weaponsPrefab.transform.Find("Guns").gameObject; //get the two prefab elements
+        meleePrefab = weaponsPrefab.transform.Find("Melee").gameObject;
+
+        gunsPrefab.transform.parent = gunsParent.transform; //make it a child of the correct thing
+        Debug.Log("gunsPrefab.transform.parent = " + gunsPrefab.transform.parent);
+        gunsPrefab.transform.position = gunsParent.transform.position;//set the position and the rotation
+        gunsPrefab.transform.rotation = gunsParent.transform.rotation;
+
+        meleePrefab.transform.parent = meleeParent.transform;
+        Debug.Log("meleePrefab.transform.parent = " + meleePrefab.transform.parent);
+        meleePrefab.transform.position = meleeParent.transform.position;
+        meleePrefab.transform.rotation = meleeParent.transform.rotation;
     }
 
 
@@ -128,10 +145,17 @@ public class Character : MonoBehaviour
     {
         string animation;
         float[] states;
-        weaponAccess.useWeapon(equippedWeapon, out animation, out states); //the first argument will probably be replaced with a default weapon that doesn't exist yet
+        weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states); //the first argument will probably be replaced with a default weapon that doesn't exist yet
 
         if(animation != null)
             anim.SetTrigger(animation);
+    }
+
+
+    protected virtual void cycleWeapon()
+    {
+        equippedWeapon++;
+        equippedWeapon = equippedWeapon % availableWeapons.Length;
     }
 
 

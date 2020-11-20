@@ -55,6 +55,7 @@ public class NewPlayer : Character
         controls.Gameplay.Dash.performed += ctx => initiateDash();       //Similar for dashing
         controls.Gameplay.Fire.performed += ctx => useWeapons();
         controls.Gameplay.ChangeViewMode.performed += ctx => changeViewMode();
+        controls.Gameplay.CycleWeapon.performed += ctx => cycleWeapon();
     }
 
     /**
@@ -105,7 +106,7 @@ public class NewPlayer : Character
 
         base.Start(); //call the regular start function
 
-        equippedWeapon = "handgun"; //this is given a default value that I want to override
+        //equippedWeapon = "stick"; //this is given a default value that I want to override
 
         //trying to access the numbers in the states array.
         //useStates = new float[4];
@@ -187,6 +188,7 @@ public class NewPlayer : Character
 
         float targetAngleY = cameraMain.transform.rotation.eulerAngles.y;
         float targetAngleX = cameraMain.transform.rotation.eulerAngles.x;
+        //GameObject gunsPrefab = weaponPrefab.transform.Find("Guns").gameObject; //only rotate the guns, not the melee weapons
         if (!useFreeRotation || movement != Vector3.zero)
         {
             characterRigidbody.constraints = RigidbodyConstraints.None; //unfreeze rotation
@@ -200,13 +202,13 @@ public class NewPlayer : Character
             RaycastHit hit = new RaycastHit();
             if (Physics.Raycast(ray, out hit, 1000f, ~playerLayer)) //the ray hit something, so we aren't looking at empty space
             {
-                Vector3 dirVector = hit.point - weaponPrefab.transform.position; //figure out which direction we should aim in (difference of two vectors)
-                weaponPrefab.transform.rotation = Quaternion.Slerp(weaponPrefab.transform.rotation, Quaternion.LookRotation(dirVector), 15 * Time.fixedDeltaTime);
+                Vector3 dirVector = hit.point - gunsPrefab.transform.position; //figure out which direction we should aim in (difference of two vectors)
+                gunsPrefab.transform.rotation = Quaternion.Slerp(gunsPrefab.transform.rotation, Quaternion.LookRotation(dirVector), 15 * Time.fixedDeltaTime);
                     //aim in that direction
             }
             else //the ray didn't hit anything, so we're looking at empty space
             {
-                weaponPrefab.transform.rotation = Quaternion.Slerp(weaponPrefab.transform.rotation, Quaternion.LookRotation(cameraMain.transform.forward), 15 * Time.fixedDeltaTime);
+                gunsPrefab.transform.rotation = Quaternion.Slerp(gunsPrefab.transform.rotation, Quaternion.LookRotation(cameraMain.transform.forward), 15 * Time.fixedDeltaTime);
                 //just be parallel to the camera
             }
         }
