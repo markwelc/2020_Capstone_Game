@@ -40,7 +40,7 @@ public class Character : MonoBehaviour
     [SerializeField] protected GameObject weaponPrefab;
     protected actionState toolActionState;
 
-    protected bool isDead;
+    protected bool isDead;  // To check if dead so player cant continue to move
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -53,6 +53,9 @@ public class Character : MonoBehaviour
         jumpActionState = actionState.inactive;
         toolActionState = actionState.inactive;
 
+        // Get the characters health
+        // Applies this script to each object using the character class
+        // We can then generate a health bar based on this object by giving the name of the desired object
         playerHealthManager = gameObject.AddComponent<PlayerHealthController>();
         health = playerHealthManager.getHealth();
         isDead = false;
@@ -103,14 +106,15 @@ public class Character : MonoBehaviour
     {
 
         //the raycasting is useful for fast moving objects that the colliders can't deal with
-        print(isDead);
         if (isDead)
             direcAndDist = Vector3.zero;
+
         direcAndDist.y = characterRigidbody.velocity.y;
         Ray ray = new Ray(characterTransform.position, direcAndDist); //shoot a ray from current position in direction of travel
         RaycastHit hit;
         if (!Physics.Raycast(ray, out hit, (direcAndDist * Time.deltaTime).magnitude)) //if the ray didn't hit anything within the range that we're moving
             characterRigidbody.MovePosition((Vector3)transform.position + direcAndDist * Time.deltaTime); //go ahead and move
+        
         else
         {
             characterRigidbody.MovePosition(hit.point);//otherwise, move to where the thing we hit was
@@ -146,9 +150,10 @@ public class Character : MonoBehaviour
         weaponAccess.useWeapon();
     }
 
-
     //these three functions determine whether the character may jump
-    protected virtual void OnCollisionEnter(Collision collision)
+    // Changed to oncollisionstay
+    // Oncollision enter wasn't always accurate and caused issues when on slant
+    protected virtual void OnCollisionStay(Collision collision)
     {
         if (LayerMask.LayerToName(collision.gameObject.layer) == "staticEnvironment")
             jumpPossible = true;
