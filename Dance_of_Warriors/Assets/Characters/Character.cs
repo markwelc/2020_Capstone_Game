@@ -61,18 +61,7 @@ public class Character : MonoBehaviour
         jumpActionState = actionState.inactive;
         toolActionState = actionState.inactive;
 
-        gunsPrefab = weaponsPrefab.transform.Find("Guns").gameObject; //get the two prefab elements
-        meleePrefab = weaponsPrefab.transform.Find("Melee").gameObject;
-
-        gunsPrefab.transform.parent = gunsParent.transform; //make it a child of the correct thing
-        Debug.Log("gunsPrefab.transform.parent = " + gunsPrefab.transform.parent);
-        gunsPrefab.transform.position = gunsParent.transform.position;//set the position and the rotation
-        gunsPrefab.transform.rotation = gunsParent.transform.rotation;
-
-        meleePrefab.transform.parent = meleeParent.transform;
-        Debug.Log("meleePrefab.transform.parent = " + meleePrefab.transform.parent);
-        meleePrefab.transform.position = meleeParent.transform.position;
-        meleePrefab.transform.rotation = meleeParent.transform.rotation;
+        setWeaponParents();
     }
 
 
@@ -148,10 +137,12 @@ public class Character : MonoBehaviour
         weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states); //the first argument will probably be replaced with a default weapon that doesn't exist yet
 
         if(animation != null)
-            anim.SetTrigger(animation);
+            anim.SetTrigger(animation); //start the animation
     }
 
-
+    /*
+     * changes the equipped weapon to the next item in the available weapons array
+     */
     protected virtual void cycleWeapon()
     {
         equippedWeapon++;
@@ -183,5 +174,25 @@ public class Character : MonoBehaviour
     protected virtual bool jumpAllowed()
     {
         return jumpPossible;
+    }
+
+
+    /*
+     * move the Guns and Melee gameObjects that are children of the Weapons gameObject into different places
+     */
+    void setWeaponParents()
+    {
+        gunsPrefab = weaponsPrefab.transform.Find("Guns").gameObject; //get the two prefab elements
+        meleePrefab = weaponsPrefab.transform.Find("Melee").gameObject;
+
+        gunsPrefab.transform.parent = gunsParent.transform; //make it a child of the correct thing
+        Debug.Log("gunsPrefab.transform.parent = " + gunsPrefab.transform.parent);
+        gunsPrefab.transform.position = gunsParent.transform.position;//set the position and the rotation
+        gunsPrefab.transform.rotation = gunsParent.transform.rotation;
+
+        meleePrefab.transform.parent = meleeParent.transform;
+        Debug.Log("meleePrefab.transform.parent = " + meleePrefab.transform.parent);
+        meleePrefab.transform.position = meleeParent.transform.position;
+        meleePrefab.transform.rotation = meleeParent.transform.rotation;
     }
 }
