@@ -22,9 +22,9 @@ public class WeaponController : MonoBehaviour
         //stickActive = false;
     }
 
-    public virtual void useWeapon(string weaponName, out string animation, out float[] states)
+    public virtual void useWeapon(string weaponName, out string animation, out float states)
     {
-        states = new float[4];
+        states = -2.0f;
         switch(weaponName)
         {
             case "handgun":

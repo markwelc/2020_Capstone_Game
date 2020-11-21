@@ -32,7 +32,7 @@ public class NewPlayer : Character
     protected Vector3 dashVector;//the direction of our dash
     /*[SerializeField]*/
     protected actionState dashActionState;
-    protected float[] useStates;
+    
 
 
     [SerializeField] private LayerMask playerLayer;
@@ -106,6 +106,7 @@ public class NewPlayer : Character
         base.Start(); //call the regular start function
 
         equippedWeapon = "handgun"; //this is given a default value that I want to override
+        
     }
 
     /**
@@ -249,6 +250,7 @@ public class NewPlayer : Character
 
             movement *= dashSpeed[(int)dashActionState - 1]; //scales the movement vector
         }
+        Debug.Log("useStates: " + useStates);
     }
 
     private void dashingMovement()

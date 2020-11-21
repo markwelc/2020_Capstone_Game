@@ -15,7 +15,7 @@ public class Character : MonoBehaviour
     protected bool isJumping = false;
     protected float healthMax; //the amount of health that the character can have
     protected float health; //the amount of health that the character has
-
+    protected float useStates; //the status of the character's actions
     protected float speed;//the default speed of the character
 
     //public float staminaMax; //the max amount of stamina the character can have
@@ -56,6 +56,7 @@ public class Character : MonoBehaviour
         toolActionState = actionState.inactive;
 
         equippedWeapon = null; //by default, don't equip a weapon
+        useStates = -1;
     }
 
 
@@ -127,11 +128,14 @@ public class Character : MonoBehaviour
     protected virtual void useWeapons() //actually goes and uses the weapon
     {
         string animation;
-        float[] states;
+        float states;
         weaponAccess.useWeapon(equippedWeapon, out animation, out states); //the first argument will probably be replaced with a default weapon that doesn't exist yet
 
         if(animation != null)
             anim.SetTrigger(animation);
+        useStates = states;
+        //useStates has the array in it now
+        //Debug.Log(useStates);
     }
 
 
