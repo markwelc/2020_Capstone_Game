@@ -13,7 +13,7 @@ public class Character : MonoBehaviour
     protected Collider characterCollider; //the character's collider
     protected Animator anim;
     protected bool isJumping = false;
-    PlayerHealthController playerHealthManager;
+    public PlayerHealthController playerHealthManager;
     protected float health;
     protected float speed;//the default speed of the character
 

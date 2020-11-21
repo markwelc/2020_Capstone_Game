@@ -98,6 +98,7 @@ public class PlayerHealthController : MonoBehaviour
         switch (collisionTag)
         {
             case "playerRightArm":
+                Debug.Log("Hit: playerRightArm");
                 rArmHealth -= attackDamage; // Take thhe damage off of that limbs health
                 if (rArmHealth <= 0)         // Is it still usable?
                 {
@@ -112,6 +113,7 @@ public class PlayerHealthController : MonoBehaviour
 
             // Continue with same style as prior
             case "playerLeftArm":
+                Debug.Log("Hit: playerLeftArm");
                 lArmHealth -= attackDamage;
                 if (lArmHealth <= 0)
                 {
@@ -125,6 +127,7 @@ public class PlayerHealthController : MonoBehaviour
                 break;
 
             case "playerRightLeg":
+                Debug.Log("Hit: playerRightLeg");
                 rLegHealth -= attackDamage;
                 if (rLegHealth <= 0)
                 {
@@ -138,6 +141,7 @@ public class PlayerHealthController : MonoBehaviour
                 break;
 
             case "playerLeftLeg":
+                Debug.Log("Hit: playerLeftLeg");
                 lLegHealth -= attackDamage;
                 if (lLegHealth <= 0)
                 {
@@ -151,6 +155,7 @@ public class PlayerHealthController : MonoBehaviour
                 break;
 
             case "playerBody":
+                Debug.Log("Hit: playerBody");
                 bodyHealth -= attackDamage;
                 if (bodyHealth <= 0)
                 {
