@@ -15,9 +15,10 @@ public class Character : MonoBehaviour
     protected bool isJumping = false;
     protected float healthMax; //the amount of health that the character can have
     protected float health; //the amount of health that the character has
-    protected float useStates; //the status of the character's actions
+    protected int[] toolStates;
     protected float speed;//the default speed of the character
-
+    protected actionState toolActionState;
+    //useStates has the information
     //public float staminaMax; //the max amount of stamina the character can have
     //protected float staminaCur; //the current amount of stamina the 
 
@@ -35,11 +36,11 @@ public class Character : MonoBehaviour
 
     /*[SerializeField]*/ protected float jumpForce; //this is how strongly the character can jump
     protected bool jumpPossible; //determines if the character can currently jump
-    protected actionState jumpActionState; //this may not be needed to restrict jumping, but may be useful in graphics
+    //protected actionState jumpActionState; //this may not be needed to restrict jumping, but may be useful in graphics
 
     [SerializeField] protected WeaponController weaponAccess;
     [SerializeField] protected GameObject weaponPrefab;
-    protected actionState toolActionState;
+    
 
     protected string equippedWeapon; //which weapon is currently equipped
 
@@ -52,11 +53,10 @@ public class Character : MonoBehaviour
         characterCollider = this.GetComponent<Collider>(); //get collider
         health = healthMax; //set health
 
-        jumpActionState = actionState.inactive;
-        toolActionState = actionState.inactive;
+        //jumpActionState = actionState.inactive;
+        //toolActionState = actionState.inactive;
 
         equippedWeapon = null; //by default, don't equip a weapon
-        useStates = -1;
     }
 
 
@@ -128,14 +128,14 @@ public class Character : MonoBehaviour
     protected virtual void useWeapons() //actually goes and uses the weapon
     {
         string animation;
-        float states;
+        int[] states;
         weaponAccess.useWeapon(equippedWeapon, out animation, out states); //the first argument will probably be replaced with a default weapon that doesn't exist yet
 
         if(animation != null)
             anim.SetTrigger(animation);
-        useStates = states;
-        //useStates has the array in it now
-        //Debug.Log(useStates);
+        toolStates = states;
+        //print out the first number in the states array
+        //Debug.Log("States = " + states[0]);
     }
 
 

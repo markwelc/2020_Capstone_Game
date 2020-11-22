@@ -25,6 +25,7 @@ public class NewPlayer : Character
 
     /*[SerializeField]*/
     protected int dashing; //keeps track of where we are in the dash
+    protected int usingTool; //keep track of where we are in the tool use
     /*[SerializeField]*/
     protected int[] dashLength; //lists the number of frames that each of the three phases should be active for
     /*[SerializeField]*/
@@ -32,6 +33,7 @@ public class NewPlayer : Character
     protected Vector3 dashVector;//the direction of our dash
     /*[SerializeField]*/
     protected actionState dashActionState;
+    //moved the below actionstate
     
 
 
@@ -84,6 +86,9 @@ public class NewPlayer : Character
         speed = 10;
         jumpForce = 300;
 
+        toolActionState = actionState.inactive;
+        usingTool = 0;
+
         dashVector = Vector3.zero;
         dashActionState = actionState.inactive;
         dashing = 0;
@@ -106,7 +111,6 @@ public class NewPlayer : Character
         base.Start(); //call the regular start function
 
         equippedWeapon = "handgun"; //this is given a default value that I want to override
-        
     }
 
     /**
@@ -250,7 +254,8 @@ public class NewPlayer : Character
 
             movement *= dashSpeed[(int)dashActionState - 1]; //scales the movement vector
         }
-        Debug.Log("useStates: " + useStates);
+        
+        Debug.Log("States = " + toolStates[3]);
     }
 
     private void dashingMovement()
@@ -309,7 +314,14 @@ public class NewPlayer : Character
         }
     }
 
-   
+   private void initiateTool()
+	{
+        if(toolAllowed())
+		{
+            toolActionState++;
+            usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the value of the first element in toolStates (telegraph length)
+        }
+	}
 
     private void changeViewMode()
     {
@@ -328,6 +340,16 @@ public class NewPlayer : Character
         return false;
     }
 
+    //trying to implement states for the gun
+    protected bool toolAllowed()
+	{
+        bool toolPermits = toolActionState == actionState.inactive;
+        if (toolPermits)
+		{
+            return true;
+		}
+        return false;
+	}
 
     /**
      * we need to override this cause we care about the value of dashActionState
