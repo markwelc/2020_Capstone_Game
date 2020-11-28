@@ -30,6 +30,7 @@ public class NewPlayer : Character
     protected int[] dashLength; //lists the number of frames that each of the three phases should be active for
     /*[SerializeField]*/
     protected float[] dashSpeed; //indicates the speed of the dash
+    protected float[] use;
     protected Vector3 dashVector;//the direction of our dash
     /*[SerializeField]*/
     protected actionState dashActionState;
@@ -55,7 +56,8 @@ public class NewPlayer : Character
 
         controls.Gameplay.Jump.performed += ctx => Jump();      // In jump context call the jump function
         controls.Gameplay.Dash.performed += ctx => initiateDash();       //Similar for dashing
-        controls.Gameplay.Fire.performed += ctx => useWeapons();
+        //controls.Gameplay.Fire.performed += ctx => useWeapons();
+        controls.Gameplay.Fire.performed += ctx => initiateTool();
         controls.Gameplay.ChangeViewMode.performed += ctx => changeViewMode();
     }
 
@@ -92,6 +94,11 @@ public class NewPlayer : Character
         dashVector = Vector3.zero;
         dashActionState = actionState.inactive;
         dashing = 0;
+
+        toolStates[0] = 0;
+        toolStates[1] = 0;
+        toolStates[2] = 0;
+        toolStates[3] = 0;
 
         dashLength = new int[4];
         dashLength[0] = 2; //length of telegraph
@@ -159,7 +166,6 @@ public class NewPlayer : Character
         movement *= speed;  //Move with speed
         anim.SetFloat("speed", move.y, 1f, Time.deltaTime * 10f);
         anim.SetFloat("turn", move.x, 1f, Time.deltaTime * 10f);
-
     }
 
     /**
@@ -233,6 +239,7 @@ public class NewPlayer : Character
         }
     }
 
+
     /**
      * Player attempts to dash, initiate dash telegraph
      */
@@ -255,7 +262,7 @@ public class NewPlayer : Character
             movement *= dashSpeed[(int)dashActionState - 1]; //scales the movement vector
         }
         
-        Debug.Log("States = " + toolStates[3]);
+        //Debug.Log("States = " + toolStates[3]);
     }
 
     private void dashingMovement()
@@ -314,14 +321,81 @@ public class NewPlayer : Character
         }
     }
 
-   private void initiateTool()
+    protected override void handleWeapons()
+    {
+        if (toolActionState != actionState.inactive)
+        {
+            toolUse();
+        }
+        else 
+        {
+            //standardMovement();
+        }
+    }
+
+    private void initiateTool()
 	{
         if(toolAllowed())
 		{
+            //since we are initiating use of a tool, we are now moving to the active state
             toolActionState++;
+            //null exception below?
+            Debug.Log("using tool: " + usingTool);
+            Debug.Log("toolstates: " + toolStates[0]);
             usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the value of the first element in toolStates (telegraph length)
         }
 	}
+
+    private void toolUse()
+	{
+        if (toolActionState == actionState.telegraph && usingTool <= 0) //if we're in the telegraph phase and need to switch
+        {
+            //telegraph
+            toolActionState++; //move to the next state
+            usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the appropriate value
+        }
+        else if (toolActionState == actionState.active && usingTool <= 0) //if we're using a tool and need to recover
+        {
+            //action
+            toolActionState++; //move to the next state
+            usingTool = toolStates[(int)toolActionState - 1]; //set dashing to the appropriate value
+            useWeapons();
+        }
+        else if (toolActionState == actionState.recovery && usingTool <= 0) //if we are recovering and need to go to the cool down
+        {
+            //recovery
+            toolActionState++; //move to the next state
+            usingTool = toolStates[(int)toolActionState - 1]; //set using tool to the appropriate value
+
+            //anim.SetTrigger("doneDashing");
+            //anim.SetBool("isDashing", false);
+
+            toolActionState = actionState.inactive;
+
+            toolActionState = actionState.cooldown;
+            //this swapping of the value of dashActionState is explained in the else
+        }
+        else if (toolActionState == actionState.cooldown && usingTool <= 0)
+        {
+            //cooldown
+            toolActionState = actionState.inactive; //move to the inactive state
+            usingTool = 0; //set usingTool just to be safe and clean
+
+        }
+        else
+        {
+            usingTool--;
+            if (toolActionState == actionState.cooldown)
+            {
+                toolActionState = actionState.inactive;
+
+                toolActionState = actionState.cooldown;
+                //this swapping of dashActionState lets us call handleMovement without having to worry about it calling dashingMovement
+                //handleMovement doesn't care that we're lying about what dashActionState should be
+            }
+        }
+    }
+
 
     private void changeViewMode()
     {
