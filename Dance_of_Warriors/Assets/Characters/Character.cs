@@ -13,9 +13,8 @@ public class Character : MonoBehaviour
     protected Collider characterCollider; //the character's collider
     protected Animator anim;
     protected bool isJumping = false;
-    protected float healthMax; //the amount of health that the character can have
-    protected float health; //the amount of health that the character has
-
+    public PlayerHealthController playerHealthManager;
+    protected float health;
     protected float speed;//the default speed of the character
 
     //public float staminaMax; //the max amount of stamina the character can have
@@ -41,6 +40,8 @@ public class Character : MonoBehaviour
     [SerializeField] protected GameObject weaponPrefab;
     protected actionState toolActionState;
 
+    protected bool isDead;  // To check if dead so player cant continue to move
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -48,25 +49,44 @@ public class Character : MonoBehaviour
         characterRigidbody = this.GetComponent<Rigidbody>(); //get rigidbody
         characterTransform = this.GetComponent<Transform>(); //get transform
         characterCollider = this.GetComponent<Collider>(); //get collider
-        health = healthMax; //set health
 
         jumpActionState = actionState.inactive;
         toolActionState = actionState.inactive;
+
+        // Get the characters health
+        // Applies this script to each object using the character class
+        // We can then generate a health bar based on this object by giving the name of the desired object
+        playerHealthManager = gameObject.AddComponent<PlayerHealthController>();
+        health = playerHealthManager.getHealth();
+        isDead = false;
     }
 
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        // This is just to test to see communicationn between scripts
+        // Below is testing to make sure it works, you can check it out if you want
+        /*
+        playerHealthManager.TakeDamage("playerRightArm", 1f);
+        var unusableLimbs = playerHealthManager.getUnusableLimb();
+        for(int i = 0; i < unusableLimbs.Count; i++)
+        {
+            print(unusableLimbs[i]);
+        }
+        */
+        health = playerHealthManager.getHealth();
+        
+        if(health <= 0)
+        {
+            isDead = true;
+        }
+
         handleMovement();
         handleJump();
         handleAngle(); //Commented out as it overriding my angle
         handleWeapons();
 
-        if (health <= 0)
-            die();
-        else if (healthMax < health) //if the character has too much health for some reason
-            health = healthMax; //reduce their health to the max possible
 
         moveCharacter(movement);
         if(isJumping)
@@ -84,12 +104,17 @@ public class Character : MonoBehaviour
 
     protected void moveCharacter(Vector3 direcAndDist) //the input needs to contain both the direction and the distance
     {
+
         //the raycasting is useful for fast moving objects that the colliders can't deal with
+        if (isDead)
+            direcAndDist = Vector3.zero;
+
         direcAndDist.y = characterRigidbody.velocity.y;
         Ray ray = new Ray(characterTransform.position, direcAndDist); //shoot a ray from current position in direction of travel
         RaycastHit hit;
         if (!Physics.Raycast(ray, out hit, (direcAndDist * Time.deltaTime).magnitude)) //if the ray didn't hit anything within the range that we're moving
             characterRigidbody.MovePosition((Vector3)transform.position + direcAndDist * Time.deltaTime); //go ahead and move
+        
         else
         {
             characterRigidbody.MovePosition(hit.point);//otherwise, move to where the thing we hit was
@@ -125,23 +150,16 @@ public class Character : MonoBehaviour
         weaponAccess.useWeapon();
     }
 
-
-    protected virtual void die()
-    {
-        //this will get a good deal more complicated eventually, but right now it's simple
-        //Destroy(this.gameObject);
-    }
-
-
-
     //these three functions determine whether the character may jump
-    protected void OnCollisionEnter(Collision collision)
+    // Changed to oncollisionstay
+    // Oncollision enter wasn't always accurate and caused issues when on slant
+    protected virtual void OnCollisionStay(Collision collision)
     {
         if (LayerMask.LayerToName(collision.gameObject.layer) == "staticEnvironment")
             jumpPossible = true;
     }
 
-    protected void OnCollisionExit(Collision collision)
+    protected virtual void OnCollisionExit(Collision collision)
     {
         if (LayerMask.LayerToName(collision.gameObject.layer) == "staticEnvironment")
             jumpPossible = false;
@@ -150,5 +168,10 @@ public class Character : MonoBehaviour
     protected virtual bool jumpAllowed()
     {
         return jumpPossible;
+    }
+
+    public float getHealth()
+    {
+        return health;
     }
 }
