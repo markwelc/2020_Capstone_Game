@@ -95,6 +95,7 @@ public class NewPlayer : Character
         dashActionState = actionState.inactive;
         dashing = 0;
 
+        toolStates = new int[4];
         toolStates[0] = 0;
         toolStates[1] = 0;
         toolStates[2] = 0;
