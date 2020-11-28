@@ -16,6 +16,6 @@ public class Handgun : Guns
         gunStates[0] = 2;
         gunStates[1] = 5;
         gunStates[2] = 2;
-        gunStates[3] = 100;
+        gunStates[3] = 15;
     }
 }
