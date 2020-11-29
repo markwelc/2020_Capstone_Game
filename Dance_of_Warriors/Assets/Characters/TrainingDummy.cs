@@ -9,6 +9,8 @@ public class TrainingDummy : Character
     public NavMeshAgent agent;
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer;
+    // public LayerMask whatIsGround = LayerMask.GetMask("staticEnvironment");
+    // public LayerMask whatIsPlayer = LayerMask.GetMask("player");
 
     //patrolling variables
     public Vector3 walkPoint; //finds a point on the map to travel to
@@ -28,6 +30,8 @@ public class TrainingDummy : Character
     {
         player = GameObject.Find("Enemy Knight").transform; //find the position of the player
         agent = GetComponent<NavMeshAgent>(); //initializes the navmesh agent
+        whatIsGround = LayerMask.GetMask("staticEnvironment");
+        whatIsPlayer = LayerMask.GetMask("player");
     }
 
 
@@ -45,8 +49,8 @@ public class TrainingDummy : Character
     private void Update()
     {
         //finds whether the player is within sight range or attack range by checking distance from character
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, LayerMask.GetMask("player"));
+        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, LayerMask.GetMask("player"));
 
         if (!playerInSightRange && !playerInAttackRange) Patrolling(); //if player is not within sight or attack range, patrol
         if (playerInSightRange && !playerInAttackRange) ChasePlayer(); //if player is within sight range, but not attack range, chase the player
@@ -72,10 +76,10 @@ public class TrainingDummy : Character
 
     private void SearchWalkPoint()
     {
+        //Z and X coordinate range for random walkpoint setting
         // float randomZ = Random.Range(-walkPointRange, walkPointRange);
         // float randomX = Random.Range(-walkPointRange, walkPointRange);
 
-        //Z and X coordinate range for random walkpoint setting
         float randomZ = Random.Range(-10, 10);
         float randomX = Random.Range(-10, 10);
 
@@ -83,7 +87,7 @@ public class TrainingDummy : Character
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
         //keeps walkpoint within bounds of the map
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+        if (Physics.Raycast(walkPoint, -transform.up, 2f, LayerMask.GetMask("staticEnvironment")))
             walkPointSet = true;
     }
 
@@ -106,9 +110,9 @@ public class TrainingDummy : Character
         // if character has not already attacked, throw a projectile at them
         if(!alreadyAttacked)
         {
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            // Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            // rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+            // rb.AddForce(transform.up * 8f, ForceMode.Impulse);
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
