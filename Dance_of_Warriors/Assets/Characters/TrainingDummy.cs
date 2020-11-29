@@ -9,8 +9,6 @@ public class TrainingDummy : Character
     public NavMeshAgent agent;
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer;
-    // public LayerMask whatIsGround = LayerMask.GetMask("staticEnvironment");
-    // public LayerMask whatIsPlayer = LayerMask.GetMask("player");
 
     //patrolling variables
     public Vector3 walkPoint; //finds a point on the map to travel to
@@ -49,8 +47,8 @@ public class TrainingDummy : Character
     private void Update()
     {
         //finds whether the player is within sight range or attack range by checking distance from character
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, LayerMask.GetMask("player"));
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, LayerMask.GetMask("player"));
+        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
         if (!playerInSightRange && !playerInAttackRange) Patrolling(); //if player is not within sight or attack range, patrol
         if (playerInSightRange && !playerInAttackRange) ChasePlayer(); //if player is within sight range, but not attack range, chase the player
@@ -87,7 +85,7 @@ public class TrainingDummy : Character
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
         //keeps walkpoint within bounds of the map
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, LayerMask.GetMask("staticEnvironment")))
+        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
             walkPointSet = true;
     }
 
