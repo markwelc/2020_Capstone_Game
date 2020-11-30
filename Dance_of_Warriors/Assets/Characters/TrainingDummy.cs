@@ -30,7 +30,6 @@ public class TrainingDummy : Character
     private void Awake()
     {
         player = GameObject.Find("Enemy Knight").transform; //find the position of the player
-        // agent = GetComponent<NavMeshAgent>(); //initializes the navmesh agent
         whatIsGround = LayerMask.GetMask("staticEnvironment");
         whatIsPlayer = LayerMask.GetMask("player");
     }
@@ -60,13 +59,7 @@ public class TrainingDummy : Character
         }
         else
         {
-            //finds whether the player is within sight range or attack range by checking distance from character
-            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-
-            if (!playerInSightRange && !playerInAttackRange) Patrolling(); //if player is not within sight or attack range, patrol
-            // if (playerInSightRange && !playerInAttackRange) ChasePlayer(); //if player is within sight range, but not attack range, chase the player
-            // if (playerInSightRange && playerInAttackRange) AttackPlayer(); //if player is within both sight and attack range, attack them
+            Patrolling();
         }
     }
 
@@ -104,14 +97,6 @@ public class TrainingDummy : Character
         if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
             walkPointSet = true;
     }
-
-    // //handles chasing the player
-    // private void ChasePlayer()
-    // {
-    //     //sets destination to player's position
-    //     agent.SetDestination(player.position);
-    //     // transform.LookAt(player);
-    // }
 
     // //attack player code
     // private void AttackPlayer()
