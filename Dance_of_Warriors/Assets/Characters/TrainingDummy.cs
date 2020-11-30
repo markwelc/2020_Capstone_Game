@@ -58,14 +58,16 @@ public class TrainingDummy : Character
             agent.SetDestination(target.position);
             transform.LookAt(target.position);
         }
-        
-        //finds whether the player is within sight range or attack range by checking distance from character
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+        else
+        {
+            //finds whether the player is within sight range or attack range by checking distance from character
+            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange) Patrolling(); //if player is not within sight or attack range, patrol
-        // if (playerInSightRange && !playerInAttackRange) ChasePlayer(); //if player is within sight range, but not attack range, chase the player
-        // if (playerInSightRange && playerInAttackRange) AttackPlayer(); //if player is within both sight and attack range, attack them
+            if (!playerInSightRange && !playerInAttackRange) Patrolling(); //if player is not within sight or attack range, patrol
+            // if (playerInSightRange && !playerInAttackRange) ChasePlayer(); //if player is within sight range, but not attack range, chase the player
+            // if (playerInSightRange && playerInAttackRange) AttackPlayer(); //if player is within both sight and attack range, attack them
+        }
     }
 
     private void Patrolling()
