@@ -30,7 +30,7 @@ public class TrainingDummy : Character
 
     private void Awake()
     {
-        player = GameObject.Find("Enemy Knight").transform; //find the position of the player
+        // player = GameObject.Find("Enemy Knight").transform; //find the position of the player
         whatIsGround = LayerMask.GetMask("staticEnvironment");
         whatIsPlayer = LayerMask.GetMask("player");
     }
@@ -59,7 +59,7 @@ public class TrainingDummy : Character
             transform.LookAt(target.position);
             if (distance <= attackRadius)
             {
-                Attack();
+                AttackPlayer();
             }
         }
         else
@@ -103,35 +103,32 @@ public class TrainingDummy : Character
             walkPointSet = true;
     }
 
-    private void Attack()
+    //attack player code
+    private void AttackPlayer()
     {
-        Debug.Log("In range, Attacking player");
+        Debug.Log("Attacking Player");
+        //chase the player
+        agent.SetDestination(transform.position);
+
+        //look at the player so it doesn't look dumb
+        transform.LookAt(target);
+
+        // if character has not already attacked, throw a projectile at them
+        if(!alreadyAttacked)
+        {
+            // Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            // rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+            // rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            alreadyAttacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }
     }
-    // //attack player code
-    // private void AttackPlayer()
-    // {
-    //     //chase the player
-    //     agent.SetDestination(transform.position);
 
-    //     //look at the player so it doesn't look dumb
-    //     transform.LookAt(player);
-
-    //     // if character has not already attacked, throw a projectile at them
-    //     if(!alreadyAttacked)
-    //     {
-    //         // Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-    //         // rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-    //         // rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-    //         alreadyAttacked = true;
-    //         Invoke(nameof(ResetAttack), timeBetweenAttacks);
-    //     }
-    // }
-
-    // // resets the alreadyAttacked variable used in AttackPlayer()
-    // private void ResetAttack()
-    // {
-    //     alreadyAttacked = false;
-    // }
+    // resets the alreadyAttacked variable used in AttackPlayer()
+    private void ResetAttack()
+    {
+        alreadyAttacked = false;
+    }
 
     // //handles taking damage from player
     // public void TakeDamage(int damage)
