@@ -6,8 +6,11 @@ using UnityEngine;
 
 public class TrainingDummy : Character
 {
+    public float lookRadius = 10f;
+
     public NavMeshAgent agent;
     public Transform player;
+    public Transform target;
     public LayerMask whatIsGround, whatIsPlayer;
 
     //patrolling variables
@@ -27,7 +30,7 @@ public class TrainingDummy : Character
     private void Awake()
     {
         player = GameObject.Find("Enemy Knight").transform; //find the position of the player
-        agent = GetComponent<NavMeshAgent>(); //initializes the navmesh agent
+        // agent = GetComponent<NavMeshAgent>(); //initializes the navmesh agent
         whatIsGround = LayerMask.GetMask("staticEnvironment");
         whatIsPlayer = LayerMask.GetMask("player");
     }
@@ -36,9 +39,11 @@ public class TrainingDummy : Character
     // Start is called before the first frame update
     protected override void Start()
     {
-        healthMax = 5;
-        speed = 5;
-        jumpForce = 300;
+        target = PlayerManager.instance.player.transform;
+        agent = GetComponent<NavMeshAgent>();
+        // healthMax = 5;
+        // speed = 5;
+        // jumpForce = 300;
 
         base.Start();
     }
@@ -46,6 +51,14 @@ public class TrainingDummy : Character
     // Update is called once per frame
     private void Update()
     {
+        float distance = Vector3.Distance(target.position, transform.position);
+
+        if (distance <= lookRadius)
+        {
+            agent.SetDestination(target.position);
+            transform.LookAt(target.position);
+        }
+        
         //finds whether the player is within sight range or attack range by checking distance from character
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
