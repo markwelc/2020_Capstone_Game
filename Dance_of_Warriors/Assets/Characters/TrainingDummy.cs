@@ -51,8 +51,8 @@ public class TrainingDummy : Character
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
         if (!playerInSightRange && !playerInAttackRange) Patrolling(); //if player is not within sight or attack range, patrol
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer(); //if player is within sight range, but not attack range, chase the player
-        if (playerInSightRange && playerInAttackRange) AttackPlayer(); //if player is within both sight and attack range, attack them
+        // if (playerInSightRange && !playerInAttackRange) ChasePlayer(); //if player is within sight range, but not attack range, chase the player
+        // if (playerInSightRange && playerInAttackRange) AttackPlayer(); //if player is within both sight and attack range, attack them
     }
 
     private void Patrolling()
@@ -63,6 +63,7 @@ public class TrainingDummy : Character
         //moves the character toward the walkpoint
         if (walkPointSet)
             agent.SetDestination(walkPoint);
+            transform.LookAt(walkPoint);
 
         //keeps track of distance to walkpoint
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -89,102 +90,65 @@ public class TrainingDummy : Character
             walkPointSet = true;
     }
 
-    //handles chasing the player
-    private void ChasePlayer()
-    {
-        //sets destination to player's position
-        agent.SetDestination(player.position);
-    }
-
-    //attack player code
-    private void AttackPlayer()
-    {
-        //chase the player
-        agent.SetDestination(transform.position);
-
-        //look at the player so it doesn't look dumb
-        transform.LookAt(player);
-
-        // if character has not already attacked, throw a projectile at them
-        if(!alreadyAttacked)
-        {
-            // Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            // rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            // rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-            alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
-        }
-    }
-
-    // resets the alreadyAttacked variable used in AttackPlayer()
-    private void ResetAttack()
-    {
-        alreadyAttacked = false;
-    }
-
-    //handles taking damage from player
-    public void TakeDamage(int damage)
-    {
-        //damage health
-        health -= damage;
-
-        //kill character if health == 0
-        if (health <= 0)
-            die();
-        else if (healthMax < health) //if the character has too much health for some reason
-            health = healthMax; //reduce their health to the max possible
-    }
-        // if (health <= 0)
-        //     die();
-        // else if (healthMax < health) //if the character has too much health for some reason
-        //     health = healthMax; //reduce their health to the max possible
-
-        // if(jumpPossible)
-        // {
-        //     if(isJumping)
-        //     {
-        //         anim.SetBool("isJumping", false);
-        //         anim.SetBool("doneJumping", true);
-        //         isJumping = false;
-        //     }
-        // }
+    // //handles chasing the player
+    // private void ChasePlayer()
+    // {
+    //     //sets destination to player's position
+    //     agent.SetDestination(player.position);
+    //     // transform.LookAt(player);
     // }
+
+    // //attack player code
+    // private void AttackPlayer()
+    // {
+    //     //chase the player
+    //     agent.SetDestination(transform.position);
+
+    //     //look at the player so it doesn't look dumb
+    //     transform.LookAt(player);
+
+    //     // if character has not already attacked, throw a projectile at them
+    //     if(!alreadyAttacked)
+    //     {
+    //         // Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+    //         // rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+    //         // rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+    //         alreadyAttacked = true;
+    //         Invoke(nameof(ResetAttack), timeBetweenAttacks);
+    //     }
+    // }
+
+    // // resets the alreadyAttacked variable used in AttackPlayer()
+    // private void ResetAttack()
+    // {
+    //     alreadyAttacked = false;
+    // }
+
+    // //handles taking damage from player
+    // public void TakeDamage(int damage)
+    // {
+    //     //damage health
+    //     health -= damage;
+
+    //     //kill character if health == 0
+    //     if (health <= 0)
+    //         die();
+    //     else if (healthMax < health) //if the character has too much health for some reason
+    //         health = healthMax; //reduce their health to the max possible
+    // }
+    //     // if (health <= 0)
+    //     //     die();
+    //     // else if (healthMax < health) //if the character has too much health for some reason
+    //     //     health = healthMax; //reduce their health to the max possible
+
+    //     // if(jumpPossible)
+    //     // {
+    //     //     if(isJumping)
+    //     //     {
+    //     //         anim.SetBool("isJumping", false);
+    //     //         anim.SetBool("doneJumping", true);
+    //     //         isJumping = false;
+    //     //     }
+    //     // }
+    // // }
 }
-
-// using System.Collections;
-// using System.Collections.Generic;
-// using UnityEngine;
-// using UnityEngine.AI;
-
-// public class TrainingDummy : Character
-// {
-//     Transform playerTransform;
-//     UnityEngine.AI.NavMeshAgent myNav;
-//     public float checkRate = 0.001f;
-//     float nextCheck;
-
-//     protected override void Start()
-//     {
-//         if (GameObject.FindGameObjectWithTag("Enemy").activeInHierarchy)
-//         {
-//             playerTransform = GameObject.FindGameObjectWithTag("Enemy").transform;
-//         }
-
-//         myNav = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
-//     }
-
-//     private void Update()
-//     {
-//         if (Time.time > nextCheck)
-//         {
-//             nextCheck = Time.time + checkRate;
-//             FollowPlayer();
-//         }
-//     }
-
-//     private void FollowPlayer()
-//     {
-//         myNav.transform.LookAt(playerTransform);
-//         myNav.SetDestination(playerTransform.position);
-//     }
-// }
