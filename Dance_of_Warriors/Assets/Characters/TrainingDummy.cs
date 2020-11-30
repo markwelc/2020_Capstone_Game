@@ -7,6 +7,7 @@ using UnityEngine;
 public class TrainingDummy : Character
 {
     public float lookRadius = 10f;
+    public float attackRadius = 4f;
 
     public NavMeshAgent agent;
     public Transform player;
@@ -56,6 +57,10 @@ public class TrainingDummy : Character
         {
             agent.SetDestination(target.position);
             transform.LookAt(target.position);
+            if (distance <= attackRadius)
+            {
+                Attack();
+            }
         }
         else
         {
@@ -98,6 +103,10 @@ public class TrainingDummy : Character
             walkPointSet = true;
     }
 
+    private void Attack()
+    {
+        Debug.Log("In range, Attacking player");
+    }
     // //attack player code
     // private void AttackPlayer()
     // {
