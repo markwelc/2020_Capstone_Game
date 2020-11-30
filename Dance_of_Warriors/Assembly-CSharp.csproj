@@ -2,8 +2,6 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
-    <CscToolPath>C:\Program Files\Unity\Hub\Editor\2019.4.9f1\Editor\Data\Tools\RoslynScripts</CscToolPath>
-    <CscToolExe>unity_csc.bat</CscToolExe>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -67,9 +65,11 @@
   <ItemGroup>
     <Compile Include="Assets\Characters\CameraLook.cs" />
     <Compile Include="Assets\Characters\Character.cs" />
+    <Compile Include="Assets\Characters\EnemyController.cs" />
     <Compile Include="Assets\Characters\NewPlayer.cs" />
     <Compile Include="Assets\Characters\Player Controls.cs" />
     <Compile Include="Assets\Characters\PlayerHealthController.cs" />
+    <Compile Include="Assets\Characters\PlayerManager.cs" />
     <Compile Include="Assets\Characters\TrainingDummy.cs" />
     <Compile Include="Assets\HealthBarManager.cs" />
     <Compile Include="Assets\Weapons\Guns\BulletController.cs" />
@@ -643,10 +643,19 @@
       <HintPath>C:/Users/tremp/Desktop/Capstone Project/2020_Capstone_Game/Dance_of_Warriors/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup></ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="NavMeshComponentsEditor.csproj">
+      <Project>{FCB76C16-7681-A51B-A944-F6160176D1B0}</Project>
+      <Name>NavMeshComponentsEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="NavMeshComponents.csproj">
+      <Project>{9872C728-0223-61A1-075F-AAC55D7D4E63}</Project>
+      <Name>NavMeshComponents</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
