@@ -23,6 +23,8 @@ public class EnemyController : Character
         agent = GetComponent<NavMeshAgent>();
         // whatIsGround = LayerMask.GetMask("staticEnvironment");
         // whatIsPlayer = LayerMask.GetMask("player");
+
+        base.Start();
     }
 
     // Update is called once per frame
