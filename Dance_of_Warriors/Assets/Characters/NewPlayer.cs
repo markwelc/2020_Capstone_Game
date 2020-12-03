@@ -96,10 +96,10 @@ public class NewPlayer : Character
         dashing = 0;
 
         toolStates = new int[4];
-        toolStates[0] = 0;
-        toolStates[1] = 0;
-        toolStates[2] = 0;
-        toolStates[3] = 0;
+        toolStates[0] = 0;  //length of telegraph
+        toolStates[1] = 0;  //length of action
+        toolStates[2] = 0;  //length of recovery
+        toolStates[3] = 0;  //length of tool cooldown
 
         dashLength = new int[4];
         dashLength[0] = 2; //length of telegraph

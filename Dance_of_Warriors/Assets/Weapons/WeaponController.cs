@@ -11,9 +11,10 @@ public class WeaponController : MonoBehaviour
    // public bool stickActive;
 
     protected string animationName;
-    protected int[] gunStates;
+  
     //create an array to hold four values
     //in handgun.cs AND stick.cs, set those four values
+    protected int[] gunStates;
 
     protected virtual void Start()
     {

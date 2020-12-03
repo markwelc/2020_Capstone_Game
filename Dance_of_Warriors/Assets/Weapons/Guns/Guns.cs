@@ -17,9 +17,10 @@ public class Guns : WeaponController
             //the bullet controller takes things from here
         newBullet.GetComponent<BulletController>().source = UserFirepoint.transform.parent.parent.GetComponent<Collider>(); //be sure to set the bullets parent
 
+        //get the animation and states from the tool
         animation = animationName;
         states = gunStates;
-        //Debug.Log(states[0]);
+       
 
     }
 }
