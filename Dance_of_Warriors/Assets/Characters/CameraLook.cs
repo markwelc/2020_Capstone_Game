@@ -10,6 +10,7 @@ public class CameraLook : MonoBehaviour
 {
 
     private CinemachineFreeLook cineCam;
+    private Transform cameraMain;
     PlayerControls controls;
     Vector2 rotate;
     
@@ -24,6 +25,7 @@ public class CameraLook : MonoBehaviour
 
     private void Awake()
     {
+        cameraMain = Camera.main.transform;
         controls = new PlayerControls();
         cineCam = GetComponent<CinemachineFreeLook>();
         // set to initalize look with mouse or right thumbstick
@@ -59,6 +61,32 @@ public class CameraLook : MonoBehaviour
      */
     void RotateCamera()
     {
+        //aim assist starts here
+        Ray ray = new Ray(cameraMain.transform.position, cameraMain.transform.forward);
+        RaycastHit hit = new RaycastHit();
+
+        //determine the sensitivity by looking to see if we can see an enemy or object that we can hit within 100
+        if (Physics.Raycast(ray, out hit, aimFarthestPoint))
+        {
+            if (hit.collider.gameObject.tag == "Enemy" && hit.distance >= aimNearestPoint)
+            {
+                //Debug.Log("Hitting enemy");
+                yLookSensitivity = yAimAssist;
+                xLookSensitivity = xAimAssist;
+            }
+            else
+            {
+                yLookSensitivity = defaultY;
+                xLookSensitivity = defaultX;
+            }
+        }
+        else
+        {
+            //Debug.Log("Hitting world");
+            yLookSensitivity = defaultY;
+            xLookSensitivity = defaultX;
+        }
+
         // get our rotation vector
         Vector2 r = new Vector2(rotate.x, rotate.y);
         
