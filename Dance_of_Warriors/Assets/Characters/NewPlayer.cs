@@ -113,7 +113,7 @@ public class NewPlayer : Character
         dashSpeed[2] = speed; //speed to move while in recovery
         dashSpeed[3] = 0; //this should never be used
 
-        mouseSensitivity = 100;
+        //mouseSensitivity = 100;
         //clampAngle = 60;
 
         base.Start(); //call the regular start function
@@ -192,7 +192,7 @@ public class NewPlayer : Character
         //    characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationY;
         //}
 
-
+        //handle camera rotation
         float targetAngleY = cameraMain.transform.rotation.eulerAngles.y;
         float targetAngleX = cameraMain.transform.rotation.eulerAngles.x;
         if (!useFreeRotation || movement != Vector3.zero)
@@ -210,19 +210,22 @@ public class NewPlayer : Character
             {
                 Vector3 dirVector = hit.point - weaponPrefab.transform.position; //figure out which direction we should aim in (difference of two vectors)
                 weaponPrefab.transform.rotation = Quaternion.Slerp(weaponPrefab.transform.rotation, Quaternion.LookRotation(dirVector), 15 * Time.fixedDeltaTime);
-                    //aim in that direction
+                //mouseSensitivity = 30;
+                //aim in that direction
+                //targetAngleY = cameraMain.transform.rotation.eulerAngles.y / 5;
+                //targetAngleX = cameraMain.transform.rotation.eulerAngles.x / 5;
             }
             else //the ray didn't hit anything, so we're looking at empty space
             {
                 weaponPrefab.transform.rotation = Quaternion.Slerp(weaponPrefab.transform.rotation, Quaternion.LookRotation(cameraMain.transform.forward), 15 * Time.fixedDeltaTime);
                 //just be parallel to the camera
+                //mouseSensitivity = 100;
             }
         }
         else
         {
             characterRigidbody.constraints = RigidbodyConstraints.FreezeRotation; //freeze rotation
         }
-
     }
 
     /**
