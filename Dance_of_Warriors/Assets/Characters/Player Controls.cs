@@ -59,9 +59,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Change View Mode"",
+                    ""name"": ""ChangeViewMode"",
                     ""type"": ""Button"",
                     ""id"": ""c3f466d9-0397-4e0d-b257-fa369a18c920"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""enableInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""52a05c81-c9e6-4fb5-a330-0a5e6d8142f9"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -229,7 +237,18 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Change View Mode"",
+                    ""action"": ""ChangeViewMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2eabe6f7-8201-435e-9f67-a873d0c11352"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""enableInventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -245,7 +264,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_Dash = m_Gameplay.FindAction("Dash", throwIfNotFound: true);
         m_Gameplay_Fire = m_Gameplay.FindAction("Fire", throwIfNotFound: true);
-        m_Gameplay_ChangeViewMode = m_Gameplay.FindAction("Change View Mode", throwIfNotFound: true);
+        m_Gameplay_ChangeViewMode = m_Gameplay.FindAction("ChangeViewMode", throwIfNotFound: true);
+        m_Gameplay_enableInventory = m_Gameplay.FindAction("enableInventory", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -301,6 +321,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Dash;
     private readonly InputAction m_Gameplay_Fire;
     private readonly InputAction m_Gameplay_ChangeViewMode;
+    private readonly InputAction m_Gameplay_enableInventory;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -311,6 +332,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Dash => m_Wrapper.m_Gameplay_Dash;
         public InputAction @Fire => m_Wrapper.m_Gameplay_Fire;
         public InputAction @ChangeViewMode => m_Wrapper.m_Gameplay_ChangeViewMode;
+        public InputAction @enableInventory => m_Wrapper.m_Gameplay_enableInventory;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -338,6 +360,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @ChangeViewMode.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeViewMode;
                 @ChangeViewMode.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeViewMode;
                 @ChangeViewMode.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeViewMode;
+                @enableInventory.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnableInventory;
+                @enableInventory.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnableInventory;
+                @enableInventory.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnableInventory;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -360,6 +385,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @ChangeViewMode.started += instance.OnChangeViewMode;
                 @ChangeViewMode.performed += instance.OnChangeViewMode;
                 @ChangeViewMode.canceled += instance.OnChangeViewMode;
+                @enableInventory.started += instance.OnEnableInventory;
+                @enableInventory.performed += instance.OnEnableInventory;
+                @enableInventory.canceled += instance.OnEnableInventory;
             }
         }
     }
@@ -372,5 +400,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnChangeViewMode(InputAction.CallbackContext context);
+        void OnEnableInventory(InputAction.CallbackContext context);
     }
 }
