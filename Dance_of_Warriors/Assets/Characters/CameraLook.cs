@@ -15,17 +15,11 @@ public class CameraLook : MonoBehaviour
     
     public float yLookSensitivity = 1f;
     public float xLookSensitivity = 1f;
-    public float defaultX = 1f;
-    public float defaultY = 1f;
-    public float xAimAssist = 0.2f;
-    public float yAimAssist = 0.2f;
-    public float aimFarthestPoint = 100f;
-    public float aimNearestPoint = 2f;
-
     private void Awake()
     {
         controls = new PlayerControls();
         cineCam = GetComponent<CinemachineFreeLook>();
+        
         // set to initalize look with mouse or right thumbstick
         controls.Gameplay.Look.performed += ctx => rotate = ctx.ReadValue<Vector2>();
         controls.Gameplay.Look.canceled += ctx => rotate = Vector2.zero;
@@ -61,7 +55,6 @@ public class CameraLook : MonoBehaviour
     {
         // get our rotation vector
         Vector2 r = new Vector2(rotate.x, rotate.y);
-        
         // Rotate with the max angle (200 looks good i think) and the sensitivity in each direction
         cineCam.m_XAxis.Value += r.x * 200 * xLookSensitivity * Time.deltaTime;
         cineCam.m_YAxis.Value += r.y * yLookSensitivity * Time.deltaTime;

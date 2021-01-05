@@ -25,17 +25,14 @@ public class NewPlayer : Character
 
     /*[SerializeField]*/
     protected int dashing; //keeps track of where we are in the dash
-    protected int usingTool; //keep track of where we are in the tool use
     /*[SerializeField]*/
     protected int[] dashLength; //lists the number of frames that each of the three phases should be active for
     /*[SerializeField]*/
     protected float[] dashSpeed; //indicates the speed of the dash
-    protected float[] use;
     protected Vector3 dashVector;//the direction of our dash
     /*[SerializeField]*/
     protected actionState dashActionState;
-    //moved the below actionstate
-    
+    protected float[] useStates;
 
 
     [SerializeField] private LayerMask playerLayer;
@@ -56,9 +53,9 @@ public class NewPlayer : Character
 
         controls.Gameplay.Jump.performed += ctx => Jump();      // In jump context call the jump function
         controls.Gameplay.Dash.performed += ctx => initiateDash();       //Similar for dashing
-        //controls.Gameplay.Fire.performed += ctx => useWeapons();
-        controls.Gameplay.Fire.performed += ctx => initiateTool();
+        controls.Gameplay.Fire.performed += ctx => useWeapons();
         controls.Gameplay.ChangeViewMode.performed += ctx => changeViewMode();
+        controls.Gameplay.CycleWeapon.performed += ctx => cycleWeapon();
     }
 
     /**
@@ -88,18 +85,9 @@ public class NewPlayer : Character
         speed = 10;
         jumpForce = 300;
 
-        toolActionState = actionState.inactive;
-        usingTool = 0;
-
         dashVector = Vector3.zero;
         dashActionState = actionState.inactive;
         dashing = 0;
-
-        toolStates = new int[4];
-        toolStates[0] = 0;  //length of telegraph
-        toolStates[1] = 0;  //length of action
-        toolStates[2] = 0;  //length of recovery
-        toolStates[3] = 0;  //length of tool cooldown
 
         dashLength = new int[4];
         dashLength[0] = 2; //length of telegraph
@@ -113,12 +101,16 @@ public class NewPlayer : Character
         dashSpeed[2] = speed; //speed to move while in recovery
         dashSpeed[3] = 0; //this should never be used
 
-        //mouseSensitivity = 100;
+        mouseSensitivity = 100;
         //clampAngle = 60;
 
         base.Start(); //call the regular start function
 
-        equippedWeapon = "handgun"; //this is given a default value that I want to override
+        //equippedWeapon = "stick"; //this is given a default value that I want to override
+
+        //trying to access the numbers in the states array.
+        //useStates = new float[4];
+        //useStates[0] = ?
     }
 
     /**
@@ -167,6 +159,7 @@ public class NewPlayer : Character
         movement *= speed;  //Move with speed
         anim.SetFloat("speed", move.y, 1f, Time.deltaTime * 10f);
         anim.SetFloat("turn", move.x, 1f, Time.deltaTime * 10f);
+
     }
 
     /**
@@ -192,9 +185,10 @@ public class NewPlayer : Character
         //    characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationY;
         //}
 
-        //handle camera rotation
+
         float targetAngleY = cameraMain.transform.rotation.eulerAngles.y;
         float targetAngleX = cameraMain.transform.rotation.eulerAngles.x;
+        //GameObject gunsPrefab = weaponPrefab.transform.Find("Guns").gameObject; //only rotate the guns, not the melee weapons
         if (!useFreeRotation || movement != Vector3.zero)
         {
             characterRigidbody.constraints = RigidbodyConstraints.None; //unfreeze rotation
@@ -208,24 +202,21 @@ public class NewPlayer : Character
             RaycastHit hit = new RaycastHit();
             if (Physics.Raycast(ray, out hit, 1000f, ~playerLayer)) //the ray hit something, so we aren't looking at empty space
             {
-                Vector3 dirVector = hit.point - weaponPrefab.transform.position; //figure out which direction we should aim in (difference of two vectors)
-                weaponPrefab.transform.rotation = Quaternion.Slerp(weaponPrefab.transform.rotation, Quaternion.LookRotation(dirVector), 15 * Time.fixedDeltaTime);
-                //mouseSensitivity = 30;
-                //aim in that direction
-                //targetAngleY = cameraMain.transform.rotation.eulerAngles.y / 5;
-                //targetAngleX = cameraMain.transform.rotation.eulerAngles.x / 5;
+                Vector3 dirVector = hit.point - gunsPrefab.transform.position; //figure out which direction we should aim in (difference of two vectors)
+                gunsPrefab.transform.rotation = Quaternion.Slerp(gunsPrefab.transform.rotation, Quaternion.LookRotation(dirVector), 15 * Time.fixedDeltaTime);
+                    //aim in that direction
             }
             else //the ray didn't hit anything, so we're looking at empty space
             {
-                weaponPrefab.transform.rotation = Quaternion.Slerp(weaponPrefab.transform.rotation, Quaternion.LookRotation(cameraMain.transform.forward), 15 * Time.fixedDeltaTime);
+                gunsPrefab.transform.rotation = Quaternion.Slerp(gunsPrefab.transform.rotation, Quaternion.LookRotation(cameraMain.transform.forward), 15 * Time.fixedDeltaTime);
                 //just be parallel to the camera
-                //mouseSensitivity = 100;
             }
         }
         else
         {
             characterRigidbody.constraints = RigidbodyConstraints.FreezeRotation; //freeze rotation
         }
+
     }
 
     /**
@@ -242,7 +233,6 @@ public class NewPlayer : Character
             isJumping = true;
         }
     }
-
 
     /**
      * Player attempts to dash, initiate dash telegraph
@@ -265,8 +255,6 @@ public class NewPlayer : Character
 
             movement *= dashSpeed[(int)dashActionState - 1]; //scales the movement vector
         }
-        
-        //Debug.Log("States = " + toolStates[3]);
     }
 
     private void dashingMovement()
@@ -325,81 +313,7 @@ public class NewPlayer : Character
         }
     }
 
-    protected override void handleWeapons()
-    {
-        if (toolActionState != actionState.inactive)
-        {
-            toolUse();
-        }
-        else 
-        {
-            //standardMovement();
-        }
-    }
-
-    private void initiateTool()
-	{
-        if(toolAllowed())
-		{
-            //since we are initiating use of a tool, we are now moving to the active state
-            toolActionState++;
-            //null exception below?
-            Debug.Log("using tool: " + usingTool);
-            Debug.Log("toolstates: " + toolStates[0]);
-            usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the value of the first element in toolStates (telegraph length)
-        }
-	}
-
-    private void toolUse()
-	{
-        if (toolActionState == actionState.telegraph && usingTool <= 0) //if we're in the telegraph phase and need to switch
-        {
-            //telegraph
-            toolActionState++; //move to the next state
-            usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the appropriate value
-        }
-        else if (toolActionState == actionState.active && usingTool <= 0) //if we're using a tool and need to recover
-        {
-            //action
-            toolActionState++; //move to the next state
-            usingTool = toolStates[(int)toolActionState - 1]; //set dashing to the appropriate value
-            useWeapons();
-        }
-        else if (toolActionState == actionState.recovery && usingTool <= 0) //if we are recovering and need to go to the cool down
-        {
-            //recovery
-            toolActionState++; //move to the next state
-            usingTool = toolStates[(int)toolActionState - 1]; //set using tool to the appropriate value
-
-            //anim.SetTrigger("doneDashing");
-            //anim.SetBool("isDashing", false);
-
-            toolActionState = actionState.inactive;
-
-            toolActionState = actionState.cooldown;
-            //this swapping of the value of dashActionState is explained in the else
-        }
-        else if (toolActionState == actionState.cooldown && usingTool <= 0)
-        {
-            //cooldown
-            toolActionState = actionState.inactive; //move to the inactive state
-            usingTool = 0; //set usingTool just to be safe and clean
-
-        }
-        else
-        {
-            usingTool--;
-            if (toolActionState == actionState.cooldown)
-            {
-                toolActionState = actionState.inactive;
-
-                toolActionState = actionState.cooldown;
-                //this swapping of dashActionState lets us call handleMovement without having to worry about it calling dashingMovement
-                //handleMovement doesn't care that we're lying about what dashActionState should be
-            }
-        }
-    }
-
+   
 
     private void changeViewMode()
     {
@@ -418,16 +332,6 @@ public class NewPlayer : Character
         return false;
     }
 
-    //trying to implement states for the gun
-    protected bool toolAllowed()
-	{
-        bool toolPermits = toolActionState == actionState.inactive;
-        if (toolPermits)
-		{
-            return true;
-		}
-        return false;
-	}
 
     /**
      * we need to override this cause we care about the value of dashActionState
