@@ -12,10 +12,10 @@ public class Handgun : Guns
         animationName = null;
         //handgunActive = true;
         //telegraph, action, recovery, cooldown that is passed to the player to determine if/when they can fire
-        weaponStates = new float[4];
-        weaponStates[0] = 0.0f;
-        weaponStates[1] = 0.0f;
-        weaponStates[2] = 0.0f;
-        weaponStates[3] = 0.0f;
+        gunStates = new int[4];
+        gunStates[0] = 2;
+        gunStates[1] = 5;
+        gunStates[2] = 2;
+        gunStates[3] = 15;
     }
 }

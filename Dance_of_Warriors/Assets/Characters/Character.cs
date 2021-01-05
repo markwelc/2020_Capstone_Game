@@ -15,9 +15,10 @@ public class Character : MonoBehaviour
     protected bool isJumping = false;
     protected float healthMax; //the amount of health that the character can have
     protected float health; //the amount of health that the character has
-
+    protected int[] toolStates;
     protected float speed;//the default speed of the character
-
+    protected actionState toolActionState;
+    //useStates has the information
     //public float staminaMax; //the max amount of stamina the character can have
     //protected float staminaCur; //the current amount of stamina the 
 
@@ -35,19 +36,13 @@ public class Character : MonoBehaviour
 
     /*[SerializeField]*/ protected float jumpForce; //this is how strongly the character can jump
     protected bool jumpPossible; //determines if the character can currently jump
-    protected actionState jumpActionState; //this may not be needed to restrict jumping, but may be useful in graphics
+    //protected actionState jumpActionState; //this may not be needed to restrict jumping, but may be useful in graphics
 
     [SerializeField] protected WeaponController weaponAccess;
-    [SerializeField] protected GameObject weaponsPrefab;
-    protected GameObject gunsPrefab; //this is so that we can access only the guns
-    [SerializeField] protected GameObject gunsParent; //this will be the parent object of the gunsPrefab
-    protected GameObject meleePrefab; 
-    [SerializeField] protected GameObject meleeParent;
-    //[SerializeField] protected GameObject weaponGrip; //stores transform of where we want the weapon to be
-    protected actionState toolActionState;
+    [SerializeField] protected GameObject weaponPrefab;
+    
 
-    [SerializeField] protected string[] availableWeapons;
-    protected int equippedWeapon; //which weapon is currently equipped
+    protected string equippedWeapon; //which weapon is currently equipped
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -58,10 +53,10 @@ public class Character : MonoBehaviour
         characterCollider = this.GetComponent<Collider>(); //get collider
         health = healthMax; //set health
 
-        jumpActionState = actionState.inactive;
-        toolActionState = actionState.inactive;
+        //jumpActionState = actionState.inactive;
+        //toolActionState = actionState.inactive;
 
-        setWeaponParents();
+        equippedWeapon = null; //by default, don't equip a weapon
     }
 
 
@@ -133,20 +128,14 @@ public class Character : MonoBehaviour
     protected virtual void useWeapons() //actually goes and uses the weapon
     {
         string animation;
-        float[] states;
-        weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states); //the first argument will probably be replaced with a default weapon that doesn't exist yet
+        int[] states;
+        weaponAccess.useWeapon(equippedWeapon, out animation, out states); //the first argument will probably be replaced with a default weapon that doesn't exist yet
 
         if(animation != null)
-            anim.SetTrigger(animation); //start the animation
-    }
-
-    /*
-     * changes the equipped weapon to the next item in the available weapons array
-     */
-    protected virtual void cycleWeapon()
-    {
-        equippedWeapon++;
-        equippedWeapon = equippedWeapon % availableWeapons.Length;
+            anim.SetTrigger(animation);
+        toolStates = states;
+        //print out the first number in the states array
+        //Debug.Log("States = " + states[0]);
     }
 
 
@@ -174,25 +163,5 @@ public class Character : MonoBehaviour
     protected virtual bool jumpAllowed()
     {
         return jumpPossible;
-    }
-
-
-    /*
-     * move the Guns and Melee gameObjects that are children of the Weapons gameObject into different places
-     */
-    void setWeaponParents()
-    {
-        gunsPrefab = weaponsPrefab.transform.Find("Guns").gameObject; //get the two prefab elements
-        meleePrefab = weaponsPrefab.transform.Find("Melee").gameObject;
-
-        gunsPrefab.transform.parent = gunsParent.transform; //make it a child of the correct thing
-        Debug.Log("gunsPrefab.transform.parent = " + gunsPrefab.transform.parent);
-        gunsPrefab.transform.position = gunsParent.transform.position;//set the position and the rotation
-        gunsPrefab.transform.rotation = gunsParent.transform.rotation;
-
-        meleePrefab.transform.parent = meleeParent.transform;
-        Debug.Log("meleePrefab.transform.parent = " + meleePrefab.transform.parent);
-        meleePrefab.transform.position = meleeParent.transform.position;
-        meleePrefab.transform.rotation = meleeParent.transform.rotation;
     }
 }

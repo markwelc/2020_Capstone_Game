@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,12 +9,18 @@ public class Guns : WeaponController
     /*[SerializeField] private*/ public Transform UserFirepoint;
     private GameObject newBullet;
 
-    protected override void useWeapon()
+    public override void useWeapon(string weaponName, out string animation, out int[] states)
     {
         Vector3 angle = UserFirepoint.rotation.eulerAngles; //figure out the angle
 
         newBullet = Instantiate(bulletPrefab, UserFirepoint.position, Quaternion.Euler(angle)); //make the bullet
             //the bullet controller takes things from here
         newBullet.GetComponent<BulletController>().source = UserFirepoint.transform.parent.parent.GetComponent<Collider>(); //be sure to set the bullets parent
+
+        //get the animation and states from the tool
+        animation = animationName;
+        states = gunStates;
+       
+
     }
 }
