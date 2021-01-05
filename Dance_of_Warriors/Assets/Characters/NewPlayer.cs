@@ -53,7 +53,7 @@ public class NewPlayer : Character
         controls.Gameplay.Move.performed += ctx => move = ctx.ReadValue<Vector2>();
         controls.Gameplay.Move.canceled += ctx => move = Vector2.zero;              //Not moving anymore so set that vector2 to 0
 
-
+        
         controls.Gameplay.Jump.performed += ctx => Jump();      // In jump context call the jump function
         controls.Gameplay.Dash.performed += ctx => initiateDash();       //Similar for dashing
         //controls.Gameplay.Fire.performed += ctx => useWeapons();
@@ -344,8 +344,8 @@ public class NewPlayer : Character
             //since we are initiating use of a tool, we are now moving to the active state
             toolActionState++;
             //null exception below?
-            Debug.Log("using tool: " + usingTool);
-            Debug.Log("toolstates: " + toolStates[0]);
+            //Debug.Log("using tool: " + usingTool);
+            //Debug.Log("toolstates: " + toolStates[0]);
             usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the value of the first element in toolStates (telegraph length)
         }
 	}

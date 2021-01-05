@@ -22,6 +22,8 @@ public class CameraLook : MonoBehaviour
     public float yAimAssist = 0.2f;
     public float aimFarthestPoint = 100f;
     public float aimNearestPoint = 2f;
+    public float VerRecoil = 0;
+    public float HorRecoil = 0;
 
     private void Awake()
     {
@@ -51,10 +53,19 @@ public class CameraLook : MonoBehaviour
     }
 
     // Update is called once per frame
+    //need to add recoil here
     void Update()
     {
+        controls.Gameplay.Fire.performed += ctx => AddRecoil(5, 1);
         RotateCamera();
     }
+
+    //weapon recoil
+    void AddRecoil(float vertical, float horizontal)
+	{
+        VerRecoil += vertical;
+        HorRecoil += horizontal;
+	}
 
     /**
      * Rotate the camera
@@ -68,9 +79,11 @@ public class CameraLook : MonoBehaviour
         //determine the sensitivity by looking to see if we can see an enemy or object that we can hit within 100
         if (Physics.Raycast(ray, out hit, aimFarthestPoint))
         {
-            if (hit.collider.gameObject.tag == "Enemy" && hit.distance >= aimNearestPoint)
+            //hit.transform.gameObject.layer == LayerMask.NameToLayer("enemy")
+            if (hit.collider.gameObject.CompareTag("Enemy") && hit.distance >= aimNearestPoint)
             {
                 //Debug.Log("Hitting enemy");
+                //Debug.DrawLine(cameraMain.transform.position, hit.point, Color.red, 1.f);
                 yLookSensitivity = yAimAssist;
                 xLookSensitivity = xAimAssist;
             }
@@ -91,7 +104,11 @@ public class CameraLook : MonoBehaviour
         Vector2 r = new Vector2(rotate.x, rotate.y);
         
         // Rotate with the max angle (200 looks good i think) and the sensitivity in each direction
-        cineCam.m_XAxis.Value += r.x * 200 * xLookSensitivity * Time.deltaTime;
-        cineCam.m_YAxis.Value += r.y * yLookSensitivity * Time.deltaTime;
+        cineCam.m_XAxis.Value += (r.x + HorRecoil) * 200 * xLookSensitivity * Time.deltaTime;
+        //cineCam.m_XAxis.Value += HorRecoil;
+        cineCam.m_YAxis.Value += (r.y + VerRecoil) * yLookSensitivity * Time.deltaTime;
+        //cineCam.m_YAxis.Value += VerRecoil;
+        VerRecoil = 0;
+        HorRecoil = 0;
     }
 }
