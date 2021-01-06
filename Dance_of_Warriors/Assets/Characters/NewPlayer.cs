@@ -32,6 +32,8 @@ public class NewPlayer : Character
     protected Vector3 dashVector;//the direction of our dash
     /*[SerializeField]*/
     protected actionState dashActionState;
+    protected float[] useStates;
+
 
     [SerializeField] private LayerMask playerLayer;
 
@@ -53,6 +55,7 @@ public class NewPlayer : Character
         controls.Gameplay.Dash.performed += ctx => initiateDash();       //Similar for dashing
         controls.Gameplay.Fire.performed += ctx => useWeapons();
         controls.Gameplay.ChangeViewMode.performed += ctx => changeViewMode();
+        controls.Gameplay.CycleWeapon.performed += ctx => cycleWeapon();
     }
 
     /**
@@ -78,7 +81,7 @@ public class NewPlayer : Character
         cameraMain = Camera.main.transform;  //Get our main camera that is to be followed with the rotation
         //define all variables here
         //this might be dumb, not sure
-        
+
         speed = 10;
         jumpForce = 300;
 
@@ -103,6 +106,11 @@ public class NewPlayer : Character
 
         base.Start(); //call the regular start function
 
+        //equippedWeapon = "stick"; //this is given a default value that I want to override
+
+        //trying to access the numbers in the states array.
+        //useStates = new float[4];
+        //useStates[0] = ?
     }
 
     /**
@@ -134,7 +142,7 @@ public class NewPlayer : Character
     /**
      * Handles player movement in respect to the direction and camera
      * gets our current move location and transforms the players position each frame
-     * 
+     *
      * while this could override something from the Character class, it doesn't really need to because its purpose is to make handleMovement cleaner
      * which, as far as the Character class is concerned, isn't needed
      */
@@ -180,7 +188,7 @@ public class NewPlayer : Character
 
         float targetAngleY = cameraMain.transform.rotation.eulerAngles.y;
         float targetAngleX = cameraMain.transform.rotation.eulerAngles.x;
-        
+
         if ((!useFreeRotation || movement != Vector3.zero) && !isDead)
         {
             // Removed these constraints for now because they were messing us up
@@ -195,13 +203,13 @@ public class NewPlayer : Character
             RaycastHit hit = new RaycastHit();
             if (Physics.Raycast(ray, out hit, 1000f, ~playerLayer)) //the ray hit something, so we aren't looking at empty space
             {
-                Vector3 dirVector = hit.point - weaponPrefab.transform.position; //figure out which direction we should aim in (difference of two vectors)
-                weaponPrefab.transform.rotation = Quaternion.Slerp(weaponPrefab.transform.rotation, Quaternion.LookRotation(dirVector), 15 * Time.fixedDeltaTime);
+                Vector3 dirVector = hit.point - gunsPrefab.transform.position; //figure out which direction we should aim in (difference of two vectors)
+                gunsPrefab.transform.rotation = Quaternion.Slerp(gunsPrefab.transform.rotation, Quaternion.LookRotation(dirVector), 15 * Time.fixedDeltaTime);
                     //aim in that direction
             }
             else //the ray didn't hit anything, so we're looking at empty space
             {
-                weaponPrefab.transform.rotation = Quaternion.Slerp(weaponPrefab.transform.rotation, Quaternion.LookRotation(cameraMain.transform.forward), 15 * Time.fixedDeltaTime);
+                gunsPrefab.transform.rotation = Quaternion.Slerp(gunsPrefab.transform.rotation, Quaternion.LookRotation(cameraMain.transform.forward), 15 * Time.fixedDeltaTime);
                 //just be parallel to the camera
             }
         }
@@ -306,7 +314,7 @@ public class NewPlayer : Character
         }
     }
 
-   
+
 
     private void changeViewMode()
     {

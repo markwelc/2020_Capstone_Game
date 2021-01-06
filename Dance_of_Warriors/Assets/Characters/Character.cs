@@ -19,10 +19,10 @@ public class Character : MonoBehaviour
     protected float speed;//the default speed of the character
 
     //public float staminaMax; //the max amount of stamina the character can have
-    //protected float staminaCur; //the current amount of stamina the 
+    //protected float staminaCur; //the current amount of stamina the
 
-    protected enum actionState 
-    { 
+    protected enum actionState
+    {
         inactive,  //this means that the action is not happening
         telegraph, //this means that the action hasn't started yet, but that will start in a moment and any advanced warning that the action will happen is shown
         active, //this means that the action is happening
@@ -38,10 +38,16 @@ public class Character : MonoBehaviour
     protected actionState jumpActionState; //this may not be needed to restrict jumping, but may be useful in graphics
 
     [SerializeField] protected WeaponController weaponAccess;
-    [SerializeField] protected GameObject weaponPrefab;
+    [SerializeField] protected GameObject weaponsPrefab;
+    protected GameObject gunsPrefab; //this is so that we can access only the guns
+    [SerializeField] protected GameObject gunsParent; //this will be the parent object of the gunsPrefab
+    protected GameObject meleePrefab;
+    [SerializeField] protected GameObject meleeParent;
+    //[SerializeField] protected GameObject weaponGrip; //stores transform of where we want the weapon to be
     protected actionState toolActionState;
-
     protected bool isDead;  // To check if dead so player cant continue to move
+    [SerializeField] protected string[] availableWeapons;
+    protected int equippedWeapon; //which weapon is currently equipped
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -60,6 +66,7 @@ public class Character : MonoBehaviour
         playerHealthManager = gameObject.AddComponent<PlayerHealthController>();
         health = playerHealthManager.getHealth();
         isDead = false;
+        setWeaponParents();
     }
 
 
@@ -77,7 +84,7 @@ public class Character : MonoBehaviour
         }
         */
         health = playerHealthManager.getHealth();
-        
+
         if(health <= 0)
         {
             isDead = true;
@@ -99,7 +106,7 @@ public class Character : MonoBehaviour
                 isJumping = false;
             }
         }
-        
+
     }
 
 
@@ -115,7 +122,7 @@ public class Character : MonoBehaviour
         RaycastHit hit;
         if (!Physics.Raycast(ray, out hit, (direcAndDist * Time.deltaTime).magnitude)) //if the ray didn't hit anything within the range that we're moving
             characterRigidbody.MovePosition((Vector3)transform.position + direcAndDist * Time.deltaTime); //go ahead and move
-        
+
         else
         {
             characterRigidbody.MovePosition(hit.point);//otherwise, move to where the thing we hit was
@@ -148,7 +155,21 @@ public class Character : MonoBehaviour
 
     protected virtual void useWeapons() //actually goes and uses the weapon
     {
-        weaponAccess.useWeapon();
+        string animation;
+        float[] states;
+        weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states); //the first argument will probably be replaced with a default weapon that doesn't exist yet
+
+        if(animation != null)
+            anim.SetTrigger(animation); //start the animation
+    }
+
+    /*
+     * changes the equipped weapon to the next item in the available weapons array
+     */
+    protected virtual void cycleWeapon()
+    {
+        equippedWeapon++;
+        equippedWeapon = equippedWeapon % availableWeapons.Length;
     }
 
     //these three functions determine whether the character may jump
@@ -174,5 +195,24 @@ public class Character : MonoBehaviour
     public float getHealth()
     {
         return health;
+    }
+
+    /*
+     * move the Guns and Melee gameObjects that are children of the Weapons gameObject into different places
+     */
+    void setWeaponParents()
+    {
+        gunsPrefab = weaponsPrefab.transform.Find("Guns").gameObject; //get the two prefab elements
+        meleePrefab = weaponsPrefab.transform.Find("Melee").gameObject;
+
+        gunsPrefab.transform.parent = gunsParent.transform; //make it a child of the correct thing
+        Debug.Log("gunsPrefab.transform.parent = " + gunsPrefab.transform.parent);
+        gunsPrefab.transform.position = gunsParent.transform.position;//set the position and the rotation
+        gunsPrefab.transform.rotation = gunsParent.transform.rotation;
+
+        meleePrefab.transform.parent = meleeParent.transform;
+        Debug.Log("meleePrefab.transform.parent = " + meleePrefab.transform.parent);
+        meleePrefab.transform.position = meleeParent.transform.position;
+        meleePrefab.transform.rotation = meleeParent.transform.rotation;
     }
 }

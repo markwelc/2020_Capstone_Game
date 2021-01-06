@@ -8,7 +8,7 @@ public class Guns : WeaponController
     /*[SerializeField] private*/ public Transform UserFirepoint;
     private GameObject newBullet;
 
-    public override void useWeapon()
+    protected override void useWeapon()
     {
         Vector3 angle = UserFirepoint.rotation.eulerAngles; //figure out the angle
 
