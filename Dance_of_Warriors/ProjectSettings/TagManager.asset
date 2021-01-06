@@ -21,7 +21,7 @@ TagManager:
   - 
   - player
   - playerLimbs
-  - 
+  - enemy
   - 
   - staticEnvironment
   - whatIsGround
