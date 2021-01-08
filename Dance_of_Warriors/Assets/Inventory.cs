@@ -11,7 +11,7 @@ public class Inventory : MonoBehaviour
     private GameObject[] slot;
     public GameObject slotHolder;
     PlayerControls controls;
-    
+
     private void Awake()
     {
 
@@ -49,19 +49,11 @@ public class Inventory : MonoBehaviour
 
     void inventoryButton()
     {
-        Debug.Log("Tab pressed");
         inventoryEnabled = !inventoryEnabled;
     }
 
     void Update()
     {
-        // // if (Input.GetButtonDown(KeyCode.Tab))
-        // if (Input.GetButtonDown("tab"))
-        // {
-        //     Debug.Log("Tab pressed");
-        //     inventoryEnabled = !inventoryEnabled;
-        // }
-
         if (inventoryEnabled == true)
         {
             inventory.SetActive(true);
