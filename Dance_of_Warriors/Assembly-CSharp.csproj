@@ -63,6 +63,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Arena\Example\ImageEffects\Scripts\ScreenSpaceAmbientOcclusion.cs" />
+    <Compile Include="Assets\Arena\Example\ParticleSystems\Scripts\ParticleSystemMultiplier.cs" />
     <Compile Include="Assets\Characters\CameraLook.cs" />
     <Compile Include="Assets\Characters\Character.cs" />
     <Compile Include="Assets\Characters\EnemyController.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="Assets\Weapons\Melee\Stick.cs" />
     <Compile Include="Assets\Weapons\WeaponController.cs" />
     <Compile Include="Assets\damageTester.cs" />
+    <None Include="Assets\Arena\Example\ImageEffects\Shaders\SSAOShader.shader" />
     <None Include="Assets\Weapons\Melee\how_melee_attack_works.txt" />
     <None Include="Assets\Sci-Fi Styled Modular Pack\Readme.txt" />
     <Reference Include="UnityEngine">
