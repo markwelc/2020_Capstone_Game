@@ -17,9 +17,9 @@ MonoBehaviour:
   m_UseItemNameAsDisplayName: 1
   m_DisplayName: New Item
   m_Icon: {fileID: 21300000, guid: 8e7951917d8600344b37859c152053ad, type: 3}
-  m_Prefab: {fileID: 8546610996448420245, guid: 610b16303df42484fa220249d4ad51d7,
+  m_Prefab: {fileID: 2973682002204909468, guid: bf2d6dd43b96ab2458efcf131b8a84ac,
     type: 3}
-  m_Description: 
+  m_Description: An object for testing inventory.
   m_Category: {fileID: 4975264580902160268}
   m_IsSellable: 0
   m_BuyPrice: 0

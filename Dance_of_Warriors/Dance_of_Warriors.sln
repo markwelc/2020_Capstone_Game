@@ -5,17 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavMeshComponents", "NavMes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{7EB32168-D673-1994-420F-3F2C4D32AC5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevionGames.Utilities", "DevionGames.Utilities.csproj", "{FE2EC305-C4AE-1244-52D4-3725382AE9BE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevionGames.UIWidgets", "DevionGames.UIWidgets.csproj", "{8814E674-3191-2D5F-77F2-8C40AEE44DA5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevionGames.Triggers", "DevionGames.Triggers.csproj", "{F40E6C6F-F083-1A5E-280B-7A4BF9DC9CF2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevionGames.InventorySystem", "DevionGames.InventorySystem.csproj", "{9C0DDFF1-7157-EC50-3D24-1DFBD2A19AF7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavMeshComponentsEditor", "NavMeshComponentsEditor.csproj", "{FCB76C16-7681-A51B-A944-F6160176D1B0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{A0DF9BA2-1ECD-0FB0-4BA7-59ED5A941D98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,30 +21,10 @@ Global
 		{7EB32168-D673-1994-420F-3F2C4D32AC5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EB32168-D673-1994-420F-3F2C4D32AC5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EB32168-D673-1994-420F-3F2C4D32AC5A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FE2EC305-C4AE-1244-52D4-3725382AE9BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE2EC305-C4AE-1244-52D4-3725382AE9BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE2EC305-C4AE-1244-52D4-3725382AE9BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE2EC305-C4AE-1244-52D4-3725382AE9BE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8814E674-3191-2D5F-77F2-8C40AEE44DA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8814E674-3191-2D5F-77F2-8C40AEE44DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8814E674-3191-2D5F-77F2-8C40AEE44DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8814E674-3191-2D5F-77F2-8C40AEE44DA5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F40E6C6F-F083-1A5E-280B-7A4BF9DC9CF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F40E6C6F-F083-1A5E-280B-7A4BF9DC9CF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F40E6C6F-F083-1A5E-280B-7A4BF9DC9CF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F40E6C6F-F083-1A5E-280B-7A4BF9DC9CF2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9C0DDFF1-7157-EC50-3D24-1DFBD2A19AF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C0DDFF1-7157-EC50-3D24-1DFBD2A19AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C0DDFF1-7157-EC50-3D24-1DFBD2A19AF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C0DDFF1-7157-EC50-3D24-1DFBD2A19AF7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FCB76C16-7681-A51B-A944-F6160176D1B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FCB76C16-7681-A51B-A944-F6160176D1B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCB76C16-7681-A51B-A944-F6160176D1B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCB76C16-7681-A51B-A944-F6160176D1B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A0DF9BA2-1ECD-0FB0-4BA7-59ED5A941D98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0DF9BA2-1ECD-0FB0-4BA7-59ED5A941D98}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0DF9BA2-1ECD-0FB0-4BA7-59ED5A941D98}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0DF9BA2-1ECD-0FB0-4BA7-59ED5A941D98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
