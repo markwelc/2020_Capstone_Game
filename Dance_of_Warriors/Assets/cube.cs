@@ -24,6 +24,7 @@ public class Cube : MonoBehaviour, IInventoryItem
 
     public void OnPickup()
     {
+        Debug.Log("Cube picked up");
         gameObject.SetActive(false);
     }
 }
