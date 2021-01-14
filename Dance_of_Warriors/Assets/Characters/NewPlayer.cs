@@ -19,6 +19,9 @@ public class NewPlayer : Character
     //Vector3 moveWithCamera;
     //float turnSmoothVelocity;
 
+    //keeps track of the player's inventory
+    public Inventory inventory;
+
     [SerializeField] private Vector3 lookOffset; //this is subtracted from camera position and then the character always looks in the direction from this point to itself
     [SerializeField] private float smoother; //this will slow down the speed at which the player looks toward where the camera's looking (the lower the value, the slower the movement)
     [SerializeField] private bool useFreeRotation;
@@ -339,4 +342,16 @@ public class NewPlayer : Character
 
         return false;
     }
+    
+    //adds an item to the player's inventory when the player walks over it, will be changed later
+    //item must have a script attached to it that extends IInventoryItem, making it an interactable object
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        IInventoryItem item = hit.collider.GetComponent<IInventoryItem>();
+        if (item != null)
+        {
+            inventory.AddItem(item);
+        }
+    }
 }
+
