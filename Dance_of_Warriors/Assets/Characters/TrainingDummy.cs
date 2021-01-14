@@ -116,7 +116,8 @@ public class TrainingDummy : Character
         // if character has not already attacked, throw a projectile at them
         if(!alreadyAttacked)
         {
-            useWeapons();
+            if(weaponAccess != null)
+                useWeapons();
             // Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
             // rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
             // rb.AddForce(transform.up * 8f, ForceMode.Impulse);

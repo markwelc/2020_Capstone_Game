@@ -544,18 +544,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 2.0237799
   m_Center: {x: 0, y: 2.0237799, z: 2.09}
---- !u!114 &233750611 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7671907348698369239, guid: 8083b00bb56ddab46925d2fa6ed58e8d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1163662780}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c013f111d5ad0e54a8b075484b6f89c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &316282871
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2362,7 +2350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealthManager: {fileID: 0}
-  weaponAccess: {fileID: 233750611}
+  weaponAccess: {fileID: 0}
   weaponsPrefab: {fileID: 958512280}
   gunsParent: {fileID: 956228524}
   meleeParent: {fileID: 32655960}
