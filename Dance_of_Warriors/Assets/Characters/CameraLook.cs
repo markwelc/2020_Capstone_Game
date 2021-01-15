@@ -10,11 +10,12 @@ public class CameraLook : MonoBehaviour
 {
 
     private CinemachineFreeLook cineCam;
+    public CinemachineImpulseSource ImpulseSource;
     private Transform cameraMain, Reticle;
 
     PlayerControls controls;
     Vector2 rotate;
-    public GameObject reticle;
+    public GameObject reticle, gun;
     
 
     public float yLookSensitivity = 1f;
@@ -25,8 +26,7 @@ public class CameraLook : MonoBehaviour
     public float yAimAssist = 0.2f;
     public float aimFarthestPoint = 100f;
     public float aimNearestPoint = 2f;
-    public float VerRecoil = 0;
-    public float HorRecoil = 0;
+    
 
     private void Awake()
     {
@@ -61,16 +61,15 @@ public class CameraLook : MonoBehaviour
     //need to add recoil here
     void Update()
     {
-        controls.Gameplay.Fire.performed += ctx => AddRecoil(5, 1);
+        controls.Gameplay.Fire.performed += ctx => AddRecoil();
         RotateCamera();
     }
 
     //weapon recoil
-    void AddRecoil(float vertical, float horizontal)
+    void AddRecoil()
 	{
-        VerRecoil += vertical;
-        HorRecoil += horizontal;
-	}
+        ImpulseSource.GenerateImpulse(Camera.main.transform.up);
+    }
 
     /**
      * Rotate the camera
@@ -114,12 +113,7 @@ public class CameraLook : MonoBehaviour
         Vector2 r = new Vector2(rotate.x, rotate.y);
 
         // Rotate with the max angle (200 looks good i think) and the sensitivity in each direction
-        //cineCam.m_XAxis.Value += HorRecoil;
         cineCam.m_XAxis.Value += r.x * 200 * xLookSensitivity * Time.deltaTime;
-        //cineCam.m_YAxis.Value += VerRecoil;
         cineCam.m_YAxis.Value += r.y * yLookSensitivity * Time.deltaTime;
-        
-        VerRecoil = 0;
-        HorRecoil = 0;
     }
 }
