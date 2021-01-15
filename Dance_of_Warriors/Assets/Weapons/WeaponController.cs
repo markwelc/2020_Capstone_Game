@@ -6,10 +6,10 @@ public class WeaponController : MonoBehaviour
 {
     public Handgun handgun;
     //public bool handgunActive;
-
+    //public CameraLook camera;
     public Stick stick;
-   // public bool stickActive;
-
+    // public bool stickActive;
+    
     protected string animationName;
     protected int ammo;
     //create an array to hold four values

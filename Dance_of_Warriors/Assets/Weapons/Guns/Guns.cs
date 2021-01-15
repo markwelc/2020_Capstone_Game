@@ -1,7 +1,9 @@
-﻿using System;
+﻿//using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+
 
 public class Guns : WeaponController
 {
@@ -10,6 +12,10 @@ public class Guns : WeaponController
     private GameObject newBullet;
     protected int bulletsLeft = -1;
     protected bool reloading = false;
+    private GameObject mine;
+    protected CameraLook myC;
+
+
     //add limited magazines?
 
     public override void useWeapon(string weaponName, out string animation, out int[] states)
@@ -41,10 +47,12 @@ public class Guns : WeaponController
     
     IEnumerator Reload()
 	{
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(3.0f);
         bulletsLeft = ammo;
         reloading = false;
     }
+
+    
 
     void shoot()
 	{
@@ -55,5 +63,8 @@ public class Guns : WeaponController
         newBullet = Instantiate(bulletPrefab, UserFirepoint.position, Quaternion.Euler(angle)); //make the bullet
                                                                                                 //the bullet controller takes things from here
         newBullet.GetComponent<BulletController>().source = UserFirepoint.transform.parent.parent.GetComponent<Collider>(); //be sure to set the bullets parent
+        mine = GameObject.Find("Third Person Camera");
+        myC = mine.GetComponent<CameraLook>();
+        myC.AddRecoil();
     }
 }

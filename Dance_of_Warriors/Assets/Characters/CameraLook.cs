@@ -9,7 +9,7 @@ using UnityEditor;
 public class CameraLook : MonoBehaviour
 {
 
-    private CinemachineFreeLook cineCam;
+    public CinemachineFreeLook cineCam;
     public CinemachineImpulseSource ImpulseSource;
     private Transform cameraMain, Reticle;
 
@@ -61,14 +61,15 @@ public class CameraLook : MonoBehaviour
     //need to add recoil here
     void Update()
     {
-        controls.Gameplay.Fire.performed += ctx => AddRecoil();
+        //controls.Gameplay.Fire.performed += ctx => AddRecoil();
         RotateCamera();
     }
 
     //weapon recoil
-    void AddRecoil()
+    public void AddRecoil()
 	{
         ImpulseSource.GenerateImpulse(Camera.main.transform.up);
+        Debug.Log("impulse!");
     }
 
     /**
