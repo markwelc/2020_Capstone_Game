@@ -44,7 +44,7 @@ public class BulletController : MonoBehaviour
     {
         if (source != col)
             Destroy(this.gameObject);
-        Debug.Log("source = " + source);
-        Debug.Log("col = =" + col);
+        //Debug.Log("source = " + source);
+        //Debug.Log("col = =" + col);
     }
 }
