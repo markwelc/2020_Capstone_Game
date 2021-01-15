@@ -10,10 +10,13 @@ public class CameraLook : MonoBehaviour
 {
 
     private CinemachineFreeLook cineCam;
-    private Transform cameraMain;
+    private Transform cameraMain, Reticle;
+
     PlayerControls controls;
     Vector2 rotate;
+    public GameObject reticle;
     
+
     public float yLookSensitivity = 1f;
     public float xLookSensitivity = 1f;
     public float defaultX = 1f;
@@ -28,6 +31,8 @@ public class CameraLook : MonoBehaviour
     private void Awake()
     {
         cameraMain = Camera.main.transform;
+        reticle = GameObject.Find("/Main Camera/Reticle");
+        Reticle = reticle.transform;
         controls = new PlayerControls();
         cineCam = GetComponent<CinemachineFreeLook>();
         // set to initalize look with mouse or right thumbstick
@@ -73,17 +78,22 @@ public class CameraLook : MonoBehaviour
     void RotateCamera()
     {
         //aim assist starts here
+
+        //Ray ray = new Ray(Reticle.transform.position, Reticle.transform.forward);
         Ray ray = new Ray(cameraMain.transform.position, cameraMain.transform.forward);
         RaycastHit hit = new RaycastHit();
+        //drawing the ray from the reticle generates an incorrect angle due to the fact that the reticle is in front of the player in the game world.
+        //Debug.DrawRay(Reticle.transform.position, Reticle.transform.forward * 10, Color.red, 1);
+        //Debug.DrawRay(cameraMain.transform.position, cameraMain.transform.forward * 10, Color.red, 0.5f);
+
 
         //determine the sensitivity by looking to see if we can see an enemy or object that we can hit within 100
         if (Physics.Raycast(ray, out hit, aimFarthestPoint))
         {
-            //hit.transform.gameObject.layer == LayerMask.NameToLayer("enemy")
+            //making the knight continuous solves aim assist issue
             if (hit.collider.gameObject.CompareTag("Enemy") && hit.distance >= aimNearestPoint)
             {
                 //Debug.Log("Hitting enemy");
-                //Debug.DrawLine(cameraMain.transform.position, hit.point, Color.red, 1.f);
                 yLookSensitivity = yAimAssist;
                 xLookSensitivity = xAimAssist;
             }
@@ -102,12 +112,13 @@ public class CameraLook : MonoBehaviour
 
         // get our rotation vector
         Vector2 r = new Vector2(rotate.x, rotate.y);
-        
+
         // Rotate with the max angle (200 looks good i think) and the sensitivity in each direction
-        cineCam.m_XAxis.Value += (r.x + HorRecoil) * 200 * xLookSensitivity * Time.deltaTime;
         //cineCam.m_XAxis.Value += HorRecoil;
-        cineCam.m_YAxis.Value += (r.y + VerRecoil) * yLookSensitivity * Time.deltaTime;
+        cineCam.m_XAxis.Value += r.x * 200 * xLookSensitivity * Time.deltaTime;
         //cineCam.m_YAxis.Value += VerRecoil;
+        cineCam.m_YAxis.Value += r.y * yLookSensitivity * Time.deltaTime;
+        
         VerRecoil = 0;
         HorRecoil = 0;
     }
