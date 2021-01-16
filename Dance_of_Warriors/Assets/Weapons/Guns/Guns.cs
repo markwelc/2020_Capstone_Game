@@ -20,7 +20,8 @@ public class Guns : WeaponController
 
     public override void useWeapon(string weaponName, out string animation, out int[] states)
     {
-        if(bulletsLeft == -1)
+        Debug.Log("shoot");
+        if (bulletsLeft == -1)
 		{
             //set the correct number of bullets in the magazine depending on which gun is being used
             bulletsLeft = ammo;
@@ -56,6 +57,7 @@ public class Guns : WeaponController
 
     void shoot()
 	{
+        
         bulletsLeft--;
         //Debug.Log("bullets left: " + bulletsLeft);
         Vector3 angle = UserFirepoint.rotation.eulerAngles; //figure out the angle

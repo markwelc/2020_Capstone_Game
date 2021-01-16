@@ -32,7 +32,7 @@ public class WeaponController : MonoBehaviour
         switch(weaponName)
         {
             case "handgun":
-                handgun.useWeapon(); //call the useWeapon function that doesn't care about most of the parameters
+                handgun.useWeapon((string)null, out animation, out states); //know th
                 animation = handgun.animationName;
                 states = handgun.weaponStates;
                 break;

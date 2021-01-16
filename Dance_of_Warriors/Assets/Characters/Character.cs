@@ -156,6 +156,7 @@ public class Character : MonoBehaviour
 
     protected virtual void useWeapons() //actually goes and uses the weapon
     {
+        Debug.Log("shoot " + availableWeapons[equippedWeapon]);
         string animation;
         int[] states;
         weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states); //the first argument will probably be replaced with a default weapon that doesn't exist yet
