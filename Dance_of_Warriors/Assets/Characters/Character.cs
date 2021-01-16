@@ -215,6 +215,11 @@ public class Character : MonoBehaviour
         gunsPrefab.transform.position = gunsParent.transform.position;//set the position and the rotation
         gunsPrefab.transform.rotation = gunsParent.transform.rotation;
 
+        foreach(Collider weaponCollider in meleePrefab.GetComponentsInChildren<Collider>())
+        {
+            Physics.IgnoreCollision(weaponCollider, characterCollider);
+        }
+
         meleePrefab.transform.parent = meleeParent.transform;
         Debug.Log("meleePrefab.transform.parent = " + meleePrefab.transform.parent);
         meleePrefab.transform.position = meleeParent.transform.position;
