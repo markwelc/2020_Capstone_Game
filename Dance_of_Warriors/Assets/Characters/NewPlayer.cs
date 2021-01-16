@@ -33,7 +33,7 @@ public class NewPlayer : Character
     /*[SerializeField]*/
     protected actionState dashActionState;
     protected float[] useStates;
-
+    protected int usingTool; //keep track of where we are in the tool use
 
     [SerializeField] private LayerMask playerLayer;
 
@@ -84,7 +84,15 @@ public class NewPlayer : Character
 
         speed = 10;
         jumpForce = 300;
-
+        // Tool Added stuff
+        toolActionState = actionState.inactive;
+        usingTool = 0;
+        toolStates = new int[4];
+        toolStates[0] = 0;  //length of telegraph
+        toolStates[1] = 0;  //length of action
+        toolStates[2] = 0;  //length of recovery
+        toolStates[3] = 0;  //length of tool cooldown
+        // End tools
         dashVector = Vector3.zero;
         dashActionState = actionState.inactive;
         dashing = 0;
@@ -106,7 +114,7 @@ public class NewPlayer : Character
 
         base.Start(); //call the regular start function
 
-        //equippedWeapon = "stick"; //this is given a default value that I want to override
+        equippedWeapon = 0; //this is given a default value that I want to override
 
         //trying to access the numbers in the states array.
         //useStates = new float[4];
@@ -407,6 +415,16 @@ public class NewPlayer : Character
         return false;
     }
 
+    //trying to implement states for the gun
+    protected bool toolAllowed()
+    {
+        bool toolPermits = toolActionState == actionState.inactive;
+        if (toolPermits)
+        {
+            return true;
+        }
+        return false;
+    }
 
     /**
      * we need to override this cause we care about the value of dashActionState

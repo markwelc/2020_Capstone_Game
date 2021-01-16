@@ -45,6 +45,7 @@ public class Character : MonoBehaviour
     [SerializeField] protected GameObject meleeParent;
     //[SerializeField] protected GameObject weaponGrip; //stores transform of where we want the weapon to be
     protected actionState toolActionState;
+    protected int[] toolStates;
     protected bool isDead;  // To check if dead so player cant continue to move
     [SerializeField] protected string[] availableWeapons;
     protected int equippedWeapon; //which weapon is currently equipped
@@ -161,6 +162,7 @@ public class Character : MonoBehaviour
 
         if(animation != null)
             anim.SetTrigger(animation); //start the animation
+        toolStates = states;
     }
 
     /*

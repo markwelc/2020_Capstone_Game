@@ -42,7 +42,7 @@ public class Guns : WeaponController
         }
         //get the animation and states from the tool
         animation = animationName;
-        states = gunStates;
+        states = weaponStates;
     }
 
     IEnumerator Reload()

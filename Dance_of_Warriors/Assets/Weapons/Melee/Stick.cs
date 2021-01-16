@@ -8,10 +8,10 @@ public class Stick : Melee
     {
         animationName = "standard_stick_attack";
         //stickActive = true;
-        weaponStates = new float[4];
-        weaponStates[0] = 0.0f;
-        weaponStates[1] = 0.0f;
-        weaponStates[2] = 0.0f;
-        weaponStates[3] = 0.0f;
+        weaponStates = new int[4];
+        weaponStates[0] = 0;
+        weaponStates[1] = 0;
+        weaponStates[2] = 0;
+        weaponStates[3] = 0;
     }
 }
