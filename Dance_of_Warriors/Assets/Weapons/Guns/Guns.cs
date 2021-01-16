@@ -20,7 +20,7 @@ public class Guns : WeaponController
 
     public override void useWeapon(string weaponName, out string animation, out int[] states)
     {
-        Debug.Log("shoot");
+
         if (bulletsLeft == -1)
 		{
             //set the correct number of bullets in the magazine depending on which gun is being used

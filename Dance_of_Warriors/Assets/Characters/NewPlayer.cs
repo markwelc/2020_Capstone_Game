@@ -32,7 +32,7 @@ public class NewPlayer : Character
     protected Vector3 dashVector;//the direction of our dash
     /*[SerializeField]*/
     protected actionState dashActionState;
-    protected float[] useStates;
+    protected float[] use;
     protected int usingTool; //keep track of where we are in the tool use
 
     [SerializeField] private LayerMask playerLayer;
@@ -53,7 +53,8 @@ public class NewPlayer : Character
 
         controls.Gameplay.Jump.performed += ctx => Jump();      // In jump context call the jump function
         controls.Gameplay.Dash.performed += ctx => initiateDash();       //Similar for dashing
-        controls.Gameplay.Fire.performed += ctx => useWeapons();
+        //controls.Gameplay.Fire.performed += ctx => useWeapons();
+        controls.Gameplay.Fire.performed += ctx => initiateTool();
         controls.Gameplay.ChangeViewMode.performed += ctx => changeViewMode();
         controls.Gameplay.CycleWeapon.performed += ctx => cycleWeapon();
     }

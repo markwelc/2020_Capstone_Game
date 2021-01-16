@@ -59,7 +59,7 @@ public class Character : MonoBehaviour
         characterCollider = this.GetComponent<Collider>(); //get collider
 
         jumpActionState = actionState.inactive;
-        toolActionState = actionState.inactive;
+        //toolActionState = actionState.inactive;
 
         // Get the characters health
         // Applies this script to each object using the character class
@@ -68,6 +68,7 @@ public class Character : MonoBehaviour
         health = playerHealthManager.getHealth();
         isDead = false;
         setWeaponParents();
+       
     }
 
 
@@ -156,7 +157,7 @@ public class Character : MonoBehaviour
 
     protected virtual void useWeapons() //actually goes and uses the weapon
     {
-        Debug.Log("shoot " + availableWeapons[equippedWeapon]);
+        
         string animation;
         int[] states;
         weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states); //the first argument will probably be replaced with a default weapon that doesn't exist yet
@@ -164,6 +165,7 @@ public class Character : MonoBehaviour
         if(animation != null)
             anim.SetTrigger(animation); //start the animation
         toolStates = states;
+        
     }
 
     /*
