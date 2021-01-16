@@ -68,7 +68,7 @@ public class CameraLook : MonoBehaviour
     //weapon recoil
     public void AddRecoil()
 	{
-        //ImpulseSource.GenerateImpulse(Camera.main.transform.up);
+        ImpulseSource.GenerateImpulse(Camera.main.transform.up);
         Debug.Log("impulse!");
     }
 

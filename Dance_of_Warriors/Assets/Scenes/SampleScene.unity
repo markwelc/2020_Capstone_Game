@@ -370,6 +370,7 @@ GameObject:
   - component: {fileID: 140528582}
   - component: {fileID: 140528581}
   - component: {fileID: 140528583}
+  - component: {fileID: 140528584}
   m_Layer: 0
   m_Name: Third Person Camera
   m_TagString: Untagged
@@ -506,7 +507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cineCam: {fileID: 0}
-  ImpulseSource: {fileID: 0}
+  ImpulseSource: {fileID: 316282873}
   reticle: {fileID: 0}
   gun: {fileID: 0}
   yLookSensitivity: 1
@@ -516,7 +517,22 @@ MonoBehaviour:
   xAimAssist: 0.2
   yAimAssist: 0.2
   aimFarthestPoint: 100
-  aimNearestPoint: 2
+  aimNearestPoint: 5
+--- !u!114 &140528584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140528580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ChannelMask: 1
+  m_Gain: 1
+  m_Use2DDistance: 0
 --- !u!1 &190352118 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 115324, guid: 820591594dcfa124d8a9c5d016d6c22c,
@@ -635,6 +651,53 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8083b00bb56ddab46925d2fa6ed58e8d, type: 3}
+--- !u!1 &316282872 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7671907348698369236, guid: 8083b00bb56ddab46925d2fa6ed58e8d,
+    type: 3}
+  m_PrefabInstance: {fileID: 316282871}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &316282873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316282872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_RawSignal: {fileID: 11400000, guid: 587a7b082c06cec4f8bf3c24fc6befa4, type: 2}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0
+      m_DecayTime: 0.5
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 1000
 --- !u!1 &347909321
 GameObject:
   m_ObjectHideFlags: 0
