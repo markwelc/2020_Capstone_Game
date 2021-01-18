@@ -64,9 +64,9 @@ public class PauseMenu : MonoBehaviour
         IsGamePaused = true;
     }
 
-    public void LoadMenu()
+    public void ResetGame()
     {
-        Debug.Log("Loading menu");
+        Debug.Log("Resetting Game");
     }
 
     public void QuitGame()
