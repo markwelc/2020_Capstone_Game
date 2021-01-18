@@ -91,7 +91,6 @@ public class Inventory : MonoBehaviour
 
     void inventoryButton()
     {
-        // inventoryEnabled = !inventoryEnabled;
         if(inventory.activeSelf)
         {
             inventory.SetActive(false);

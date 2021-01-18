@@ -34,7 +34,6 @@ public class PauseMenu : MonoBehaviour
 
     void GamePause()
     {
-        // IsGamePaused = !IsGamePaused;
         if(PauseMenuUI.activeSelf)
         {
             Resume();
