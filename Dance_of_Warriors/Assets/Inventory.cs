@@ -99,12 +99,12 @@ public class Inventory : MonoBehaviour
         if (inventoryEnabled == true)
         {
             inventory.SetActive(true);
-            Time.timeScale = 0;
+            Time.timeScale = 0f;
         }
         else
         {
             inventory.SetActive(false);
-            Time.timeScale = 1;
+            Time.timeScale = 1f;
         }
     }
 }
