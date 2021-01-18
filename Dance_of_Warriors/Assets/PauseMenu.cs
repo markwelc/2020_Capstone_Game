@@ -34,13 +34,8 @@ public class PauseMenu : MonoBehaviour
 
     void GamePause()
     {
-        IsGamePaused = !IsGamePaused;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (IsGamePaused)
+        // IsGamePaused = !IsGamePaused;
+        if(PauseMenuUI.activeSelf)
         {
             Resume();
         }
