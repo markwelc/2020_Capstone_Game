@@ -73,6 +73,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""PauseGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""6b507f1f-1fe4-46d7-bb8e-9b1142d93726"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -251,6 +259,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""enableInventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6d44a149-991b-47c5-88ca-47688b1698a9"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""58d6f7ce-bd62-4c2e-ae34-5b7e686727b5"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -266,6 +296,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_Fire = m_Gameplay.FindAction("Fire", throwIfNotFound: true);
         m_Gameplay_ChangeViewMode = m_Gameplay.FindAction("ChangeViewMode", throwIfNotFound: true);
         m_Gameplay_enableInventory = m_Gameplay.FindAction("enableInventory", throwIfNotFound: true);
+        m_Gameplay_PauseGame = m_Gameplay.FindAction("PauseGame", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -322,6 +353,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Fire;
     private readonly InputAction m_Gameplay_ChangeViewMode;
     private readonly InputAction m_Gameplay_enableInventory;
+    private readonly InputAction m_Gameplay_PauseGame;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -333,6 +365,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Fire => m_Wrapper.m_Gameplay_Fire;
         public InputAction @ChangeViewMode => m_Wrapper.m_Gameplay_ChangeViewMode;
         public InputAction @enableInventory => m_Wrapper.m_Gameplay_enableInventory;
+        public InputAction @PauseGame => m_Wrapper.m_Gameplay_PauseGame;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -363,6 +396,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @enableInventory.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnableInventory;
                 @enableInventory.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnableInventory;
                 @enableInventory.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnableInventory;
+                @PauseGame.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPauseGame;
+                @PauseGame.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPauseGame;
+                @PauseGame.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPauseGame;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -388,6 +424,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @enableInventory.started += instance.OnEnableInventory;
                 @enableInventory.performed += instance.OnEnableInventory;
                 @enableInventory.canceled += instance.OnEnableInventory;
+                @PauseGame.started += instance.OnPauseGame;
+                @PauseGame.performed += instance.OnPauseGame;
+                @PauseGame.canceled += instance.OnPauseGame;
             }
         }
     }
@@ -401,5 +440,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnChangeViewMode(InputAction.CallbackContext context);
         void OnEnableInventory(InputAction.CallbackContext context);
+        void OnPauseGame(InputAction.CallbackContext context);
     }
 }

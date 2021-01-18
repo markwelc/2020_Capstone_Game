@@ -66,6 +66,7 @@
      <Compile Include="Assets\HUD.cs" />
      <Compile Include="Assets\HealthBarManager.cs" />
      <Compile Include="Assets\Inventory.cs" />
+     <Compile Include="Assets\PauseMenu.cs" />
      <Compile Include="Assets\PickupMessage.cs" />
      <Compile Include="Assets\Weapons\Guns\BulletController.cs" />
      <Compile Include="Assets\Weapons\Guns\Bullet_Handgun.cs" />
