@@ -63,9 +63,11 @@
      <Compile Include="Assets\Characters\PlayerHealthController.cs" />
      <Compile Include="Assets\Characters\PlayerManager.cs" />
      <Compile Include="Assets\Characters\TrainingDummy.cs" />
+     <Compile Include="Assets\Cube.cs" />
      <Compile Include="Assets\HUD.cs" />
      <Compile Include="Assets\HealthBarManager.cs" />
      <Compile Include="Assets\Inventory.cs" />
+     <Compile Include="Assets\InventoryItem.cs" />
      <Compile Include="Assets\PauseMenu.cs" />
      <Compile Include="Assets\PickupMessage.cs" />
      <Compile Include="Assets\Weapons\Guns\BulletController.cs" />
@@ -73,7 +75,6 @@
      <Compile Include="Assets\Weapons\Guns\Guns.cs" />
      <Compile Include="Assets\Weapons\Guns\Handgun.cs" />
      <Compile Include="Assets\Weapons\WeaponController.cs" />
-     <Compile Include="Assets\cube.cs" />
      <Compile Include="Assets\damageTester.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.9f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

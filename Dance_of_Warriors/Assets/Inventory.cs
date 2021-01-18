@@ -3,22 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IInventoryItem
-{
-    string Name { get; }
-    Sprite Image { get; }
-    void OnPickup();
-}
-
-public class InventoryEventArgs : EventArgs
-{
-    public InventoryEventArgs(IInventoryItem item)
-    {
-        Item = item;
-    }
-    public IInventoryItem Item;
-}
-
 public class Inventory : MonoBehaviour
 {
     private const int SLOTS = 24;
@@ -26,8 +10,6 @@ public class Inventory : MonoBehaviour
     public bool inventoryEnabled = false;
     public GameObject inventory;
 
-    private int allSlots, enabledSlots;
-    private GameObject[] slot;
     public GameObject slotHolder;
     PlayerControls controls;
 
@@ -77,16 +59,6 @@ public class Inventory : MonoBehaviour
     void OnDisable()
     {
         controls.Gameplay.Disable();
-    }
-
-    void Start()
-    {
-        // allSlots = 24;
-        slot = new GameObject[SLOTS];
-        for (int i = 0; i < SLOTS; i++)
-        {
-            slot[i] = slotHolder.transform.GetChild(i).gameObject;
-        }
     }
 
     void inventoryButton()
