@@ -91,20 +91,16 @@ public class Inventory : MonoBehaviour
 
     void inventoryButton()
     {
-        inventoryEnabled = !inventoryEnabled;
-    }
-
-    void Update()
-    {
-        if (inventoryEnabled == true)
-        {
-            inventory.SetActive(true);
-            Time.timeScale = 0f;
-        }
-        else
+        // inventoryEnabled = !inventoryEnabled;
+        if(inventory.activeSelf)
         {
             inventory.SetActive(false);
             Time.timeScale = 1f;
+        }
+        else
+        {
+            inventory.SetActive(true);
+            Time.timeScale = 0f;
         }
     }
 }
