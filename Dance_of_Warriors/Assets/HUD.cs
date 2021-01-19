@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
+    public GameObject inv;
     public Inventory inventory;
     public GameObject MessagePanel;
 
@@ -16,11 +17,21 @@ public class HUD : MonoBehaviour
 
     private void InventoryScript_ItemAdded(object sender, InventoryEventArgs e)
     {
-        Transform SlotHolder = transform.Find("SlotHolder");
+        inv.SetActive(true);
+        Transform SlotHolder = transform.Find("InventoryPanel").GetChild(1);
+
+        if (SlotHolder != null)
+        {
+            Debug.Log("SlotHolder not null");
+        }
+        else
+        {
+            Debug.Log("SlotHolder is null");
+        }
+
         foreach(Transform slot in SlotHolder)
         {
             Image image = slot.GetChild(0).GetChild(0).GetComponent<Image>();
-
             if(!image.enabled)
             {
                 image.enabled = true;
@@ -29,6 +40,7 @@ public class HUD : MonoBehaviour
                 break;
             }
         }
+        inv.SetActive(false);
     }
 
     public void OpenMessagePanel(string text)

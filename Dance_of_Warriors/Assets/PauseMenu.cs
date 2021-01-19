@@ -61,6 +61,8 @@ public class PauseMenu : MonoBehaviour
     public void ResetGame()
     {
         Debug.Log("Resetting Game");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Resume();
     }
 
     public void QuitGame()
