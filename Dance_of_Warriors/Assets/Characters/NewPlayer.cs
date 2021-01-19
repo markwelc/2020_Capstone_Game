@@ -21,6 +21,8 @@ public class NewPlayer : Character
 
     //keeps track of the player's inventory
     public Inventory inventory;
+    //references the HUD script for opening and closing message panels
+    public HUD hud;
 
     [SerializeField] private Vector3 lookOffset; //this is subtracted from camera position and then the character always looks in the direction from this point to itself
     [SerializeField] private float smoother; //this will slow down the speed at which the player looks toward where the camera's looking (the lower the value, the slower the movement)
@@ -56,6 +58,8 @@ public class NewPlayer : Character
         controls.Gameplay.Dash.performed += ctx => initiateDash();       //Similar for dashing
         controls.Gameplay.Fire.performed += ctx => useWeapons();
         controls.Gameplay.ChangeViewMode.performed += ctx => changeViewMode();
+
+        controls.Gameplay.Pickup.performed += ctx => PickupMessage();
     }
 
     /**
@@ -343,15 +347,32 @@ public class NewPlayer : Character
         return false;
     }
     
-    //adds an item to the player's inventory when the player walks over it, will be changed later
-    //item must have a script attached to it that extends IInventoryItem, making it an interactable object
-    private void OnControllerColliderHit(ControllerColliderHit hit)
+    private IInventoryItem mItemToPickup = null;
+
+    private void OnTriggerEnter(Collider other)
     {
-        IInventoryItem item = hit.collider.GetComponent<IInventoryItem>();
+        IInventoryItem item = other.GetComponent<IInventoryItem>();
         if (item != null)
         {
-            inventory.AddItem(item);
+            mItemToPickup = item;
+            hud.OpenMessagePanel("");
         }
     }
-}
 
+    private void OnTriggerExit(Collider other)
+    {
+        IInventoryItem item = other.GetComponent<IInventoryItem>();
+        if (item != null)
+        {
+            hud.CloseMessagePanel();
+            mItemToPickup = null;
+        }
+    }
+
+    void PickupMessage()
+    {
+        inventory.AddItem(mItemToPickup);
+        mItemToPickup.OnPickup();
+        hud.CloseMessagePanel();
+    }
+}
