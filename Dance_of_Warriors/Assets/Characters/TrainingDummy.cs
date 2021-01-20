@@ -14,6 +14,8 @@ public class TrainingDummy : Character
     public Transform target;
     public LayerMask whatIsGround, whatIsPlayer;
 
+    float distance;
+
     //patrolling variables
     public Vector3 walkPoint; //finds a point on the map to travel to
     bool walkPointSet; //keeps track of whether a walkpoint has been set
@@ -51,20 +53,32 @@ public class TrainingDummy : Character
     // Update is called once per frame
     private void Update()
     {
-        float distance = Vector3.Distance(target.position, transform.position);
+        distance = Vector3.Distance(target.position, transform.position);
+    }
 
+    protected override void handleMovement()
+    {
         if (distance <= lookRadius)
         {
             agent.SetDestination(target.position);
             transform.LookAt(target.position);
-            if (distance <= attackRadius)
-            {
-                AttackPlayer();
-            }
         }
         else
         {
             Patrolling();
+        }
+    }
+
+    protected override void handleAngle()
+    {
+        //don't set any angle, let the two transform.LookAt lines (in handleMovement and Patrolling) do it
+    }
+
+    protected override void handleWeapons()
+    {
+        if (distance <= attackRadius)
+        {
+            AttackPlayer();
         }
     }
 
@@ -76,7 +90,7 @@ public class TrainingDummy : Character
         //moves the character toward the walkpoint
         if (walkPointSet)
             agent.SetDestination(walkPoint);
-            transform.LookAt(walkPoint);
+        transform.LookAt(walkPoint);
 
         //keeps track of distance to walkpoint
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -114,9 +128,9 @@ public class TrainingDummy : Character
         transform.LookAt(target);
 
         // if character has not already attacked, throw a projectile at them
-        if(!alreadyAttacked)
+        if (!alreadyAttacked)
         {
-            if(weaponAccess != null)
+            if (weaponAccess != null)
                 useWeapons();
             // Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
             // rb.AddForce(transform.forward * 32f, ForceMode.Impulse);

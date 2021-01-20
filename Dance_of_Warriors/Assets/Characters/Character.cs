@@ -17,6 +17,7 @@ public class Character : MonoBehaviour
     public PlayerHealthController playerHealthManager;
     protected float health;
     protected float speed;//the default speed of the character
+    protected bool isDead;  // To check if dead so player cant continue to move
 
     //public float staminaMax; //the max amount of stamina the character can have
     //protected float staminaCur; //the current amount of stamina the
@@ -33,7 +34,8 @@ public class Character : MonoBehaviour
     protected Vector3 movement;//used to hold the direction that the character should move in
     protected bool diagonal;//whether the player is moving diagonally
 
-    /*[SerializeField]*/ protected float jumpForce; //this is how strongly the character can jump
+    /*[SerializeField]*/
+    protected float jumpForce; //this is how strongly the character can jump
     protected bool jumpPossible; //determines if the character can currently jump
     protected actionState jumpActionState; //this may not be needed to restrict jumping, but may be useful in graphics
 
@@ -43,10 +45,17 @@ public class Character : MonoBehaviour
     [SerializeField] protected GameObject gunsParent; //this will be the parent object of the gunsPrefab
     protected GameObject meleePrefab;
     [SerializeField] protected GameObject meleeParent;
-    //[SerializeField] protected GameObject weaponGrip; //stores transform of where we want the weapon to be
+
     protected actionState toolActionState;
-    protected int[] toolStates;
-    protected bool isDead;  // To check if dead so player cant continue to move
+    protected int[] toolStates; //length of each phase
+    protected int usingTool; //keep track of where we are in an element of toolStates
+
+    protected actionState dashActionState;
+    protected int[] dashLength; //lists the number of frames that each phase should be active for
+    protected int dashing; //keeps track of where we are in the dash
+    protected float[] dashSpeed; //indicates the speed of the dash
+    protected Vector3 dashVector;//the direction of our dash
+
     [SerializeField] protected string[] availableWeapons;
     protected int equippedWeapon; //which weapon is currently equipped
 
@@ -68,7 +77,6 @@ public class Character : MonoBehaviour
         health = playerHealthManager.getHealth();
         isDead = false;
         setWeaponParents();
-       
     }
 
 
@@ -87,21 +95,21 @@ public class Character : MonoBehaviour
         */
         health = playerHealthManager.getHealth();
 
-        if(health <= 0)
+        if (health <= 0)
         {
             isDead = true;
         }
 
-        handleMovement();
-        handleJump();
-        handleAngle(); //Commented out as it overriding my angle
-        handleWeapons();
-
+        handleMovement(); //decide when and how to move
+        handleJump(); //decide when to jump
+        handleAngle(); //decide where to face
+        handleWeapons(); //decide when to use weapons
 
         moveCharacter(movement);
-        if(isJumping)
+
+        if (isJumping)
         {
-            if(characterRigidbody.velocity.y < 0f)
+            if (characterRigidbody.velocity.y < 0f)
             {
                 anim.SetBool("isJumping", false);
                 anim.SetBool("doneJumping", true);
@@ -157,15 +165,15 @@ public class Character : MonoBehaviour
 
     protected virtual void useWeapons() //actually goes and uses the weapon
     {
-        
+
         string animation;
         int[] states;
         weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states); //the first argument will probably be replaced with a default weapon that doesn't exist yet
 
-        if(animation != null)
+        if (animation != null)
             anim.SetTrigger(animation); //start the animation
         toolStates = states;
-        
+
     }
 
     /*
@@ -192,9 +200,39 @@ public class Character : MonoBehaviour
             jumpPossible = false;
     }
 
-    protected virtual bool jumpAllowed()
+    //are we allowed to dash?
+    protected bool dashAllowed()
     {
-        return jumpPossible;
+        bool dashingPermits = dashActionState == actionState.inactive;
+        if (dashingPermits)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    //are we allowed to use a tool?
+    protected bool toolAllowed()
+    {
+        bool toolPermits = toolActionState == actionState.inactive;
+        if (toolPermits)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    //are we allowed to jump?
+    protected bool jumpAllowed()
+    {
+        bool dashingPermits = ((dashActionState == actionState.inactive) || (dashActionState == actionState.cooldown));
+        if (dashingPermits && jumpPossible)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public float getHealth()
@@ -215,7 +253,7 @@ public class Character : MonoBehaviour
         gunsPrefab.transform.position = gunsParent.transform.position;//set the position and the rotation
         gunsPrefab.transform.rotation = gunsParent.transform.rotation;
 
-        foreach(Collider weaponCollider in meleePrefab.GetComponentsInChildren<Collider>())
+        foreach (Collider weaponCollider in meleePrefab.GetComponentsInChildren<Collider>())
         {
             Physics.IgnoreCollision(weaponCollider, characterCollider);
         }
