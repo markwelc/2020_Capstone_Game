@@ -51,14 +51,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Fire"",
-                    ""type"": ""Button"",
-                    ""id"": ""e9eb264e-a471-4480-bf8b-be6212a3bd38"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""ChangeViewMode"",
                     ""type"": ""Button"",
                     ""id"": ""c3f466d9-0397-4e0d-b257-fa369a18c920"",
@@ -94,6 +86,38 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": ""enableInventory"",
                     ""type"": ""Button"",
                     ""id"": ""f8c71a81-8c67-470c-b4c1-6e7037beba66"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Tool"",
+                    ""type"": ""Button"",
+                    ""id"": ""e9eb264e-a471-4480-bf8b-be6212a3bd38"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Tool2"",
+                    ""type"": ""Button"",
+                    ""id"": ""9ecc3959-85b9-458e-b08c-7a7ff58f3653"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Tool3"",
+                    ""type"": ""Button"",
+                    ""id"": ""727b9ff4-e966-44a7-84ae-6a1960c92684"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Tool4"",
+                    ""type"": ""Button"",
+                    ""id"": ""ac941264-e690-4a21-b284-e614e0d7ca8f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -234,28 +258,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""907ff4f6-dd75-478d-ad20-861467d97716"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""cec5f449-6a70-45f4-85c7-bf9ce81a4d55"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""8ee3b3ed-c22f-4eba-89f8-0f223abfcb4f"",
                     ""path"": ""<Keyboard>/#(=)"",
                     ""interactions"": """",
@@ -312,7 +314,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ffe3b8b1-9170-4c09-9b21-fba732137eb3"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -330,6 +332,105 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""enableInventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""92bf452f-d569-4080-99ef-38792a8c7d25"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""enableInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4f0d796-7e83-4d89-81e3-02c236869fba"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tool2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fd8107cb-e0c4-4ac5-bc21-54cc0f719ae8"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tool2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""907ff4f6-dd75-478d-ad20-861467d97716"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tool"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cec5f449-6a70-45f4-85c7-bf9ce81a4d55"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tool"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""213ed7c4-85a8-4134-b2f5-504903370131"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tool3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""07c627d4-2d34-45ed-99a3-215ba6fca614"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tool3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""54744ff6-bc69-46d6-a3f7-2d6541084c33"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tool4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e1f3032c-b013-4180-bcf0-84db15b17563"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tool4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -342,12 +443,15 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_Dash = m_Gameplay.FindAction("Dash", throwIfNotFound: true);
-        m_Gameplay_Fire = m_Gameplay.FindAction("Fire", throwIfNotFound: true);
         m_Gameplay_ChangeViewMode = m_Gameplay.FindAction("ChangeViewMode", throwIfNotFound: true);
         m_Gameplay_CycleWeapon = m_Gameplay.FindAction("CycleWeapon", throwIfNotFound: true);
         m_Gameplay_PauseGame = m_Gameplay.FindAction("PauseGame", throwIfNotFound: true);
         m_Gameplay_Pickup = m_Gameplay.FindAction("Pickup", throwIfNotFound: true);
         m_Gameplay_enableInventory = m_Gameplay.FindAction("enableInventory", throwIfNotFound: true);
+        m_Gameplay_Tool = m_Gameplay.FindAction("Tool", throwIfNotFound: true);
+        m_Gameplay_Tool2 = m_Gameplay.FindAction("Tool2", throwIfNotFound: true);
+        m_Gameplay_Tool3 = m_Gameplay.FindAction("Tool3", throwIfNotFound: true);
+        m_Gameplay_Tool4 = m_Gameplay.FindAction("Tool4", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -401,12 +505,15 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Look;
     private readonly InputAction m_Gameplay_Jump;
     private readonly InputAction m_Gameplay_Dash;
-    private readonly InputAction m_Gameplay_Fire;
     private readonly InputAction m_Gameplay_ChangeViewMode;
     private readonly InputAction m_Gameplay_CycleWeapon;
     private readonly InputAction m_Gameplay_PauseGame;
     private readonly InputAction m_Gameplay_Pickup;
     private readonly InputAction m_Gameplay_enableInventory;
+    private readonly InputAction m_Gameplay_Tool;
+    private readonly InputAction m_Gameplay_Tool2;
+    private readonly InputAction m_Gameplay_Tool3;
+    private readonly InputAction m_Gameplay_Tool4;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -415,12 +522,15 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Look => m_Wrapper.m_Gameplay_Look;
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
         public InputAction @Dash => m_Wrapper.m_Gameplay_Dash;
-        public InputAction @Fire => m_Wrapper.m_Gameplay_Fire;
         public InputAction @ChangeViewMode => m_Wrapper.m_Gameplay_ChangeViewMode;
         public InputAction @CycleWeapon => m_Wrapper.m_Gameplay_CycleWeapon;
         public InputAction @PauseGame => m_Wrapper.m_Gameplay_PauseGame;
         public InputAction @Pickup => m_Wrapper.m_Gameplay_Pickup;
         public InputAction @enableInventory => m_Wrapper.m_Gameplay_enableInventory;
+        public InputAction @Tool => m_Wrapper.m_Gameplay_Tool;
+        public InputAction @Tool2 => m_Wrapper.m_Gameplay_Tool2;
+        public InputAction @Tool3 => m_Wrapper.m_Gameplay_Tool3;
+        public InputAction @Tool4 => m_Wrapper.m_Gameplay_Tool4;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -442,9 +552,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Dash.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDash;
-                @Fire.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFire;
-                @Fire.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFire;
-                @Fire.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFire;
                 @ChangeViewMode.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeViewMode;
                 @ChangeViewMode.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeViewMode;
                 @ChangeViewMode.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeViewMode;
@@ -460,6 +567,18 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @enableInventory.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnableInventory;
                 @enableInventory.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnableInventory;
                 @enableInventory.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnableInventory;
+                @Tool.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTool;
+                @Tool.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTool;
+                @Tool.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTool;
+                @Tool2.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTool2;
+                @Tool2.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTool2;
+                @Tool2.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTool2;
+                @Tool3.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTool3;
+                @Tool3.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTool3;
+                @Tool3.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTool3;
+                @Tool4.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTool4;
+                @Tool4.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTool4;
+                @Tool4.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTool4;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -476,9 +595,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
-                @Fire.started += instance.OnFire;
-                @Fire.performed += instance.OnFire;
-                @Fire.canceled += instance.OnFire;
                 @ChangeViewMode.started += instance.OnChangeViewMode;
                 @ChangeViewMode.performed += instance.OnChangeViewMode;
                 @ChangeViewMode.canceled += instance.OnChangeViewMode;
@@ -494,6 +610,18 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @enableInventory.started += instance.OnEnableInventory;
                 @enableInventory.performed += instance.OnEnableInventory;
                 @enableInventory.canceled += instance.OnEnableInventory;
+                @Tool.started += instance.OnTool;
+                @Tool.performed += instance.OnTool;
+                @Tool.canceled += instance.OnTool;
+                @Tool2.started += instance.OnTool2;
+                @Tool2.performed += instance.OnTool2;
+                @Tool2.canceled += instance.OnTool2;
+                @Tool3.started += instance.OnTool3;
+                @Tool3.performed += instance.OnTool3;
+                @Tool3.canceled += instance.OnTool3;
+                @Tool4.started += instance.OnTool4;
+                @Tool4.performed += instance.OnTool4;
+                @Tool4.canceled += instance.OnTool4;
             }
         }
     }
@@ -504,11 +632,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
-        void OnFire(InputAction.CallbackContext context);
         void OnChangeViewMode(InputAction.CallbackContext context);
         void OnCycleWeapon(InputAction.CallbackContext context);
         void OnPauseGame(InputAction.CallbackContext context);
         void OnPickup(InputAction.CallbackContext context);
         void OnEnableInventory(InputAction.CallbackContext context);
+        void OnTool(InputAction.CallbackContext context);
+        void OnTool2(InputAction.CallbackContext context);
+        void OnTool3(InputAction.CallbackContext context);
+        void OnTool4(InputAction.CallbackContext context);
     }
 }

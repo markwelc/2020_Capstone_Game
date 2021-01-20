@@ -38,14 +38,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Fire",
-                    "type": "Button",
-                    "id": "e9eb264e-a471-4480-bf8b-be6212a3bd38",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "ChangeViewMode",
                     "type": "Button",
                     "id": "c3f466d9-0397-4e0d-b257-fa369a18c920",
@@ -81,6 +73,38 @@
                     "name": "enableInventory",
                     "type": "Button",
                     "id": "f8c71a81-8c67-470c-b4c1-6e7037beba66",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Tool",
+                    "type": "Button",
+                    "id": "e9eb264e-a471-4480-bf8b-be6212a3bd38",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Tool2",
+                    "type": "Button",
+                    "id": "9ecc3959-85b9-458e-b08c-7a7ff58f3653",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Tool3",
+                    "type": "Button",
+                    "id": "727b9ff4-e966-44a7-84ae-6a1960c92684",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Tool4",
+                    "type": "Button",
+                    "id": "ac941264-e690-4a21-b284-e614e0d7ca8f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -221,28 +245,6 @@
                 },
                 {
                     "name": "",
-                    "id": "907ff4f6-dd75-478d-ad20-861467d97716",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Fire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cec5f449-6a70-45f4-85c7-bf9ce81a4d55",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Fire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "8ee3b3ed-c22f-4eba-89f8-0f223abfcb4f",
                     "path": "<Keyboard>/#(=)",
                     "interactions": "",
@@ -299,7 +301,7 @@
                 {
                     "name": "",
                     "id": "ffe3b8b1-9170-4c09-9b21-fba732137eb3",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -315,6 +317,105 @@
                     "processors": "",
                     "groups": "",
                     "action": "enableInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "92bf452f-d569-4080-99ef-38792a8c7d25",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "enableInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f4f0d796-7e83-4d89-81e3-02c236869fba",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tool2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd8107cb-e0c4-4ac5-bc21-54cc0f719ae8",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tool2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "907ff4f6-dd75-478d-ad20-861467d97716",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tool",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cec5f449-6a70-45f4-85c7-bf9ce81a4d55",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tool",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "213ed7c4-85a8-4134-b2f5-504903370131",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tool3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "07c627d4-2d34-45ed-99a3-215ba6fca614",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tool3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "54744ff6-bc69-46d6-a3f7-2d6541084c33",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tool4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e1f3032c-b013-4180-bcf0-84db15b17563",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tool4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -131,7 +131,7 @@ public class TrainingDummy : Character
         if (!alreadyAttacked)
         {
             if (weaponAccess != null)
-                useWeapons();
+                useWeapons(1);
             // Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
             // rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
             // rb.AddForce(transform.up * 8f, ForceMode.Impulse);

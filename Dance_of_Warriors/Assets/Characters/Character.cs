@@ -49,6 +49,7 @@ public class Character : MonoBehaviour
     protected actionState toolActionState;
     protected int[] toolStates; //length of each phase
     protected int usingTool; //keep track of where we are in an element of toolStates
+    protected int toolUsed; //keeps track of which tool is being used (0 means no tool)
 
     protected actionState dashActionState;
     protected int[] dashLength; //lists the number of frames that each phase should be active for
@@ -58,6 +59,7 @@ public class Character : MonoBehaviour
 
     [SerializeField] protected string[] availableWeapons;
     protected int equippedWeapon; //which weapon is currently equipped
+    protected int equippedWeapon2; //which weapon is currently equipped as the secondary weapon
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -163,13 +165,17 @@ public class Character : MonoBehaviour
         //do nothing
     }
 
-    protected virtual void useWeapons() //actually goes and uses the weapon
+    protected virtual void useWeapons(int toolNum) //actually goes and uses the weapon
     {
 
         string animation;
         int[] states;
-        weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states); //the first argument will probably be replaced with a default weapon that doesn't exist yet
-
+        if(toolNum == 2)
+            weaponAccess.useWeapon(availableWeapons[equippedWeapon2], out animation, out states); //the first argument will probably be replaced with a default weapon that doesn't exist yet
+        else //e.g. if toolNum is 1
+            //this way our default tool is our primary tool
+            weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states);
+ 
         if (animation != null)
             anim.SetTrigger(animation); //start the animation
         toolStates = states;
@@ -179,10 +185,63 @@ public class Character : MonoBehaviour
     /*
      * changes the equipped weapon to the next item in the available weapons array
      */
-    protected virtual void cycleWeapon()
+    //protected virtual void cycleWeapon()
+    //{
+    //    equippedWeapon++;
+    //    equippedWeapon = equippedWeapon % availableWeapons.Length;
+    //}
+
+    //start using a tool
+    //this is in Character.cs because it is similar for every character
+    protected void initiateTool(int toolNum)
     {
-        equippedWeapon++;
-        equippedWeapon = equippedWeapon % availableWeapons.Length;
+        if (toolAllowed())
+        {
+            //since we are initiating use of a tool, we are now moving to the active state
+            toolActionState++;
+
+            usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the value of the first element in toolStates (telegraph length)
+
+            toolUsed = toolNum; //set the tool that we're using depending on how this function was called
+        }
+    }
+
+    //move through all the tool action states
+    //this is in Character.cs because it is similar for every character
+    protected void toolUse()
+    {
+        if (toolActionState == actionState.telegraph && usingTool <= 0) //if we're in the telegraph phase and need to switch
+        {
+            //telegraph
+            toolActionState++; //move to the next state
+            usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the appropriate value
+
+            useWeapons(toolUsed);
+            toolUsed = 0; //we're done with this, set it up for next time.
+        }
+        else if (toolActionState == actionState.active && usingTool <= 0) //if we're using a tool and need to recover
+        {
+            //action
+            toolActionState++; //move to the next state
+            usingTool = toolStates[(int)toolActionState - 1]; //set dashing to the appropriate value
+        }
+        else if (toolActionState == actionState.recovery && usingTool <= 0) //if we are recovering and need to go to the cool down
+        {
+            //recovery
+            toolActionState++; //move to the next state
+            usingTool = toolStates[(int)toolActionState - 1]; //set using tool to the appropriate value
+        }
+        else if (toolActionState == actionState.cooldown && usingTool <= 0)
+        {
+            //cooldown
+            toolActionState = actionState.inactive; //move to the inactive state
+            usingTool = 0; //set usingTool just to be safe and clean
+
+        }
+        else
+        {
+            usingTool--;
+        }
     }
 
     //these three functions determine whether the character may jump
