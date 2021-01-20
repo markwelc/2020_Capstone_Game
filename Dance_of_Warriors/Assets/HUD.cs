@@ -20,15 +20,6 @@ public class HUD : MonoBehaviour
         inv.SetActive(true);
         Transform SlotHolder = transform.Find("InventoryPanel").GetChild(1);
 
-        if (SlotHolder != null)
-        {
-            Debug.Log("SlotHolder not null");
-        }
-        else
-        {
-            Debug.Log("SlotHolder is null");
-        }
-
         foreach(Transform slot in SlotHolder)
         {
             Image image = slot.GetChild(0).GetChild(0).GetComponent<Image>();
