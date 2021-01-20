@@ -70,25 +70,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": ""CycleWeapon"",
                     ""type"": ""Button"",
                     ""id"": ""47ceae40-ae82-4aa1-8306-13eac7157ce6"",
-                    ""name"": ""enableInventory"",
-                    ""type"": ""Button"",
-                    ""id"": ""52a05c81-c9e6-4fb5-a330-0a5e6d8142f9"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""PauseGame"",
-                    ""type"": ""Button"",
-                    ""id"": ""6b507f1f-1fe4-46d7-bb8e-9b1142d93726"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Pickup"",
-                    ""type"": ""Button"",
-                    ""id"": ""778aa146-7d5b-4d3f-ad34-4b3cd6dcad2e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -268,56 +249,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""CycleWeapon"",
-                    ""id"": ""2eabe6f7-8201-435e-9f67-a873d0c11352"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""enableInventory"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6d44a149-991b-47c5-88ca-47688b1698a9"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PauseGame"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""58d6f7ce-bd62-4c2e-ae34-5b7e686727b5"",
-                    ""path"": ""<Gamepad>/start"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PauseGame"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ad7404c6-a22a-4433-b954-ee8892bdb153"",
-                    ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Pickup"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ffe3b8b1-9170-4c09-9b21-fba732137eb3"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Pickup"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -335,9 +266,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_Fire = m_Gameplay.FindAction("Fire", throwIfNotFound: true);
         m_Gameplay_ChangeViewMode = m_Gameplay.FindAction("ChangeViewMode", throwIfNotFound: true);
         m_Gameplay_CycleWeapon = m_Gameplay.FindAction("CycleWeapon", throwIfNotFound: true);
-        m_Gameplay_enableInventory = m_Gameplay.FindAction("enableInventory", throwIfNotFound: true);
-        m_Gameplay_PauseGame = m_Gameplay.FindAction("PauseGame", throwIfNotFound: true);
-        m_Gameplay_Pickup = m_Gameplay.FindAction("Pickup", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -394,9 +322,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Fire;
     private readonly InputAction m_Gameplay_ChangeViewMode;
     private readonly InputAction m_Gameplay_CycleWeapon;
-    private readonly InputAction m_Gameplay_enableInventory;
-    private readonly InputAction m_Gameplay_PauseGame;
-    private readonly InputAction m_Gameplay_Pickup;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -408,9 +333,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Fire => m_Wrapper.m_Gameplay_Fire;
         public InputAction @ChangeViewMode => m_Wrapper.m_Gameplay_ChangeViewMode;
         public InputAction @CycleWeapon => m_Wrapper.m_Gameplay_CycleWeapon;
-        public InputAction @enableInventory => m_Wrapper.m_Gameplay_enableInventory;
-        public InputAction @PauseGame => m_Wrapper.m_Gameplay_PauseGame;
-        public InputAction @Pickup => m_Wrapper.m_Gameplay_Pickup;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -441,15 +363,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @CycleWeapon.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCycleWeapon;
                 @CycleWeapon.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCycleWeapon;
                 @CycleWeapon.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCycleWeapon;
-                @enableInventory.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnableInventory;
-                @enableInventory.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnableInventory;
-                @enableInventory.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnableInventory;
-                @PauseGame.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPauseGame;
-                @PauseGame.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPauseGame;
-                @PauseGame.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPauseGame;
-                @Pickup.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPickup;
-                @Pickup.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPickup;
-                @Pickup.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPickup;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -475,15 +388,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @CycleWeapon.started += instance.OnCycleWeapon;
                 @CycleWeapon.performed += instance.OnCycleWeapon;
                 @CycleWeapon.canceled += instance.OnCycleWeapon;
-                @enableInventory.started += instance.OnEnableInventory;
-                @enableInventory.performed += instance.OnEnableInventory;
-                @enableInventory.canceled += instance.OnEnableInventory;
-                @PauseGame.started += instance.OnPauseGame;
-                @PauseGame.performed += instance.OnPauseGame;
-                @PauseGame.canceled += instance.OnPauseGame;
-                @Pickup.started += instance.OnPickup;
-                @Pickup.performed += instance.OnPickup;
-                @Pickup.canceled += instance.OnPickup;
             }
         }
     }
@@ -497,8 +401,5 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnChangeViewMode(InputAction.CallbackContext context);
         void OnCycleWeapon(InputAction.CallbackContext context);
-        void OnEnableInventory(InputAction.CallbackContext context);
-        void OnPauseGame(InputAction.CallbackContext context);
-        void OnPickup(InputAction.CallbackContext context);
     }
 }
