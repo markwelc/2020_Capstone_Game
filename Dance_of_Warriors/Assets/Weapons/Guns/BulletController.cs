@@ -28,6 +28,7 @@ public class BulletController : MonoBehaviour
 
     void moveBullet()
     {
+
         Vector3 direcAndMag = transform.up * speed * Time.deltaTime; //make a vector pointing forwards (the transform is rotated) and scale it
 
         Ray ray = new Ray(transform.position, direcAndMag); //shoot a ray from current position in direction of travel
@@ -44,7 +45,7 @@ public class BulletController : MonoBehaviour
     {
         if (source != col)
             Destroy(this.gameObject);
-        Debug.Log("source = " + source);
-        Debug.Log("col = =" + col);
+        //Debug.Log("source = " + source);
+        //Debug.Log("col = =" + col);
     }
 }

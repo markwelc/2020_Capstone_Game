@@ -38,7 +38,47 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Fire",
+                    "name": "ChangeViewMode",
+                    "type": "Button",
+                    "id": "c3f466d9-0397-4e0d-b257-fa369a18c920",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "CycleWeapon",
+                    "type": "Button",
+                    "id": "47ceae40-ae82-4aa1-8306-13eac7157ce6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "PauseGame",
+                    "type": "Button",
+                    "id": "6b507f1f-1fe4-46d7-bb8e-9b1142d93726",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Pickup",
+                    "type": "Button",
+                    "id": "778aa146-7d5b-4d3f-ad34-4b3cd6dcad2e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "enableInventory",
+                    "type": "Button",
+                    "id": "f8c71a81-8c67-470c-b4c1-6e7037beba66",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Tool",
                     "type": "Button",
                     "id": "e9eb264e-a471-4480-bf8b-be6212a3bd38",
                     "expectedControlType": "Button",
@@ -46,9 +86,25 @@
                     "interactions": ""
                 },
                 {
-                    "name": "ChangeViewMode",
+                    "name": "Tool2",
                     "type": "Button",
-                    "id": "c3f466d9-0397-4e0d-b257-fa369a18c920",
+                    "id": "9ecc3959-85b9-458e-b08c-7a7ff58f3653",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Tool3",
+                    "type": "Button",
+                    "id": "727b9ff4-e966-44a7-84ae-6a1960c92684",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Tool4",
+                    "type": "Button",
+                    "id": "ac941264-e690-4a21-b284-e614e0d7ca8f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -189,34 +245,177 @@
                 },
                 {
                     "name": "",
-                    "id": "907ff4f6-dd75-478d-ad20-861467d97716",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Fire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cec5f449-6a70-45f4-85c7-bf9ce81a4d55",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Fire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "8ee3b3ed-c22f-4eba-89f8-0f223abfcb4f",
                     "path": "<Keyboard>/#(=)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "ChangeViewMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e062a685-47a7-4bcc-809b-4e615833b4e4",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CycleWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6d44a149-991b-47c5-88ca-47688b1698a9",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PauseGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "58d6f7ce-bd62-4c2e-ae34-5b7e686727b5",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PauseGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ad7404c6-a22a-4433-b954-ee8892bdb153",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pickup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ffe3b8b1-9170-4c09-9b21-fba732137eb3",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pickup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "579517ed-5d02-46b6-9f74-142d35367ffc",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "enableInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "92bf452f-d569-4080-99ef-38792a8c7d25",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "enableInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f4f0d796-7e83-4d89-81e3-02c236869fba",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tool2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd8107cb-e0c4-4ac5-bc21-54cc0f719ae8",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tool2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "907ff4f6-dd75-478d-ad20-861467d97716",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tool",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cec5f449-6a70-45f4-85c7-bf9ce81a4d55",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tool",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "213ed7c4-85a8-4134-b2f5-504903370131",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tool3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "07c627d4-2d34-45ed-99a3-215ba6fca614",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tool3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "54744ff6-bc69-46d6-a3f7-2d6541084c33",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tool4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e1f3032c-b013-4180-bcf0-84db15b17563",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tool4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - playerBody
+  - playerLeftLeg
+  - playerRightLeg
+  - playerLeftArm
+  - playerRightArm
+  - playerHead
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -15,11 +22,11 @@ TagManager:
   - 
   - player
   - playerLimbs
-  - 
+  - enemy
   - 
   - staticEnvironment
-  - 
-  - 
+  - whatIsGround
+  - whatIsPlayer
   - 
   - 
   - 

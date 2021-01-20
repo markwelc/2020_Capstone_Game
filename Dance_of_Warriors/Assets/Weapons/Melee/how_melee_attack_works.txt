@@ -1,0 +1,8 @@
+Conversation between a script that is part of the weapons prefab and the character
+//initialization
+weapon: I have the model for the weapon
+character: I'll tell you where to put it so that it's in my hand and tell you which object I am so that you know to not give me damage
+character: I'd like to do a melee attack
+weapon: ok, here's the name of the animation that you should use and how long each phase should last
+character: ok, I'll perform the animation and be sure that the weapon modely stays in my hand
+weapon: while you do that, I'll activate the collider, register any collisions, and tell what I collided with how much damage they should take
