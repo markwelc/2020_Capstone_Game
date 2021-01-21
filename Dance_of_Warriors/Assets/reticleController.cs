@@ -46,4 +46,10 @@ public class reticleController : MonoBehaviour
     {
         movingR = val;
     }
+
+    public void setShot()
+    {
+        currentSize = Mathf.Lerp(currentSize, currentSize + 30, Time.deltaTime * 5 * transitionSpeed);
+        ourReticle.sizeDelta = new Vector2(currentSize, currentSize);
+    }
 }

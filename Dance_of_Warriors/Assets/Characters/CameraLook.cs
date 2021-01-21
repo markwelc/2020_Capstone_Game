@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEditor;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CinemachineFreeLook))]
 
@@ -30,12 +31,14 @@ public class CameraLook : MonoBehaviour
     private bool startZoomTransition = false;
     public float aimTransitionSpeed = 10f;
     reticleController retController;
+    private Image[] crossHairpieces;
     private void Awake()
     {
         cameraMain = Camera.main.transform;
         reticle = GameObject.Find("/Main Camera/Canvas/Reticle");
         Reticle = reticle.transform;
         retController = reticle.GetComponent<reticleController>();
+        crossHairpieces = reticle.GetComponentsInChildren<Image>();
         controls = new PlayerControls();
         cineCam = GetComponent<CinemachineFreeLook>();
         // set to initalize look with mouse or right thumbstick
@@ -83,6 +86,7 @@ public class CameraLook : MonoBehaviour
     public void AddRecoil()
 	{
         ImpulseSource.GenerateImpulse(Camera.main.transform.up);
+        retController.setShot();
         Debug.Log("impulse!");
     }
 
@@ -94,10 +98,10 @@ public class CameraLook : MonoBehaviour
         //aim assist starts here
 
         //Ray ray = new Ray(Reticle.transform.position, Reticle.transform.forward);
-        Ray ray = new Ray(cameraMain.transform.position, cameraMain.transform.forward);
+        Ray ray = new Ray(Reticle.transform.position, Reticle.transform.forward);
         RaycastHit hit = new RaycastHit();
         //drawing the ray from the reticle generates an incorrect angle due to the fact that the reticle is in front of the player in the game world.
-        //Debug.DrawRay(Reticle.transform.position, Reticle.transform.forward * 10, Color.red, 1);
+        Debug.DrawRay(Reticle.transform.position, Reticle.transform.forward * 10, Color.red, 1);
         //Debug.DrawRay(cameraMain.transform.position, cameraMain.transform.forward * 10, Color.red, 0.5f);
 
 
@@ -105,9 +109,9 @@ public class CameraLook : MonoBehaviour
         if (Physics.Raycast(ray, out hit, aimFarthestPoint))
         {
             //making the knight continuous solves aim assist issue
-            if (hit.collider.gameObject.CompareTag("Enemy") && hit.distance >= aimNearestPoint)
+            if (hit.collider.gameObject.CompareTag("Enemy"))
             {
-                //Debug.Log("Hitting enemy");
+                enableTargetCross(new Color32(255, 0, 0, 255));
                 yLookSensitivity = yAimAssist;
                 xLookSensitivity = xAimAssist;
             }
@@ -115,6 +119,7 @@ public class CameraLook : MonoBehaviour
             {
                 yLookSensitivity = defaultY;
                 xLookSensitivity = defaultX;
+                enableTargetCross(new Color32(0, 255, 0, 255));
             }
         }
         else
@@ -122,6 +127,7 @@ public class CameraLook : MonoBehaviour
             //Debug.Log("Hitting world");
             yLookSensitivity = defaultY;
             xLookSensitivity = defaultX;
+            enableTargetCross(new Color32(0, 255, 0, 255));
         }
 
         // get our rotation vector
@@ -178,8 +184,17 @@ public class CameraLook : MonoBehaviour
                 startOutZoomTransition = false;
             }
         }
-        Debug.Log("FOV Val :" + cineCam.m_Lens.FieldOfView);
+        //Debug.Log("FOV Val :" + cineCam.m_Lens.FieldOfView);
 
         
     }
+
+    void enableTargetCross(Color32 color)
+    {
+        foreach(Image cross in crossHairpieces)
+        {
+            cross.color = color;
+        }
+    }
+
 }
