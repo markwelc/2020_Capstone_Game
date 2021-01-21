@@ -29,11 +29,13 @@ public class CameraLook : MonoBehaviour
     private bool startOutZoomTransition = false;
     private bool startZoomTransition = false;
     public float aimTransitionSpeed = 10f;
+    reticleController retController;
     private void Awake()
     {
         cameraMain = Camera.main.transform;
-        reticle = GameObject.Find("/Main Camera/Reticle");
+        reticle = GameObject.Find("/Main Camera/Canvas/Reticle");
         Reticle = reticle.transform;
+        retController = reticle.GetComponent<reticleController>();
         controls = new PlayerControls();
         cineCam = GetComponent<CinemachineFreeLook>();
         // set to initalize look with mouse or right thumbstick
@@ -132,6 +134,7 @@ public class CameraLook : MonoBehaviour
 
     private void zoomIn()
     {
+        retController.setZoomReticle(true);
         startOutZoomTransition = false;
         startZoomTransition = true;   
         //cineCam.m_Lens.FieldOfView = Mathf.Lerp(25, 60, Time.deltaTime / 200);
@@ -143,6 +146,7 @@ public class CameraLook : MonoBehaviour
 
     private void zoomOut()
     {
+        retController.setZoomReticle(false);
         startZoomTransition = false;
         startOutZoomTransition = true;
         //cineCam.m_Lens.FieldOfView = 60;
