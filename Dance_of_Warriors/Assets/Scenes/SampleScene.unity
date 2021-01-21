@@ -643,7 +643,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 50352262}
-  m_LocalRotation: {x: 0.061378304, y: -1.248339e-15, z: -2.0300095e-14, w: -0.9981146}
+  m_LocalRotation: {x: 0.081137456, y: -0.03650695, z: -0.002973888, w: -0.99602973}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1029,7 +1029,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 2030874313}
+  m_LookAt: {fileID: 275225649}
   m_Follow: {fileID: 2030874313}
   m_CommonLens: 1
   m_Lens:
@@ -1151,6 +1151,7 @@ MonoBehaviour:
   yAimAssist: 0.2
   aimFarthestPoint: 100
   aimNearestPoint: 2
+  aimTransitionSpeed: 200
 --- !u!114 &140528584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1912,6 +1913,36 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &275225648
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 275225649}
+  m_Layer: 8
+  m_Name: Aim Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &275225649
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275225648}
+  m_LocalRotation: {x: 5.2041704e-18, y: -3.523657e-19, z: -8.944668e-19, w: 1}
+  m_LocalPosition: {x: 0.286, y: 0.234, z: 0.058}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6515712193580905052}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &287007697
 GameObject:
   m_ObjectHideFlags: 0
@@ -2728,7 +2759,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 381659611}
-  m_LocalRotation: {x: -0.09012994, y: 0.000000017136356, z: 0.0000000015508018, w: 0.9959301}
+  m_LocalRotation: {x: -0.10982076, y: 0.036406025, z: 0.0040252013, w: 0.99327636}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5227,7 +5258,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80ca02cdfb94034381ec1d30a42e460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Image: {fileID: 21300000, guid: 8e7951917d8600344b37859c152053ad, type: 3}
 --- !u!65 &712258675
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9375,7 +9405,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1324469280}
-  m_LocalRotation: {x: -0.11861743, y: -0.0000000042712225, z: -5.102127e-10, w: 0.99294007}
+  m_LocalRotation: {x: -0.13822417, y: 0.036275808, z: 0.005066257, w: 0.98972344}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -11926,7 +11956,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1878047163}
-  m_LocalRotation: {x: -0.10495417, y: 0.000000011977947, z: 0.0000000012641169, w: 0.9944771}
+  m_LocalRotation: {x: -0.12460326, y: 0.03634204, z: 0.0045670173, w: 0.99153036}
   m_LocalPosition: {x: 1.1641532e-10, y: -0.37155327, z: -3.9006271}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -12562,7 +12592,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6515712193580905052}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2051776965
 GameObject:
@@ -16666,7 +16696,7 @@ Transform:
   m_Children:
   - {fileID: 8700783698690809800}
   m_Father: {fileID: 6515712193580905052}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5908896641356441309
 GameObject:
@@ -17058,6 +17088,7 @@ Transform:
   m_LocalPosition: {x: 0.000568679, y: 0.1423577, z: -0.020880915}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 275225649}
   - {fileID: 2030874313}
   - {fileID: 5901452235252079398}
   m_Father: {fileID: 366175167987498529}

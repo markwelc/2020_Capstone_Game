@@ -26,8 +26,9 @@ public class CameraLook : MonoBehaviour
     public float yAimAssist = 0.2f;
     public float aimFarthestPoint = 100f;
     public float aimNearestPoint = 2f;
-
-
+    private bool startOutZoomTransition = false;
+    private bool startZoomTransition = false;
+    public float aimTransitionSpeed = 10f;
     private void Awake()
     {
         cameraMain = Camera.main.transform;
@@ -38,6 +39,9 @@ public class CameraLook : MonoBehaviour
         // set to initalize look with mouse or right thumbstick
         controls.Gameplay.Look.performed += ctx => rotate = ctx.ReadValue<Vector2>();
         controls.Gameplay.Look.canceled += ctx => rotate = Vector2.zero;
+
+        controls.Gameplay.Aim.performed += ctx => zoomIn();
+        controls.Gameplay.Aim.canceled += ctx => zoomOut();
 
     }
 
@@ -63,6 +67,14 @@ public class CameraLook : MonoBehaviour
     {
         //controls.Gameplay.Fire.performed += ctx => AddRecoil();
         RotateCamera();
+        if(startZoomTransition)
+        {
+            fovTransition(30);
+        }
+        else if(startOutZoomTransition)
+        {
+            fovTransition(55);
+        }
     }
 
     //weapon recoil
@@ -116,5 +128,54 @@ public class CameraLook : MonoBehaviour
         // Rotate with the max angle (200 looks good i think) and the sensitivity in each direction
         cineCam.m_XAxis.Value += r.x * 200 * xLookSensitivity * Time.deltaTime;
         cineCam.m_YAxis.Value += r.y * yLookSensitivity * Time.deltaTime;
+    }
+
+    private void zoomIn()
+    {
+        startOutZoomTransition = false;
+        startZoomTransition = true;   
+        //cineCam.m_Lens.FieldOfView = Mathf.Lerp(25, 60, Time.deltaTime / 200);
+        defaultX = 0.5f;
+        defaultY = 0.5f;
+        Debug.Log("zoom in");
+
+    }
+
+    private void zoomOut()
+    {
+        startZoomTransition = false;
+        startOutZoomTransition = true;
+        //cineCam.m_Lens.FieldOfView = 60;
+        defaultX = 1;
+        defaultY = 1;
+        Debug.Log("zoom out");
+    }
+
+    private void fovTransition(float end)
+    {
+        Debug.Log("starting transition");
+        if (end == 30)
+        {
+            cineCam.m_Lens.FieldOfView -= Time.deltaTime * aimTransitionSpeed;
+            if (cineCam.m_Lens.FieldOfView <= end)
+            {
+                cineCam.m_Lens.FieldOfView = end;
+                Debug.Log("Ending Transition");
+                startZoomTransition = false;
+            }
+        }
+        else
+        {
+            cineCam.m_Lens.FieldOfView += Time.deltaTime * aimTransitionSpeed;
+            if (cineCam.m_Lens.FieldOfView >= end)
+            {
+                cineCam.m_Lens.FieldOfView = end;
+                Debug.Log("Ending Transition");
+                startOutZoomTransition = false;
+            }
+        }
+        Debug.Log("FOV Val :" + cineCam.m_Lens.FieldOfView);
+
+        
     }
 }
