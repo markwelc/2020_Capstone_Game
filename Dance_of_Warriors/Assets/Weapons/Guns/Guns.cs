@@ -18,7 +18,7 @@ public class Guns : WeaponController
 
     //add limited magazines?
 
-    public override void useWeapon(string weaponName, out string animation, out int[] states)
+    public override void useWeapon(string weaponName, out string animation, out int[] states, int attackType)
     {
 
         if (bulletsLeft == -1)
@@ -42,7 +42,10 @@ public class Guns : WeaponController
             shoot();
         }
         //get the animation and states from the tool
-        animation = animationName;
+        if (attackType == 2)
+            animation = animationNameSecondary;
+        else
+            animation = animationName;
         states = weaponStates;
     }
 

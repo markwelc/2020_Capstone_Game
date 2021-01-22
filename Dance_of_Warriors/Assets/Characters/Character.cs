@@ -49,7 +49,7 @@ public class Character : MonoBehaviour
     protected actionState toolActionState;
     protected int[] toolStates; //length of each phase
     protected int usingTool; //keep track of where we are in an element of toolStates
-    protected int toolUsed; //keeps track of which tool is being used (0 means no tool)
+    protected int toolAnimation; //keeps track of which animation for the tool is being used
 
     protected actionState dashActionState;
     protected int[] dashLength; //lists the number of frames that each phase should be active for
@@ -59,7 +59,6 @@ public class Character : MonoBehaviour
 
     [SerializeField] protected string[] availableWeapons;
     protected int equippedWeapon; //which weapon is currently equipped
-    protected int equippedWeapon2; //which weapon is currently equipped as the secondary weapon
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -165,16 +164,17 @@ public class Character : MonoBehaviour
         //do nothing
     }
 
-    protected virtual void useWeapons(int toolNum) //actually goes and uses the weapon
+    /*
+     * attackType should be either 1 or 2
+     * 1 if using the currently equipped weapon's primary attack
+     * 2 if using the currently equipped weapon's secondary attack
+     */
+    protected virtual void useWeapons(int attackType) //actually goes and uses the weapon
     {
 
         string animation;
         int[] states;
-        if(toolNum == 2)
-            weaponAccess.useWeapon(availableWeapons[equippedWeapon2], out animation, out states); //the first argument will probably be replaced with a default weapon that doesn't exist yet
-        else //e.g. if toolNum is 1
-            //this way our default tool is our primary tool
-            weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states);
+            weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states, attackType); //the first argument will probably be replaced with a default weapon that doesn't exist yet
  
         if (animation != null)
             anim.SetTrigger(animation); //start the animation
@@ -193,7 +193,9 @@ public class Character : MonoBehaviour
 
     //start using a tool
     //this is in Character.cs because it is similar for every character
-    protected void initiateTool(int toolNum)
+    //toolOption refers to which option for the tool you want to use (main or secondary attack for example) 
+    //should be either 1 or 2
+    protected void initiateTool(int toolOption)
     {
         if (toolAllowed())
         {
@@ -202,7 +204,7 @@ public class Character : MonoBehaviour
 
             usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the value of the first element in toolStates (telegraph length)
 
-            toolUsed = toolNum; //set the tool that we're using depending on how this function was called
+            toolAnimation = toolOption; //set the tool that we're using depending on how this function was called
         }
     }
 
@@ -216,8 +218,8 @@ public class Character : MonoBehaviour
             toolActionState++; //move to the next state
             usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the appropriate value
 
-            useWeapons(toolUsed);
-            toolUsed = 0; //we're done with this, set it up for next time.
+            useWeapons(toolAnimation);
+            toolAnimation = 0; //we're done with this, set it up for next time.
         }
         else if (toolActionState == actionState.active && usingTool <= 0) //if we're using a tool and need to recover
         {
@@ -242,6 +244,13 @@ public class Character : MonoBehaviour
         {
             usingTool--;
         }
+    }
+
+    //changes currently equipped weapon to the next one in available weapons array
+    protected void cycleWeapon()
+    {
+        equippedWeapon++;
+        equippedWeapon = equippedWeapon % availableWeapons.Length;
     }
 
     //these three functions determine whether the character may jump

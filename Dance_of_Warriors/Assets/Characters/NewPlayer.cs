@@ -43,7 +43,7 @@ public class NewPlayer : Character
         controls.Gameplay.Tool3.performed += ctx => initiateTool(3); //this is meant for offensive items (grenades)
         controls.Gameplay.Tool4.performed += ctx => initiateTool(4); //this is meant for support items (estus stimpaks)
         controls.Gameplay.ChangeViewMode.performed += ctx => changeViewMode();
-        //controls.Gameplay.CycleWeapon.performed += ctx => cycleWeapon();
+        controls.Gameplay.CycleWeapon.performed += ctx => cycleWeapon();
 
         controls.Gameplay.Pickup.performed += ctx => PickupMessage();
     }
@@ -84,7 +84,7 @@ public class NewPlayer : Character
         toolStates[1] = 0;  //length of action
         toolStates[2] = 0;  //length of recovery
         toolStates[3] = 0;  //length of tool cooldown
-        toolUsed = 0;
+        toolAnimation = 0;
         // End tools
 
         dashVector = Vector3.zero;
@@ -99,14 +99,13 @@ public class NewPlayer : Character
 
         dashSpeed = new float[4];
         dashSpeed[0] = speed; //speed to move while in telegraph
-        dashSpeed[1] = speed * 3; //speed to move while dashing
+        dashSpeed[1] = speed * 7; //speed to move while dashing
         dashSpeed[2] = speed; //speed to move while in recovery
         dashSpeed[3] = 0; //this should never be used
 
         mouseSensitivity = 100;
 
         equippedWeapon = 1; //this is the starting value
-        equippedWeapon2 = 0;
     }
 
     /**
