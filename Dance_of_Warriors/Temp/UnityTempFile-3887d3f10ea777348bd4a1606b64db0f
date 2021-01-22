@@ -301,6 +301,7 @@ Assets\Characters\NewPlayer.cs
 Assets\Characters\PlayerHealthController.cs
 Assets\Characters\PlayerManager.cs
 Assets\Characters\TrainingDummy.cs
+Assets\Cube.cs
 Assets\HUD.cs
 Assets\HealthBarManager.cs
 Assets\Inventory.cs
@@ -313,7 +314,6 @@ Assets\Weapons\Guns\Handgun.cs
 Assets\Weapons\Melee\Melee.cs
 Assets\Weapons\Melee\Stick.cs
 Assets\Weapons\WeaponController.cs
-Assets\cube.cs
 Assets\damageTester.cs
 Assets\doorController.cs
 Assets\loadArenaScene.cs
