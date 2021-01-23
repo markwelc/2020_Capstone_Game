@@ -27,4 +27,17 @@ public class HealthPack : MonoBehaviour, IInventoryItem
         Debug.Log("Health Pack picked up");
         gameObject.SetActive(false);
     }
+
+    public void OnUse()
+    {
+        heal();
+    }
+
+    public PlayerHealthController PlayerHealth;
+    public float healVal = 20f;
+
+    void heal()
+    {
+        PlayerHealth.healGeneralHealth(healVal);
+    }
 }

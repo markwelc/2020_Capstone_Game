@@ -12974,6 +12974,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Image: {fileID: 21300000, guid: 94d4d568c5ea40d4ca572c313c39dba7, type: 3}
+  PlayerHealth: {fileID: 0}
+  healVal: 20
 --- !u!65 &2063955777
 BoxCollider:
   m_ObjectHideFlags: 0

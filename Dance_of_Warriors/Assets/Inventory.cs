@@ -35,6 +35,15 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void UseItem(IInventoryItem item)
+    {
+        if (mItems.Contains(item))
+        {
+            Debug.Log("Item found in inventory");
+        }
+        item.OnUse();
+    }
+
 
     private void Awake()
     {
