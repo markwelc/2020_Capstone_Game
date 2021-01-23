@@ -66,6 +66,7 @@
      <Compile Include="Assets\Cube.cs" />
      <Compile Include="Assets\HUD.cs" />
      <Compile Include="Assets\HealthBarManager.cs" />
+     <Compile Include="Assets\HealthPack.cs" />
      <Compile Include="Assets\Inventory.cs" />
      <Compile Include="Assets\InventoryItem.cs" />
      <Compile Include="Assets\PauseMenu.cs" />
