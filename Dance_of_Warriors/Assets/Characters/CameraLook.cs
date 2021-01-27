@@ -87,7 +87,7 @@ public class CameraLook : MonoBehaviour
 	{
         ImpulseSource.GenerateImpulse(Camera.main.transform.up);
         retController.setShot();
-        Debug.Log("impulse!");
+       // Debug.Log("impulse!");
     }
 
     /**
@@ -109,7 +109,7 @@ public class CameraLook : MonoBehaviour
         if (Physics.Raycast(ray, out hit, aimFarthestPoint))
         {
             //making the knight continuous solves aim assist issue
-            if (hit.collider.gameObject.CompareTag("Enemy"))
+            if (hit.collider.gameObject.layer == 10)
             {
                 enableTargetCross(new Color32(255, 0, 0, 255));
                 yLookSensitivity = yAimAssist;
@@ -146,7 +146,6 @@ public class CameraLook : MonoBehaviour
         //cineCam.m_Lens.FieldOfView = Mathf.Lerp(25, 60, Time.deltaTime / 200);
         defaultX = 0.5f;
         defaultY = 0.5f;
-        Debug.Log("zoom in");
 
     }
 
@@ -158,19 +157,18 @@ public class CameraLook : MonoBehaviour
         //cineCam.m_Lens.FieldOfView = 60;
         defaultX = 1;
         defaultY = 1;
-        Debug.Log("zoom out");
+        
     }
 
     private void fovTransition(float end)
     {
-        Debug.Log("starting transition");
+       
         if (end == 30)
         {
             cineCam.m_Lens.FieldOfView -= Time.deltaTime * aimTransitionSpeed;
             if (cineCam.m_Lens.FieldOfView <= end)
             {
                 cineCam.m_Lens.FieldOfView = end;
-                Debug.Log("Ending Transition");
                 startZoomTransition = false;
             }
         }
