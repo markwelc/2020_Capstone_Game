@@ -8,6 +8,8 @@ public class Melee : WeaponController
     protected int[] phaseTimes; //the lenght of time each phase should last
     public Collider user; //the character using this weapon
                           // private Transform weaponTransform;
+    protected Character targetCharacter; //used to figure out what to actually damage
+                                //may or may not eventually move to WeaponController.cs
 
 
     //public override void useWeapon(string weaponName, out string animation, out float[] states)
@@ -28,4 +30,6 @@ public class Melee : WeaponController
             animation = animationName;
         states = weaponStates;
     }
+
+    
 }
