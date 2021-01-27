@@ -15,38 +15,43 @@ public class Guns : WeaponController
     private GameObject mine;
     protected CameraLook myC;
 
+    //not shooting should have an animation associated with it
+    //this is because we tell whether or not we should make a projectile by whether or not we're playing an animation
 
     //add limited magazines?
 
     public override void useWeapon(string weaponName, out string animation, out int[] states, int attackType)
     {
-
-        if (bulletsLeft == -1)
-		{
-            //set the correct number of bullets in the magazine depending on which gun is being used
-            bulletsLeft = ammo;
-            shoot();
-		}
-        //you've run out of ammo! reload!
-        else if (bulletsLeft == 0)
-		{
-            if (reloading == false)
-			{
-                reloading = true;
-                StartCoroutine("Reload");
-            }
-		}
-        //go ahead and shoot one bullet and remove it from the magazine
-        else
-		{
-            shoot();
-        }
         //get the animation and states from the tool
         if (attackType == 2)
             animation = animationNameSecondary;
         else
             animation = animationName;
         states = weaponStates;
+
+        if(animation == null) //only deal with shooting if we aren't using another animation
+        {
+            if (bulletsLeft == -1)
+            {
+                //set the correct number of bullets in the magazine depending on which gun is being used
+                bulletsLeft = ammo;
+                shoot();
+            }
+            //you've run out of ammo! reload!
+            else if (bulletsLeft == 0)
+            {
+                if (reloading == false)
+                {
+                    reloading = true;
+                    StartCoroutine("Reload");
+                }
+            }
+            //go ahead and shoot one bullet and remove it from the magazine
+            else
+            {
+                shoot();
+            }
+        }
     }
 
     IEnumerator Reload()
