@@ -27,9 +27,16 @@ public class TrainingDummy : Character
     public GameObject projectile; //used for attacks
 
     //states
-    public float sightRange, attackRange; //self explanatory
-    public bool playerInSightRange, playerInAttackRange; //self explanatory
+    
+    public musicAnalyzer music;
+    private bool actionDone = false;
 
+    // Can grow if needed
+    // 0 = patrolling
+    // 1 = following
+    // 2 = inRange
+    private int enemyState;
+    
     private void Awake()
     {
         // player = GameObject.Find("Enemy Knight").transform; //find the position of the player
@@ -41,6 +48,8 @@ public class TrainingDummy : Character
     // Start is called before the first frame update
     protected override void Start()
     {
+        if (music == null)
+            Debug.Log("need music analyzer");
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
         // healthMax = 5;
@@ -54,34 +63,127 @@ public class TrainingDummy : Character
     private void Update()
     {
         distance = Vector3.Distance(target.position, transform.position);
-    }
-
-    protected override void handleMovement()
-    {
-        if (distance <= lookRadius)
+        if (!isDead)
         {
-            agent.SetDestination(target.position);
-            transform.LookAt(target.position);
+            // If beat is 3 they can do one action
+            if (music.getbeat() == 3 && !actionDone)
+            {
+                // Figure out action
+                onBeatAction();
+                // Can only do one action
+                actionDone = true;
+            }
+            else if (music.getbeat() == 2)
+            {
+                // reset action to prep for next available beat
+                actionDone = false;
+            }
         }
         else
         {
-            Patrolling();
+            // Complete enemy specific death operation
+            enemyDefeated();
         }
     }
 
-    protected override void handleAngle()
+    /**
+     * Handles moving the player
+     * and setting their current state
+     */
+    protected override void handleMovement()
     {
-        //don't set any angle, let the two transform.LookAt lines (in handleMovement and Patrolling) do it
+        if (!isDead)
+        {
+            if (distance <= lookRadius)
+            {
+                if (distance > attackRadius) // In attack range dont want to move but do want to set to look at player
+                {
+                    enemyState = 1;
+                    agent.SetDestination(target.position);
+                }
+                transform.LookAt(target.position);
+            }
+            else
+            {
+                Patrolling();
+                enemyState = 0;
+            }
+        }
     }
 
+    /**
+     * This happens on the third beat
+     * Where are they in relation to player?
+     * Slect action based on where they are
+     * NOTE: will need to handle to do something in between beats 
+     * otherwise the player will be in range but just not be doing anything until 3rd beat
+     */
+    private void onBeatAction()
+    {
+        // Overall idea
+        // Enemy has a list of available actions for each case
+        // randomly select one depending on case
+        // maybe less randomly if we can check what the player is doing
+        switch(enemyState)
+        {
+            case 0: // Patrolling
+                selectPatrollingAction();
+                break;
+            case 1: // Following
+                selectFollowingAction();
+                break;
+            case 2: // In player range
+                selectInRangeAction();
+                break;
+            default:
+                Debug.Log("Unrecognizable enemy state");
+                break;
+        }
+    }
+
+    /**
+     * This will be called on beat.
+     * They are patrolling so what can the do for an action?
+     */
+    private void selectPatrollingAction()
+    {
+        Debug.Log("Select patrol action");
+    }
+
+    /**
+     * This will be called on beat.
+     * They are following the player so what can they do?
+     */
+    private void selectFollowingAction()
+    {
+        Debug.Log("Select following action");
+    }
+
+    /**
+     * This will be called on beat.
+     * They are in range so what can they do?
+     */
+    private void selectInRangeAction()
+    {
+        Debug.Log("Select in range action");
+        AttackPlayer();
+    }
+
+    /**
+     * They are in range
+     * set state to notify
+     */
     protected override void handleWeapons()
     {
         if (distance <= attackRadius)
         {
-            AttackPlayer();
+            enemyState = 2;
         }
     }
 
+    /**
+     * Enemy is randomly patrolling
+     */
     private void Patrolling()
     {
         //finds a walk point for the patrolling behavior
@@ -100,6 +202,10 @@ public class TrainingDummy : Character
             walkPointSet = false;
     }
 
+    /**
+     * They are patrolling
+     * now search for a random patrol point
+     */
     private void SearchWalkPoint()
     {
         //Z and X coordinate range for random walkpoint setting
@@ -117,7 +223,13 @@ public class TrainingDummy : Character
             walkPointSet = true;
     }
 
-    //attack player code
+    
+    /**
+     * Attack the player
+     * this will need to be changed later depending
+     * on how attacks are handled
+     * Maybe change weapon to be used for attack by feeding in variable
+     */
     private void AttackPlayer()
     {
         //Debug.Log("Attacking Player");
@@ -146,33 +258,16 @@ public class TrainingDummy : Character
         alreadyAttacked = false;
     }
 
-    // //handles taking damage from player
-    // public void TakeDamage(int damage)
-    // {
-    //     //damage health
-    //     health -= damage;
+    private void enemyDefeated()
+    {
+        Destroy(agent);
+    }
 
-    //     //kill character if health == 0
-    //     if (health <= 0)
-    //         die();
-    //     else if (healthMax < health) //if the character has too much health for some reason
-    //         health = healthMax; //reduce their health to the max possible
-    // }
-    //     // if (health <= 0)
-    //     //     die();
-    //     // else if (healthMax < health) //if the character has too much health for some reason
-    //     //     health = healthMax; //reduce their health to the max possible
+    protected override void handleAngle()
+    {
+        //don't set any angle, let the two transform.LookAt lines (in handleMovement and Patrolling) do it
+    }
 
-    //     // if(jumpPossible)
-    //     // {
-    //     //     if(isJumping)
-    //     //     {
-    //     //         anim.SetBool("isJumping", false);
-    //     //         anim.SetBool("doneJumping", true);
-    //     //         isJumping = false;
-    //     //     }
-    //     // }
-    // // }
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

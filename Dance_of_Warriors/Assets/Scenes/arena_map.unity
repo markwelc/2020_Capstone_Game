@@ -2415,10 +2415,7 @@ MonoBehaviour:
   walkPointRange: 0
   timeBetweenAttacks: 0
   projectile: {fileID: 0}
-  sightRange: 0
-  attackRange: 0
-  playerInSightRange: 0
-  playerInAttackRange: 0
+  music: {fileID: 980197864}
 --- !u!136 &196954799
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5958,7 +5955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  ourTarget: Enemy Knight
+  ourTarget: Enemy Cyborg
 --- !u!114 &416964765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6578,6 +6575,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 452819991}
+  - component: {fileID: 452819992}
   m_Layer: 12
   m_Name: Middle Beams
   m_TagString: Untagged
@@ -6603,6 +6601,24 @@ Transform:
   m_Father: {fileID: 794475197}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &452819992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452819990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6619ac66d5bb8544848b1fdeb038d23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music: {fileID: 980197864}
+  beams:
+  - {fileID: 404286985}
+  - {fileID: 1106989077}
+  - {fileID: 1308579169}
+  - {fileID: 1366434607}
 --- !u!1 &454582411
 GameObject:
   m_ObjectHideFlags: 0
@@ -13195,12 +13211,12 @@ PrefabInstance:
     - target: {fileID: 2261187898084467975, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.05163209
+      value: 0.051632058
       objectReference: {fileID: 0}
     - target: {fileID: 2261187898084467975, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0023712728
+      value: 0.0023712711
       objectReference: {fileID: 0}
     - target: {fileID: 2261187898084467975, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
@@ -13255,7 +13271,7 @@ PrefabInstance:
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0005988443
+      value: 0.0005988432
       objectReference: {fileID: 0}
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
@@ -14146,6 +14162,50 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 977877333}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &980197863
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 980197865}
+  - component: {fileID: 980197864}
+  m_Layer: 0
+  m_Name: Music Analyzer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &980197864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980197863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b69fb088ba90e3b48a158ac5df8148fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  beatSpeed: 1.5
+--- !u!4 &980197865
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980197863}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14.12, y: -0.98872316, z: -0.96000004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &985588895 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 463376, guid: e15828603e27c5e42b39860e4f55da70,
@@ -14594,10 +14654,7 @@ MonoBehaviour:
   walkPointRange: 0
   timeBetweenAttacks: 0
   projectile: {fileID: 0}
-  sightRange: 0
-  attackRange: 0
-  playerInSightRange: 0
-  playerInAttackRange: 0
+  music: {fileID: 0}
 --- !u!195 &1027853771
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -16043,10 +16100,7 @@ MonoBehaviour:
   walkPointRange: 10
   timeBetweenAttacks: 2
   projectile: {fileID: 0}
-  sightRange: 10
-  attackRange: 5
-  playerInSightRange: 0
-  playerInAttackRange: 0
+  music: {fileID: 0}
 --- !u!1 &1100449198
 GameObject:
   m_ObjectHideFlags: 0
@@ -20829,12 +20883,12 @@ PrefabInstance:
     - target: {fileID: 4745595593235009125, guid: f013b6817c9f7514fbebe99b72a2b792,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.051659826
+      value: 0.051659793
       objectReference: {fileID: 0}
     - target: {fileID: 4745595593235009125, guid: f013b6817c9f7514fbebe99b72a2b792,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0016611523
+      value: 0.0016611513
       objectReference: {fileID: 0}
     - target: {fileID: 4745595593235009125, guid: f013b6817c9f7514fbebe99b72a2b792,
         type: 3}
@@ -21901,7 +21955,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enemy Knight
+  m_Text: Enemy Cyborg
 --- !u!222 &1388920364
 CanvasRenderer:
   m_ObjectHideFlags: 0
