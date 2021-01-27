@@ -121,6 +121,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Aim"",
+                    ""type"": ""Button"",
+                    ""id"": ""cdd679c7-8e09-4a59-a40f-960aba91e900"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -401,17 +409,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""07c627d4-2d34-45ed-99a3-215ba6fca614"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Tool3"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""54744ff6-bc69-46d6-a3f7-2d6541084c33"",
                     ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
@@ -429,6 +426,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Tool4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""102d2997-fc09-4db9-b3f2-aa5e4106e034"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5199940e-a60b-4461-b245-b30cc6c11267"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -452,6 +471,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_Tool2 = m_Gameplay.FindAction("Tool2", throwIfNotFound: true);
         m_Gameplay_Tool3 = m_Gameplay.FindAction("Tool3", throwIfNotFound: true);
         m_Gameplay_Tool4 = m_Gameplay.FindAction("Tool4", throwIfNotFound: true);
+        m_Gameplay_Aim = m_Gameplay.FindAction("Aim", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -514,6 +534,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Tool2;
     private readonly InputAction m_Gameplay_Tool3;
     private readonly InputAction m_Gameplay_Tool4;
+    private readonly InputAction m_Gameplay_Aim;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -531,6 +552,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Tool2 => m_Wrapper.m_Gameplay_Tool2;
         public InputAction @Tool3 => m_Wrapper.m_Gameplay_Tool3;
         public InputAction @Tool4 => m_Wrapper.m_Gameplay_Tool4;
+        public InputAction @Aim => m_Wrapper.m_Gameplay_Aim;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -579,6 +601,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Tool4.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTool4;
                 @Tool4.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTool4;
                 @Tool4.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTool4;
+                @Aim.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAim;
+                @Aim.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAim;
+                @Aim.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAim;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -622,6 +647,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Tool4.started += instance.OnTool4;
                 @Tool4.performed += instance.OnTool4;
                 @Tool4.canceled += instance.OnTool4;
+                @Aim.started += instance.OnAim;
+                @Aim.performed += instance.OnAim;
+                @Aim.canceled += instance.OnAim;
             }
         }
     }
@@ -641,5 +669,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnTool2(InputAction.CallbackContext context);
         void OnTool3(InputAction.CallbackContext context);
         void OnTool4(InputAction.CallbackContext context);
+        void OnAim(InputAction.CallbackContext context);
     }
 }

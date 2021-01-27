@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEditor;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CinemachineFreeLook))]
 
@@ -26,18 +27,26 @@ public class CameraLook : MonoBehaviour
     public float yAimAssist = 0.2f;
     public float aimFarthestPoint = 100f;
     public float aimNearestPoint = 2f;
-
-
+    private bool startOutZoomTransition = false;
+    private bool startZoomTransition = false;
+    public float aimTransitionSpeed = 10f;
+    reticleController retController;
+    private Image[] crossHairpieces;
     private void Awake()
     {
         cameraMain = Camera.main.transform;
-        reticle = GameObject.Find("/Main Camera/Reticle");
+        reticle = GameObject.Find("/Main Camera/Canvas/Reticle");
         Reticle = reticle.transform;
+        retController = reticle.GetComponent<reticleController>();
+        crossHairpieces = reticle.GetComponentsInChildren<Image>();
         controls = new PlayerControls();
         cineCam = GetComponent<CinemachineFreeLook>();
         // set to initalize look with mouse or right thumbstick
         controls.Gameplay.Look.performed += ctx => rotate = ctx.ReadValue<Vector2>();
         controls.Gameplay.Look.canceled += ctx => rotate = Vector2.zero;
+
+        controls.Gameplay.Aim.performed += ctx => zoomIn();
+        controls.Gameplay.Aim.canceled += ctx => zoomOut();
 
     }
 
@@ -63,13 +72,22 @@ public class CameraLook : MonoBehaviour
     {
         //controls.Gameplay.Fire.performed += ctx => AddRecoil();
         RotateCamera();
+        if(startZoomTransition)
+        {
+            fovTransition(30);
+        }
+        else if(startOutZoomTransition)
+        {
+            fovTransition(55);
+        }
     }
 
     //weapon recoil
     public void AddRecoil()
 	{
         ImpulseSource.GenerateImpulse(Camera.main.transform.up);
-        Debug.Log("impulse!");
+        retController.setShot();
+       // Debug.Log("impulse!");
     }
 
     /**
@@ -80,10 +98,10 @@ public class CameraLook : MonoBehaviour
         //aim assist starts here
 
         //Ray ray = new Ray(Reticle.transform.position, Reticle.transform.forward);
-        Ray ray = new Ray(cameraMain.transform.position, cameraMain.transform.forward);
+        Ray ray = new Ray(Reticle.transform.position, Reticle.transform.forward);
         RaycastHit hit = new RaycastHit();
         //drawing the ray from the reticle generates an incorrect angle due to the fact that the reticle is in front of the player in the game world.
-        //Debug.DrawRay(Reticle.transform.position, Reticle.transform.forward * 10, Color.red, 1);
+        Debug.DrawRay(Reticle.transform.position, Reticle.transform.forward * 10, Color.red, 1);
         //Debug.DrawRay(cameraMain.transform.position, cameraMain.transform.forward * 10, Color.red, 0.5f);
 
 
@@ -91,9 +109,9 @@ public class CameraLook : MonoBehaviour
         if (Physics.Raycast(ray, out hit, aimFarthestPoint))
         {
             //making the knight continuous solves aim assist issue
-            if (hit.collider.gameObject.CompareTag("Enemy") && hit.distance >= aimNearestPoint)
+            if (hit.collider.gameObject.layer == 10)
             {
-                //Debug.Log("Hitting enemy");
+                enableTargetCross(new Color32(255, 0, 0, 255));
                 yLookSensitivity = yAimAssist;
                 xLookSensitivity = xAimAssist;
             }
@@ -101,6 +119,7 @@ public class CameraLook : MonoBehaviour
             {
                 yLookSensitivity = defaultY;
                 xLookSensitivity = defaultX;
+                enableTargetCross(new Color32(0, 255, 0, 255));
             }
         }
         else
@@ -108,6 +127,7 @@ public class CameraLook : MonoBehaviour
             //Debug.Log("Hitting world");
             yLookSensitivity = defaultY;
             xLookSensitivity = defaultX;
+            enableTargetCross(new Color32(0, 255, 0, 255));
         }
 
         // get our rotation vector
@@ -117,4 +137,62 @@ public class CameraLook : MonoBehaviour
         cineCam.m_XAxis.Value += r.x * 200 * xLookSensitivity * Time.deltaTime;
         cineCam.m_YAxis.Value += r.y * yLookSensitivity * Time.deltaTime;
     }
+
+    private void zoomIn()
+    {
+        retController.setZoomReticle(true);
+        startOutZoomTransition = false;
+        startZoomTransition = true;   
+        //cineCam.m_Lens.FieldOfView = Mathf.Lerp(25, 60, Time.deltaTime / 200);
+        defaultX = 0.5f;
+        defaultY = 0.5f;
+
+    }
+
+    private void zoomOut()
+    {
+        retController.setZoomReticle(false);
+        startZoomTransition = false;
+        startOutZoomTransition = true;
+        //cineCam.m_Lens.FieldOfView = 60;
+        defaultX = 1;
+        defaultY = 1;
+        
+    }
+
+    private void fovTransition(float end)
+    {
+       
+        if (end == 30)
+        {
+            cineCam.m_Lens.FieldOfView -= Time.deltaTime * aimTransitionSpeed;
+            if (cineCam.m_Lens.FieldOfView <= end)
+            {
+                cineCam.m_Lens.FieldOfView = end;
+                startZoomTransition = false;
+            }
+        }
+        else
+        {
+            cineCam.m_Lens.FieldOfView += Time.deltaTime * aimTransitionSpeed;
+            if (cineCam.m_Lens.FieldOfView >= end)
+            {
+                cineCam.m_Lens.FieldOfView = end;
+                Debug.Log("Ending Transition");
+                startOutZoomTransition = false;
+            }
+        }
+        //Debug.Log("FOV Val :" + cineCam.m_Lens.FieldOfView);
+
+        
+    }
+
+    void enableTargetCross(Color32 color)
+    {
+        foreach(Image cross in crossHairpieces)
+        {
+            cross.color = color;
+        }
+    }
+
 }

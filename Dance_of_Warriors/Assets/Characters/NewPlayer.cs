@@ -21,6 +21,9 @@ public class NewPlayer : Character
 
     [SerializeField] private LayerMask playerLayer;
 
+    private GameObject reticle;
+    reticleController retController;
+
     /**
      * On awake we initialize our controls to tell it what to do with each
      *
@@ -46,6 +49,9 @@ public class NewPlayer : Character
         //controls.Gameplay.CycleWeapon.performed += ctx => cycleWeapon();
 
         controls.Gameplay.Pickup.performed += ctx => PickupMessage();
+
+        reticle = GameObject.Find("/Main Camera/Canvas/Reticle");
+        retController = reticle.GetComponent<reticleController>();
     }
 
     /**
@@ -144,6 +150,10 @@ public class NewPlayer : Character
      */
     private void standardMovement()
     {
+        if (move != Vector2.zero)
+            retController.setMoving(true);
+        else
+            retController.setMoving(false);
         // Essentially we are going in a current direction with respect to the camera view
         // Since input is a 2d vector, move.y is essentially what we want to use to move in the z axis
         // now calculate our vector with respect to the camera
