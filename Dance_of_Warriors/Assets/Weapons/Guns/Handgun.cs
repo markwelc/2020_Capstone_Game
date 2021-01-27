@@ -10,6 +10,7 @@ public class Handgun : Guns
     protected override void Start()
     {
         animationName = null;
+        animationNameSecondary = "quick_left_jab";
         ammo = 7;
         //handgunActive = true;
         //telegraph, action, recovery, cooldown that is passed to the player to determine if/when they can fire
