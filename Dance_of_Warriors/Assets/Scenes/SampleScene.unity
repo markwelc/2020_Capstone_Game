@@ -6411,7 +6411,8 @@ MonoBehaviour:
   walkPointRange: 0
   timeBetweenAttacks: 0
   projectile: {fileID: 0}
-  music: {fileID: 2131382589}
+  onFullBeat: 0
+  onBeatD8: 
 --- !u!195 &1027853771
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -7063,7 +7064,8 @@ MonoBehaviour:
   walkPointRange: 10
   timeBetweenAttacks: 2
   projectile: {fileID: 0}
-  music: {fileID: 0}
+  onFullBeat: 0
+  onBeatD8: 
 --- !u!1 &1097481551
 GameObject:
   m_ObjectHideFlags: 0
@@ -12217,7 +12219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b69fb088ba90e3b48a158ac5df8148fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beatSpeed: 1.5
+  bpm: 127.95
 --- !u!4 &2131382590
 Transform:
   m_ObjectHideFlags: 0
