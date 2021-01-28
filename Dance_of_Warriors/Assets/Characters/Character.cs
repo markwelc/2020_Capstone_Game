@@ -40,11 +40,11 @@ public class Character : MonoBehaviour
     protected actionState jumpActionState; //this may not be needed to restrict jumping, but may be useful in graphics
 
     [SerializeField] protected WeaponController weaponAccess;
-    [SerializeField] protected GameObject weaponsPrefab;
-    protected GameObject gunsPrefab; //this is so that we can access only the guns
+    //[SerializeField] protected GameObject weaponsPrefab;
+    //protected GameObject gunsPrefab; //this is so that we can access only the guns
     [SerializeField] protected GameObject gunsParent; //this will be the parent object of the gunsPrefab
-    protected GameObject meleePrefab;
-    [SerializeField] protected GameObject meleeParent;
+    //protected GameObject meleePrefab;
+    //[SerializeField] protected GameObject meleeParent;
 
     protected actionState toolActionState;
     protected int[] toolStates; //length of each phase
@@ -78,7 +78,7 @@ public class Character : MonoBehaviour
         playerHealthManager = gameObject.AddComponent<PlayerHealthController>();
         health = playerHealthManager.getHealth();
         isDead = false;
-        setWeaponParents();
+        //setWeaponParents();
     }
 
 
@@ -299,27 +299,27 @@ public class Character : MonoBehaviour
         return health;
     }
 
-    /*
-     * move the Guns and Melee gameObjects that are children of the Weapons gameObject into different places
-     */
-    void setWeaponParents()
-    {
-        gunsPrefab = weaponsPrefab.transform.Find("Guns").gameObject; //get the two prefab elements
-        meleePrefab = weaponsPrefab.transform.Find("Melee").gameObject;
+    ///*
+    // * move the Guns and Melee gameObjects that are children of the Weapons gameObject into different places
+    // */
+    //void setWeaponParents()
+    //{
+    //    gunsPrefab = weaponsPrefab.transform.Find("Guns").gameObject; //get the two prefab elements
+    //    meleePrefab = weaponsPrefab.transform.Find("Melee").gameObject;
 
-        gunsPrefab.transform.parent = gunsParent.transform; //make it a child of the correct thing
-        Debug.Log("gunsPrefab.transform.parent = " + gunsPrefab.transform.parent);
-        gunsPrefab.transform.position = gunsParent.transform.position;//set the position and the rotation
-        gunsPrefab.transform.rotation = gunsParent.transform.rotation;
+    //    gunsPrefab.transform.parent = gunsParent.transform; //make it a child of the correct thing
+    //    Debug.Log("gunsPrefab.transform.parent = " + gunsPrefab.transform.parent);
+    //    gunsPrefab.transform.position = gunsParent.transform.position;//set the position and the rotation
+    //    gunsPrefab.transform.rotation = gunsParent.transform.rotation;
 
-        foreach (Collider weaponCollider in meleePrefab.GetComponentsInChildren<Collider>())
-        {
-            Physics.IgnoreCollision(weaponCollider, characterCollider);
-        }
+    //    foreach (Collider weaponCollider in meleePrefab.GetComponentsInChildren<Collider>())
+    //    {
+    //        Physics.IgnoreCollision(weaponCollider, characterCollider);
+    //    }
 
-        meleePrefab.transform.parent = meleeParent.transform;
-        Debug.Log("meleePrefab.transform.parent = " + meleePrefab.transform.parent);
-        meleePrefab.transform.position = meleeParent.transform.position;
-        meleePrefab.transform.rotation = meleeParent.transform.rotation;
-    }
+    //    meleePrefab.transform.parent = meleeParent.transform;
+    //    Debug.Log("meleePrefab.transform.parent = " + meleePrefab.transform.parent);
+    //    meleePrefab.transform.position = meleeParent.transform.position;
+    //    meleePrefab.transform.rotation = meleeParent.transform.rotation;
+    //}
 }
