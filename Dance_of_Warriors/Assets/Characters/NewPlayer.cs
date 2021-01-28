@@ -92,14 +92,14 @@ public class NewPlayer : Character
         dashing = 0;
 
         dashLength = new int[4];
-        dashLength[0] = 2; //length of telegraph
-        dashLength[1] = 15; //length of action
-        dashLength[2] = 2; //length of recovery
-        dashLength[3] = 200; //length of dash cool down
+        dashLength[0] = 0; //length of telegraph
+        dashLength[1] = 22; //length of action
+        dashLength[2] = 0; //length of recovery
+        dashLength[3] = 100; //length of dash cool down
 
         dashSpeed = new float[4];
         dashSpeed[0] = speed; //speed to move while in telegraph
-        dashSpeed[1] = speed * 3; //speed to move while dashing
+        dashSpeed[1] = speed * 2; //speed to move while dashing
         dashSpeed[2] = speed; //speed to move while in recovery
         dashSpeed[3] = 0; //this should never be used
 
@@ -239,8 +239,11 @@ public class NewPlayer : Character
         if (dashAllowed())
         {
             if (move.y > 0.01 || move.x > 0.01)
+			{
                 anim.SetTrigger("isDashing");
-
+                
+            }
+                
             movement = Vector3.ProjectOnPlane(cameraMain.forward, Vector3.up) * move.y + cameraMain.right * move.x; //figure out which direction to dash in
             movement.y = 0; // make sure no vertical movement
             movement = Vector3.Normalize(movement); //be sure movement is a normal vector
@@ -250,27 +253,33 @@ public class NewPlayer : Character
             dashActionState++;
             dashing = dashLength[(int)dashActionState - 1]; //set dashing to the value of the first element in dash length (telegraph length)
 
-            movement *= dashSpeed[(int)dashActionState - 1]; //scales the movement vector
+            //movement *= dashSpeed[(int)dashActionState - 1]; //scales the movement vector
+
+            //need to stop collect information about movement ahead of time, disable movement from the user, and then re-enable it once the roll is complete
         }
     }
 
     private void dashingMovement()
     {
-
+        
         movement = dashVector; //set direction and speed to whatever it was in the previous function call
         movement.y = 0; // double check to make sure no vertical movement
         if (dashActionState == actionState.telegraph && dashing <= 0) //if we're in the telegraph phase and need to switch
         {
+            //OnDisable();
             dashActionState++; //move to the next state
             dashing = dashLength[(int)dashActionState - 1]; //set dashing to the appropriate value
 
             movement *= dashSpeed[(int)dashActionState - 1]; //scale movement
+            //characterRigidbody.AddForce(transform.forward * 20, ForceMode.VelocityChange);
+            anim.SetTrigger("doneDashing");
+            anim.SetBool("isDashing", false);
         }
         else if (dashActionState == actionState.active && dashing <= 0) //if we're dashing and need to recover
         {
             dashActionState++; //move to the next state
             dashing = dashLength[(int)dashActionState - 1]; //set dashing to the appropriate value
-
+            //characterRigidbody.AddForce(transform.forward * 20, ForceMode.VelocityChange);
             movement *= dashSpeed[(int)dashActionState - 1]; //scale movement (this is recovery speed)
         }
         else if (dashActionState == actionState.recovery && dashing <= 0) //if we are recovering and need to go to the cool down
@@ -278,12 +287,14 @@ public class NewPlayer : Character
             dashActionState++; //move to the next state
             dashing = dashLength[(int)dashActionState - 1]; //set dashing to the appropriate value
 
-            anim.SetTrigger("doneDashing");
-            anim.SetBool("isDashing", false);
+            //anim.SetTrigger("doneDashing");
+            //anim.SetBool("isDashing", false);
 
             dashActionState = actionState.inactive;
+            
             handleMovement(); //at this point we just want to move normally
                               //this lets us move in the frame that we switch to using regular movement
+            //OnEnable();
             dashActionState = actionState.cooldown;
             //this swapping of the value of dashActionState is explained in the else
         }
