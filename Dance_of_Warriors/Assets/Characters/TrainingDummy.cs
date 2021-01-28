@@ -27,16 +27,22 @@ public class TrainingDummy : Character
     public GameObject projectile; //used for attacks
 
     //states
-    
-    public musicAnalyzer music;
-    private bool actionDone = false;
 
     // Can grow if needed
     // 0 = patrolling
     // 1 = following
     // 2 = inRange
     private int enemyState;
-    
+
+    // Music stuff
+    [Header("Beat Settings")]
+    [Range(0, 3)]
+    public int onFullBeat;
+    [Range(0, 7)]
+    public int[] onBeatD8;
+    private int beatCountFull;
+
+
     private void Awake()
     {
         // player = GameObject.Find("Enemy Knight").transform; //find the position of the player
@@ -48,8 +54,6 @@ public class TrainingDummy : Character
     // Start is called before the first frame update
     protected override void Start()
     {
-        if (music == null)
-            Debug.Log("need music analyzer");
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
         // healthMax = 5;
@@ -62,22 +66,12 @@ public class TrainingDummy : Character
     // Update is called once per frame
     private void Update()
     {
+        
         distance = Vector3.Distance(target.position, transform.position);
         if (!isDead)
         {
-            // If beat is 3 they can do one action
-            if (music.getbeat() == 3 && !actionDone)
-            {
-                // Figure out action
-                onBeatAction();
-                // Can only do one action
-                actionDone = true;
-            }
-            else if (music.getbeat() == 2)
-            {
-                // reset action to prep for next available beat
-                actionDone = false;
-            }
+            checkBeat();
+            
         }
         else
         {
@@ -85,6 +79,7 @@ public class TrainingDummy : Character
             enemyDefeated();
         }
     }
+
 
     /**
      * Handles moving the player
@@ -109,6 +104,33 @@ public class TrainingDummy : Character
                 enemyState = 0;
             }
         }
+    }
+
+    /**
+     * This checks based on our music analyzer class
+     * if all cases are satisified an on beat action is possible
+     * can then call on beat action function to select one approprite
+     */
+    void checkBeat()
+    {
+        // Loop in 4 steps
+        beatCountFull = musicAnalyzer.beatCountFull % 4;
+
+        // on beat divded by 8 to get our 4 steps
+        for (int i = 0; i < onBeatD8.Length; i++)
+        {
+            // 3 cases
+            // is timer greater than interval
+            // is it a full beat
+            // is the ccount equal to that in question 
+            if (musicAnalyzer.beatD8 && beatCountFull == onFullBeat && musicAnalyzer.beatCountD8 % 8 == onBeatD8[i])
+            {
+                //Debug.Log("Do move");
+                // can do something
+                onBeatAction();
+            }
+        }
+
     }
 
     /**

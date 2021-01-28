@@ -76,6 +76,8 @@
     <Compile Include="Assets\Inventory.cs" />
     <Compile Include="Assets\InventoryItem.cs" />
     <Compile Include="Assets\PauseMenu.cs" />
+    <Compile Include="Assets\Sound\LightOnBeat.cs" />
+    <Compile Include="Assets\Sound\musicAnalyzer.cs" />
     <Compile Include="Assets\Weapons\Guns\BulletController.cs" />
     <Compile Include="Assets\Weapons\Guns\Bullet_Handgun.cs" />
     <Compile Include="Assets\Weapons\Guns\Guns.cs" />
@@ -87,8 +89,6 @@
     <Compile Include="Assets\damageTester.cs" />
     <Compile Include="Assets\doorController.cs" />
     <Compile Include="Assets\loadArenaScene.cs" />
-    <Compile Include="Assets\mapSyncRhythmTest.cs" />
-    <Compile Include="Assets\musicAnalyzer.cs" />
     <Compile Include="Assets\reticleController.cs" />
     <None Include="Assets\Weapons\Melee\how_melee_attack_works.txt" />
     <None Include="Assets\Sci-Fi Styled Modular Pack\Readme.txt" />
