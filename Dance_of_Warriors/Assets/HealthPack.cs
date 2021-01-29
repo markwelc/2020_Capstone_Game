@@ -8,7 +8,7 @@ public class HealthPack : MonoBehaviour, IInventoryItem
     {
         get
         {
-            return "Halth Pack";
+            return "Health Pack";
         }
     }
 

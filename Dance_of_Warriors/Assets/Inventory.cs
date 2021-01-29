@@ -15,6 +15,7 @@ public class Inventory : MonoBehaviour
 
     private List<IInventoryItem> mItems = new List<IInventoryItem>();
     public event EventHandler<InventoryEventArgs> ItemAdded;
+    public event EventHandler<InventoryEventArgs> ItemRemoved;
 
     public void AddItem(IInventoryItem item)
     {
@@ -40,6 +41,11 @@ public class Inventory : MonoBehaviour
         if (mItems.Contains(item))
         {
             Debug.Log("Item found in inventory");
+            mItems.Remove(item);
+        }
+        if (ItemRemoved != null)
+        {
+            ItemRemoved(this, new InventoryEventArgs(item));
         }
         item.OnUse();
     }
@@ -75,12 +81,12 @@ public class Inventory : MonoBehaviour
         if(inventory.activeSelf)
         {
             inventory.SetActive(false);
-            Time.timeScale = 1f;
+            // Time.timeScale = 1f;
         }
         else
         {
             inventory.SetActive(true);
-            Time.timeScale = 0f;
+            // Time.timeScale = 0f;
         }
     }
 }
