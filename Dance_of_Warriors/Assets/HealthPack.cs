@@ -34,7 +34,7 @@ public class HealthPack : MonoBehaviour, IInventoryItem
     }
 
     public PlayerHealthController PlayerHealth;
-    public float healVal = 20f;
+    public float healVal;
 
     void heal()
     {
