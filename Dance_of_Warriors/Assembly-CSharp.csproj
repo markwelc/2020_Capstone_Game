@@ -76,6 +76,8 @@
     <Compile Include="Assets\Inventory.cs" />
     <Compile Include="Assets\InventoryItem.cs" />
     <Compile Include="Assets\PauseMenu.cs" />
+    <Compile Include="Assets\Sound\LightOnBeat.cs" />
+    <Compile Include="Assets\Sound\musicAnalyzer.cs" />
     <Compile Include="Assets\Weapons\Guns\BulletController.cs" />
     <Compile Include="Assets\Weapons\Guns\Bullet_Handgun.cs" />
     <Compile Include="Assets\Weapons\Guns\Guns.cs" />
