@@ -8,6 +8,8 @@ public class Melee : WeaponController
     protected int[] phaseTimes; //the lenght of time each phase should last
     public Collider user; //the character using this weapon
                           // private Transform weaponTransform;
+    protected Character targetCharacter; //used to figure out what to actually damage
+                                //may or may not eventually move to WeaponController.cs
 
 
     //public override void useWeapon(string weaponName, out string animation, out float[] states)
@@ -20,8 +22,14 @@ public class Melee : WeaponController
     //    // weaponTransform.localScale += new Vector3(0, 0.5f, 0);
     //}
 
-    protected override void useWeapon()
+    public override void useWeapon(string weaponName, out string animation, out int[] states, int attackType)
     {
-        //don't do anything in particular
+        if (attackType == 2)
+            animation = animationNameSecondary;
+        else
+            animation = animationName;
+        states = weaponStates;
     }
+
+    
 }
