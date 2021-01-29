@@ -2863,7 +2863,9 @@ MonoBehaviour:
   playerHealthManager: {fileID: 0}
   weaponAccess: {fileID: 429799161}
   gunsParent: {fileID: 0}
+  meleeParent: {fileID: 0}
   availableWeapons: []
+  rig: {fileID: 0}
   inventory: {fileID: 0}
   hud: {fileID: 0}
   lookOffset: {x: 0, y: 2, z: 0}
@@ -4964,9 +4966,11 @@ MonoBehaviour:
   playerHealthManager: {fileID: 0}
   weaponAccess: {fileID: 744708506}
   gunsParent: {fileID: 1453076375}
+  meleeParent: {fileID: 1097481551}
   availableWeapons:
   - handgun
   - stick
+  rig: {fileID: 1069317354}
   inventory: {fileID: 744708511}
   hud: {fileID: 507433950}
   lookOffset: {x: 0, y: 0, z: 0}
@@ -6498,9 +6502,11 @@ MonoBehaviour:
   playerHealthManager: {fileID: 0}
   weaponAccess: {fileID: 919132148151474654}
   gunsParent: {fileID: 1210821757}
+  meleeParent: {fileID: 0}
   availableWeapons:
   - stick
   - stick
+  rig: {fileID: 0}
   lookRadius: 10
   attackRadius: 4
   agent: {fileID: 1027853771}
@@ -6672,7 +6678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0
   m_Effectors: []
 --- !u!4 &1069317355
 Transform:
@@ -7027,7 +7033,9 @@ MonoBehaviour:
   playerHealthManager: {fileID: 0}
   weaponAccess: {fileID: 0}
   gunsParent: {fileID: 0}
+  meleeParent: {fileID: 0}
   availableWeapons: []
+  rig: {fileID: 0}
   lookRadius: 10
   target: {fileID: 543450653690136997}
   agent: {fileID: 1096069365}
@@ -7113,7 +7121,9 @@ MonoBehaviour:
   playerHealthManager: {fileID: 0}
   weaponAccess: {fileID: 0}
   gunsParent: {fileID: 0}
+  meleeParent: {fileID: 0}
   availableWeapons: []
+  rig: {fileID: 0}
   lookRadius: 10
   attackRadius: 4
   agent: {fileID: 1096069365}
@@ -8645,7 +8655,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1317253234
 Transform:
   m_ObjectHideFlags: 0
@@ -9433,11 +9443,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453076375}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.03, y: 1.456, z: 0}
+  m_LocalPosition: {x: -0.057, y: 1.671, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1280342439}
-  - {fileID: 1929552453}
   m_Father: {fileID: 543450653690136997}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10663,36 +10672,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1740724606}
   m_CullTransparentMesh: 0
---- !u!1 &1744359257
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1744359258}
-  m_Layer: 0
-  m_Name: FirePoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1744359258
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1744359257}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1929552453}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1746269323
 GameObject:
   m_ObjectHideFlags: 0
@@ -11507,53 +11486,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &1929552452
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1929552453}
-  - component: {fileID: 1929552454}
-  m_Layer: 0
-  m_Name: Handgun
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1929552453
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1929552452}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1744359258}
-  m_Father: {fileID: 1453076376}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1929552454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1929552452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c013f111d5ad0e54a8b075484b6f89c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 372686149879948546, guid: f3984f0dda8f6644c9d25d9534c32fd8,
-    type: 3}
-  UserFirepoint: {fileID: 1744359258}
 --- !u!1 &1941866384
 GameObject:
   m_ObjectHideFlags: 0
@@ -11686,7 +11618,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100016, guid: cc34ae6a7e465584aa9e4dcc48852048, type: 3}
       propertyPath: m_Name
-      value: Pistol
+      value: handgun
+      objectReference: {fileID: 0}
+    - target: {fileID: 100016, guid: cc34ae6a7e465584aa9e4dcc48852048, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400016, guid: cc34ae6a7e465584aa9e4dcc48852048, type: 3}
       propertyPath: m_LocalPosition.x

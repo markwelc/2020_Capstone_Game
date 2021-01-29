@@ -5,10 +5,7 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
     protected Handgun handgun;
-    //public bool handgunActive;
-    //public CameraLook camera;
     protected Stick stick;
-    // public bool stickActive;
 
     protected string animationName; //primary attack animation
     protected string animationNameSecondary; //secondary attack animation
@@ -20,8 +17,9 @@ public class WeaponController : MonoBehaviour
 
     protected virtual void Start()
     {
-        handgun = this.GetComponentInChildren<Handgun>();
-        stick = this.GetComponentInChildren<Stick>();
+        handgun = this.GetComponentInChildren<Handgun>(true); //find it
+        stick = this.GetComponentInChildren<Stick>(true);
+        
         animationName = null;
         //handgunActive = false;
         //stickActive = false;
