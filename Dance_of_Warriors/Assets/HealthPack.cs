@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cube : MonoBehaviour, IInventoryItem
+public class HealthPack : MonoBehaviour, IInventoryItem
 {
     public string Name
     {
         get
         {
-            return "Cube";
+            return "Health Pack";
         }
     }
 
@@ -24,12 +24,20 @@ public class Cube : MonoBehaviour, IInventoryItem
 
     public void OnPickup()
     {
-        Debug.Log("Cube picked up");
+        Debug.Log("Health Pack picked up");
         gameObject.SetActive(false);
     }
 
     public void OnUse()
     {
-        Debug.Log("Cube Used");
+        heal();
+    }
+
+    public PlayerHealthController PlayerHealth;
+    public float healVal = 20f;
+
+    void heal()
+    {
+        PlayerHealth.healGeneralHealth(healVal);
     }
 }
