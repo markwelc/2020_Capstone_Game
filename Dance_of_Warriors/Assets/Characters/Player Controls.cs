@@ -88,7 +88,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""id"": ""f8c71a81-8c67-470c-b4c1-6e7037beba66"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""Tool"",

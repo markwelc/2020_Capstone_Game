@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    private const int SLOTS = 24;
+    private const int SLOTS = 6;
 
     public bool inventoryEnabled = false;
     public GameObject inventory;
@@ -81,12 +81,14 @@ public class Inventory : MonoBehaviour
         if(inventory.activeSelf)
         {
             inventory.SetActive(false);
-            // Time.timeScale = 1f;
+            // controls.Gameplay.Disable();
+            Time.timeScale = 1f;
         }
         else
         {
             inventory.SetActive(true);
-            // Time.timeScale = 0f;
+            // controls.Gameplay.Enable();
+            Time.timeScale = 0f;
         }
     }
 }
