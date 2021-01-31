@@ -10,7 +10,7 @@ public class HUD : MonoBehaviour
     public GameObject MessagePanel; // prompts player
     Transform SlotHolder; // the SlotHolder within the inventory object
 
-    private List<Button> buttons = new List<Button>(); //List of buttons for each slot in the inventory
+    private List<Transform> buttons = new List<Transform>(); //List of buttons for each slot in the inventory
     public Button slotButton; //Used to keep track of the button component of a specific inventory slot
 
     // Start is called before the first frame update
@@ -20,10 +20,12 @@ public class HUD : MonoBehaviour
         foreach(Transform slot in SlotHolder)
         {
             slotButton = slot.GetChild(0).GetComponent<Button>(); // get the button component of the slot
-            buttons.Add(slotButton); // add it to the buttons array
-            slotButton.onClick.AddListener(delegate {InventoryScript_ButtonPressed(slot);}); // add event listener for when a button is pressed
+            buttons.Add(slot); // add it to the buttons array
+            // slotButton.onClick.AddListener(delegate {InventoryScript_ButtonPressed(slot);}); // add event listener for when a button is pressed
+            // slotButton.onClick.AddListener(InventoryScript_ButtonPressed());
         }
         inventory.ItemAdded += InventoryScript_ItemAdded;
+        // inventory.ItemRemoved += InventoryScript_ButtonPressed;
     }
 
     //Call this when an item is added to the inventory
