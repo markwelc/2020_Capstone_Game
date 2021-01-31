@@ -18,6 +18,7 @@ public class CameraLook : MonoBehaviour
     Vector2 rotate;
     public GameObject reticle, gun;
 
+    public bool isCamMovementAllowed = true; //controls when camera movement is allowed. Used for inventory.
 
     public float yLookSensitivity = 1f;
     public float xLookSensitivity = 1f;
@@ -70,15 +71,18 @@ public class CameraLook : MonoBehaviour
     //need to add recoil here
     void Update()
     {
-        //controls.Gameplay.Fire.performed += ctx => AddRecoil();
-        RotateCamera();
-        if(startZoomTransition)
+        if (isCamMovementAllowed)
         {
-            fovTransition(30);
-        }
-        else if(startOutZoomTransition)
-        {
-            fovTransition(55);
+            //controls.Gameplay.Fire.performed += ctx => AddRecoil();
+            RotateCamera();
+            if(startZoomTransition)
+            {
+                fovTransition(30);
+            }
+            else if(startOutZoomTransition)
+            {
+                fovTransition(55);
+            }
         }
     }
 
