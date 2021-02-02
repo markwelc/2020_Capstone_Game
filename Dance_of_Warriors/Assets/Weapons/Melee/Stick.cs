@@ -16,14 +16,5 @@ public class Stick : Melee
         weaponStates[3] = 0;
     }
 
-    void OnCollisionnEnter(Collision other)
-    {
-        Debug.Log("a melee weapon hit something");
-        if (LayerMask.LayerToName(other.collider.gameObject.layer) == "enemy" || LayerMask.LayerToName(other.collider.gameObject.layer) == "player")
-        {
-            targetCharacter = other.collider.gameObject.GetComponent<Character>();
-            targetCharacter.playerHealthManager.TakeDamage(other.gameObject.tag, 1);
-        }
-
-    }
+    
 }

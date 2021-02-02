@@ -291,6 +291,16 @@ public class Character : MonoBehaviour
             jumpPossible = false;
     }
 
+    //protected void OnCollisionnEnter(Collision other)
+    //{
+    //    Debug.Log("something hit the player");
+    //    if (other.collider.gameObject.tag == "meleeWeapon")
+    //    {
+    //        playerHealthManager.TakeDamage(other.gameObject.tag, 1);
+    //    }
+
+    //}
+
     //are we allowed to dash?
     protected bool dashAllowed()
     {

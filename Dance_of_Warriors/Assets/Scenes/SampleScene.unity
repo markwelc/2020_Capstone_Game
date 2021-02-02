@@ -4916,7 +4916,7 @@ MonoBehaviour:
     m_MaintainTargetPositionOffset: 0
     m_MaintainTargetRotationOffset: 0
   m_SourceObjectsGUIToggle: 1
-  m_SettingsGUIToggle: 0
+  m_SettingsGUIToggle: 1
 --- !u!1 &744708505
 GameObject:
   m_ObjectHideFlags: 0
@@ -4934,7 +4934,7 @@ GameObject:
   - component: {fileID: 744708512}
   m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8535,18 +8535,6 @@ MonoBehaviour:
   bulletPrefab: {fileID: 372686149879948546, guid: f3984f0dda8f6644c9d25d9534c32fd8,
     type: 3}
   UserFirepoint: {fileID: 1244157526}
---- !u!114 &1280342441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1280342438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48948dfe9d76b07488dacd46a7955fa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1304344395
 GameObject:
   m_ObjectHideFlags: 0
@@ -8691,9 +8679,9 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1317253233}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.5
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.33
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -9428,6 +9416,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1453076376}
+  - component: {fileID: 1453076377}
   m_Layer: 8
   m_Name: Guns Parent
   m_TagString: Untagged
@@ -9450,6 +9439,18 @@ Transform:
   m_Father: {fileID: 543450653690136997}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1453076377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453076375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48948dfe9d76b07488dacd46a7955fa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1461255921
 GameObject:
   m_ObjectHideFlags: 0
@@ -10291,7 +10292,7 @@ GameObject:
   - component: {fileID: 1679186451}
   - component: {fileID: 1679186450}
   - component: {fileID: 1679186449}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: stick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10333,8 +10334,8 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1679186447}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
+  m_IsTrigger: 1
+  m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -14221,17 +14222,17 @@ PrefabInstance:
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.011570645
+      value: -0.011570624
       objectReference: {fileID: 0}
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.05168309
+      value: -0.051683057
       objectReference: {fileID: 0}
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0005988474
+      value: 0.00059884595
       objectReference: {fileID: 0}
     - target: {fileID: 2261187899182359264, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
