@@ -11,13 +11,20 @@ public class ItemClickHandler : MonoBehaviour
         ItemDragHandler dragHandler = gameObject.transform.Find("ItemImage").GetComponent<ItemDragHandler>();
         // hud.InventoryScript_ButtonPressed();
         Image image = gameObject.transform.Find("ItemImage").GetComponent<Image>();
+        Debug.Log("Image Found");
+        // if (image != null)
+        // {
+        //     image.enabled = false;
+        //     image.sprite = null;
+        // }
+        IInventoryItem item = dragHandler.Item;
+        Debug.Log("Item set");
+        Debug.Log(item.Name);
+        item.OnUse();
         if (image != null)
         {
             image.enabled = false;
             image.sprite = null;
         }
-        IInventoryItem item = dragHandler.Item;
-        Debug.Log(item.Name);
-        item.OnUse();
     }
 }
