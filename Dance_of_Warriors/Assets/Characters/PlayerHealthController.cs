@@ -188,8 +188,7 @@ public class PlayerHealthController : MonoBehaviour
             default:
                 Debug.Log("They didnt hit our player");
                 // Weird ig take away attack damage
-                //currentHealth += attackDamage;
-                    //still deal damage cause it was an enemy we hit (the tags should all be added for the enemy, but later)
+                currentHealth += attackDamage;
                 break;
         }
 

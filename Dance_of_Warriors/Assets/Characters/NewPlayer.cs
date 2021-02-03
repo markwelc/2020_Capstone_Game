@@ -46,7 +46,7 @@ public class NewPlayer : Character
         controls.Gameplay.Tool3.performed += ctx => initiateTool(3); //this is meant for offensive items (grenades)
         controls.Gameplay.Tool4.performed += ctx => initiateTool(4); //this is meant for support items (estus stimpaks)
         controls.Gameplay.ChangeViewMode.performed += ctx => changeViewMode();
-        controls.Gameplay.CycleWeapon.performed += ctx => cycleWeapon();
+        //controls.Gameplay.CycleWeapon.performed += ctx => cycleWeapon();
 
         controls.Gameplay.Pickup.performed += ctx => PickupMessage();
 
@@ -90,7 +90,7 @@ public class NewPlayer : Character
         toolStates[1] = 0;  //length of action
         toolStates[2] = 0;  //length of recovery
         toolStates[3] = 0;  //length of tool cooldown
-        toolAnimation = 0;
+        toolUsed = 0;
         // End tools
 
         dashVector = Vector3.zero;
@@ -105,13 +105,14 @@ public class NewPlayer : Character
 
         dashSpeed = new float[4];
         dashSpeed[0] = speed; //speed to move while in telegraph
-        dashSpeed[1] = speed * 7; //speed to move while dashing
+        dashSpeed[1] = speed * 3; //speed to move while dashing
         dashSpeed[2] = speed; //speed to move while in recovery
         dashSpeed[3] = 0; //this should never be used
 
         mouseSensitivity = 100;
 
         equippedWeapon = 1; //this is the starting value
+        equippedWeapon2 = 0;
     }
 
     /**
@@ -208,13 +209,13 @@ public class NewPlayer : Character
             RaycastHit hit = new RaycastHit();
             if (Physics.Raycast(ray, out hit, 1000f, ~playerLayer)) //the ray hit something, so we aren't looking at empty space
             {
-                Vector3 dirVector = hit.point - gunsParent.transform.position; //figure out which direction we should aim in (difference of two vectors)
-                gunsParent.transform.rotation = Quaternion.Slerp(gunsParent.transform.rotation, Quaternion.LookRotation(dirVector), 15 * Time.fixedDeltaTime);
+                Vector3 dirVector = hit.point - gunsPrefab.transform.position; //figure out which direction we should aim in (difference of two vectors)
+                gunsPrefab.transform.rotation = Quaternion.Slerp(gunsPrefab.transform.rotation, Quaternion.LookRotation(dirVector), 15 * Time.fixedDeltaTime);
                 //aim in that direction
             }
             else //the ray didn't hit anything, so we're looking at empty space
             {
-                gunsParent.transform.rotation = Quaternion.Slerp(gunsParent.transform.rotation, Quaternion.LookRotation(cameraMain.transform.forward), 15 * Time.fixedDeltaTime);
+                gunsPrefab.transform.rotation = Quaternion.Slerp(gunsPrefab.transform.rotation, Quaternion.LookRotation(cameraMain.transform.forward), 15 * Time.fixedDeltaTime);
                 //just be parallel to the camera
             }
         }

@@ -11,7 +11,6 @@ TagManager:
   - playerRightArm
   - playerHead
   - Enemy
-  - meleeWeapon
   layers:
   - Default
   - TransparentFX
