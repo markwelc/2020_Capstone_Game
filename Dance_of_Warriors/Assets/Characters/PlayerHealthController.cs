@@ -102,6 +102,7 @@ public class PlayerHealthController : MonoBehaviour
                 rArmHealth -= attackDamage; // Take thhe damage off of that limbs health
                 if (rArmHealth <= 0)         // Is it still usable?
                 {
+                    rArmHealth = 0f;
                     rArmUsability = false; // Set usability to false
                 }
                 else
@@ -117,6 +118,7 @@ public class PlayerHealthController : MonoBehaviour
                 lArmHealth -= attackDamage;
                 if (lArmHealth <= 0)
                 {
+                    lArmHealth = 0f;
                     lArmUsability = false;
                 }
                 else
@@ -131,6 +133,7 @@ public class PlayerHealthController : MonoBehaviour
                 rLegHealth -= attackDamage;
                 if (rLegHealth <= 0)
                 {
+                    rLegHealth = 0f;
                     rLegUsability = false;
                 }
                 else
@@ -145,6 +148,7 @@ public class PlayerHealthController : MonoBehaviour
                 lLegHealth -= attackDamage;
                 if (lLegHealth <= 0)
                 {
+                    lLegHealth = 0f;
                     lLegUsability = false;
                 }
                 else
@@ -159,6 +163,7 @@ public class PlayerHealthController : MonoBehaviour
                 bodyHealth -= attackDamage;
                 if (bodyHealth <= 0)
                 {
+                    bodyHealth = 0f;
                     bodyUsability = false;
                 }
                 else
@@ -176,6 +181,7 @@ public class PlayerHealthController : MonoBehaviour
                 currentHealth -= 5f;
                 if (headHealth <= 0)
                 {
+                    headHealth = 0f;
                     headUsability = false;
                 }
                 else
