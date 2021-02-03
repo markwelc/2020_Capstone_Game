@@ -69,6 +69,8 @@
      <Compile Include="Assets\HealthPack.cs" />
      <Compile Include="Assets\Inventory.cs" />
      <Compile Include="Assets\InventoryItem.cs" />
+     <Compile Include="Assets\ItemClickHandler.cs" />
+     <Compile Include="Assets\ItemDragHandler.cs" />
      <Compile Include="Assets\PauseMenu.cs" />
      <Compile Include="Assets\Sound\LightOnBeat.cs" />
      <Compile Include="Assets\Sound\musicAnalyzer.cs" />

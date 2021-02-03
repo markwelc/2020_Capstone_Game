@@ -333,32 +333,38 @@ public class NewPlayer : Character
         useFreeRotation = !useFreeRotation;
     }
 
-    private IInventoryItem mItemToPickup = null;
+    private IInventoryItem mItemToPickup = null; //reference to inventory item that player is colliding with
 
+    //called when player connects with item's box collider
     private void OnTriggerEnter(Collider other)
     {
+        //reference to item within box collider
         IInventoryItem item = other.GetComponent<IInventoryItem>();
+        //if the item is not null
         if (item != null)
         {
-            mItemToPickup = item;
-            hud.OpenMessagePanel("");
+            mItemToPickup = item; //get reference to that item
+            hud.OpenMessagePanel(""); //open message panel to pick up item
         }
     }
 
+    //called when player is no longer connecting to an item's box collider
     private void OnTriggerExit(Collider other)
     {
+        //reference to item within box collider
         IInventoryItem item = other.GetComponent<IInventoryItem>();
-        if (item != null)
+        if (item != null) //if item is not null
         {
-            hud.CloseMessagePanel();
-            mItemToPickup = null;
+            hud.CloseMessagePanel(); //close the message panel
+            mItemToPickup = null; //set item reference to null
         }
     }
 
+    //called when an item is picked up
     void PickupMessage()
     {
-        inventory.AddItem(mItemToPickup);
-        mItemToPickup.OnPickup();
-        hud.CloseMessagePanel();
+        inventory.AddItem(mItemToPickup); //add item to player's inventory
+        mItemToPickup.OnPickup(); //call item's OnPickup() method
+        hud.CloseMessagePanel(); //close the message panel
     }
 }
