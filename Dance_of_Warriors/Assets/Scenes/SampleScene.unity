@@ -3162,6 +3162,7 @@ MonoBehaviour:
   gunsParent: {fileID: 0}
   meleeParent: {fileID: 0}
   availableWeapons: []
+  Dash: 0
   inventory: {fileID: 0}
   hud: {fileID: 0}
   lookOffset: {x: 0, y: 2, z: 0}
@@ -5227,7 +5228,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80ca02cdfb94034381ec1d30a42e460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Image: {fileID: 21300000, guid: 8e7951917d8600344b37859c152053ad, type: 3}
 --- !u!65 &712258675
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5342,6 +5342,7 @@ MonoBehaviour:
   availableWeapons:
   - handgun
   - stick
+  Dash: 0
   inventory: {fileID: 744708511}
   hud: {fileID: 507433950}
   lookOffset: {x: 0, y: 0, z: 0}
