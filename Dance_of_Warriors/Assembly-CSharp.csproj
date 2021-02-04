@@ -64,6 +64,7 @@
      <Compile Include="Assets\Characters\PlayerManager.cs" />
      <Compile Include="Assets\Characters\TrainingDummy.cs" />
      <Compile Include="Assets\Cube.cs" />
+     <Compile Include="Assets\DocBag.cs" />
      <Compile Include="Assets\HUD.cs" />
      <Compile Include="Assets\HealthBarManager.cs" />
      <Compile Include="Assets\HealthPack.cs" />
