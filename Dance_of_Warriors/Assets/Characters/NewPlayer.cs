@@ -267,7 +267,7 @@ public class NewPlayer : Character
             {
                 //the player is moving diagonal, so rotate the player for the dash (left diagonal)
                 //characterTransform.rotation = Quaternion.Euler(0, -45, 0);
-                myTargetAngle = characterTransform.rotation.eulerAngles.y - 45;
+                myTargetAngle = characterTransform.rotation.eulerAngles.y - 70;
                 if(myTargetAngle < 0)
 				{
                     myTargetAngle = myTargetAngle + 360;
@@ -279,9 +279,8 @@ public class NewPlayer : Character
             }
             else if (move.y > 0.1 && move.x > 0.1)
             {
-                //works
                 //the player is moving diagonal, so rotate the player for the dash (right diagonal)
-                myTargetAngle = characterTransform.rotation.eulerAngles.y + 45;
+                myTargetAngle = characterTransform.rotation.eulerAngles.y + 70;
                 myTargetAngle = myTargetAngle % 360;
                 Debug.Log("Angle: " + myTargetAngle);
                 characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, myTargetAngle, 0), 15 * Time.fixedDeltaTime);
