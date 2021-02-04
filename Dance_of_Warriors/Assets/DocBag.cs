@@ -30,7 +30,7 @@ public class DocBag : MonoBehaviour, IInventoryItem
 
     public void OnUse()
     {
-        heal();
+        limbHeal();
     }
 
     Character player;
@@ -58,7 +58,7 @@ public class DocBag : MonoBehaviour, IInventoryItem
 
     public float healVal;
 
-    void heal()
+    void limbHeal()
     {
         Debug.Log("Current health: " + player.playerHealthManager.getHealth());
         // add healVal to player's health
