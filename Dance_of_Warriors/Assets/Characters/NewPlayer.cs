@@ -49,6 +49,8 @@ public class NewPlayer : Character
         //controls.Gameplay.CycleWeapon.performed += ctx => cycleWeapon();
 
         controls.Gameplay.Pickup.performed += ctx => PickupMessage();
+        controls.Gameplay.Block.performed += ctx => startBlock();
+        controls.Gameplay.Block.canceled += ctx => endBlock();
 
         reticle = GameObject.Find("/Main Camera/Canvas/Reticle");
         retController = reticle.GetComponent<reticleController>();
@@ -366,5 +368,49 @@ public class NewPlayer : Character
         inventory.AddItem(mItemToPickup); //add item to player's inventory
         mItemToPickup.OnPickup(); //call item's OnPickup() method
         hud.CloseMessagePanel(); //close the message panel
+    }
+
+    /**
+     * Initiate block
+     */
+    void startBlock()
+    {
+       // Debug.Log("Blocking");
+        anim.SetTrigger("isBlocking");
+
+        // Trigger wern't restting for some reason before reset now
+        anim.ResetTrigger("doneBlocking");
+        anim.ResetTrigger("breakBlock");
+        invincible = true;
+        isBlocking = true;
+    }
+
+    /**
+     * They stopped blocking but was never broken
+     */
+    void endBlock()
+    {
+       // Debug.Log("End Block");
+        anim.SetTrigger("doneBlocking");
+        invincible = false;
+        isBlocking = false;
+    }
+
+    /**
+     * If the block has been broken
+     */
+    protected override void breakBlock()
+    {
+        if (isBlocking)
+        {
+            // only blocks one time reset back
+            playerHealthManager.setOneTimeBlock(false);
+         //   Debug.Log("Got Hit break block");
+            anim.SetTrigger("breakBlock"); // break block animation then transition back to standard
+            
+            // no longer invincible or blocking
+            invincible = false;
+            isBlocking = false;
+        }
     }
 }

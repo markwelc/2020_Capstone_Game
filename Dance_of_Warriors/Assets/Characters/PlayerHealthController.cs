@@ -24,8 +24,8 @@ public class PlayerHealthController : MonoBehaviour
     protected bool bodyUsability;
     protected float headHealth;
     protected bool headUsability;
-
-
+    private bool invincible;
+    private bool oneTimeBlock;
     // Start is called before the first frame update
     // Changed to awake. when initialized in start the first variable was always zero
     private void Awake()
@@ -76,120 +76,144 @@ public class PlayerHealthController : MonoBehaviour
 
     }
 
+    public void setInvincible(bool invincible)
+    {
+        this.invincible = invincible;
+    }
+
+    public void setOneTimeBlock(bool val)
+    {
+        this.oneTimeBlock = val;
+    }
+
+    public bool getOneTimeBlock()
+    {
+        return this.oneTimeBlock;
+    }
+
     /**
      * Can be called from enemy collision like shown below
      * Basically just decreases from overall and limb specific health
      */
     public void TakeDamage(string collisionTag, float attackDamage)
     {
-        // In oncollision enter with enemy object we can call this script
-        // Like so....
-
-        /* PlayerHealthController playerHealth = collision.gameObject.GetComponent<PlayerHealthConotroller>();
-         * playerHealth.TakeDamage(amount for that attacks damage
-         */
-
-        // Subtract attackDamage from current health
-        currentHealth -= attackDamage;
-
-        // Since there are usually 2 colliders that make up a limb
-        // I set each of those to equal a tag for thata limb
-        // So.. see if our tag matches what was hit
-        switch (collisionTag)
+        if (!invincible)
         {
-            case "playerRightArm":
-                Debug.Log("Hit: playerRightArm");
-                rArmHealth -= attackDamage; // Take thhe damage off of that limbs health
-                if (rArmHealth <= 0)         // Is it still usable?
-                {
-                    rArmUsability = false; // Set usability to false
-                }
-                else
-                {
-                    // Adding this here so if they heal that limb it can be usable again
-                    rArmUsability = true;
-                }
-                break;
+            
+            // In oncollision enter with enemy object we can call this script
+            // Like so....
 
-            // Continue with same style as prior
-            case "playerLeftArm":
-                Debug.Log("Hit: playerLeftArm");
-                lArmHealth -= attackDamage;
-                if (lArmHealth <= 0)
-                {
-                    lArmUsability = false;
-                }
-                else
-                {
-                    // Adding this here so if they heal that limb it can be usable again
-                    lArmUsability = true;
-                }
-                break;
+            /* PlayerHealthController playerHealth = collision.gameObject.GetComponent<PlayerHealthConotroller>();
+             * playerHealth.TakeDamage(amount for that attacks damage
+             */
 
-            case "playerRightLeg":
-                Debug.Log("Hit: playerRightLeg");
-                rLegHealth -= attackDamage;
-                if (rLegHealth <= 0)
-                {
-                    rLegUsability = false;
-                }
-                else
-                {
-                    // Adding this here so if they heal that limb it can be usable again
-                    rLegUsability = true;
-                }
-                break;
+            // Subtract attackDamage from current health
+            currentHealth -= attackDamage;
 
-            case "playerLeftLeg":
-                Debug.Log("Hit: playerLeftLeg");
-                lLegHealth -= attackDamage;
-                if (lLegHealth <= 0)
-                {
-                    lLegUsability = false;
-                }
-                else
-                {
-                    // Adding this here so if they heal that limb it can be usable again
-                    lLegUsability = true;
-                }
-                break;
+            // Since there are usually 2 colliders that make up a limb
+            // I set each of those to equal a tag for thata limb
+            // So.. see if our tag matches what was hit
+            switch (collisionTag)
+            {
+                case "playerRightArm":
+                    Debug.Log("Hit: playerRightArm");
+                    rArmHealth -= attackDamage; // Take thhe damage off of that limbs health
+                    if (rArmHealth <= 0)         // Is it still usable?
+                    {
+                        rArmUsability = false; // Set usability to false
+                    }
+                    else
+                    {
+                        // Adding this here so if they heal that limb it can be usable again
+                        rArmUsability = true;
+                    }
+                    break;
 
-            case "playerBody":
-                Debug.Log("Hit: playerBody");
-                bodyHealth -= attackDamage;
-                if (bodyHealth <= 0)
-                {
-                    bodyUsability = false;
-                }
-                else
-                {
-                    // Adding this here so if they heal that limb it can be usable again
-                    bodyUsability = true;
-                }
-                break;
+                // Continue with same style as prior
+                case "playerLeftArm":
+                    Debug.Log("Hit: playerLeftArm");
+                    lArmHealth -= attackDamage;
+                    if (lArmHealth <= 0)
+                    {
+                        lArmUsability = false;
+                    }
+                    else
+                    {
+                        // Adding this here so if they heal that limb it can be usable again
+                        lArmUsability = true;
+                    }
+                    break;
 
-            case "playerHead":
-                Debug.Log("haa bam headshot lil bish");
-                headHealth -= attackDamage;
-                // Lets do extra damage if you got hit in head
-                // Just gonna do an arbitary number for now
-                currentHealth -= 5f;
-                if (headHealth <= 0)
-                {
-                    headUsability = false;
-                }
-                else
-                {
-                    // Adding this here so if they heal that limb it can be usable again
-                    headUsability = true;
-                }
-                break;
+                case "playerRightLeg":
+                    Debug.Log("Hit: playerRightLeg");
+                    rLegHealth -= attackDamage;
+                    if (rLegHealth <= 0)
+                    {
+                        rLegUsability = false;
+                    }
+                    else
+                    {
+                        // Adding this here so if they heal that limb it can be usable again
+                        rLegUsability = true;
+                    }
+                    break;
 
-            default:
-                Debug.Log("They didnt hit our player");
-                // Weird ig take away attack damage
-                currentHealth += attackDamage;
-                break;
+                case "playerLeftLeg":
+                    Debug.Log("Hit: playerLeftLeg");
+                    lLegHealth -= attackDamage;
+                    if (lLegHealth <= 0)
+                    {
+                        lLegUsability = false;
+                    }
+                    else
+                    {
+                        // Adding this here so if they heal that limb it can be usable again
+                        lLegUsability = true;
+                    }
+                    break;
+
+                case "playerBody":
+                    Debug.Log("Hit: playerBody");
+                    bodyHealth -= attackDamage;
+                    if (bodyHealth <= 0)
+                    {
+                        bodyUsability = false;
+                    }
+                    else
+                    {
+                        // Adding this here so if they heal that limb it can be usable again
+                        bodyUsability = true;
+                    }
+                    break;
+
+                case "playerHead":
+                    Debug.Log("haa bam headshot lil bish");
+                    headHealth -= attackDamage;
+                    // Lets do extra damage if you got hit in head
+                    // Just gonna do an arbitary number for now
+                    currentHealth -= 5f;
+                    if (headHealth <= 0)
+                    {
+                        headUsability = false;
+                    }
+                    else
+                    {
+                        // Adding this here so if they heal that limb it can be usable again
+                        headUsability = true;
+                    }
+                    break;
+
+                default:
+                    Debug.Log("They didnt hit our player");
+                    // Weird ig take away attack damage
+                    currentHealth += attackDamage;
+                    break;
+            }
+        }
+        else
+        {
+            // we got hit once no longer invincible
+            oneTimeBlock = true;
         }
 
     }
