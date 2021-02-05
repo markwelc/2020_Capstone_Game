@@ -12,6 +12,7 @@ public class NewPlayer : Character
     protected float mouseSensitivity; //hopefully this can be replaced by something in the input manager
     private Transform cameraMain;
 
+    public bool Dash;
     public Inventory inventory; //keeps track of the player's inventory
     public HUD hud;//references the HUD script for opening and closing message panels
 
@@ -78,7 +79,7 @@ public class NewPlayer : Character
         cameraMain = Camera.main.transform;  //Get our main camera that is to be followed with the rotation
         //define all variables here
         //this might be dumb, not sure
-
+        Dash = false;
         speed = 10;
         jumpForce = 300;
 
@@ -98,14 +99,14 @@ public class NewPlayer : Character
         dashing = 0;
 
         dashLength = new int[4];
-        dashLength[0] = 2; //length of telegraph
-        dashLength[1] = 15; //length of action
-        dashLength[2] = 2; //length of recovery
-        dashLength[3] = 200; //length of dash cool down
+        dashLength[0] = 0; //length of telegraph
+        dashLength[1] = 22; //length of action
+        dashLength[2] = 0; //length of recovery
+        dashLength[3] = 100; //length of dash cool down
 
         dashSpeed = new float[4];
         dashSpeed[0] = speed; //speed to move while in telegraph
-        dashSpeed[1] = speed * 3; //speed to move while dashing
+        dashSpeed[1] = speed * 2; //speed to move while dashing
         dashSpeed[2] = speed; //speed to move while in recovery
         dashSpeed[3] = 0; //this should never be used
 
@@ -191,37 +192,48 @@ public class NewPlayer : Character
         //    characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationY;
         //}
 
-
-        float targetAngleY = cameraMain.transform.rotation.eulerAngles.y;
-        float targetAngleX = cameraMain.transform.rotation.eulerAngles.x;
-
-        if ((!useFreeRotation || movement != Vector3.zero) && !isDead)
+        if (!Dash)
         {
-            // Removed these constraints for now because they were messing us up
-            //characterRigidbody.constraints = RigidbodyConstraints.None; //unfreeze rotation
-            //characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationX; //we always want rotation around x to be frozen
-            //characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ; //rotation around the z axis should always be frozen
-
-            characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, targetAngleY, 0), 15 * Time.fixedDeltaTime); //rotate the whole character to look left and right
-
-            //shoot a raycast from the camera straight outwards
-            Ray ray = new Ray(cameraMain.transform.position, cameraMain.transform.forward);
-            RaycastHit hit = new RaycastHit();
-            if (Physics.Raycast(ray, out hit, 1000f, ~playerLayer)) //the ray hit something, so we aren't looking at empty space
+            float targetAngleY = cameraMain.transform.rotation.eulerAngles.y;
+            float targetAngleX = cameraMain.transform.rotation.eulerAngles.x;
+            //Debug.Log(targetAngleY);
+            //Debug.Log(targetAngleX);
+            if ((!useFreeRotation || movement != Vector3.zero) && !isDead)
             {
-                Vector3 dirVector = hit.point - gunsPrefab.transform.position; //figure out which direction we should aim in (difference of two vectors)
-                gunsPrefab.transform.rotation = Quaternion.Slerp(gunsPrefab.transform.rotation, Quaternion.LookRotation(dirVector), 15 * Time.fixedDeltaTime);
-                //aim in that direction
+                // Removed these constraints for now because they were messing us up
+                //characterRigidbody.constraints = RigidbodyConstraints.None; //unfreeze rotation
+                //characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationX; //we always want rotation around x to be frozen
+                //characterRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ; //rotation around the z axis should always be frozen
+
+                //rotate the character and follow the camera if the player is not dashing at the moment
+                //characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, targetAngleY, 0), 15 * Time.fixedDeltaTime); //rotate the whole character to look left and right
+
+                
+
+                 characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, targetAngleY, 0), 15 * Time.fixedDeltaTime); //rotate the whole character to look left and right
+                
+
+
+
+                //shoot a raycast from the camera straight outwards
+                Ray ray = new Ray(cameraMain.transform.position, cameraMain.transform.forward);
+                RaycastHit hit = new RaycastHit();
+                if (Physics.Raycast(ray, out hit, 1000f, ~playerLayer)) //the ray hit something, so we aren't looking at empty space
+                {
+                    Vector3 dirVector = hit.point - gunsPrefab.transform.position; //figure out which direction we should aim in (difference of two vectors)
+                    gunsPrefab.transform.rotation = Quaternion.Slerp(gunsPrefab.transform.rotation, Quaternion.LookRotation(dirVector), 15 * Time.fixedDeltaTime);
+                    //aim in that direction
+                }
+                else //the ray didn't hit anything, so we're looking at empty space
+                {
+                    gunsPrefab.transform.rotation = Quaternion.Slerp(gunsPrefab.transform.rotation, Quaternion.LookRotation(cameraMain.transform.forward), 15 * Time.fixedDeltaTime);
+                    //just be parallel to the camera
+                }
             }
-            else //the ray didn't hit anything, so we're looking at empty space
+            else
             {
-                gunsPrefab.transform.rotation = Quaternion.Slerp(gunsPrefab.transform.rotation, Quaternion.LookRotation(cameraMain.transform.forward), 15 * Time.fixedDeltaTime);
-                //just be parallel to the camera
+                characterRigidbody.constraints = RigidbodyConstraints.FreezeRotation; //freeze rotation
             }
-        }
-        else
-        {
-            characterRigidbody.constraints = RigidbodyConstraints.FreezeRotation; //freeze rotation
         }
 
     }
@@ -246,10 +258,46 @@ public class NewPlayer : Character
      */
     private void initiateDash()
     {
+        float myTargetAngle = 0;
         if (dashAllowed())
         {
-            if (move.y > 0.01 || move.x > 0.01)
+            //**BUG FIX - needed to be changed to != 0.0 instead of > 0.1 because values of x and y can be negative.
+            if (move.y != 0.0 || move.x != 0.0)
+			{
                 anim.SetTrigger("isDashing");
+                Dash = true;
+                //current rotation
+                //Debug.Log("transform is: " + characterTransform.rotation);
+                //current inputs
+                //Debug.Log("y: " + move.y + "x: " + move.x);
+            }
+
+            //rotate the player for the diagonal forward dashes (if there is appropriate input)
+            if (move.y > 0.1 && move.x < -0.1)
+            {
+                //the player is moving diagonal, so rotate the player for the dash (left diagonal)
+                //characterTransform.rotation = Quaternion.Euler(0, -45, 0);
+                myTargetAngle = characterTransform.rotation.eulerAngles.y - 70;
+                if(myTargetAngle < 0)
+				{
+                    myTargetAngle = myTargetAngle + 360;
+				}
+                Debug.Log("Angle: " + myTargetAngle);
+                characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, myTargetAngle, 0), 15 * Time.fixedDeltaTime);
+                //Debug.Log("transform is: " + characterTransform.rotation);
+                //Debug.Log("y: " + move.y + "x: " + move.x);
+            }
+            else if (move.y > 0.1 && move.x > 0.1)
+            {
+                //the player is moving diagonal, so rotate the player for the dash (right diagonal)
+                myTargetAngle = characterTransform.rotation.eulerAngles.y + 70;
+                myTargetAngle = myTargetAngle % 360;
+                Debug.Log("Angle: " + myTargetAngle);
+                characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, myTargetAngle, 0), 15 * Time.fixedDeltaTime);
+                //Debug.Log("transform is: " + characterTransform.rotation);
+                //Debug.Log("y: " + move.y + "x: " + move.x);
+            }
+
 
             movement = Vector3.ProjectOnPlane(cameraMain.forward, Vector3.up) * move.y + cameraMain.right * move.x; //figure out which direction to dash in
             movement.y = 0; // make sure no vertical movement
@@ -260,27 +308,36 @@ public class NewPlayer : Character
             dashActionState++;
             dashing = dashLength[(int)dashActionState - 1]; //set dashing to the value of the first element in dash length (telegraph length)
 
-            movement *= dashSpeed[(int)dashActionState - 1]; //scales the movement vector
+            //movement *= dashSpeed[(int)dashActionState - 1]; //scales the movement vector
+
+            //need to stop collect information about movement ahead of time, disable movement from the user, and then re-enable it once the roll is complete
         }
     }
 
     private void dashingMovement()
     {
-
+        
         movement = dashVector; //set direction and speed to whatever it was in the previous function call
         movement.y = 0; // double check to make sure no vertical movement
         if (dashActionState == actionState.telegraph && dashing <= 0) //if we're in the telegraph phase and need to switch
         {
+            //OnDisable();
             dashActionState++; //move to the next state
             dashing = dashLength[(int)dashActionState - 1]; //set dashing to the appropriate value
 
             movement *= dashSpeed[(int)dashActionState - 1]; //scale movement
+            //-----Vector3 rot = new Vector3(0, 45, 0);
+            //-----characterTransform.rotation = Quaternion.LookRotation(rot);
+            //characterRigidbody.AddForce(transform.forward * 20, ForceMode.VelocityChange);
+            //Debug.Log("Movement: " + movement);
+            anim.SetTrigger("doneDashing");
+            anim.SetBool("isDashing", false);
         }
         else if (dashActionState == actionState.active && dashing <= 0) //if we're dashing and need to recover
         {
             dashActionState++; //move to the next state
             dashing = dashLength[(int)dashActionState - 1]; //set dashing to the appropriate value
-
+            
             movement *= dashSpeed[(int)dashActionState - 1]; //scale movement (this is recovery speed)
         }
         else if (dashActionState == actionState.recovery && dashing <= 0) //if we are recovering and need to go to the cool down
@@ -288,12 +345,14 @@ public class NewPlayer : Character
             dashActionState++; //move to the next state
             dashing = dashLength[(int)dashActionState - 1]; //set dashing to the appropriate value
 
-            anim.SetTrigger("doneDashing");
-            anim.SetBool("isDashing", false);
+            //anim.SetTrigger("doneDashing");
+            //anim.SetBool("isDashing", false);
 
             dashActionState = actionState.inactive;
+            Dash = false;
             handleMovement(); //at this point we just want to move normally
                               //this lets us move in the frame that we switch to using regular movement
+            //OnEnable();
             dashActionState = actionState.cooldown;
             //this swapping of the value of dashActionState is explained in the else
         }
