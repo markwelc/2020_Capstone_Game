@@ -42,14 +42,13 @@ public class Inventory : MonoBehaviour
     {
         if (mItems.Contains(item))
         {
-            Debug.Log("Item found in inventory");
             mItems.Remove(item);
+            item.OnUse();
         }
         if (ItemRemoved != null)
         {
             ItemRemoved(this, new InventoryEventArgs(item));
         }
-        item.OnUse();
     }
 
 
