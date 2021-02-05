@@ -228,9 +228,9 @@ public class PlayerHealthController : MonoBehaviour
         foreach(string i in limbs.GetNames(typeof(limbs)))
         {
             // return getLimbHealth(i);
-            Debug.Log(i);
-            return 0f;
+            Debug.Log(getLimbHealth(i));
         }
+        return 0f;
     }
 
     /**
