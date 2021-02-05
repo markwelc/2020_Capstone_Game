@@ -115,6 +115,13 @@ public class NewPlayer : Character
         equippedWeapon2 = 0;
     }
 
+    void Update()
+    {
+        if (isDead)
+        {
+            hud.OpenDeathMessagePanel();
+        }
+    }
     /**
      * General movement override, called in fixed update each time from parent
      * NOTE: this function doesn't start doing a certain type of movement.
