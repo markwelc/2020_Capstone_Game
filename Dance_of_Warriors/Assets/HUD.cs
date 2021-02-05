@@ -7,7 +7,8 @@ public class HUD : MonoBehaviour
 {
     public GameObject inv; // inventory as a GameObject
     public Inventory inventory; // the inventory itself
-    public GameObject MessagePanel; // prompts player
+    public GameObject PickupMessagePanel; // prompts player to pick up an object
+    public GameObject DeathMessagePanel; // shows on screen when player dies
     Transform SlotHolder; // the SlotHolder within the inventory object
 
     private List<Transform> buttons = new List<Transform>(); //List of buttons for each slot in the inventory
@@ -74,13 +75,18 @@ public class HUD : MonoBehaviour
     }
 
     //Open the pickupMessage panel
-    public void OpenMessagePanel(string text)
+    public void OpenPickupMessagePanel(string text)
     {
-        MessagePanel.SetActive(true);
+        PickupMessagePanel.SetActive(true);
     }
     //Close the pickupMessage panel
-    public void CloseMessagePanel()
+    public void ClosePickupMessagePanel()
     {
-        MessagePanel.SetActive(false);
+        PickupMessagePanel.SetActive(false);
+    }
+    //Open the deathMessage panel
+    public void OpenDeathMessagePanel()
+    {
+        DeathMessagePanel.SetActive(true);
     }
 }

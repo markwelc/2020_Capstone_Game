@@ -344,7 +344,7 @@ public class NewPlayer : Character
         if (item != null)
         {
             mItemToPickup = item; //get reference to that item
-            hud.OpenMessagePanel(""); //open message panel to pick up item
+            hud.OpenPickupMessagePanel(""); //open message panel to pick up item
         }
     }
 
@@ -355,7 +355,7 @@ public class NewPlayer : Character
         IInventoryItem item = other.GetComponent<IInventoryItem>();
         if (item != null) //if item is not null
         {
-            hud.CloseMessagePanel(); //close the message panel
+            hud.ClosePickupMessagePanel(); //close the message panel
             mItemToPickup = null; //set item reference to null
         }
     }
@@ -365,6 +365,15 @@ public class NewPlayer : Character
     {
         inventory.AddItem(mItemToPickup); //add item to player's inventory
         mItemToPickup.OnPickup(); //call item's OnPickup() method
-        hud.CloseMessagePanel(); //close the message panel
+        hud.ClosePickupMessagePanel(); //close the message panel
+    }
+
+    //called when player dies
+    void DeathMessage()
+    {
+        if (isDead == true)
+        {
+            hud.OpenDeathMessagePanel();
+        }
     }
 }
