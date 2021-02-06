@@ -198,9 +198,12 @@ public class NewPlayer : Character
                 //rotate the character and follow the camera if the player is not dashing at the moment
                 //characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, targetAngleY, 0), 15 * Time.fixedDeltaTime); //rotate the whole character to look left and right
 
+                
 
                  characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, targetAngleY, 0), 15 * Time.fixedDeltaTime); //rotate the whole character to look left and right
                 
+
+
 
                 //shoot a raycast from the camera straight outwards
                 Ray ray = new Ray(cameraMain.transform.position, cameraMain.transform.forward);
@@ -270,7 +273,7 @@ public class NewPlayer : Character
                     myTargetAngle = myTargetAngle + 360;
 				}
                 //Debug.Log("Angle: " + myTargetAngle);
-                characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, myTargetAngle, 0), 70 * Time.fixedDeltaTime);
+                characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, myTargetAngle, 0), 15 * Time.fixedDeltaTime);
                 //Debug.Log("transform is: " + characterTransform.rotation);
                 //Debug.Log("y: " + move.y + "x: " + move.x);
             }
@@ -280,7 +283,7 @@ public class NewPlayer : Character
                 myTargetAngle = characterTransform.rotation.eulerAngles.y + 70;
                 myTargetAngle = myTargetAngle % 360;
                 //Debug.Log("Angle: " + myTargetAngle);
-                characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, myTargetAngle, 0), 70 * Time.fixedDeltaTime);
+                characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, myTargetAngle, 0), 15 * Time.fixedDeltaTime);
                 //Debug.Log("transform is: " + characterTransform.rotation);
                 //Debug.Log("y: " + move.y + "x: " + move.x);
             }
