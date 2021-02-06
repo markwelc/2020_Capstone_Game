@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerHealthController : MonoBehaviour
 {
-
     [SerializeField] private float initialHealth = 100f; //the amount of health that the character has can adjust
     private float currentHealth; // The players current health
 
@@ -41,7 +40,7 @@ public class PlayerHealthController : MonoBehaviour
     private void Awake()
     {
         InItHealth();
-
+        // hud = GameObject.Find("HUD");
     }
 
     // Update is called once per frame
