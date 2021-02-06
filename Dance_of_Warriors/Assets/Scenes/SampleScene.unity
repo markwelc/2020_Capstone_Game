@@ -1924,7 +1924,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Image: {fileID: 21300000, guid: e6ff5b2733dbde24ea5f6eb5c1543f08, type: 3}
   ourTarget: Player
-  healVal: 0
+  healVal: 10
 --- !u!4 &707823887 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5787098976114755534, guid: 82a76256a42024049964a0c8b9bb380f,
