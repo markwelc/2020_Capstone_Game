@@ -24,7 +24,12 @@ public class Cube : MonoBehaviour, IInventoryItem
 
     public void OnPickup()
     {
-        Debug.Log("Cube picked up");
+        // Debug.Log("Cube picked up");
         gameObject.SetActive(false);
+    }
+
+    public void OnUse()
+    {
+        Debug.Log("Cube Used");
     }
 }

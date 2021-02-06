@@ -114,6 +114,13 @@ public class NewPlayer : Character
         equippedWeapon = 1; //this is the starting value
     }
 
+    void Update()
+    {
+        if (isDead)
+        {
+            hud.OpenDeathMessagePanel();
+        }
+    }
     /**
      * General movement override, called in fixed update each time from parent
      * NOTE: this function doesn't start doing a certain type of movement.
@@ -332,32 +339,47 @@ public class NewPlayer : Character
         useFreeRotation = !useFreeRotation;
     }
 
-    private IInventoryItem mItemToPickup = null;
+    private IInventoryItem mItemToPickup = null; //reference to inventory item that player is colliding with
 
+    //called when player connects with item's box collider
     private void OnTriggerEnter(Collider other)
     {
+        //reference to item within box collider
         IInventoryItem item = other.GetComponent<IInventoryItem>();
+        //if the item is not null
         if (item != null)
         {
-            mItemToPickup = item;
-            hud.OpenMessagePanel("");
+            mItemToPickup = item; //get reference to that item
+            hud.OpenPickupMessagePanel(""); //open message panel to pick up item
         }
     }
 
+    //called when player is no longer connecting to an item's box collider
     private void OnTriggerExit(Collider other)
     {
+        //reference to item within box collider
         IInventoryItem item = other.GetComponent<IInventoryItem>();
-        if (item != null)
+        if (item != null) //if item is not null
         {
-            hud.CloseMessagePanel();
-            mItemToPickup = null;
+            hud.ClosePickupMessagePanel(); //close the message panel
+            mItemToPickup = null; //set item reference to null
         }
     }
 
+    //called when an item is picked up
     void PickupMessage()
     {
-        inventory.AddItem(mItemToPickup);
-        mItemToPickup.OnPickup();
-        hud.CloseMessagePanel();
+        inventory.AddItem(mItemToPickup); //add item to player's inventory
+        mItemToPickup.OnPickup(); //call item's OnPickup() method
+        hud.ClosePickupMessagePanel(); //close the message panel
+    }
+
+    //called when player dies
+    void DeathMessage()
+    {
+        if (isDead == true)
+        {
+            hud.OpenDeathMessagePanel();
+        }
     }
 }

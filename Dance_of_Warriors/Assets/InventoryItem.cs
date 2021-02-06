@@ -8,6 +8,7 @@ public interface IInventoryItem
         string Name { get; } // name of the object
         Sprite Image { get; } // the object's sprite/image, set in Unity
         void OnPickup(); // adds the object to the player's inventory
+        void OnUse(); // defines how the object behaves when selected in inventory
     }
 
 public class InventoryEventArgs : EventArgs

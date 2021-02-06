@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    private const int SLOTS = 24;
+    public CameraLook cam; //for disabling camera controls while inventory is open
+
+    private const int SLOTS = 6;
 
     public bool inventoryEnabled = false;
     public GameObject inventory;
@@ -15,6 +17,7 @@ public class Inventory : MonoBehaviour
 
     private List<IInventoryItem> mItems = new List<IInventoryItem>();
     public event EventHandler<InventoryEventArgs> ItemAdded;
+    public event EventHandler<InventoryEventArgs> ItemRemoved;
 
     public void AddItem(IInventoryItem item)
     {
@@ -35,14 +38,25 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void UseItem(IInventoryItem item)
+    {
+        if (mItems.Contains(item))
+        {
+            mItems.Remove(item);
+            item.OnUse();
+        }
+        if (ItemRemoved != null)
+        {
+            ItemRemoved(this, new InventoryEventArgs(item));
+        }
+    }
+
 
     private void Awake()
     {
-
         controls = new PlayerControls();    // Initialize our controls object
 
         controls.Gameplay.enableInventory.performed += ctx => inventoryButton();
-        
     }
 
     /**
@@ -63,15 +77,15 @@ public class Inventory : MonoBehaviour
 
     void inventoryButton()
     {
-        if(inventory.activeSelf)
+        if(inventory.activeSelf) // if inventory is active when the button is pressed
         {
-            inventory.SetActive(false);
-            Time.timeScale = 1f;
+            inventory.SetActive(false); //deactivate it in game
+            cam.isCamMovementAllowed = true; // allow camera movement
         }
-        else
+        else //if inventory is not active when button is pressed
         {
-            inventory.SetActive(true);
-            Time.timeScale = 0f;
+            inventory.SetActive(true); //activate it in game
+            cam.isCamMovementAllowed = false; //disallow camera movement
         }
     }
 }

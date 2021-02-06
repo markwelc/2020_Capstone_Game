@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerHealthController : MonoBehaviour
 {
-
     [SerializeField] private float initialHealth = 100f; //the amount of health that the character has can adjust
     private float currentHealth; // The players current health
 
@@ -25,13 +24,23 @@ public class PlayerHealthController : MonoBehaviour
     protected float headHealth;
     protected bool headUsability;
 
+    //used for healing limbs
+    enum limbs
+    {
+        playerLeftArm,
+        playerLeftLeg,
+        playerRightArm,
+        playerRightLeg,
+        playerHead,
+        playerBody
+    };
 
     // Start is called before the first frame update
     // Changed to awake. when initialized in start the first variable was always zero
     private void Awake()
     {
         InItHealth();
-
+        // hud = GameObject.Find("HUD");
     }
 
     // Update is called once per frame
@@ -102,6 +111,7 @@ public class PlayerHealthController : MonoBehaviour
                 rArmHealth -= attackDamage; // Take thhe damage off of that limbs health
                 if (rArmHealth <= 0)         // Is it still usable?
                 {
+                    rArmHealth = 0f;
                     rArmUsability = false; // Set usability to false
                 }
                 else
@@ -117,6 +127,7 @@ public class PlayerHealthController : MonoBehaviour
                 lArmHealth -= attackDamage;
                 if (lArmHealth <= 0)
                 {
+                    lArmHealth = 0f;
                     lArmUsability = false;
                 }
                 else
@@ -131,6 +142,7 @@ public class PlayerHealthController : MonoBehaviour
                 rLegHealth -= attackDamage;
                 if (rLegHealth <= 0)
                 {
+                    rLegHealth = 0f;
                     rLegUsability = false;
                 }
                 else
@@ -145,6 +157,7 @@ public class PlayerHealthController : MonoBehaviour
                 lLegHealth -= attackDamage;
                 if (lLegHealth <= 0)
                 {
+                    lLegHealth = 0f;
                     lLegUsability = false;
                 }
                 else
@@ -159,6 +172,7 @@ public class PlayerHealthController : MonoBehaviour
                 bodyHealth -= attackDamage;
                 if (bodyHealth <= 0)
                 {
+                    bodyHealth = 0f;
                     bodyUsability = false;
                 }
                 else
@@ -176,6 +190,7 @@ public class PlayerHealthController : MonoBehaviour
                 currentHealth -= 5f;
                 if (headHealth <= 0)
                 {
+                    headHealth = 0f;
                     headUsability = false;
                 }
                 else
@@ -205,6 +220,54 @@ public class PlayerHealthController : MonoBehaviour
         currentHealth += healAmount;
     }
 
+    /**
+    * Function for getting health of every limb
+    */
+    public float getAllLimbHealth()
+    {
+        foreach(string i in limbs.GetNames(typeof(limbs)))
+        {
+            // return getLimbHealth(i);
+            Debug.Log(getLimbHealth(i));
+        }
+        return 0f;
+    }
+
+    /**
+    * Function for getting the health of a specific limb
+    */
+    public float getLimbHealth(string limb)
+    {
+        switch(limb)
+        {
+            case "playerRightArm":
+                return rArmHealth;
+            case "playerLeftArm":
+                return lArmHealth;
+            case "playerRightLeg":
+                return rLegHealth;
+            case "playerLeftLeg":
+                return lLegHealth;
+            case "playerHead":
+                return headHealth;
+            case "playerBody":
+                return bodyHealth;
+            default:
+                Debug.Log("No limb to speak of");
+                return 0;
+        }
+    }
+
+    /**
+    * Used by Doctor's bag to apply a healing amount to every limb on character's body
+    */
+    public void healAllLimbs(float healAmount)
+    {
+        foreach (string i in limbs.GetNames(typeof(limbs)))
+        {
+            healLimb(i, healAmount);
+        }
+    }
     /**
      * Similar to previous but can heal the limbs now
      * Not sure our exact implementation for this or even if we want to do it
