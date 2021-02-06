@@ -60,10 +60,10 @@ public class DocBag : MonoBehaviour, IInventoryItem
 
     void limbHeal()
     {
-        Debug.Log("Current health: " + player.playerHealthManager.getHealth());
+        Debug.Log("Current health of all limbs: " + player.playerHealthManager.getAllLimbHealth());
         // add healVal to player's health
-        player.playerHealthManager.healGeneralHealth(healVal);
-        Debug.Log("Healing player for " + healVal + " health");
-        Debug.Log("New health value: " + player.playerHealthManager.getHealth());
+        player.playerHealthManager.healAllLimbs(healVal);
+        Debug.Log("Healing player limbs for " + healVal + " health");
+        Debug.Log("New health value of all limbs: " + player.playerHealthManager.getAllLimbHealth());
     }
 }

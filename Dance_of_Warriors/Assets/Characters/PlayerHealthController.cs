@@ -25,6 +25,16 @@ public class PlayerHealthController : MonoBehaviour
     protected float headHealth;
     protected bool headUsability;
 
+    //used for healing limbs
+    enum limbs
+    {
+        playerLeftArm,
+        playerLeftLeg,
+        playerRightArm,
+        playerRightLeg,
+        playerHead,
+        playerBody
+    };
 
     // Start is called before the first frame update
     // Changed to awake. when initialized in start the first variable was always zero
@@ -210,6 +220,54 @@ public class PlayerHealthController : MonoBehaviour
         currentHealth += healAmount;
     }
 
+    /**
+    * Function for getting health of every limb
+    */
+    public float getAllLimbHealth()
+    {
+        foreach(string i in limbs.GetNames(typeof(limbs)))
+        {
+            // return getLimbHealth(i);
+            Debug.Log(getLimbHealth(i));
+        }
+        return 0f;
+    }
+
+    /**
+    * Function for getting the health of a specific limb
+    */
+    public float getLimbHealth(string limb)
+    {
+        switch(limb)
+        {
+            case "playerRightArm":
+                return rArmHealth;
+            case "playerLeftArm":
+                return lArmHealth;
+            case "playerRightLeg":
+                return rLegHealth;
+            case "playerLeftLeg":
+                return lLegHealth;
+            case "playerHead":
+                return headHealth;
+            case "playerBody":
+                return bodyHealth;
+            default:
+                Debug.Log("No limb to speak of");
+                return 0;
+        }
+    }
+
+    /**
+    * Used by Doctor's bag to apply a healing amount to every limb on character's body
+    */
+    public void healAllLimbs(float healAmount)
+    {
+        foreach (string i in limbs.GetNames(typeof(limbs)))
+        {
+            healLimb(i, healAmount);
+        }
+    }
     /**
      * Similar to previous but can heal the limbs now
      * Not sure our exact implementation for this or even if we want to do it
