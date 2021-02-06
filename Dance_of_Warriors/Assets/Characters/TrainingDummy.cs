@@ -56,6 +56,7 @@ public class TrainingDummy : Character
     {
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
+        equippedWeapon = 0;
         // healthMax = 5;
         // speed = 5;
         // jumpForce = 300;

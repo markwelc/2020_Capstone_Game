@@ -46,7 +46,7 @@ public class NewPlayer : Character
         controls.Gameplay.Tool3.performed += ctx => initiateTool(3); //this is meant for offensive items (grenades)
         controls.Gameplay.Tool4.performed += ctx => initiateTool(4); //this is meant for support items (estus stimpaks)
         controls.Gameplay.ChangeViewMode.performed += ctx => changeViewMode();
-        //controls.Gameplay.CycleWeapon.performed += ctx => cycleWeapon();
+        controls.Gameplay.CycleWeapon.performed += ctx => cycleWeapon();
 
         controls.Gameplay.Pickup.performed += ctx => PickupMessage();
 
@@ -112,9 +112,15 @@ public class NewPlayer : Character
         mouseSensitivity = 100;
 
         equippedWeapon = 1; //this is the starting value
-        equippedWeapon2 = 0;
     }
 
+    void Update()
+    {
+        if (isDead)
+        {
+            hud.OpenDeathMessagePanel();
+        }
+    }
     /**
      * General movement override, called in fixed update each time from parent
      * NOTE: this function doesn't start doing a certain type of movement.
@@ -209,13 +215,13 @@ public class NewPlayer : Character
             RaycastHit hit = new RaycastHit();
             if (Physics.Raycast(ray, out hit, 1000f, ~playerLayer)) //the ray hit something, so we aren't looking at empty space
             {
-                Vector3 dirVector = hit.point - gunsPrefab.transform.position; //figure out which direction we should aim in (difference of two vectors)
-                gunsPrefab.transform.rotation = Quaternion.Slerp(gunsPrefab.transform.rotation, Quaternion.LookRotation(dirVector), 15 * Time.fixedDeltaTime);
+                Vector3 dirVector = hit.point - gunsParent.transform.position; //figure out which direction we should aim in (difference of two vectors)
+                gunsParent.transform.rotation = Quaternion.Slerp(gunsParent.transform.rotation, Quaternion.LookRotation(dirVector), 15 * Time.fixedDeltaTime);
                 //aim in that direction
             }
             else //the ray didn't hit anything, so we're looking at empty space
             {
-                gunsPrefab.transform.rotation = Quaternion.Slerp(gunsPrefab.transform.rotation, Quaternion.LookRotation(cameraMain.transform.forward), 15 * Time.fixedDeltaTime);
+                gunsParent.transform.rotation = Quaternion.Slerp(gunsParent.transform.rotation, Quaternion.LookRotation(cameraMain.transform.forward), 15 * Time.fixedDeltaTime);
                 //just be parallel to the camera
             }
         }
@@ -344,7 +350,7 @@ public class NewPlayer : Character
         if (item != null)
         {
             mItemToPickup = item; //get reference to that item
-            hud.OpenMessagePanel(""); //open message panel to pick up item
+            hud.OpenPickupMessagePanel(""); //open message panel to pick up item
         }
     }
 
@@ -355,7 +361,7 @@ public class NewPlayer : Character
         IInventoryItem item = other.GetComponent<IInventoryItem>();
         if (item != null) //if item is not null
         {
-            hud.CloseMessagePanel(); //close the message panel
+            hud.ClosePickupMessagePanel(); //close the message panel
             mItemToPickup = null; //set item reference to null
         }
     }
@@ -365,6 +371,15 @@ public class NewPlayer : Character
     {
         inventory.AddItem(mItemToPickup); //add item to player's inventory
         mItemToPickup.OnPickup(); //call item's OnPickup() method
-        hud.CloseMessagePanel(); //close the message panel
+        hud.ClosePickupMessagePanel(); //close the message panel
+    }
+
+    //called when player dies
+    void DeathMessage()
+    {
+        if (isDead == true)
+        {
+            hud.OpenDeathMessagePanel();
+        }
     }
 }
