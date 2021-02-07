@@ -50,6 +50,8 @@ public class NewPlayer : Character
         //controls.Gameplay.CycleWeapon.performed += ctx => cycleWeapon();
 
         controls.Gameplay.Pickup.performed += ctx => PickupMessage();
+        controls.Gameplay.Block.performed += ctx => startBlock();
+        controls.Gameplay.Block.canceled += ctx => endBlock();
 
         reticle = GameObject.Find("/Main Camera/Canvas/Reticle");
         retController = reticle.GetComponent<reticleController>();
@@ -431,7 +433,7 @@ public class NewPlayer : Character
          */
         void startBlock()
         {
-           // Debug.Log("Blocking");
+            Debug.Log("Blocking");
             anim.SetTrigger("isBlocking");
 
             // Trigger wern't restting for some reason before reset now
@@ -446,7 +448,7 @@ public class NewPlayer : Character
          */
         void endBlock()
         {
-           // Debug.Log("End Block");
+            Debug.Log("End Block");
             anim.SetTrigger("doneBlocking");
             invincible = false;
             isBlocking = false;
