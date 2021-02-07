@@ -129,6 +129,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Block"",
+                    ""type"": ""Button"",
+                    ""id"": ""b0ce2f6d-485e-4a3e-a5f9-dd33d3423893"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -203,7 +211,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""id"": ""2af00d26-c2db-46db-bc0c-ab0524e6758c"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""InvertVector2(invertX=false)"",
                     ""groups"": """",
                     ""action"": ""Look"",
                     ""isComposite"": false,
@@ -450,6 +458,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c0222a6-0b6d-41d9-98da-ea798a6cf54a"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Block"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2cf5a1ec-84b3-4396-ad49-54e406eb5b16"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Block"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -472,6 +502,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_Tool3 = m_Gameplay.FindAction("Tool3", throwIfNotFound: true);
         m_Gameplay_Tool4 = m_Gameplay.FindAction("Tool4", throwIfNotFound: true);
         m_Gameplay_Aim = m_Gameplay.FindAction("Aim", throwIfNotFound: true);
+        m_Gameplay_Block = m_Gameplay.FindAction("Block", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -535,6 +566,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Tool3;
     private readonly InputAction m_Gameplay_Tool4;
     private readonly InputAction m_Gameplay_Aim;
+    private readonly InputAction m_Gameplay_Block;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -553,6 +585,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Tool3 => m_Wrapper.m_Gameplay_Tool3;
         public InputAction @Tool4 => m_Wrapper.m_Gameplay_Tool4;
         public InputAction @Aim => m_Wrapper.m_Gameplay_Aim;
+        public InputAction @Block => m_Wrapper.m_Gameplay_Block;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -604,6 +637,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Aim.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAim;
                 @Aim.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAim;
                 @Aim.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAim;
+                @Block.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBlock;
+                @Block.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBlock;
+                @Block.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBlock;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -650,6 +686,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Aim.started += instance.OnAim;
                 @Aim.performed += instance.OnAim;
                 @Aim.canceled += instance.OnAim;
+                @Block.started += instance.OnBlock;
+                @Block.performed += instance.OnBlock;
+                @Block.canceled += instance.OnBlock;
             }
         }
     }
@@ -670,5 +709,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnTool3(InputAction.CallbackContext context);
         void OnTool4(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
+        void OnBlock(InputAction.CallbackContext context);
     }
 }

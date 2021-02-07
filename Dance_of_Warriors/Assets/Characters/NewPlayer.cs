@@ -294,7 +294,7 @@ public class NewPlayer : Character
                 //Debug.Log("transform is: " + characterTransform.rotation);
                 //Debug.Log("y: " + move.y + "x: " + move.x);
             }
-            
+
 
             movement = Vector3.ProjectOnPlane(cameraMain.forward, Vector3.up) * move.y + cameraMain.right * move.x; //figure out which direction to dash in
             movement.y = 0; // make sure no vertical movement
@@ -424,4 +424,49 @@ public class NewPlayer : Character
             hud.OpenDeathMessagePanel();
         }
     }
+
+
+        /**
+         * Initiate block
+         */
+        void startBlock()
+        {
+           // Debug.Log("Blocking");
+            anim.SetTrigger("isBlocking");
+
+            // Trigger wern't restting for some reason before reset now
+            anim.ResetTrigger("doneBlocking");
+            anim.ResetTrigger("breakBlock");
+            invincible = true;
+            isBlocking = true;
+        }
+
+        /**
+         * They stopped blocking but was never broken
+         */
+        void endBlock()
+        {
+           // Debug.Log("End Block");
+            anim.SetTrigger("doneBlocking");
+            invincible = false;
+            isBlocking = false;
+        }
+
+        /**
+         * If the block has been broken
+         */
+        protected override void breakBlock()
+        {
+            if (isBlocking)
+            {
+                // only blocks one time reset back
+                playerHealthManager.setOneTimeBlock(false);
+             //   Debug.Log("Got Hit break block");
+                anim.SetTrigger("breakBlock"); // break block animation then transition back to standard
+
+                // no longer invincible or blocking
+                invincible = false;
+                isBlocking = false;
+            }
+        }
 }

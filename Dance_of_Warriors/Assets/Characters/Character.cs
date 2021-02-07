@@ -18,7 +18,8 @@ public class Character : MonoBehaviour
     protected float health;
     protected float speed;//the default speed of the character
     protected bool isDead;  // To check if dead so player cant continue to move
-
+    protected bool invincible;
+    protected bool isBlocking;
     //public float staminaMax; //the max amount of stamina the character can have
     //protected float staminaCur; //the current amount of stamina the
 
@@ -78,6 +79,8 @@ public class Character : MonoBehaviour
         playerHealthManager = gameObject.AddComponent<PlayerHealthController>();
         health = playerHealthManager.getHealth();
         isDead = false;
+        invincible = false;
+        isBlocking = false;
         setWeaponParents();
     }
 
@@ -101,6 +104,12 @@ public class Character : MonoBehaviour
         {
             isDead = true;
         }
+        if(playerHealthManager.getOneTimeBlock())
+        {
+            breakBlock();
+        }
+
+        playerHealthManager.setInvincible(invincible);
 
         handleMovement(); //decide when and how to move
         handleJump(); //decide when to jump
@@ -126,7 +135,7 @@ public class Character : MonoBehaviour
     {
 
         //the raycasting is useful for fast moving objects that the colliders can't deal with
-        if (isDead)
+        if (isDead || isBlocking)
             direcAndDist = Vector3.zero;
 
         direcAndDist.y = characterRigidbody.velocity.y;
@@ -321,5 +330,10 @@ public class Character : MonoBehaviour
         Debug.Log("meleePrefab.transform.parent = " + meleePrefab.transform.parent);
         meleePrefab.transform.position = meleeParent.transform.position;
         meleePrefab.transform.rotation = meleeParent.transform.rotation;
+    }
+
+    protected virtual void breakBlock()
+    {
+        // Override
     }
 }

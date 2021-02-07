@@ -85,6 +85,21 @@ public class PlayerHealthController : MonoBehaviour
 
     }
 
+    public void setInvincible(bool invincible)
+    {
+        this.invincible = invincible;
+    }
+
+    public void setOneTimeBlock(bool val)
+    {
+        this.oneTimeBlock = val;
+    }
+
+    public bool getOneTimeBlock()
+    {
+        return this.oneTimeBlock;
+    }
+
     /**
      * Can be called from enemy collision like shown below
      * Basically just decreases from overall and limb specific health
@@ -315,7 +330,7 @@ public class PlayerHealthController : MonoBehaviour
     {
         if (currentHealth > initialHealth)
             currentHealth = initialHealth;
-        
+
         if (rArmHealth > initialLimbHealth)
             rArmHealth = initialLimbHealth;
 
@@ -379,7 +394,7 @@ public class PlayerHealthController : MonoBehaviour
     }
 
 
-    //way to kill player. Basically they just turn lifeless 
+    //way to kill player. Basically they just turn lifeless
     void RagDoll(bool value)
     {
         var bodyParts = GetComponentsInChildren<Rigidbody>();
