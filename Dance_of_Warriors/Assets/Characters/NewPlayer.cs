@@ -24,6 +24,7 @@ public class NewPlayer : Character
 
     private GameObject reticle;
     reticleController retController;
+    
 
     /**
      * On awake we initialize our controls to tell it what to do with each
@@ -245,7 +246,7 @@ public class NewPlayer : Character
      */
     private void Jump()
     {
-        if (jumpAllowed())
+        if (jumpAllowed() && !isBlocking)
         {
             characterRigidbody.AddForce(Vector3.up * jumpForce);
             anim.SetBool("isJumping", true);
@@ -259,12 +260,13 @@ public class NewPlayer : Character
     private void initiateDash()
     {
         float myTargetAngle = 0;
-        if (dashAllowed())
+        if (dashAllowed() && !isBlocking)
         {
             if (move.y != 0.00 || move.x != 0.00)
             {
                 anim.SetTrigger("isDashing");
                 dash = true;
+                invincible = true;
                 //current rotation
                 //Debug.Log("transform is: " + characterTransform.rotation);
                 //current inputs
@@ -324,6 +326,7 @@ public class NewPlayer : Character
             movement *= dashSpeed[(int)dashActionState - 1]; //scale movement
             anim.SetTrigger("doneDashing");
             anim.SetBool("isDashing", false);
+            
         }
         else if (dashActionState == actionState.active && dashing <= 0) //if we're dashing and need to recover
         {
@@ -339,7 +342,7 @@ public class NewPlayer : Character
 
             //anim.SetTrigger("doneDashing");
             //anim.SetBool("isDashing", false);
-
+            invincible = false;
             dashActionState = actionState.inactive;
             dash = false;
             handleMovement(); //at this point we just want to move normally
@@ -428,47 +431,55 @@ public class NewPlayer : Character
     }
 
 
-        /**
-         * Initiate block
-         */
-        void startBlock()
+    /**
+     * Initiate block
+     */
+    void startBlock()
+    {
+        // No need to reinvent the wheel
+        // blocking has same restrictions as jump
+        // player mu be grounded and not in dash state
+        if (jumpAllowed())
         {
-            Debug.Log("Blocking");
+          //  Debug.Log("Blocking");
             anim.SetTrigger("isBlocking");
 
             // Trigger wern't restting for some reason before reset now
             anim.ResetTrigger("doneBlocking");
             anim.ResetTrigger("breakBlock");
+            // They are invincible at start
             invincible = true;
             isBlocking = true;
         }
+    }
 
-        /**
-         * They stopped blocking but was never broken
-         */
-        void endBlock()
+    /**
+     * They stopped blocking but was never broken
+     */
+    void endBlock()
+    {
+        //Debug.Log("End Block");
+        // They released so end the block no longer invincible
+        anim.SetTrigger("doneBlocking");
+        invincible = false;
+        isBlocking = false;
+    }
+
+    /**
+     * If the block has been broken
+     */
+    protected override void breakBlock()
+    {
+        if (isBlocking)
         {
-            Debug.Log("End Block");
-            anim.SetTrigger("doneBlocking");
+            // only blocks one time reset back
+            playerHealthManager.setOneTimeBlock(false);
+            //   Debug.Log("Got Hit break block");
+            anim.SetTrigger("breakBlock"); // break block animation then transition back to standard
+            
+            // no longer invincible or blocking
             invincible = false;
             isBlocking = false;
         }
-
-        /**
-         * If the block has been broken
-         */
-        protected override void breakBlock()
-        {
-            if (isBlocking)
-            {
-                // only blocks one time reset back
-                playerHealthManager.setOneTimeBlock(false);
-             //   Debug.Log("Got Hit break block");
-                anim.SetTrigger("breakBlock"); // break block animation then transition back to standard
-
-                // no longer invincible or blocking
-                invincible = false;
-                isBlocking = false;
-            }
-        }
+    }
 }
