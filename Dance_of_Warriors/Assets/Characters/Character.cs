@@ -18,7 +18,6 @@ public class Character : MonoBehaviour
     protected float health;
     protected float speed;//the default speed of the character
     protected bool isDead;  // To check if dead so player cant continue to move
-    protected bool invincible;
     protected bool isBlocking;
     //public float staminaMax; //the max amount of stamina the character can have
     //protected float staminaCur; //the current amount of stamina the
@@ -79,7 +78,7 @@ public class Character : MonoBehaviour
         playerHealthManager = gameObject.AddComponent<PlayerHealthController>();
         health = playerHealthManager.getHealth();
         isDead = false;
-        invincible = false;
+        
         isBlocking = false;
         setWeaponParents();
     }
@@ -109,7 +108,6 @@ public class Character : MonoBehaviour
             breakBlock();
         }
 
-        playerHealthManager.setInvincible(invincible);
 
         handleMovement(); //decide when and how to move
         handleJump(); //decide when to jump
@@ -272,35 +270,24 @@ public class Character : MonoBehaviour
     protected bool dashAllowed()
     {
         bool dashingPermits = dashActionState == actionState.inactive;
-        if (dashingPermits)
-        {
-            return true;
-        }
 
-        return false;
+        return dashingPermits && !isBlocking;
     }
 
     //are we allowed to use a tool?
     protected bool toolAllowed()
     {
         bool toolPermits = toolActionState == actionState.inactive;
-        if (toolPermits)
-        {
-            return true;
-        }
-        return false;
+
+        return toolPermits;
     }
 
     //are we allowed to jump?
     protected bool jumpAllowed()
     {
         bool dashingPermits = ((dashActionState == actionState.inactive) || (dashActionState == actionState.cooldown));
-        if (dashingPermits && jumpPossible)
-        {
-            return true;
-        }
 
-        return false;
+        return dashingPermits && jumpPossible && !isBlocking;
     }
 
     public float getHealth()

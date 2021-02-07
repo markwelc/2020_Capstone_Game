@@ -246,7 +246,7 @@ public class NewPlayer : Character
      */
     private void Jump()
     {
-        if (jumpAllowed() && !isBlocking)
+        if (jumpAllowed())
         {
             characterRigidbody.AddForce(Vector3.up * jumpForce);
             anim.SetBool("isJumping", true);
@@ -260,13 +260,13 @@ public class NewPlayer : Character
     private void initiateDash()
     {
         float myTargetAngle = 0;
-        if (dashAllowed() && !isBlocking)
+        if (dashAllowed())
         {
             if (move.y != 0.00 || move.x != 0.00)
             {
                 anim.SetTrigger("isDashing");
                 dash = true;
-                invincible = true;
+                playerHealthManager.setInvincible(true);
                 //current rotation
                 //Debug.Log("transform is: " + characterTransform.rotation);
                 //current inputs
@@ -342,7 +342,7 @@ public class NewPlayer : Character
 
             //anim.SetTrigger("doneDashing");
             //anim.SetBool("isDashing", false);
-            invincible = false;
+            playerHealthManager.setInvincible(false);
             dashActionState = actionState.inactive;
             dash = false;
             handleMovement(); //at this point we just want to move normally
@@ -448,8 +448,8 @@ public class NewPlayer : Character
             anim.ResetTrigger("doneBlocking");
             anim.ResetTrigger("breakBlock");
             // They are invincible at start
-            invincible = true;
             isBlocking = true;
+            playerHealthManager.setInvincible(true);
         }
     }
 
@@ -461,8 +461,8 @@ public class NewPlayer : Character
         //Debug.Log("End Block");
         // They released so end the block no longer invincible
         anim.SetTrigger("doneBlocking");
-        invincible = false;
         isBlocking = false;
+        playerHealthManager.setInvincible(false);
     }
 
     /**
@@ -478,8 +478,8 @@ public class NewPlayer : Character
             anim.SetTrigger("breakBlock"); // break block animation then transition back to standard
             
             // no longer invincible or blocking
-            invincible = false;
             isBlocking = false;
+            playerHealthManager.setInvincible(false);
         }
     }
 }
