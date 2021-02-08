@@ -7,6 +7,7 @@ public class Stick : Melee
     protected override void Start()
     {
         animationName = "standard_stick_attack";
+        animationNameSecondary = "heavy_stick_attack";
         //stickActive = true;
         weaponStates = new int[4];
         weaponStates[0] = 0;
