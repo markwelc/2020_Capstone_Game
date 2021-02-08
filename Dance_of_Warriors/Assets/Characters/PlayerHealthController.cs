@@ -222,7 +222,8 @@ public class PlayerHealthController : MonoBehaviour
                 default:
                     Debug.Log("They didnt hit our player");
                     // Weird ig take away attack damage
-                    currentHealth += attackDamage;
+                    //currentHealth += attackDamage;
+                    //still deal damage cause we might have hit the enemy
                     break;
             }
         }

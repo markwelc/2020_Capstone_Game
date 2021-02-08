@@ -48,7 +48,7 @@ public class NewPlayer : Character
         controls.Gameplay.Tool3.performed += ctx => initiateTool(3); //this is meant for offensive items (grenades)
         controls.Gameplay.Tool4.performed += ctx => initiateTool(4); //this is meant for support items (estus stimpaks)
         controls.Gameplay.ChangeViewMode.performed += ctx => changeViewMode();
-        //controls.Gameplay.CycleWeapon.performed += ctx => cycleWeapon();
+        controls.Gameplay.CycleWeapon.performed += ctx => cycleWeapon();
 
         controls.Gameplay.Pickup.performed += ctx => PickupMessage();
         controls.Gameplay.Block.performed += ctx => startBlock();
@@ -116,7 +116,6 @@ public class NewPlayer : Character
         mouseSensitivity = 100;
 
         equippedWeapon = 1; //this is the starting value
-        equippedWeapon2 = 0;
     }
 
     void Update()
@@ -221,13 +220,13 @@ public class NewPlayer : Character
                 RaycastHit hit = new RaycastHit();
                 if (Physics.Raycast(ray, out hit, 1000f, ~playerLayer)) //the ray hit something, so we aren't looking at empty space
                 {
-                    Vector3 dirVector = hit.point - gunsPrefab.transform.position; //figure out which direction we should aim in (difference of two vectors)
-                    gunsPrefab.transform.rotation = Quaternion.Slerp(gunsPrefab.transform.rotation, Quaternion.LookRotation(dirVector), 15 * Time.fixedDeltaTime);
+                    Vector3 dirVector = hit.point - gunsParent.transform.position; //figure out which direction we should aim in (difference of two vectors)
+                    gunsParent.transform.rotation = Quaternion.Slerp(gunsParent.transform.rotation, Quaternion.LookRotation(dirVector), 15 * Time.fixedDeltaTime);
                     //aim in that direction
                 }
                 else //the ray didn't hit anything, so we're looking at empty space
                 {
-                    gunsPrefab.transform.rotation = Quaternion.Slerp(gunsPrefab.transform.rotation, Quaternion.LookRotation(cameraMain.transform.forward), 15 * Time.fixedDeltaTime);
+                    gunsParent.transform.rotation = Quaternion.Slerp(gunsParent.transform.rotation, Quaternion.LookRotation(cameraMain.transform.forward), 15 * Time.fixedDeltaTime);
                     //just be parallel to the camera
                 }
             }

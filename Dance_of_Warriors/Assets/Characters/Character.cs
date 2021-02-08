@@ -80,7 +80,6 @@ public class Character : MonoBehaviour
         isDead = false;
 
         isBlocking = false;
-        setWeaponParents();
     }
 
 
@@ -246,6 +245,7 @@ public class Character : MonoBehaviour
     //changes the currently equipped weapon to the next one in available weapons array
     protected void cycleWeapon()
     {
+        Debug.Log("hello");
         //disable current weapon's gameobject
         Transform curWeapon = gunsParent.transform.Find(availableWeapons[equippedWeapon]);
         if(curWeapon == null)
@@ -323,30 +323,6 @@ public class Character : MonoBehaviour
     public float getHealth()
     {
         return health;
-    }
-
-    /*
-     * move the Guns and Melee gameObjects that are children of the Weapons gameObject into different places
-     */
-    void setWeaponParents()
-    {
-        gunsPrefab = weaponsPrefab.transform.Find("Guns").gameObject; //get the two prefab elements
-        meleePrefab = weaponsPrefab.transform.Find("Melee").gameObject;
-
-        gunsPrefab.transform.parent = gunsParent.transform; //make it a child of the correct thing
-        Debug.Log("gunsPrefab.transform.parent = " + gunsPrefab.transform.parent);
-        gunsPrefab.transform.position = gunsParent.transform.position;//set the position and the rotation
-        gunsPrefab.transform.rotation = gunsParent.transform.rotation;
-
-        foreach (Collider weaponCollider in meleePrefab.GetComponentsInChildren<Collider>())
-        {
-            Physics.IgnoreCollision(weaponCollider, characterCollider);
-        }
-
-        meleePrefab.transform.parent = meleeParent.transform;
-        Debug.Log("meleePrefab.transform.parent = " + meleePrefab.transform.parent);
-        meleePrefab.transform.position = meleeParent.transform.position;
-        meleePrefab.transform.rotation = meleeParent.transform.rotation;
     }
 
     protected virtual void breakBlock()
