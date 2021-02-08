@@ -18,32 +18,38 @@ public class Guns : WeaponController
 
     //add limited magazines?
 
-    public override void useWeapon(string weaponName, out string animation, out int[] states)
+    public override void useWeapon(string weaponName, out string animation, out int[] states, int attackType)
     {
-
-        if (bulletsLeft == -1)
-		{
-            //set the correct number of bullets in the magazine depending on which gun is being used
-            bulletsLeft = ammo;
-            shoot();
-		}
-        //you've run out of ammo! reload!
-        else if (bulletsLeft == 0)
-		{
-            if (reloading == false)
-			{
-                reloading = true;
-                StartCoroutine("Reload");
-            }
-		}
-        //go ahead and shoot one bullet and remove it from the magazine
+        if (attackType == 2)
+            animation = animationNameSecondary;
         else
-		{
-            shoot();
-        }
-        //get the animation and states from the tool
-        animation = animationName;
+            animation = animationName;
         states = weaponStates;
+
+        if(animation == null)
+        {
+            if (bulletsLeft == -1)
+            {
+                //set the correct number of bullets in the magazine depending on which gun is being used
+                bulletsLeft = ammo;
+                shoot();
+            }
+            //you've run out of ammo! reload!
+            else if (bulletsLeft == 0)
+            {
+                if (reloading == false)
+                {
+                    reloading = true;
+                    StartCoroutine("Reload");
+                }
+            }
+            //go ahead and shoot one bullet and remove it from the magazine
+            else
+            {
+                shoot();
+            }
+        }
+        
     }
 
     IEnumerator Reload()

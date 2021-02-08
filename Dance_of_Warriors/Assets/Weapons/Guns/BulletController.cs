@@ -11,6 +11,7 @@ public class BulletController : MonoBehaviour
     protected float lifespan;
 
     public Collider source;
+    private Character targetCharacter;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -47,5 +48,12 @@ public class BulletController : MonoBehaviour
             Destroy(this.gameObject);
         //Debug.Log("source = " + source);
         //Debug.Log("col = =" + col);
+
+        if (LayerMask.LayerToName(col.gameObject.layer) == "enemy" || LayerMask.LayerToName(col.gameObject.layer) == "player")
+        {
+            targetCharacter = col.gameObject.GetComponent<Character>();
+            if(targetCharacter)
+                targetCharacter.playerHealthManager.TakeDamage(col.gameObject.tag, 1);
+        }
     }
 }

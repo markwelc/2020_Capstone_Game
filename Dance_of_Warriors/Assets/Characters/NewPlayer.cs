@@ -24,7 +24,7 @@ public class NewPlayer : Character
 
     private GameObject reticle;
     reticleController retController;
-    
+
 
     /**
      * On awake we initialize our controls to tell it what to do with each
@@ -326,7 +326,7 @@ public class NewPlayer : Character
             movement *= dashSpeed[(int)dashActionState - 1]; //scale movement
             anim.SetTrigger("doneDashing");
             anim.SetBool("isDashing", false);
-            
+
         }
         else if (dashActionState == actionState.active && dashing <= 0) //if we're dashing and need to recover
         {
@@ -476,7 +476,7 @@ public class NewPlayer : Character
             playerHealthManager.setOneTimeBlock(false);
             //   Debug.Log("Got Hit break block");
             anim.SetTrigger("breakBlock"); // break block animation then transition back to standard
-            
+
             // no longer invincible or blocking
             isBlocking = false;
             playerHealthManager.setInvincible(false);

@@ -66,12 +66,12 @@ public class TrainingDummy : Character
     // Update is called once per frame
     private void Update()
     {
-        
+
         distance = Vector3.Distance(target.position, transform.position);
         if (!isDead)
         {
             checkBeat();
-            
+
         }
         else
         {
@@ -122,7 +122,7 @@ public class TrainingDummy : Character
             // 3 cases
             // is timer greater than interval
             // is it a full beat
-            // is the ccount equal to that in question 
+            // is the ccount equal to that in question
             if (musicAnalyzer.beatD8 && beatCountFull == onFullBeat && musicAnalyzer.beatCountD8 % 8 == onBeatD8[i])
             {
                 //Debug.Log("Do move");
@@ -137,7 +137,7 @@ public class TrainingDummy : Character
      * This happens on the third beat
      * Where are they in relation to player?
      * Slect action based on where they are
-     * NOTE: will need to handle to do something in between beats 
+     * NOTE: will need to handle to do something in between beats
      * otherwise the player will be in range but just not be doing anything until 3rd beat
      */
     private void onBeatAction()
@@ -245,7 +245,7 @@ public class TrainingDummy : Character
             walkPointSet = true;
     }
 
-    
+
     /**
      * Attack the player
      * this will need to be changed later depending

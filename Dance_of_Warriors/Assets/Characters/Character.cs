@@ -40,10 +40,10 @@ public class Character : MonoBehaviour
     protected actionState jumpActionState; //this may not be needed to restrict jumping, but may be useful in graphics
 
     [SerializeField] protected WeaponController weaponAccess;
-    [SerializeField] protected GameObject weaponsPrefab;
-    protected GameObject gunsPrefab; //this is so that we can access only the guns
+    //[SerializeField] protected GameObject weaponsPrefab;
+    //protected GameObject gunsPrefab; //this is so that we can access only the guns
     [SerializeField] protected GameObject gunsParent; //this will be the parent object of the gunsPrefab
-    protected GameObject meleePrefab;
+    //protected GameObject meleePrefab;
     [SerializeField] protected GameObject meleeParent;
 
     protected actionState toolActionState;
@@ -59,7 +59,7 @@ public class Character : MonoBehaviour
 
     [SerializeField] protected string[] availableWeapons;
     protected int equippedWeapon; //which weapon is currently equipped
-    protected int equippedWeapon2; //which weapon is currently equipped as the secondary weapon
+    [SerializeField] private UnityEngine.Animations.Rigging.Rig rig;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -78,7 +78,7 @@ public class Character : MonoBehaviour
         playerHealthManager = gameObject.AddComponent<PlayerHealthController>();
         health = playerHealthManager.getHealth();
         isDead = false;
-        
+
         isBlocking = false;
         setWeaponParents();
     }
@@ -172,31 +172,23 @@ public class Character : MonoBehaviour
         //do nothing
     }
 
-    protected virtual void useWeapons(int toolNum) //actually goes and uses the weapon
+    /*attackType should be either 1 or 2
+     * 1 if using the currently equipped weapon's primary attack
+     * 2 if using the currently equipped weapon's secondary attack
+     */
+    protected virtual void useWeapons(int attackType) //actually goes and uses the weapon
     {
 
         string animation;
         int[] states;
-        if(toolNum == 2)
-            weaponAccess.useWeapon(availableWeapons[equippedWeapon2], out animation, out states); //the first argument will probably be replaced with a default weapon that doesn't exist yet
-        else //e.g. if toolNum is 1
-            //this way our default tool is our primary tool
-            weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states);
- 
+
+        weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states, attackType);
+
         if (animation != null)
             anim.SetTrigger(animation); //start the animation
         toolStates = states;
 
     }
-
-    /*
-     * changes the equipped weapon to the next item in the available weapons array
-     */
-    //protected virtual void cycleWeapon()
-    //{
-    //    equippedWeapon++;
-    //    equippedWeapon = equippedWeapon % availableWeapons.Length;
-    //}
 
     //start using a tool
     //this is in Character.cs because it is similar for every character
@@ -249,6 +241,44 @@ public class Character : MonoBehaviour
         {
             usingTool--;
         }
+    }
+
+    //changes the currently equipped weapon to the next one in available weapons array
+    protected void cycleWeapon()
+    {
+        //disable current weapon's gameobject
+        Transform curWeapon = gunsParent.transform.Find(availableWeapons[equippedWeapon]);
+        if(curWeapon == null)
+        {
+            curWeapon = meleeParent.transform.Find(availableWeapons[equippedWeapon]);
+            if(curWeapon == null)
+            {
+                Debug.Log("no weapon with name " + availableWeapons[equippedWeapon] + " found");
+                return;
+            }
+        }
+        curWeapon.gameObject.SetActive(false);
+
+        equippedWeapon++;
+        equippedWeapon = equippedWeapon % availableWeapons.Length;
+
+        //enable the new weapon
+        curWeapon = gunsParent.transform.Find(availableWeapons[equippedWeapon]);
+        if(curWeapon == null)
+        {
+            curWeapon = meleeParent.transform.Find(availableWeapons[equippedWeapon]);
+            if (curWeapon == null)
+            {
+                Debug.Log("no weapon with name " + availableWeapons[equippedWeapon] + " found");
+                return;
+            }
+            rig.weight = 0;//we're using a melee weapon, so don't use animation rigging
+        }
+        else
+        {
+            rig.weight = 1;//we're using a gun, so use animation rigging
+        }
+        curWeapon.gameObject.SetActive(true);
     }
 
     //these three functions determine whether the character may jump
