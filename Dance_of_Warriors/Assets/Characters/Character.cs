@@ -60,6 +60,7 @@ public class Character : MonoBehaviour
     [SerializeField] protected string[] availableWeapons;
     protected int equippedWeapon; //which weapon is currently equipped
     [SerializeField] private UnityEngine.Animations.Rigging.Rig rig;
+    private IEnumerator coroutine;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -180,15 +181,43 @@ public class Character : MonoBehaviour
 
         string animation;
         int[] states;
-        Debug.Log(this.gameObject.name + ": is using the weapon, " + availableWeapons[equippedWeapon] + " with attack type: " + attackType);
+        
         weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states, attackType);
+        weaponAccess.canDealDamage(availableWeapons[equippedWeapon], true);
 
         if (animation != null)
         {
             anim.SetTrigger(animation); //start the animation
-            Debug.Log(this.gameObject.name + ": applying anim: " +  animation);
         }
         toolStates = states;
+        
+
+        // Get how long the clip is so it only does ddamage while attacking
+        float time = -1;
+        RuntimeAnimatorController ac = anim.runtimeAnimatorController;    //Get Animator controller
+        for (int i = 0; i < ac.animationClips.Length; i++)                 //For all animations
+        {
+            if (ac.animationClips[i].name == animation)        //If it has the same name as your clip
+            {
+                time = ac.animationClips[i].length;
+            }
+        }
+        // make sure we actually got something
+        if(time != -1)
+        {
+            // start courintine when done can no longer deal damage
+            StartCoroutine(WaitForAttackComplete(time));
+        }
+        
+
+    }
+
+    private IEnumerator WaitForAttackComplete(float waitTime)
+    {
+        // waittime is the time of that animation
+        yield return new WaitForSeconds(waitTime);
+        // once done stop attack
+        weaponAccess.canDealDamage(availableWeapons[equippedWeapon], false);
 
     }
 
@@ -200,10 +229,6 @@ public class Character : MonoBehaviour
         {
             //since we are initiating use of a tool, we are now moving to the active state
             toolActionState++;
-            if (toolStates == null)
-                Debug.LogWarning("cant get states");
-            else
-                Debug.LogWarning("got the states");
 
             usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the value of the first element in toolStates (telegraph length)
 

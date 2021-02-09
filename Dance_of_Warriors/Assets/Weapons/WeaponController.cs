@@ -34,7 +34,6 @@ public class WeaponController : MonoBehaviour
                 break;
             case "stick":
                 stick.useWeapon((string)null, out animation, out states, attackType);
-                Debug.LogWarning("da states: " + states);
                 break;
             default:
                 animation = null;
@@ -47,5 +46,21 @@ public class WeaponController : MonoBehaviour
     protected virtual void useWeapon()
     {
         //do nothing
+    }
+
+    public virtual void canDealDamage(string weaponName, bool canDamage)
+    {
+        //which weapon can/cant do damage?
+
+        switch (weaponName)
+        {
+            case "stick":
+                stick.canDealDamage(weaponName, canDamage);
+                break;
+            default:
+                // Nothing to be done here could be a gun where bullet always uses damage
+                break;
+        }
+        
     }
 }

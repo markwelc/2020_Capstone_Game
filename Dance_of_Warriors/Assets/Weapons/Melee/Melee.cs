@@ -9,7 +9,7 @@ public class Melee : WeaponController
     public Collider user; //the character using this weapon
                           // private Transform weaponTransform;
     protected Character targetCharacter; //used to fiture out what to actually damage
-
+    private bool canDamage = false;
 
     public override void useWeapon(string weaponName, out string animation, out int[] states, int attackType)
     {
@@ -25,9 +25,12 @@ public class Melee : WeaponController
         Debug.Log("LayerMask.LayerToName(other.gameObject.layer) = " + LayerMask.LayerToName(other.gameObject.layer));
         if(LayerMask.LayerToName(other.gameObject.layer) == "enemy" || LayerMask.LayerToName(other.gameObject.layer) == "player")
         {
-            Debug.Log("hit a character");
-            targetCharacter = getCharacterInParents(other.gameObject);
-            targetCharacter.playerHealthManager.TakeDamage(other.gameObject.tag, 1);
+            if (canDamage)
+            {
+                Debug.Log("hit a character");
+                targetCharacter = getCharacterInParents(other.gameObject);
+                targetCharacter.playerHealthManager.TakeDamage(other.gameObject.tag, 1);
+            }
         }
     }
 
@@ -45,5 +48,12 @@ public class Melee : WeaponController
         }
 
         return res;
+    }
+
+    public override void canDealDamage(string weaponN, bool canDamage)
+    {
+        
+        this.canDamage = canDamage;
+        
     }
 }

@@ -61,6 +61,7 @@ public class TrainingDummy : Character
         // healthMax = 5;
         // speed = 5;
         // jumpForce = 300;
+        /*
         // Tool Added stuff
         toolActionState = actionState.inactive;
         usingTool = 0;
@@ -71,6 +72,7 @@ public class TrainingDummy : Character
         toolStates[3] = 0;  //length of tool cooldown
         toolUsed = 0;
         // End tools
+        */
 
         equippedWeapon = 1; //this is the starting value
 
@@ -216,11 +218,11 @@ public class TrainingDummy : Character
         {
             enemyState = 2;
         }
-
+        /*
         if (toolActionState != actionState.inactive)
         {
             toolUse();
-        }
+        }*/
     }
 
     /**
@@ -280,19 +282,19 @@ public class TrainingDummy : Character
 
         //look at the player so it doesn't look dumb
         transform.LookAt(target);
-        Debug.Log("initiating tool use");
-        initiateTool(1);
+        //Debug.Log("initiating tool use");
+        //initiateTool(1);
        // equippedWeapon = 1;
         // if character has not already attacked, throw a projectile at them
         if (!alreadyAttacked)
         {
 
            // initiateTool(1); 
-         /*   if (weaponAccess != null)
+            if (weaponAccess != null)
             {
                 Debug.Log("attacking");
                 useWeapons(2);
-            }*/
+            }
             // Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
             // rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
             // rb.AddForce(transform.up * 8f, ForceMode.Impulse);
