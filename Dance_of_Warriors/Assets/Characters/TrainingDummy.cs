@@ -54,13 +54,28 @@ public class TrainingDummy : Character
     // Start is called before the first frame update
     protected override void Start()
     {
+        base.Start();
+
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
         // healthMax = 5;
         // speed = 5;
         // jumpForce = 300;
+        // Tool Added stuff
+        toolActionState = actionState.inactive;
+        usingTool = 0;
+        toolStates = new int[4];
+        toolStates[0] = 0;  //length of telegraph
+        toolStates[1] = 0;  //length of action
+        toolStates[2] = 0;  //length of recovery
+        toolStates[3] = 0;  //length of tool cooldown
+        toolUsed = 0;
+        // End tools
 
-        base.Start();
+        equippedWeapon = 1; //this is the starting value
+
+
+        
     }
 
     // Update is called once per frame
@@ -201,6 +216,11 @@ public class TrainingDummy : Character
         {
             enemyState = 2;
         }
+
+        if (toolActionState != actionState.inactive)
+        {
+            toolUse();
+        }
     }
 
     /**
@@ -260,12 +280,19 @@ public class TrainingDummy : Character
 
         //look at the player so it doesn't look dumb
         transform.LookAt(target);
-
+        Debug.Log("initiating tool use");
+        initiateTool(1);
+       // equippedWeapon = 1;
         // if character has not already attacked, throw a projectile at them
         if (!alreadyAttacked)
         {
-            if (weaponAccess != null)
-                useWeapons(0);
+
+           // initiateTool(1); 
+         /*   if (weaponAccess != null)
+            {
+                Debug.Log("attacking");
+                useWeapons(2);
+            }*/
             // Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
             // rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
             // rb.AddForce(transform.up * 8f, ForceMode.Impulse);

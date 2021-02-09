@@ -34,6 +34,7 @@ public class WeaponController : MonoBehaviour
                 break;
             case "stick":
                 stick.useWeapon((string)null, out animation, out states, attackType);
+                Debug.LogWarning("da states: " + states);
                 break;
             default:
                 animation = null;

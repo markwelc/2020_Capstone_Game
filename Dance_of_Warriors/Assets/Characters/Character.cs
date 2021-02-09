@@ -180,11 +180,14 @@ public class Character : MonoBehaviour
 
         string animation;
         int[] states;
-
+        Debug.Log(this.gameObject.name + ": is using the weapon, " + availableWeapons[equippedWeapon] + " with attack type: " + attackType);
         weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states, attackType);
 
         if (animation != null)
+        {
             anim.SetTrigger(animation); //start the animation
+            Debug.Log(this.gameObject.name + ": applying anim: " +  animation);
+        }
         toolStates = states;
 
     }
@@ -197,6 +200,10 @@ public class Character : MonoBehaviour
         {
             //since we are initiating use of a tool, we are now moving to the active state
             toolActionState++;
+            if (toolStates == null)
+                Debug.LogWarning("cant get states");
+            else
+                Debug.LogWarning("got the states");
 
             usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the value of the first element in toolStates (telegraph length)
 
