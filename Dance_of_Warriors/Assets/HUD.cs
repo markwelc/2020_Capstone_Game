@@ -16,7 +16,8 @@ public class HUD : MonoBehaviour
     public Button slotButton; //Used to keep track of the button component of a specific inventory slot
 
     public GameObject deathMessageFirstButton;
-    public NewPlayer playa;
+    public CameraLook cam; //for disabling camera controls while inventory is open
+
 
     // Start is called before the first frame update
     void Start()
@@ -91,9 +92,11 @@ public class HUD : MonoBehaviour
     //Open the deathMessage panel
     public void OpenDeathMessagePanel()
     {
+        Debug.LogWarning("hhh");
         DeathMessagePanel.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(deathMessageFirstButton);
-        playa.menuEnabled(true);
+        if(cam != null)
+            cam.isCamMovementAllowed = false; //disallow camera movement
     }
 }

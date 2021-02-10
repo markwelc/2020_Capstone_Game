@@ -13,6 +13,7 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject pauseFirstButton;
     public NewPlayer playa;
+    public AudioSource music;
     
     private void Awake()
     {
@@ -53,7 +54,10 @@ public class PauseMenu : MonoBehaviour
         PauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         IsGamePaused = false;
-        playa.menuEnabled(false);
+        if(playa != null)
+            playa.menuEnabled(false);
+        if(music != null)
+            music.Play();
     }
     
     void Pause()
@@ -62,8 +66,12 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         IsGamePaused = true;
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(pauseFirstButton);
-        playa.menuEnabled(true);
+        if(pauseFirstButton != null)
+            EventSystem.current.SetSelectedGameObject(pauseFirstButton);
+        if(playa != null)
+            playa.menuEnabled(true);
+        if(music != null)
+            music.Pause();
         
     }
 

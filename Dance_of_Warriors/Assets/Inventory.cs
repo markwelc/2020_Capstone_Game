@@ -88,7 +88,8 @@ public class Inventory : MonoBehaviour
             {
                 inventory.SetActive(false); //deactivate it in game
                 cam.isCamMovementAllowed = true; // allow camera movement
-                playa.menuEnabled(false);
+                if(playa != null)
+                    playa.menuEnabled(false);
             }
             else //if inventory is not active when button is pressed
             {
@@ -96,7 +97,8 @@ public class Inventory : MonoBehaviour
                 cam.isCamMovementAllowed = false; //disallow camera movement
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(firstSelectedSlot);
-                playa.menuEnabled(true);
+                if(playa != null)
+                    playa.menuEnabled(true);
             }
         }
     }

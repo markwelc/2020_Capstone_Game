@@ -26,7 +26,7 @@ public class NewPlayer : Character
     private GameObject reticle;
     reticleController retController;
 
-
+    private bool deathMessageOpened;
     /**
      * On awake we initialize our controls to tell it what to do with each
      *
@@ -117,12 +117,14 @@ public class NewPlayer : Character
         mouseSensitivity = 100;
 
         equippedWeapon = 1; //this is the starting value
+        deathMessageOpened = false;
     }
 
     void Update()
     {
-        if (isDead)
+        if (isDead && !deathMessageOpened)
         {
+            deathMessageOpened = true;
             hud.OpenDeathMessagePanel();
         }
     }
@@ -421,15 +423,6 @@ public class NewPlayer : Character
         inventory.AddItem(mItemToPickup); //add item to player's inventory
         mItemToPickup.OnPickup(); //call item's OnPickup() method
         hud.ClosePickupMessagePanel(); //close the message panel
-    }
-
-    //called when player dies
-    void DeathMessage()
-    {
-        if (isDead == true)
-        {
-            hud.OpenDeathMessagePanel();
-        }
     }
 
 
