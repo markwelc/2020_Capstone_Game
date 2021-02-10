@@ -25,6 +25,9 @@ public class NewPlayer : Character
     private GameObject reticle;
     reticleController retController;
 
+    
+    
+
 
     /**
      * On awake we initialize our controls to tell it what to do with each
@@ -84,8 +87,8 @@ public class NewPlayer : Character
         //this might be dumb, not sure
         dash = false;
         speed = 10;
-        jumpForce = 300;
-
+        jumpForce = 6;
+        
         // Tool Added stuff
         toolActionState = actionState.inactive;
         usingTool = 0;
@@ -247,10 +250,20 @@ public class NewPlayer : Character
     {
         if (jumpAllowed())
         {
-            characterRigidbody.AddForce(Vector3.up * jumpForce);
-            anim.SetBool("isJumping", true);
+            //characterRigidbody.AddForce(Vector3.up * jumpForce);
+            //anim.SetBool("isJumping", true);
+            anim.SetTrigger("isJumping");
             isJumping = true;
+            characterRigidbody.velocity = Vector3.up * jumpForce;
+            //movement.y = 17f;
+            //isJumping = false;
+            //anim.SetTrigger("doneJumping");
+            //doneJumping = true;
         }
+		else if (isJumping == true)
+		{
+            //anim.SetBool("doneJumping", true);
+		}
     }
 
     /**
