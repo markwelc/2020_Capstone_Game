@@ -61,6 +61,7 @@ public class Character : MonoBehaviour
     protected int equippedWeapon; //which weapon is currently equipped
     [SerializeField] private UnityEngine.Animations.Rigging.Rig rig;
     private IEnumerator coroutine;
+    [SerializeField] public Collider[] weaponColliders;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -99,10 +100,7 @@ public class Character : MonoBehaviour
         */
         health = playerHealthManager.getHealth();
 
-        if (health <= 0)
-        {
-            isDead = true;
-        }
+        checkIsDead();
         if(playerHealthManager.getOneTimeBlock())
         {
             breakBlock();
@@ -181,7 +179,6 @@ public class Character : MonoBehaviour
 
         string animation;
         int[] states;
-        
         weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states, attackType);
         weaponAccess.canDealDamage(availableWeapons[equippedWeapon], true);
 
@@ -304,11 +301,13 @@ public class Character : MonoBehaviour
                 Debug.Log("no weapon with name " + availableWeapons[equippedWeapon] + " found");
                 return;
             }
-            rig.weight = 0;//we're using a melee weapon, so don't use animation rigging
+            if(this.gameObject.layer == 8) // this for now until enemy rig is set up
+                rig.weight = 0;//we're using a melee weapon, so don't use animation rigging
         }
         else
         {
-            rig.weight = 1;//we're using a gun, so use animation rigging
+            if(this.gameObject.layer == 8)
+                rig.weight = 1;//we're using a gun, so use animation rigging
         }
         curWeapon.gameObject.SetActive(true);
     }
@@ -360,5 +359,20 @@ public class Character : MonoBehaviour
     protected virtual void breakBlock()
     {
         // Override
+    }
+
+    private void checkIsDead()
+    {
+        if (health <= 0)
+        {
+            // player is dead this causes them to drop their weapon
+            // since added rigged body and is trigger to false so it stays on the map
+            // then there is a possibility you can pick it up again and add to invenetory if need be
+            foreach (Collider wCol in weaponColliders)
+            {
+                wCol.isTrigger = false;
+            }
+            isDead = true;
+        }
     }
 }

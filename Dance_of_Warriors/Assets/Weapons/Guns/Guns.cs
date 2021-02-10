@@ -71,8 +71,12 @@ public class Guns : WeaponController
         newBullet = Instantiate(bulletPrefab, UserFirepoint.position, Quaternion.Euler(angle)); //make the bullet
                                                                                                 //the bullet controller takes things from here
         newBullet.GetComponent<BulletController>().source = UserFirepoint.transform.parent.parent.GetComponent<Collider>(); //be sure to set the bullets parent
-        mine = GameObject.Find("Third Person Camera");
-        myC = mine.GetComponent<CameraLook>();
-        myC.AddRecoil();
+        // only add recoil when player shoots
+        if (this.gameObject.layer == 8)
+        {
+            mine = GameObject.Find("Third Person Camera");
+            myC = mine.GetComponent<CameraLook>();
+            myC.AddRecoil();
+        }
     }
 }

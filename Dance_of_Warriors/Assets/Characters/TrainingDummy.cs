@@ -13,7 +13,7 @@ public class TrainingDummy : Character
     public Transform player;
     public Transform target;
     public LayerMask whatIsGround, whatIsPlayer;
-
+    public bool dash;
     float distance;
 
     //patrolling variables
@@ -25,7 +25,7 @@ public class TrainingDummy : Character
     public float timeBetweenAttacks; //sets attack frequency
     bool alreadyAttacked; //helps with attack frequency
     public GameObject projectile; //used for attacks
-
+    private int numOfInRangeActions = 2;
     //states
 
     // Can grow if needed
@@ -74,10 +74,10 @@ public class TrainingDummy : Character
         // End tools
         */
 
-        equippedWeapon = 1; //this is the starting value
+        equippedWeapon = 0; //this is the starting value
+        numOfInRangeActions = 2;
 
 
-        
     }
 
     // Update is called once per frame
@@ -104,11 +104,12 @@ public class TrainingDummy : Character
      */
     protected override void handleMovement()
     {
+
         if (!isDead)
         {
             if (distance <= lookRadius)
             {
-                if (distance > attackRadius) // In attack range dont want to move but do want to set to look at player
+                if (distance > attackRadius && !isBlocking) // In attack range dont want to move but do want to set to look at player
                 {
                     enemyState = 1;
                     agent.SetDestination(target.position);
@@ -117,7 +118,8 @@ public class TrainingDummy : Character
             }
             else
             {
-                Patrolling();
+                if(!isBlocking) // Just a check. likely this will never happen but just to be safe
+                    Patrolling();
                 enemyState = 0;
             }
         }
@@ -196,6 +198,41 @@ public class TrainingDummy : Character
     private void selectFollowingAction()
     {
         Debug.Log("Select following action");
+        //shoot();
+        initDashForward();
+
+    }
+
+    void shoot()
+    {
+
+        // Not working do we want to set up animation rigging for the enemy? when using gun point at the player?
+        if (equippedWeapon != 0)
+            cycleWeapon();
+        
+        // be sure they actually have access
+        if (weaponAccess != null)
+        {
+            // Doing random range to select the type they want
+            // since it uses else for standard attack
+            // this is just to lower the probability of a heavy attack
+            useWeapons(1);
+        }
+    }
+
+    void initDashForward()
+    {
+        anim.SetTrigger("isDashing");
+        dash = true;
+        playerHealthManager.setInvincible(true);
+        agent.speed = agent.speed * 3f;
+
+        Invoke(nameof(ResetAttack), 0.25f); // 0.25 seems to work well for dodge
+        // want to dodge left right back etc?
+        // could change target location for the nav mesh 
+        // apply that to move vector
+        // honestly possible just being able to get the move pos from the agent set destination may be best
+        // than we can control everything manually and do what we want instead of just relying on nav mesh
     }
 
     /**
@@ -204,9 +241,32 @@ public class TrainingDummy : Character
      */
     private void selectInRangeAction()
     {
-        Debug.Log("Select in range action");
-        AttackPlayer();
-    }
+        //chase the player
+        agent.SetDestination(transform.position);
+
+        //look at the player so it doesn't look dumb
+        transform.LookAt(target);
+
+        if (!alreadyAttacked)
+        {
+            int rand = Random.Range(1, numOfInRangeActions + 1); // just picking a random for now. can fine tune later
+            alreadyAttacked = true;
+            switch (rand)
+            {
+                case 1:
+                    AttackPlayer();
+                    break;
+                case 2:
+                    Block();
+                    break;
+                default:
+                    break;
+            }
+
+            
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }
+}
 
     /**
      * They are in range
@@ -218,11 +278,6 @@ public class TrainingDummy : Character
         {
             enemyState = 2;
         }
-        /*
-        if (toolActionState != actionState.inactive)
-        {
-            toolUse();
-        }*/
     }
 
     /**
@@ -267,6 +322,50 @@ public class TrainingDummy : Character
             walkPointSet = true;
     }
 
+    private void Block()
+    {
+            anim.SetTrigger("isBlocking");
+
+            // Trigger wern't restting for some reason before reset now
+            anim.ResetTrigger("doneBlocking");
+            anim.ResetTrigger("breakBlock");
+            // They are invincible at start
+            isBlocking = true;
+            playerHealthManager.setInvincible(true);
+        
+    }
+
+    /**
+     * They stopped blocking but was never broken
+     */
+    void endBlock()
+    {
+        //Debug.Log("End Block");
+        // They released so end the block no longer invincible
+        anim.SetTrigger("doneBlocking");
+        isBlocking = false;
+        playerHealthManager.setInvincible(false);
+    }
+
+
+    /**
+     * If the block has been broken
+     */
+    protected override void breakBlock()
+    {
+        if (isBlocking)
+        {
+            // only blocks one time reset back
+            playerHealthManager.setOneTimeBlock(false);
+            //   Debug.Log("Got Hit break block");
+            anim.SetTrigger("breakBlock"); // break block animation then transition back to standard
+
+            // no longer invincible or blocking
+            isBlocking = false;
+            playerHealthManager.setInvincible(false);
+        }
+    }
+
 
     /**
      * Attack the player
@@ -277,36 +376,47 @@ public class TrainingDummy : Character
     private void AttackPlayer()
     {
         //Debug.Log("Attacking Player");
-        //chase the player
-        agent.SetDestination(transform.position);
+        if (equippedWeapon != 1)
+            cycleWeapon();
 
-        //look at the player so it doesn't look dumb
-        transform.LookAt(target);
-        //Debug.Log("initiating tool use");
-        //initiateTool(1);
-       // equippedWeapon = 1;
         // if character has not already attacked, throw a projectile at them
-        if (!alreadyAttacked)
-        {
-
-           // initiateTool(1); 
+        
+       
+           // be sure they actually have access
             if (weaponAccess != null)
             {
-                Debug.Log("attacking");
-                useWeapons(2);
+                // Doing random range to select the type they want
+                // since it uses else for standard attack
+                // this is just to lower the probability of a heavy attack
+                useWeapons(Random.Range(1, 5));
             }
             // Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
             // rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
             // rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-            alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
-        }
+            //alreadyAttacked = true;
+          //  Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        //}
     }
 
     // resets the alreadyAttacked variable used in AttackPlayer()
     private void ResetAttack()
     {
         alreadyAttacked = false;
+        if(isBlocking)
+        {
+            endBlock();
+        }
+        if(dash)
+        {
+            anim.SetTrigger("doneDashing");
+            anim.SetBool("isDashing", false);
+            playerHealthManager.setInvincible(false);
+            dash = false;
+            if (agent.speed > 5)
+            {
+                agent.speed = agent.speed / 3;
+            }
+        }
     }
 
     private void enemyDefeated()
