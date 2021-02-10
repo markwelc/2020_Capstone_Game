@@ -1217,6 +1217,9 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 0
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!54 &429799163
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2882,6 +2885,9 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 768
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!136 &744708508
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8958,17 +8964,17 @@ PrefabInstance:
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.011570624
+      value: -0.011570645
       objectReference: {fileID: 0}
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.051683057
+      value: -0.05168309
       objectReference: {fileID: 0}
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.00059884595
+      value: 0.0005988474
       objectReference: {fileID: 0}
     - target: {fileID: 2261187899182359264, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}

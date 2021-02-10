@@ -13,6 +13,7 @@ public class NewPlayer : Character
     private Transform cameraMain;
 
     public bool dash;
+    
     public Inventory inventory; //keeps track of the player's inventory
     public HUD hud;//references the HUD script for opening and closing message panels
 
@@ -25,9 +26,8 @@ public class NewPlayer : Character
     private GameObject reticle;
     reticleController retController;
 
-    
-    
-
+    public LayerMask whatIsGround;
+    private bool grounded;
 
     /**
      * On awake we initialize our controls to tell it what to do with each
@@ -59,6 +59,7 @@ public class NewPlayer : Character
 
         reticle = GameObject.Find("/Main Camera/Canvas/Reticle");
         retController = reticle.GetComponent<reticleController>();
+        whatIsGround = LayerMask.GetMask("staticEnvironment");
     }
 
     /**
@@ -86,6 +87,7 @@ public class NewPlayer : Character
         //define all variables here
         //this might be dumb, not sure
         dash = false;
+        grounded = false;
         speed = 10;
         jumpForce = 6;
         
@@ -119,6 +121,7 @@ public class NewPlayer : Character
         mouseSensitivity = 100;
 
         equippedWeapon = 1; //this is the starting value
+        
     }
 
     void Update()
@@ -127,6 +130,16 @@ public class NewPlayer : Character
         {
             hud.OpenDeathMessagePanel();
         }
+        //if(Physics.Raycast(characterRigidbody.position, -transform.up, 2f, whatIsGround))
+		//{
+        //    grounded = true;
+		//}
+		//else
+		//{
+        //    grounded = false;
+		//}
+        //Debug.Log(characterRigidbody.position + myVec);
+        //Debug.Log(grounded);
     }
     /**
      * General movement override, called in fixed update each time from parent
@@ -250,20 +263,45 @@ public class NewPlayer : Character
     {
         if (jumpAllowed())
         {
-            //characterRigidbody.AddForce(Vector3.up * jumpForce);
-            //anim.SetBool("isJumping", true);
+            anim.SetBool("jumpBool", false);
             anim.SetTrigger("isJumping");
             isJumping = true;
-            characterRigidbody.velocity = Vector3.up * jumpForce;
+            StartCoroutine("Jumping");
+            //characterRigidbody.velocity = Vector3.up * jumpForce;
             //movement.y = 17f;
             //isJumping = false;
             //anim.SetTrigger("doneJumping");
             //doneJumping = true;
         }
-		else if (isJumping == true)
+        else if (isJumping == true && GroundCheck())
 		{
-            //anim.SetBool("doneJumping", true);
-		}
+            isJumping = false;
+            anim.SetBool("jumpBool", true);
+        }
+		
+    }
+    private IEnumerator Jumping()
+    {
+        //this delays the addition of the velocity until the player has prepared to jump
+        yield return new WaitForSeconds(0.4f);
+        characterRigidbody.velocity = Vector3.up * jumpForce;
+    }
+
+    private bool GroundCheck()
+    {
+        RaycastHit hit;
+        float distance = 3f;
+        Vector3 direction = new Vector3(0, -1, 0);
+
+        if (Physics.Raycast(characterRigidbody.transform.position, direction, out hit, distance))
+        {
+            grounded = true;
+        }
+        else
+        {
+            grounded = false;
+        }
+        return grounded;
     }
 
     /**
