@@ -3,12 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour
 {
     public static bool IsGamePaused = false;
     public GameObject PauseMenuUI;
     PlayerControls controls;
+
+    public GameObject pauseFirstButton;
+    public NewPlayer playa;
     
     private void Awake()
     {
@@ -49,6 +53,7 @@ public class PauseMenu : MonoBehaviour
         PauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         IsGamePaused = false;
+        playa.menuEnabled(false);
     }
     
     void Pause()
@@ -56,6 +61,10 @@ public class PauseMenu : MonoBehaviour
         PauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         IsGamePaused = true;
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(pauseFirstButton);
+        playa.menuEnabled(true);
+        
     }
 
     public void ResetGame()

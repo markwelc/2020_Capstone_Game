@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Inventory : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class Inventory : MonoBehaviour
     private List<IInventoryItem> mItems = new List<IInventoryItem>();
     public event EventHandler<InventoryEventArgs> ItemAdded;
     public event EventHandler<InventoryEventArgs> ItemRemoved;
+
+    public GameObject firstSelectedSlot;
+
+    public NewPlayer playa;
 
     public void AddItem(IInventoryItem item)
     {
@@ -77,15 +82,22 @@ public class Inventory : MonoBehaviour
 
     void inventoryButton()
     {
-        if(inventory.activeSelf) // if inventory is active when the button is pressed
+        if (Time.timeScale > 0.0f) // This just checks if the game is paused
         {
-            inventory.SetActive(false); //deactivate it in game
-            cam.isCamMovementAllowed = true; // allow camera movement
-        }
-        else //if inventory is not active when button is pressed
-        {
-            inventory.SetActive(true); //activate it in game
-            cam.isCamMovementAllowed = false; //disallow camera movement
+            if (inventory.activeSelf) // if inventory is active when the button is pressed
+            {
+                inventory.SetActive(false); //deactivate it in game
+                cam.isCamMovementAllowed = true; // allow camera movement
+                playa.menuEnabled(false);
+            }
+            else //if inventory is not active when button is pressed
+            {
+                inventory.SetActive(true); //activate it in game
+                cam.isCamMovementAllowed = false; //disallow camera movement
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(firstSelectedSlot);
+                playa.menuEnabled(true);
+            }
         }
     }
 }

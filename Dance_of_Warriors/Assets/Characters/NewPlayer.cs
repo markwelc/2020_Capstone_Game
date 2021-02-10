@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem; //Need for new input system
 using UnityEngine.XR.WSA;
 
+
 public class NewPlayer : Character
 {
 
@@ -137,6 +138,7 @@ public class NewPlayer : Character
      */
     protected override void handleMovement()
     {
+
         if (dashActionState != actionState.inactive)
         {
             dashingMovement();
@@ -149,6 +151,7 @@ public class NewPlayer : Character
         {
             standardMovement();
         }
+
     }
 
     /**
@@ -480,5 +483,14 @@ public class NewPlayer : Character
             isBlocking = false;
             playerHealthManager.setInvincible(false);
         }
+    }
+
+    public void menuEnabled(bool siPapi)
+    {
+        if (siPapi)
+            controls.Gameplay.Disable();
+        else
+            controls.Gameplay.Enable();
+       
     }
 }

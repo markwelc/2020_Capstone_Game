@@ -12,7 +12,10 @@ public class ItemClickHandler : MonoBehaviour
         ItemDragHandler dragHandler = gameObject.transform.Find("ItemImage").GetComponent<ItemDragHandler>();
         Image image = gameObject.transform.Find("ItemImage").GetComponent<Image>();
         IInventoryItem item = dragHandler.Item;
-        Debug.Log(item.Name);
-        inv.UseItem(item);
+        if (item != null)
+        {
+            Debug.Log(item.Name);
+            inv.UseItem(item);
+        }
     }
 }

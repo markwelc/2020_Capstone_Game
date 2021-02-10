@@ -72,11 +72,11 @@ public class Guns : WeaponController
                                                                                                 //the bullet controller takes things from here
         newBullet.GetComponent<BulletController>().source = UserFirepoint.transform.parent.parent.GetComponent<Collider>(); //be sure to set the bullets parent
         // only add recoil when player shoots
-        if (this.gameObject.layer == 8)
-        {
+       // if (this.gameObject.layer == 8)
+        //{
             mine = GameObject.Find("Third Person Camera");
             myC = mine.GetComponent<CameraLook>();
             myC.AddRecoil();
-        }
+        //}
     }
 }

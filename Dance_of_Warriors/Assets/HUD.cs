@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class HUD : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class HUD : MonoBehaviour
 
     private List<Transform> buttons = new List<Transform>(); //List of buttons for each slot in the inventory
     public Button slotButton; //Used to keep track of the button component of a specific inventory slot
+
+    public GameObject deathMessageFirstButton;
+    public NewPlayer playa;
 
     // Start is called before the first frame update
     void Start()
@@ -88,5 +92,8 @@ public class HUD : MonoBehaviour
     public void OpenDeathMessagePanel()
     {
         DeathMessagePanel.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(deathMessageFirstButton);
+        playa.menuEnabled(true);
     }
 }
