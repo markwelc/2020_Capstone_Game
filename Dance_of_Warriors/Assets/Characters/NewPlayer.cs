@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem; //Need for new input system
 using UnityEngine.XR.WSA;
 
+
 public class NewPlayer : Character
 {
 
@@ -25,7 +26,7 @@ public class NewPlayer : Character
     private GameObject reticle;
     reticleController retController;
 
-
+    private bool deathMessageOpened;
     /**
      * On awake we initialize our controls to tell it what to do with each
      *
@@ -116,12 +117,14 @@ public class NewPlayer : Character
         mouseSensitivity = 100;
 
         equippedWeapon = 1; //this is the starting value
+        deathMessageOpened = false;
     }
 
     void Update()
     {
-        if (isDead)
+        if (isDead && !deathMessageOpened)
         {
+            deathMessageOpened = true;
             hud.OpenDeathMessagePanel();
         }
     }
@@ -137,6 +140,7 @@ public class NewPlayer : Character
      */
     protected override void handleMovement()
     {
+
         if (dashActionState != actionState.inactive)
         {
             dashingMovement();
@@ -149,6 +153,7 @@ public class NewPlayer : Character
         {
             standardMovement();
         }
+
     }
 
     /**
@@ -420,15 +425,6 @@ public class NewPlayer : Character
         hud.ClosePickupMessagePanel(); //close the message panel
     }
 
-    //called when player dies
-    void DeathMessage()
-    {
-        if (isDead == true)
-        {
-            hud.OpenDeathMessagePanel();
-        }
-    }
-
 
     /**
      * Initiate block
@@ -480,5 +476,14 @@ public class NewPlayer : Character
             isBlocking = false;
             playerHealthManager.setInvincible(false);
         }
+    }
+
+    public void menuEnabled(bool siPapi)
+    {
+        if (siPapi)
+            controls.Gameplay.Disable();
+        else
+            controls.Gameplay.Enable();
+       
     }
 }

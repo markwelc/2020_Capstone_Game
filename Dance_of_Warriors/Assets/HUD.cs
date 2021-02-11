@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class HUD : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class HUD : MonoBehaviour
 
     private List<Transform> buttons = new List<Transform>(); //List of buttons for each slot in the inventory
     public Button slotButton; //Used to keep track of the button component of a specific inventory slot
+
+    public GameObject deathMessageFirstButton;
+    public CameraLook cam; //for disabling camera controls while inventory is open
+
 
     // Start is called before the first frame update
     void Start()
@@ -87,6 +92,11 @@ public class HUD : MonoBehaviour
     //Open the deathMessage panel
     public void OpenDeathMessagePanel()
     {
+        Debug.LogWarning("hhh");
         DeathMessagePanel.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(deathMessageFirstButton);
+        if(cam != null)
+            cam.isCamMovementAllowed = false; //disallow camera movement
     }
 }

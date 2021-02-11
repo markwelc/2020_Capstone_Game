@@ -47,4 +47,20 @@ public class WeaponController : MonoBehaviour
     {
         //do nothing
     }
+
+    public virtual void canDealDamage(string weaponName, bool canDamage)
+    {
+        //which weapon can/cant do damage?
+
+        switch (weaponName)
+        {
+            case "stick":
+                stick.canDealDamage(weaponName, canDamage);
+                break;
+            default:
+                // Nothing to be done here could be a gun where bullet always uses damage
+                break;
+        }
+        
+    }
 }
