@@ -314,6 +314,9 @@ public class NewPlayer : Character
             dashing = dashLength[(int)dashActionState - 1]; //set dashing to the value of the first element in dash length (telegraph length)
 
             movement *= dashSpeed[(int)dashActionState - 1]; //scales the movement vector
+
+            if (getCurrentWeaponType() == 'g' && this.gameObject.layer == 8) //if we're holding a gun, turn off animations
+                toggleAnimRigging(false);
         }
     }
 
@@ -353,6 +356,9 @@ public class NewPlayer : Character
                               //this lets us move in the frame that we switch to using regular movement
             dashActionState = actionState.cooldown;
             //this swapping of the value of dashActionState is explained in the else
+
+            if (getCurrentWeaponType() == 'g' && this.gameObject.layer == 8)
+                toggleAnimRigging(true);
         }
         else if (dashActionState == actionState.cooldown && dashing <= 0)
         {
