@@ -244,6 +244,13 @@ public class Character : MonoBehaviour
             usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the appropriate value
 
             useWeapons(toolUsed);
+            char toolType = getCurrentWeaponType();
+            if (toolType == 'g' && toolUsed != 1 && this.gameObject.layer == 8)
+            {
+                toggleAnimRigging(false);
+                Debug.Log("setting rig.weight to zero cause we've got to wait " + (toolStates[1] + toolStates[2]) + " units of time before we can use it again");
+            }
+                
             toolUsed = 0; //we're done with this, set it up for next time.
         }
         else if (toolActionState == actionState.active && usingTool <= 0) //if we're using a tool and need to recover
@@ -257,6 +264,10 @@ public class Character : MonoBehaviour
             //recovery
             toolActionState++; //move to the next state
             usingTool = toolStates[(int)toolActionState - 1]; //set using tool to the appropriate value
+
+            char toolType = getCurrentWeaponType();
+            if (toolType == 'g' && this.gameObject.layer == 8)
+                toggleAnimRigging(true);
         }
         else if (toolActionState == actionState.cooldown && usingTool <= 0)
         {
@@ -276,40 +287,19 @@ public class Character : MonoBehaviour
     {
         Debug.Log("hello");
         //disable current weapon's gameobject
-        Transform curWeapon = gunsParent.transform.Find(availableWeapons[equippedWeapon]);
-        if(curWeapon == null)
-        {
-            curWeapon = meleeParent.transform.Find(availableWeapons[equippedWeapon]);
-            if(curWeapon == null)
-            {
-                Debug.Log("no weapon with name " + availableWeapons[equippedWeapon] + " found");
-                return;
-            }
-        }
-        curWeapon.gameObject.SetActive(false);
+        getCurrentWeapon().gameObject.SetActive(false);
 
         equippedWeapon++;
         equippedWeapon = equippedWeapon % availableWeapons.Length;
 
         //enable the new weapon
-        curWeapon = gunsParent.transform.Find(availableWeapons[equippedWeapon]);
-        if(curWeapon == null)
-        {
-            curWeapon = meleeParent.transform.Find(availableWeapons[equippedWeapon]);
-            if (curWeapon == null)
-            {
-                Debug.Log("no weapon with name " + availableWeapons[equippedWeapon] + " found");
-                return;
-            }
-            if(this.gameObject.layer == 8) // this for now until enemy rig is set up
-                rig.weight = 0;//we're using a melee weapon, so don't use animation rigging
-        }
+        char toolType = getCurrentWeaponType();
+        if (toolType == 'g' && this.gameObject.layer == 8)
+            toggleAnimRigging(true);
         else
-        {
-            if(this.gameObject.layer == 8)
-                rig.weight = 1;//we're using a gun, so use animation rigging
-        }
-        curWeapon.gameObject.SetActive(true);
+            toggleAnimRigging(false);
+
+        getCurrentWeapon().gameObject.SetActive(true);
     }
 
     //these three functions determine whether the character may jump
@@ -374,5 +364,56 @@ public class Character : MonoBehaviour
             }
             isDead = true;
         }
+    }
+
+    /*
+     * returns 'm' if the currently equipped weapon is a melee weapon
+     * returns 'g' if it's a gun
+     * returns '\0' otherwise
+     */
+    protected char getCurrentWeaponType()
+    {
+        Transform curWeapon = gunsParent.transform.Find(availableWeapons[equippedWeapon]);
+        if (curWeapon == null)
+        {
+            curWeapon = meleeParent.transform.Find(availableWeapons[equippedWeapon]);
+            if (curWeapon == null)
+            {
+                Debug.Log("no weapon with name " + availableWeapons[equippedWeapon] + " found");
+                return '\0';
+            }
+            return 'm';//we're using a melee weapon, so don't use animation rigging
+        }
+        else
+        {
+            return 'g';//we're using a gun
+        }
+    }
+
+    /*
+     * returns the transform of the currently equipped weapon
+     */
+    protected Transform getCurrentWeapon()
+    {
+        Transform curWeapon = gunsParent.transform.Find(availableWeapons[equippedWeapon]);
+        if (curWeapon == null)
+        {
+            curWeapon = meleeParent.transform.Find(availableWeapons[equippedWeapon]);
+            if (curWeapon == null)
+            {
+                Debug.Log("no weapon with name " + availableWeapons[equippedWeapon] + " found");
+                return null;
+            }
+        }
+
+        return curWeapon;
+    }
+
+    /*
+     * this function will turn off/on animation rigging for the currently equipped weapon
+     */
+    protected void toggleAnimRigging(bool turnOn)
+    {
+        rig.weight = turnOn ? 1 : 0;
     }
 }
