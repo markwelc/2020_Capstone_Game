@@ -188,7 +188,7 @@ public class TrainingDummy : Character
      */
     private void selectPatrollingAction()
     {
-        Debug.Log("Select patrol action");
+        //Debug.Log("Select patrol action");
     }
 
     /**
@@ -197,7 +197,7 @@ public class TrainingDummy : Character
      */
     private void selectFollowingAction()
     {
-        Debug.Log("Select following action");
+        //Debug.Log("Select following action");
         //shoot();
         initDashForward();
 
@@ -376,8 +376,8 @@ public class TrainingDummy : Character
     private void AttackPlayer()
     {
         //Debug.Log("Attacking Player");
-        if (equippedWeapon != 1)
-            cycleWeapon();
+        //if (equippedWeapon != 1)
+            //cycleWeapon();
 
         // if character has not already attacked, throw a projectile at them
         

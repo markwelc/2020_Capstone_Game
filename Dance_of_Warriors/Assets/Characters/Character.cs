@@ -40,10 +40,8 @@ public class Character : MonoBehaviour
     protected actionState jumpActionState; //this may not be needed to restrict jumping, but may be useful in graphics
 
     [SerializeField] protected WeaponController weaponAccess;
-    //[SerializeField] protected GameObject weaponsPrefab;
-    //protected GameObject gunsPrefab; //this is so that we can access only the guns
-    [SerializeField] protected GameObject gunsParent; //this will be the parent object of the gunsPrefab
-    //protected GameObject meleePrefab;
+    [SerializeField] protected GameObject gunsParent; //this will be the parent object of all guns while they are using animation rigging
+    [SerializeField] protected GameObject gunsParentHand; //this will be the parent of all guns while they are NOT using animation rigging
     [SerializeField] protected GameObject meleeParent;
 
     protected actionState toolActionState;
@@ -244,6 +242,12 @@ public class Character : MonoBehaviour
             usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the appropriate value
 
             useWeapons(toolUsed);
+            char toolType = getCurrentWeaponType();
+            if (toolType == 'g' && toolUsed != 1 && this.gameObject.layer == 8)
+            {
+                toggleAnimRigging(false, true);
+                Debug.Log("setting rig.weight to zero cause we've got to wait " + (toolStates[1] + toolStates[2]) + " units of time before we can use it again");
+            }
             toolUsed = 0; //we're done with this, set it up for next time.
         }
         else if (toolActionState == actionState.active && usingTool <= 0) //if we're using a tool and need to recover
@@ -257,6 +261,13 @@ public class Character : MonoBehaviour
             //recovery
             toolActionState++; //move to the next state
             usingTool = toolStates[(int)toolActionState - 1]; //set using tool to the appropriate value
+
+            char toolType = getCurrentWeaponType();
+            if (toolType == 'g' && this.gameObject.layer == 8)
+            {
+                //Debug.Log("turning on anim rigging");
+                toggleAnimRigging(true, true);
+            }
         }
         else if (toolActionState == actionState.cooldown && usingTool <= 0)
         {
@@ -274,42 +285,27 @@ public class Character : MonoBehaviour
     //changes the currently equipped weapon to the next one in available weapons array
     protected void cycleWeapon()
     {
-        Debug.Log("hello");
+        //Debug.Log("hello");
         //disable current weapon's gameobject
-        Transform curWeapon = gunsParent.transform.Find(availableWeapons[equippedWeapon]);
-        if(curWeapon == null)
-        {
-            curWeapon = meleeParent.transform.Find(availableWeapons[equippedWeapon]);
-            if(curWeapon == null)
-            {
-                Debug.Log("no weapon with name " + availableWeapons[equippedWeapon] + " found");
-                return;
-            }
-        }
-        curWeapon.gameObject.SetActive(false);
+        getCurrentWeapon().gameObject.SetActive(false);
 
         equippedWeapon++;
         equippedWeapon = equippedWeapon % availableWeapons.Length;
 
+        getCurrentWeapon().gameObject.SetActive(true);
+
         //enable the new weapon
-        curWeapon = gunsParent.transform.Find(availableWeapons[equippedWeapon]);
-        if(curWeapon == null)
+        char toolType = getCurrentWeaponType();
+        if (toolType == 'g' && this.gameObject.layer == 8)
         {
-            curWeapon = meleeParent.transform.Find(availableWeapons[equippedWeapon]);
-            if (curWeapon == null)
-            {
-                Debug.Log("no weapon with name " + availableWeapons[equippedWeapon] + " found");
-                return;
-            }
-            if(this.gameObject.layer == 8) // this for now until enemy rig is set up
-                rig.weight = 0;//we're using a melee weapon, so don't use animation rigging
+            Debug.Log("turning on anim rigging");
+            toggleAnimRigging(true, false);
         }
         else
         {
-            if(this.gameObject.layer == 8)
-                rig.weight = 1;//we're using a gun, so use animation rigging
+            Debug.Log("turning off anim rigging");
+            toggleAnimRigging(false, false);
         }
-        curWeapon.gameObject.SetActive(true);
     }
 
     //these three functions determine whether the character may jump
@@ -373,6 +369,67 @@ public class Character : MonoBehaviour
                 wCol.isTrigger = false;
             }
             isDead = true;
+        }
+    }
+
+    /*
+     * returns 'm' if the currently equipped weapon is a melee weapon
+     * returns 'g' if it's a gun
+     * returns '\0' otherwise
+     */
+    protected char getCurrentWeaponType()
+    {
+        Transform curWeapon = getCurrentWeapon();
+        if (curWeapon.IsChildOf(gunsParent.transform) || curWeapon.IsChildOf(gunsParentHand.transform))
+        { 
+            return 'g';//we're using a melee weapon, so don't use animation rigging
+        }
+        else if (curWeapon.IsChildOf(meleeParent.transform))
+        {
+            return 'm';//we're using a gun
+        }
+        else
+        {
+            Debug.Log("no weapon with name " + availableWeapons[equippedWeapon] + " found");
+            return '\0';
+        }
+    }
+
+    /*
+     * returns the transform of the currently equipped weapon
+     */
+    protected Transform getCurrentWeapon()
+    {
+        Transform curWeapon = gunsParent.transform.Find(availableWeapons[equippedWeapon]);
+        if(curWeapon == null)
+            curWeapon = gunsParentHand.transform.Find(availableWeapons[equippedWeapon]); //we need to search both possible parents for the gun (although we should actually use the gun while waving it around)
+
+        if (curWeapon == null)
+            curWeapon = meleeParent.transform.Find(availableWeapons[equippedWeapon]);
+
+        if (curWeapon == null)
+            Debug.Log("no weapon with name " + availableWeapons[equippedWeapon] + " found");
+
+        return curWeapon;
+    }
+
+    /*
+     * this function will turn off/on animation rigging for the currently equipped weapon
+     * won't do anything if a weapon that is not a gun is currently equipped
+     */
+    protected void toggleAnimRigging(bool turnOn, bool changeParent)
+    {
+        char type = getCurrentWeaponType();
+        Transform curGun = getCurrentWeapon();
+        if(turnOn)
+        {
+            rig.weight = 1;
+            if(changeParent && type == 'g') curGun.SetParent(gunsParent.transform, false);
+        }
+        else
+        {
+            rig.weight = 0;
+            if(changeParent && type == 'g') curGun.SetParent(gunsParentHand.transform, false);
         }
     }
 }

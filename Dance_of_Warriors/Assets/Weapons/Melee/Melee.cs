@@ -14,15 +14,20 @@ public class Melee : WeaponController
     public override void useWeapon(string weaponName, out string animation, out int[] states, int attackType)
     {
         if (attackType == 2)
+        {
             animation = animationNameSecondary;
+            states = weaponStatesSecondary;
+        }
         else
+        {
             animation = animationName;
-        states = weaponStates;
+            states = weaponStates;
+        }
     }
 
     protected void OnTriggerEnter(Collider other)
     {
-        Debug.Log("LayerMask.LayerToName(other.gameObject.layer) = " + LayerMask.LayerToName(other.gameObject.layer));
+        //Debug.Log("LayerMask.LayerToName(other.gameObject.layer) = " + LayerMask.LayerToName(other.gameObject.layer));
         if(LayerMask.LayerToName(other.gameObject.layer) == "enemy" || LayerMask.LayerToName(other.gameObject.layer) == "player")
         {
             if (canDamage)

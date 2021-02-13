@@ -623,10 +623,7 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: quick_left_jab
-    m_EventTreshold: 0
+  m_Conditions: []
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5648814276914116393}
   m_Solo: 0
@@ -1003,7 +1000,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 7d332055c8a4c5749be42787eee318a4,
+  m_Motion: {fileID: -203655887218126122, guid: a0910ae6e34d16a4081a8802e19bdbf1,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 

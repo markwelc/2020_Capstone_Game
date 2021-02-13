@@ -21,10 +21,15 @@ public class Guns : WeaponController
     public override void useWeapon(string weaponName, out string animation, out int[] states, int attackType)
     {
         if (attackType == 2)
+        {
             animation = animationNameSecondary;
+            states = weaponStatesSecondary;
+        }
         else
+        {
             animation = animationName;
-        states = weaponStates;
+            states = weaponStates;
+        }
 
         if(animation == null)
         {
