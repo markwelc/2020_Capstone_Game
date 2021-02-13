@@ -316,7 +316,7 @@ public class NewPlayer : Character
             movement *= dashSpeed[(int)dashActionState - 1]; //scales the movement vector
 
             if (getCurrentWeaponType() == 'g' && this.gameObject.layer == 8) //if we're holding a gun, turn off animations
-                toggleAnimRigging(false);
+                toggleAnimRigging(false, true);
         }
     }
 
@@ -358,7 +358,7 @@ public class NewPlayer : Character
             //this swapping of the value of dashActionState is explained in the else
 
             if (getCurrentWeaponType() == 'g' && this.gameObject.layer == 8)
-                toggleAnimRigging(true);
+                toggleAnimRigging(true, true);
         }
         else if (dashActionState == actionState.cooldown && dashing <= 0)
         {
