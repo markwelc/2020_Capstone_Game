@@ -28,6 +28,7 @@ public class NewPlayer : Character
 
     public LayerMask whatIsGround;
     private bool grounded;
+    private bool canCheck;
 
     /**
      * On awake we initialize our controls to tell it what to do with each
@@ -130,7 +131,22 @@ public class NewPlayer : Character
         {
             hud.OpenDeathMessagePanel();
         }
-        //GroundCheck();
+
+        
+        // Are they jump and can you check aka has courontine finished?
+        if(isJumping && canCheck)
+        {
+            // Okay so we know they are jumping and the courintine is finished
+            // check for ground so we can start jump animation
+            if(GroundCheck())
+            {
+                // reset jump operations for next time and play animation
+                isJumping = false;
+                anim.SetTrigger("landJump");
+                canCheck = false;
+            }
+        }
+        
     }
     /**
      * General movement override, called in fixed update each time from parent
@@ -254,9 +270,14 @@ public class NewPlayer : Character
     {
         if (jumpAllowed())
         {
-            anim.SetBool("jumpBool", false);
+            // reset the triggers just in case
+            anim.ResetTrigger("isJumping");
+            anim.ResetTrigger("landJump");
+
+
             anim.SetTrigger("isJumping");
             isJumping = true;
+            
             StartCoroutine("Jumping");
             StartCoroutine("Landing");
         }
@@ -265,8 +286,10 @@ public class NewPlayer : Character
     private IEnumerator Landing()
     {
         //try to delay for 2 seconds
-        yield return new WaitForSeconds(2.0f);
-        
+        yield return new WaitForSeconds(1.0f);
+        // Just setting can check so we know we can check during our update func
+        canCheck = true;
+        /*
         while (isJumping)
         {
             Debug.Log(characterRigidbody.velocity.y);
@@ -275,7 +298,7 @@ public class NewPlayer : Character
                 isJumping = false;
                 anim.SetBool("jumpBool", true);
             }
-        }
+        }*/
     }
     private IEnumerator Jumping()
     {
@@ -284,18 +307,12 @@ public class NewPlayer : Character
         characterRigidbody.velocity = Vector3.up * jumpForce;
     }
 
-    private void GroundCheck()
+    private bool GroundCheck()
     {
-        Vector3 direction = -Vector3.up;
-
-        if (Physics.Raycast(transform.position, direction, 3.0f))
-        {
-            grounded = true;
-        }
-        else
-        {
-            grounded = false;
-        }
+        // Just made it return since its either true or false
+        // 1.75f is pretty much just arbitary, i thought it looked good though
+        // only if ground layer
+        return Physics.Raycast(this.transform.position, -Vector3.up, 1.75f, 1 << LayerMask.NameToLayer("staticEnvironment"));
     }
 
     /**
