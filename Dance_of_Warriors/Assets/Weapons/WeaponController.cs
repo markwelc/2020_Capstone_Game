@@ -11,7 +11,8 @@ public class WeaponController : MonoBehaviour
     protected string animationNameSecondary; //the secondary attack
     protected int ammo;
     protected int[] weaponStates;
-    
+    protected int[] weaponStatesSecondary;
+
     //create an array to hold four values
     //in handgun.cs AND stick.cs, set those four values
 
