@@ -130,16 +130,7 @@ public class NewPlayer : Character
         {
             hud.OpenDeathMessagePanel();
         }
-        //if(Physics.Raycast(characterRigidbody.position, -transform.up, 2f, whatIsGround))
-		//{
-        //    grounded = true;
-		//}
-		//else
-		//{
-        //    grounded = false;
-		//}
-        //Debug.Log(characterRigidbody.position + myVec);
-        //Debug.Log(grounded);
+        //GroundCheck();
     }
     /**
      * General movement override, called in fixed update each time from parent
@@ -267,18 +258,24 @@ public class NewPlayer : Character
             anim.SetTrigger("isJumping");
             isJumping = true;
             StartCoroutine("Jumping");
-            //characterRigidbody.velocity = Vector3.up * jumpForce;
-            //movement.y = 17f;
-            //isJumping = false;
-            //anim.SetTrigger("doneJumping");
-            //doneJumping = true;
+            StartCoroutine("Landing");
         }
-        else if (isJumping == true && GroundCheck())
-		{
-            isJumping = false;
-            anim.SetBool("jumpBool", true);
+    }
+
+    private IEnumerator Landing()
+    {
+        //try to delay for 2 seconds
+        yield return new WaitForSeconds(2.0f);
+        
+        while (isJumping)
+        {
+            Debug.Log(characterRigidbody.velocity.y);
+            if (characterRigidbody.velocity.y == 0)
+            {
+                isJumping = false;
+                anim.SetBool("jumpBool", true);
+            }
         }
-		
     }
     private IEnumerator Jumping()
     {
@@ -287,13 +284,11 @@ public class NewPlayer : Character
         characterRigidbody.velocity = Vector3.up * jumpForce;
     }
 
-    private bool GroundCheck()
+    private void GroundCheck()
     {
-        RaycastHit hit;
-        float distance = 3f;
-        Vector3 direction = new Vector3(0, -1, 0);
+        Vector3 direction = -Vector3.up;
 
-        if (Physics.Raycast(characterRigidbody.transform.position, direction, out hit, distance))
+        if (Physics.Raycast(transform.position, direction, 3.0f))
         {
             grounded = true;
         }
@@ -301,7 +296,6 @@ public class NewPlayer : Character
         {
             grounded = false;
         }
-        return grounded;
     }
 
     /**
