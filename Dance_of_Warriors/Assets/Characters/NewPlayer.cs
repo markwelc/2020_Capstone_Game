@@ -141,10 +141,12 @@ public class NewPlayer : Character
             if(GroundCheck())
             {
                 // reset jump operations for next time and play animation
+                
                 isJumping = false;
                 anim.SetTrigger("landJump");
                 canCheck = false;
             }
+            
         }
         
     }
@@ -272,12 +274,14 @@ public class NewPlayer : Character
         {
             // reset the triggers just in case
             anim.ResetTrigger("isJumping");
+            //anim.ResetTrigger("midAir");
             anim.ResetTrigger("landJump");
 
 
             anim.SetTrigger("isJumping");
             isJumping = true;
-            
+            //anim.SetTrigger("midAir");
+
             StartCoroutine("Jumping");
             StartCoroutine("Landing");
         }
@@ -287,18 +291,9 @@ public class NewPlayer : Character
     {
         //try to delay for 2 seconds
         yield return new WaitForSeconds(1.0f);
+        //anim.SetTrigger("midAir");
         // Just setting can check so we know we can check during our update func
         canCheck = true;
-        /*
-        while (isJumping)
-        {
-            Debug.Log(characterRigidbody.velocity.y);
-            if (characterRigidbody.velocity.y == 0)
-            {
-                isJumping = false;
-                anim.SetBool("jumpBool", true);
-            }
-        }*/
     }
     private IEnumerator Jumping()
     {
