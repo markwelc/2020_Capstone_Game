@@ -88,7 +88,6 @@ public class NewPlayer : Character
         //define all variables here
         //this might be dumb, not sure
         dash = false;
-        grounded = false;
         speed = 10;
         jumpForce = 6;
         
@@ -141,7 +140,6 @@ public class NewPlayer : Character
             if(GroundCheck())
             {
                 // reset jump operations for next time and play animation
-                
                 isJumping = false;
                 anim.SetTrigger("landJump");
                 canCheck = false;
@@ -200,7 +198,6 @@ public class NewPlayer : Character
         movement *= speed;  //Move with speed
         anim.SetFloat("speed", move.y, 1f, Time.deltaTime * 10f);
         anim.SetFloat("turn", move.x, 1f, Time.deltaTime * 10f);
-
     }
 
     /**
@@ -274,13 +271,10 @@ public class NewPlayer : Character
         {
             // reset the triggers just in case
             anim.ResetTrigger("isJumping");
-            //anim.ResetTrigger("midAir");
             anim.ResetTrigger("landJump");
-
 
             anim.SetTrigger("isJumping");
             isJumping = true;
-            //anim.SetTrigger("midAir");
 
             StartCoroutine("Jumping");
             StartCoroutine("Landing");
