@@ -38,8 +38,8 @@ ModelImporter:
       name: jump2
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 0
-      lastFrame: 79
+      firstFrame: 15
+      lastFrame: 33
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
