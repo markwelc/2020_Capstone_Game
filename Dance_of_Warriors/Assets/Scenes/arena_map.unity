@@ -25984,13 +25984,14 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SubmitAction
       value: 
-      objectReference: {fileID: 3563127494601146144, guid: 6eeeb7e4a5b28e04a82b105c102ace23,
+      objectReference: {fileID: -7809476530945345795, guid: 6eeeb7e4a5b28e04a82b105c102ace23,
         type: 3}
     - target: {fileID: 265615302413158555, guid: 8ddb30a0275a3f145ab0dd63c961fdbb,
         type: 3}
       propertyPath: m_CancelAction
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 763293419098698123, guid: 6eeeb7e4a5b28e04a82b105c102ace23,
+        type: 3}
     - target: {fileID: 265615302413158555, guid: 8ddb30a0275a3f145ab0dd63c961fdbb,
         type: 3}
       propertyPath: m_LeftClickAction
@@ -26001,17 +26002,20 @@ PrefabInstance:
         type: 3}
       propertyPath: m_MiddleClickAction
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: -3508484515656736098, guid: 6eeeb7e4a5b28e04a82b105c102ace23,
+        type: 3}
     - target: {fileID: 265615302413158555, guid: 8ddb30a0275a3f145ab0dd63c961fdbb,
         type: 3}
       propertyPath: m_RightClickAction
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: -8998825000270542240, guid: 6eeeb7e4a5b28e04a82b105c102ace23,
+        type: 3}
     - target: {fileID: 265615302413158555, guid: 8ddb30a0275a3f145ab0dd63c961fdbb,
         type: 3}
       propertyPath: m_ScrollWheelAction
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: -6678612611156509582, guid: 6eeeb7e4a5b28e04a82b105c102ace23,
+        type: 3}
     - target: {fileID: 265615302413158555, guid: 8ddb30a0275a3f145ab0dd63c961fdbb,
         type: 3}
       propertyPath: m_TrackedDevicePositionAction
@@ -44883,6 +44887,11 @@ PrefabInstance:
     - target: {fileID: 4880195666970061244, guid: 951ebda4d096a1d44a7602e9ef7718fc,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880195666970061245, guid: 951ebda4d096a1d44a7602e9ef7718fc,
+        type: 3}
+      propertyPath: m_IsKinematic
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
