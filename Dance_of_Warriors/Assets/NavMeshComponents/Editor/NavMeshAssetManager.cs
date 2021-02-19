@@ -16,6 +16,7 @@ namespace UnityEditor.AI
             public AsyncOperation bakeOperation;
         }
 
+
         List<AsyncBakeOperation> m_BakeOperations = new List<AsyncBakeOperation>();
         internal List<AsyncBakeOperation> GetBakeOperations() { return m_BakeOperations; }
 

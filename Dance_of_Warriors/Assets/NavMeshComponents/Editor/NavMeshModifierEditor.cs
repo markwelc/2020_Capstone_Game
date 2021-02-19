@@ -11,6 +11,7 @@ namespace UnityEditor.AI
         SerializedProperty m_IgnoreFromBuild;
         SerializedProperty m_OverrideArea;
 
+
         void OnEnable()
         {
             m_AffectedAgents = serializedObject.FindProperty("m_AffectedAgents");

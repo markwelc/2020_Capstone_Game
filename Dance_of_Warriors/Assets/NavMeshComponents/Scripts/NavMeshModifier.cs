@@ -11,6 +11,7 @@ namespace UnityEngine.AI
         bool m_OverrideArea;
         public bool overrideArea { get { return m_OverrideArea; } set { m_OverrideArea = value; } }
 
+
         [SerializeField]
         int m_Area;
         public int area { get { return m_Area; } set { m_Area = value; } }

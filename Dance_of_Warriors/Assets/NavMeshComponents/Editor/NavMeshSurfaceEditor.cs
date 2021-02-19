@@ -45,6 +45,7 @@ namespace UnityEditor.AI
             public readonly GUIContent m_ShowPolyMeshDetail = new GUIContent("Show Poly Mesh Detail");
         }
 
+
         static Styles s_Styles;
 
         static bool s_ShowDebugOptions;

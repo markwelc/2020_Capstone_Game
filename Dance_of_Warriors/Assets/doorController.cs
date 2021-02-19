@@ -10,6 +10,7 @@ public class doorController : MonoBehaviour
     {
         doorAnim = GetComponent<Animator>();
         //doorAnim.SetBool("character_nearby", true);
+
     }
 
     // Update is called once per frame

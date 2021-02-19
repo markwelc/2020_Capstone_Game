@@ -23,6 +23,7 @@ public class HealthBarManager : MonoBehaviour
                 ourPerson = person;
             }
         }
+
     }
 
     // Update is called once per frame

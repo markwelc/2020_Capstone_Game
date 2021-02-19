@@ -24,5 +24,6 @@ public class loadArenaScene : MonoBehaviour
         {
             SceneManager.LoadScene(1);
         }
+
     }
 }
