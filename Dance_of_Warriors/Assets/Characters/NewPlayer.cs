@@ -27,6 +27,8 @@ public class NewPlayer : Character
     reticleController retController;
 
     private bool deathMessageOpened;
+
+    private bool canCheck;
     /**
      * On awake we initialize our controls to tell it what to do with each
      *
@@ -85,7 +87,7 @@ public class NewPlayer : Character
         //this might be dumb, not sure
         dash = false;
         speed = 10;
-        jumpForce = 300;
+        jumpForce = 6;
 
         // Tool Added stuff
         toolActionState = actionState.inactive;
@@ -126,6 +128,21 @@ public class NewPlayer : Character
         {
             deathMessageOpened = true;
             hud.OpenDeathMessagePanel();
+        }
+
+        // Are they jump and can you check aka has courontine finished?
+        if (isJumping && canCheck)
+        {
+            // Okay so we know they are jumping and the courintine is finished
+            // check for ground so we can start jump animation
+            if (GroundCheck())
+            {
+                // reset jump operations for next time and play animation
+                isJumping = false;
+                anim.SetTrigger("landJump");
+                canCheck = false;
+            }
+
         }
     }
 
@@ -253,10 +270,39 @@ public class NewPlayer : Character
     {
         if (jumpAllowed())
         {
-            characterRigidbody.AddForce(Vector3.up * jumpForce);
-            anim.SetBool("isJumping", true);
+            // reset the triggers just in case
+            anim.ResetTrigger("isJumping");
+            anim.ResetTrigger("landJump");
+
+            anim.SetTrigger("isJumping");
             isJumping = true;
+
+            StartCoroutine("Jumping");
+            StartCoroutine("Landing");
         }
+    }
+
+    private IEnumerator Landing()
+    {
+        //try to delay for 2 seconds
+        yield return new WaitForSeconds(1.0f);
+        //anim.SetTrigger("midAir");
+        // Just setting can check so we know we can check during our update func
+        canCheck = true;
+    }
+    private IEnumerator Jumping()
+    {
+        //this delays the addition of the velocity until the player has prepared to jump
+        yield return new WaitForSeconds(0.4f);
+        characterRigidbody.velocity = Vector3.up * jumpForce;
+    }
+
+    private bool GroundCheck()
+    {
+        // Just made it return since its either true or false
+        // 1.75f is pretty much just arbitary, i thought it looked good though
+        // only if ground layer
+        return Physics.Raycast(this.transform.position, -Vector3.up, 1.75f, 1 << LayerMask.NameToLayer("staticEnvironment"));
     }
 
     /**

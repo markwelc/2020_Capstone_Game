@@ -111,7 +111,7 @@ public class Character : MonoBehaviour
         handleWeapons(); //decide when to use weapons
 
         moveCharacter(movement);
-
+        /*
         if (isJumping)
         {
             if (characterRigidbody.velocity.y < 0f)
@@ -120,7 +120,7 @@ public class Character : MonoBehaviour
                 anim.SetBool("doneJumping", true);
                 isJumping = false;
             }
-        }
+        }*/
 
     }
 
