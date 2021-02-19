@@ -128,6 +128,7 @@ public class NewPlayer : Character
             hud.OpenDeathMessagePanel();
         }
     }
+
     /**
      * General movement override, called in fixed update each time from parent
      * NOTE: this function doesn't start doing a certain type of movement.

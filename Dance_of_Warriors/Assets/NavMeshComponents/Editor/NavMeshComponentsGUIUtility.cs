@@ -9,6 +9,7 @@ namespace UnityEditor.AI
         {
             var areaIndex = -1;
             var areaNames = GameObjectUtility.GetNavMeshAreaNames();
+
             for (var i = 0; i < areaNames.Length; i++)
             {
                 var areaValue = GameObjectUtility.GetNavMeshAreaFromName(areaNames[i]);

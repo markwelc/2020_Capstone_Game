@@ -11,6 +11,7 @@ namespace UnityEngine.AI
         Vector3 m_Size = new Vector3(4.0f, 3.0f, 4.0f);
         public Vector3 size { get { return m_Size; } set { m_Size = value; } }
 
+
         [SerializeField]
         Vector3 m_Center = new Vector3(0, 1.0f, 0);
         public Vector3 center { get { return m_Center; } set { m_Center = value; } }

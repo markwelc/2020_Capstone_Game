@@ -16,6 +16,7 @@ public class damageTester : MonoBehaviour
                 ourPerson = person;
             }
         }
+
     }
 
     // Update is called once per frame

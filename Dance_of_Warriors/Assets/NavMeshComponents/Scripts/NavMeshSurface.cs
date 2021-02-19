@@ -23,6 +23,7 @@ namespace UnityEngine.AI
         int m_AgentTypeID;
         public int agentTypeID { get { return m_AgentTypeID; } set { m_AgentTypeID = value; } }
 
+
         [SerializeField]
         CollectObjects m_CollectObjects = CollectObjects.All;
         public CollectObjects collectObjects { get { return m_CollectObjects; } set { m_CollectObjects = value; } }
