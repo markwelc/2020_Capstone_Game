@@ -16,10 +16,10 @@ public class musicAnalyzer : MonoBehaviour
     //public static bool beatFull, beatD8;
     //public static int beatCountFull, beatCountD8;
 
-    private float beatInterval;
-    private float beatTimer;
-    public int beatCount;
-    private int beatDivisions;
+    private float interval;
+    private float timer;
+    public static int count;
+    private int divisions;
 
 
     // Ensure there is only 1 instance
@@ -39,18 +39,13 @@ public class musicAnalyzer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        beatTimer = 0;
-        beatCount = 0;
-        beatDivisions = 32;
+        timer = 0;
+        count = 1; //start at 1 but start right away
+        divisions = 32;
 
-        // 60 define minute so minutes / beats per minute
-        // beatInterval is set to the percentage of a beat completed in a second
-        // so beatInterval is beats per second
-        beatInterval = 60 / bpm;
+        bpm = bpm / 60; //convert beats per minute to beats per second
 
-        //the counting for the music (1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4) starts the instant that this function is called
-        //as opposed to a beat before
-        //so beatCountFull being divisble by 4 indicates that we're on the one
+        interval = bpm / (divisions / 4);
     }
 
     // Update is called once per frame
@@ -90,13 +85,14 @@ public class musicAnalyzer : MonoBehaviour
 
     void beatCounter()
     {
-        beatTimer += Time.deltaTime;
+        timer += Time.deltaTime;
 
-        if (beatTimer >= beatInterval)
+        if (timer >= interval)
         {
-            beatTimer -= beatInterval;
-            beatCount++;
-            beatCount = beatCount % beatDivisions;
+            timer -= interval;
+            count++;
+            Debug.Log("count = " + count);
+            count = count % divisions;
         }
     }
 }

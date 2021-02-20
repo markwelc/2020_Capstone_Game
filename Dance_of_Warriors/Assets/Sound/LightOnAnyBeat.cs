@@ -16,9 +16,7 @@ public class LightOnAnyBeat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //the beat starts right away, so this being divisible by 32 means we're on the 1
-        for (int i = 0; i < on32ndNote.Length; i++)
-            on32ndNote[i]--;
+        //the beat starts right away but it starts at 1, so no need to adjust anything
 
         //get all the lights and put thm into an array
         lights = this.GetComponentsInChildren<Light>();
@@ -29,11 +27,13 @@ public class LightOnAnyBeat : MonoBehaviour
     {
         for (int i = 0; i < on32ndNote.Length; i++)
         {
-            if (musicAnalyzer.beatCount == on32ndNote[i]) //if we're on a beat that we light up on
+            if (musicAnalyzer.count == on32ndNote[i]) //if we're on a beat that we light up on
             {
                 //turn on the light
                 foreach (Light bulb in lights)
                     bulb.intensity = beatIntensity;
+
+                break;
             }
             else
             {

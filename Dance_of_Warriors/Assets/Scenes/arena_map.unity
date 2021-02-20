@@ -2072,7 +2072,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 157820601}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 77da28f3ee4cb8447bf12f14a703e947, type: 3}
@@ -5782,6 +5782,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 404286986}
+  - component: {fileID: 404286987}
   m_Layer: 12
   m_Name: LightPost
   m_TagString: Untagged
@@ -5805,6 +5806,21 @@ Transform:
   m_Father: {fileID: 452819991}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &404286987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404286985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8128a6b307d0a046916af48d53e7d5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultIntensity: 10
+  beatIntensity: 30
+  on32ndNote: 01000000090000001100000019000000
 --- !u!1 &407990684
 GameObject:
   m_ObjectHideFlags: 0
@@ -12893,17 +12909,17 @@ PrefabInstance:
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.011570633
+      value: -0.011570614
       objectReference: {fileID: 0}
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.051683042
+      value: -0.05168301
       objectReference: {fileID: 0}
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.00059884466
+      value: 0.0005988432
       objectReference: {fileID: 0}
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
@@ -26113,10 +26129,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51f802c3f19d4644c836edbb3aaadc67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultIntensity: 2
-  beatIntensity: 2.5
-  onFullBeat: 3
-  onBeatD8: 0000000004000000
 --- !u!1001 &1696062767
 PrefabInstance:
   m_ObjectHideFlags: 0
