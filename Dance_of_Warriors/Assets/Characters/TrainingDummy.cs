@@ -35,12 +35,15 @@ public class TrainingDummy : Character
     private int enemyState;
 
     // Music stuff
+    //[Header("Beat Settings")]
+    //[Range(0, 3)]
+    //public int onFullBeat;
+    //[Range(0, 7)]
+    //public int[] onBeatD8;
+    //private int beatCountFull;
     [Header("Beat Settings")]
-    [Range(0, 3)]
-    public int onFullBeat;
-    [Range(0, 7)]
-    public int[] onBeatD8;
-    private int beatCountFull;
+    [Range(1, 32)] public int[] active32ndNotes;
+
 
 
     private void Awake()
@@ -150,6 +153,17 @@ public class TrainingDummy : Character
         //    }
         //}
 
+        bool takeAction = false;
+
+        for (int i = 0; i < active32ndNotes.Length && !takeAction; i++) //go through all the 32nd notes that we do something on
+        {
+            if (musicAnalyzer.count == active32ndNotes[i]) //if we're on a 32nd note that we can do something on
+            {
+                onBeatAction();//do something
+
+                takeAction = true;//we can stop going through the array since only one positive is possible (or useful at least) and other negatives don't matter
+            }
+        }
     }
 
     /**
@@ -266,7 +280,7 @@ public class TrainingDummy : Character
             
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
-}
+    }
 
     /**
      * They are in range

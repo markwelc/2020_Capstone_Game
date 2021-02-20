@@ -96,7 +96,6 @@ public class musicAnalyzer : MonoBehaviour
             timer -= interval; //decrease by interval to prevent drifting errors
             count++; //move to the next count
             if (count == 33) count = 1; //I wasn't sure the mod operator was working as expected
-            Debug.Log("count = " + count);
         }
     }
 }
