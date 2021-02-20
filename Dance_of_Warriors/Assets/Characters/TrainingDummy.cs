@@ -132,23 +132,23 @@ public class TrainingDummy : Character
      */
     void checkBeat()
     {
-        // Loop in 4 steps
-        beatCountFull = musicAnalyzer.beatCountFull % 4;
+        //// Loop in 4 steps
+        //beatCountFull = musicAnalyzer.beatCountFull % 4;
 
-        // on beat divded by 8 to get our 4 steps
-        for (int i = 0; i < onBeatD8.Length; i++)
-        {
-            // 3 cases
-            // is timer greater than interval
-            // is it a full beat
-            // is the ccount equal to that in question
-            if (musicAnalyzer.beatD8 && beatCountFull == onFullBeat && musicAnalyzer.beatCountD8 % 8 == onBeatD8[i])
-            {
-                //Debug.Log("Do move");
-                // can do something
-                onBeatAction();
-            }
-        }
+        //// on beat divded by 8 to get our 4 steps
+        //for (int i = 0; i < onBeatD8.Length; i++)
+        //{
+        //    // 3 cases
+        //    // is timer greater than interval
+        //    // is it a full beat
+        //    // is the ccount equal to that in question
+        //    if (musicAnalyzer.beatD8 && beatCountFull == onFullBeat && musicAnalyzer.beatCountD8 % 8 == onBeatD8[i])
+        //    {
+        //        //Debug.Log("Do move");
+        //        // can do something
+        //        onBeatAction();
+        //    }
+        //}
 
     }
 
