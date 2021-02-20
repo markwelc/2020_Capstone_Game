@@ -25,7 +25,8 @@ public class LightOnAnyBeat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < on32ndNote.Length; i++)
+        bool turnOnLight = false;
+        for (int i = 0; i < on32ndNote.Length && !turnOnLight; i++)
         {
             if (musicAnalyzer.count == on32ndNote[i]) //if we're on a beat that we light up on
             {
@@ -33,13 +34,14 @@ public class LightOnAnyBeat : MonoBehaviour
                 foreach (Light bulb in lights)
                     bulb.intensity = beatIntensity;
 
-                break;
+                turnOnLight = true;//we can stop going through the array since only one positive is possible (or useful at least) and other negatives don't matter
             }
-            else
-            {
-                foreach (Light bulb in lights)
-                    bulb.intensity = defaultIntensity;
-            }
+        }
+
+        if(!turnOnLight) //if we never found anything to turn on, just turn everything off
+        {
+            foreach (Light bulb in lights)
+                bulb.intensity = defaultIntensity;
         }
     }
 }

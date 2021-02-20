@@ -43,9 +43,13 @@ public class musicAnalyzer : MonoBehaviour
         count = 1; //start at 1 but start right away
         divisions = 32;
 
-        bpm = bpm / 60; //convert beats per minute to beats per second
+        float secondsPerBeat = 1 / ( bpm / 60 ); //convert beats per minute to seconds per beat
 
-        interval = bpm / (divisions / 4);
+        interval = secondsPerBeat / (divisions / 4);
+        //a quarter note is one beat, so bpm could also be seen as quarter notes per minute
+        //we converted beats per minute to seconds per beat, so now secondsPerBeat can be seen as the amount of time one quarter note takes
+        //we don't want quarter notes though, we want 32nd notes (or whatever divisions is)
+        // so take secondsPerBeat and divide it by 8 to get the time in seconds between each 32nd note
     }
 
     // Update is called once per frame
@@ -89,10 +93,10 @@ public class musicAnalyzer : MonoBehaviour
 
         if (timer >= interval)
         {
-            timer -= interval;
-            count++;
+            timer -= interval; //decrease by interval to prevent drifting errors
+            count++; //move to the next count
+            if (count == 33) count = 1; //I wasn't sure the mod operator was working as expected
             Debug.Log("count = " + count);
-            count = count % divisions;
         }
     }
 }
