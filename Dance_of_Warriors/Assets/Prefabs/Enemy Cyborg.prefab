@@ -6602,7 +6602,7 @@ MonoBehaviour:
   walkPointRange: 0
   timeBetweenAttacks: 1
   projectile: {fileID: 0}
-  active32ndNotes: 0100000011000000
+  active32ndNotes: 01000000
 --- !u!195 &4880195666970061216
 NavMeshAgent:
   m_ObjectHideFlags: 0
