@@ -59,6 +59,10 @@ public class TrainingDummy : Character
     {
         base.Start();
 
+        dashSpeed = new float[1];
+        dashSpeed[0] = 11f;
+        speed = 3.5f;
+
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
         // healthMax = 5;
@@ -239,9 +243,9 @@ public class TrainingDummy : Character
         anim.SetTrigger("isDashing");
         dash = true;
         playerHealthManager.setInvincible(true);
-        agent.speed = agent.speed * 3f;
+        agent.speed = dashSpeed[0];
 
-        Invoke(nameof(ResetAttack), 0.25f); // 0.25 seems to work well for dodge
+        Invoke(nameof(ResetAttack), 0.4f); // 0.25 seems to work well for dodge
         // want to dodge left right back etc?
         // could change target location for the nav mesh 
         // apply that to move vector
@@ -426,10 +430,10 @@ public class TrainingDummy : Character
             anim.SetBool("isDashing", false);
             playerHealthManager.setInvincible(false);
             dash = false;
-            if (agent.speed > 5)
-            {
-                agent.speed = agent.speed / 3;
-            }
+            //if (agent.speed > 5)
+            //{
+                agent.speed = speed;
+            //}
         }
     }
 

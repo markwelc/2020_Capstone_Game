@@ -6588,6 +6588,8 @@ MonoBehaviour:
   - {fileID: 4880195666459721711}
   lookRadius: 10
   attackRadius: 4
+  baseSpeed: 3.5
+  dashSpeed: 10
   agent: {fileID: 4880195666970061216}
   player: {fileID: 0}
   target: {fileID: 0}
