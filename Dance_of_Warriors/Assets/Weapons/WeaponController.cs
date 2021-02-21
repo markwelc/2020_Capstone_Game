@@ -31,7 +31,7 @@ public class WeaponController : MonoBehaviour
         switch(weaponName)
         {
             case "handgun":
-                handgun.useWeapon((string)null, out animation, out states, attackType); //know th
+                handgun.useWeapon("handgun", out animation, out states, attackType);
                 break;
             case "stick":
                 stick.useWeapon((string)null, out animation, out states, attackType);

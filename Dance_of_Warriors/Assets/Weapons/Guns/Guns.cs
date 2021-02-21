@@ -38,6 +38,8 @@ public class Guns : WeaponController
                 //set the correct number of bullets in the magazine depending on which gun is being used
                 bulletsLeft = ammo;
                 shoot();
+                //play the weapon's sound from the sound manager
+                FindObjectOfType<AudioManager>().Play(weaponName);
             }
             //you've run out of ammo! reload!
             else if (bulletsLeft == 0)
@@ -46,12 +48,14 @@ public class Guns : WeaponController
                 {
                     reloading = true;
                     StartCoroutine("Reload");
+                    FindObjectOfType<AudioManager>().Play("reload");
                 }
             }
             //go ahead and shoot one bullet and remove it from the magazine
             else
             {
                 shoot();
+                FindObjectOfType<AudioManager>().Play(weaponName);
             }
         }
         
@@ -59,7 +63,7 @@ public class Guns : WeaponController
 
     IEnumerator Reload()
 	{
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(2.7f);
         bulletsLeft = ammo;
         reloading = false;
     }
