@@ -2075,11 +2075,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: da3af9c2dde3e764a862c750a50d86f0, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 77da28f3ee4cb8447bf12f14a703e947, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -5815,13 +5815,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 404286985}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51f802c3f19d4644c836edbb3aaadc67, type: 3}
+  m_Script: {fileID: 11500000, guid: f8128a6b307d0a046916af48d53e7d5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   defaultIntensity: 10
   beatIntensity: 40
-  onFullBeat: 0
-  onBeatD8: 0000000004000000
+  on32ndNote: 01000000110000000e000000
 --- !u!1 &407990684
 GameObject:
   m_ObjectHideFlags: 0
@@ -12910,17 +12909,17 @@ PrefabInstance:
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.011570614
+      value: -0.011570633
       objectReference: {fileID: 0}
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.05168301
+      value: -0.051683042
       objectReference: {fileID: 0}
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0005988432
+      value: 0.00059884466
       objectReference: {fileID: 0}
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
@@ -13993,7 +13992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b69fb088ba90e3b48a158ac5df8148fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bpm: 127.95
+  bpm: 102
 --- !u!4 &980197865
 Transform:
   m_ObjectHideFlags: 0
@@ -15990,13 +15989,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1106989077}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51f802c3f19d4644c836edbb3aaadc67, type: 3}
+  m_Script: {fileID: 11500000, guid: f8128a6b307d0a046916af48d53e7d5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   defaultIntensity: 10
   beatIntensity: 40
-  onFullBeat: 1
-  onBeatD8: 0000000004000000
+  on32ndNote: 0100000002000000
 --- !u!1001 &1108040794
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19448,13 +19446,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1308579169}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51f802c3f19d4644c836edbb3aaadc67, type: 3}
+  m_Script: {fileID: 11500000, guid: f8128a6b307d0a046916af48d53e7d5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   defaultIntensity: 10
   beatIntensity: 40
-  onFullBeat: 0
-  onBeatD8: 0000000004000000
+  on32ndNote: 01000000090000000d00000011000000190000001d000000
 --- !u!1001 &1317084760
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20357,13 +20354,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1366434607}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51f802c3f19d4644c836edbb3aaadc67, type: 3}
+  m_Script: {fileID: 11500000, guid: f8128a6b307d0a046916af48d53e7d5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   defaultIntensity: 10
   beatIntensity: 40
-  onFullBeat: 1
-  onBeatD8: 0000000004000000
+  on32ndNote: 01000000090000001100000019000000
 --- !u!1001 &1367108938
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26181,10 +26177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51f802c3f19d4644c836edbb3aaadc67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultIntensity: 2
-  beatIntensity: 2.5
-  onFullBeat: 3
-  onBeatD8: 0000000004000000
 --- !u!1001 &1696062767
 PrefabInstance:
   m_ObjectHideFlags: 0

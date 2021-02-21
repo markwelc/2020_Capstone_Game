@@ -35,12 +35,15 @@ public class TrainingDummy : Character
     private int enemyState;
 
     // Music stuff
+    //[Header("Beat Settings")]
+    //[Range(0, 3)]
+    //public int onFullBeat;
+    //[Range(0, 7)]
+    //public int[] onBeatD8;
+    //private int beatCountFull;
     [Header("Beat Settings")]
-    [Range(0, 3)]
-    public int onFullBeat;
-    [Range(0, 7)]
-    public int[] onBeatD8;
-    private int beatCountFull;
+    [Range(1, 32)] public int[] active32ndNotes;
+
 
 
     private void Awake()
@@ -132,24 +135,35 @@ public class TrainingDummy : Character
      */
     void checkBeat()
     {
-        // Loop in 4 steps
-        beatCountFull = musicAnalyzer.beatCountFull % 4;
+        //// Loop in 4 steps
+        //beatCountFull = musicAnalyzer.beatCountFull % 4;
 
-        // on beat divded by 8 to get our 4 steps
-        for (int i = 0; i < onBeatD8.Length; i++)
+        //// on beat divded by 8 to get our 4 steps
+        //for (int i = 0; i < onBeatD8.Length; i++)
+        //{
+        //    // 3 cases
+        //    // is timer greater than interval
+        //    // is it a full beat
+        //    // is the ccount equal to that in question
+        //    if (musicAnalyzer.beatD8 && beatCountFull == onFullBeat && musicAnalyzer.beatCountD8 % 8 == onBeatD8[i])
+        //    {
+        //        //Debug.Log("Do move");
+        //        // can do something
+        //        onBeatAction();
+        //    }
+        //}
+
+        bool takeAction = false;
+
+        for (int i = 0; i < active32ndNotes.Length && !takeAction; i++) //go through all the 32nd notes that we do something on
         {
-            // 3 cases
-            // is timer greater than interval
-            // is it a full beat
-            // is the ccount equal to that in question
-            if (musicAnalyzer.beatD8 && beatCountFull == onFullBeat && musicAnalyzer.beatCountD8 % 8 == onBeatD8[i])
+            if (musicAnalyzer.count == active32ndNotes[i]) //if we're on a 32nd note that we can do something on
             {
-                //Debug.Log("Do move");
-                // can do something
-                onBeatAction();
+                onBeatAction();//do something
+
+                takeAction = true;//we can stop going through the array since only one positive is possible (or useful at least) and other negatives don't matter
             }
         }
-
     }
 
     /**
@@ -266,7 +280,7 @@ public class TrainingDummy : Character
             
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
-}
+    }
 
     /**
      * They are in range
