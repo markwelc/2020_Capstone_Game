@@ -2681,8 +2681,7 @@ MonoBehaviour:
   walkPointRange: 10
   timeBetweenAttacks: 2
   projectile: {fileID: 0}
-  onFullBeat: 0
-  onBeatD8: 
+  active32ndNotes: 
 --- !u!1 &1097481551
 GameObject:
   m_ObjectHideFlags: 0
@@ -4243,7 +4242,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2131382589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4256,7 +4255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b69fb088ba90e3b48a158ac5df8148fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bpm: 127.95
+  bpm: 102
 --- !u!4 &2131382590
 Transform:
   m_ObjectHideFlags: 0

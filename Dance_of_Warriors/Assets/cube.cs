@@ -18,6 +18,7 @@ public class Cube : MonoBehaviour, IInventoryItem
     {
         get
         {
+
             return _Image;
         }
     }
