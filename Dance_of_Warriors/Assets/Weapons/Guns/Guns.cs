@@ -48,6 +48,7 @@ public class Guns : WeaponController
                 {
                     reloading = true;
                     StartCoroutine("Reload");
+                    //may want to make a switch here if we want new guns to have other reload sounds
                     FindObjectOfType<AudioManager>().Play("reload");
                 }
             }

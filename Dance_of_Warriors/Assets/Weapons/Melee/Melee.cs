@@ -17,11 +17,13 @@ public class Melee : WeaponController
         {
             animation = animationNameSecondary;
             states = weaponStatesSecondary;
+            StartCoroutine("Swing");
         }
         else
         {
             animation = animationName;
             states = weaponStates;
+            StartCoroutine("FastSwing");
         }
     }
 
@@ -37,6 +39,17 @@ public class Melee : WeaponController
                 targetCharacter.playerHealthManager.TakeDamage(other.gameObject.tag, 1);
             }
         }
+    }
+
+    private IEnumerator Swing()
+    {
+        yield return new WaitForSeconds(0.2f);
+        FindObjectOfType<AudioManager>().Play("swing");
+    }
+    private IEnumerator FastSwing()
+    {
+        yield return new WaitForSeconds(0.33f);
+        FindObjectOfType<AudioManager>().Play("fastswing");
     }
 
     private Character getCharacterInParents(GameObject start)

@@ -34,7 +34,7 @@ public class WeaponController : MonoBehaviour
                 handgun.useWeapon("handgun", out animation, out states, attackType);
                 break;
             case "stick":
-                stick.useWeapon((string)null, out animation, out states, attackType);
+                stick.useWeapon("stick", out animation, out states, attackType);
                 break;
             default:
                 animation = null;

@@ -313,6 +313,8 @@ public class NewPlayer : Character
         float myTargetAngle = 0;
         if (dashAllowed())
         {
+            StartCoroutine("DashSound");
+            //FindObjectOfType<AudioManager>().Play("dash");
             if (move.y != 0.00 || move.x != 0.00)
             {
                 anim.SetTrigger("isDashing");
@@ -367,9 +369,15 @@ public class NewPlayer : Character
         }
     }
 
+    private IEnumerator DashSound()
+    {
+        //try to delay for 2 seconds
+        yield return new WaitForSeconds(0.0f);
+        FindObjectOfType<AudioManager>().Play("dash");
+    }
+
     private void dashingMovement()
     {
-
         movement = dashVector; //set direction and speed to whatever it was in the previous function call
         movement.y = 0; // double check to make sure no vertical movement
         if (dashActionState == actionState.telegraph && dashing <= 0) //if we're in the telegraph phase and need to switch
