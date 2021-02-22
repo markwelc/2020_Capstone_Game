@@ -6588,6 +6588,8 @@ MonoBehaviour:
   - {fileID: 4880195666459721711}
   lookRadius: 10
   attackRadius: 4
+  baseSpeed: 3.5
+  dashSpeed: 10
   agent: {fileID: 4880195666970061216}
   player: {fileID: 0}
   target: {fileID: 0}
@@ -6602,8 +6604,7 @@ MonoBehaviour:
   walkPointRange: 0
   timeBetweenAttacks: 1
   projectile: {fileID: 0}
-  onFullBeat: 0
-  onBeatD8: 03000000
+  active32ndNotes: 01000000
 --- !u!195 &4880195666970061216
 NavMeshAgent:
   m_ObjectHideFlags: 0
