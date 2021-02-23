@@ -406,7 +406,7 @@ public class TrainingDummy : Character
                 // Doing random range to select the type they want
                 // since it uses else for standard attack
                 // this is just to lower the probability of a heavy attack
-                useWeapons(Random.Range(1, 5));
+                useWeapons(1);
             }
             // Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
             // rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
