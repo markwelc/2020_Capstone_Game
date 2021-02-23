@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerHealthController : MonoBehaviour
 {
+    public float characterSpeed;
+
     [SerializeField] private float initialHealth = 100f; //the amount of health that the character has can adjust
     private float currentHealth; // The players current health
 
@@ -42,7 +44,6 @@ public class PlayerHealthController : MonoBehaviour
     private void Awake()
     {
         InItHealth();
-        // hud = GameObject.Find("HUD");
     }
 
     // Update is called once per frame
@@ -64,6 +65,7 @@ public class PlayerHealthController : MonoBehaviour
      */
     public void InItHealth()
     {
+        characterSpeed = 10f;
         // Set initial player health
         currentHealth = initialHealth;
 
@@ -102,6 +104,41 @@ public class PlayerHealthController : MonoBehaviour
         return this.oneTimeBlock;
     }
 
+    public void debuffLimb(string limb)
+    {
+        switch(limb)
+        {
+            case "playerRightArm":
+                Debug.Log("Player arms debuffed");
+                // reduce the damage the player deals
+                break;
+            case "playerLeftArm":
+                Debug.Log("Player arms debuffed");
+                // reduce the damage the player deals
+                break;
+            case "playerRightLeg":
+                Debug.Log("Player legs debuffed");
+                // slow the player's movement
+                characterSpeed -= 2f;
+                break;
+            case "playerLeftLeg":
+                Debug.Log("Player legs debuffed"); 
+                // slow the player's movement
+                characterSpeed -= 2f;
+                break;
+            case "playerBody":
+                Debug.Log("Player body debuffed");
+                // take more damage on hits, why not
+                break;
+            case "playerHead":
+                Debug.Log("Player head debuffed");
+                // take more damage on hits
+                break;
+            default:
+                Debug.Log("no limb to debuff");
+                break;
+        }
+    }
     /**
      * Can be called from enemy collision like shown below
      * Basically just decreases from overall and limb specific health
@@ -118,7 +155,11 @@ public class PlayerHealthController : MonoBehaviour
              */
 
             // Subtract attackDamage from current health
-            currentHealth -= attackDamage;
+            if (bodyUsability == false || headUsability == false)
+            {
+                currentHealth *= 1.25;
+            }
+            currentHealth -= attackdamage;
 
             // Since there are usually 2 colliders that make up a limb
             // I set each of those to equal a tag for thata limb
@@ -132,6 +173,7 @@ public class PlayerHealthController : MonoBehaviour
                     {
                         rArmHealth = 0f;
                         rArmUsability = false; // Set usability to false
+                        debuffLimb("playerRightArm");
                     }
                     else
                     {
@@ -148,6 +190,7 @@ public class PlayerHealthController : MonoBehaviour
                     {
                         lArmHealth = 0f;
                         lArmUsability = false;
+                        debuffLimb("playerLeftArm");
                     }
                     else
                     {
@@ -163,6 +206,7 @@ public class PlayerHealthController : MonoBehaviour
                     {
                         rLegHealth = 0f;
                         rLegUsability = false;
+                        debuffLimb("playerRightLeg");
                     }
                     else
                     {
@@ -178,6 +222,7 @@ public class PlayerHealthController : MonoBehaviour
                     {
                         lLegHealth = 0f;
                         lLegUsability = false;
+                        debuffLimb("playerLeftLeg");
                     }
                     else
                     {
@@ -193,6 +238,7 @@ public class PlayerHealthController : MonoBehaviour
                     {
                         bodyHealth = 0f;
                         bodyUsability = false;
+                        // debuffLimb("playerBody");
                     }
                     else
                     {
@@ -211,6 +257,7 @@ public class PlayerHealthController : MonoBehaviour
                     {
                         headHealth = 0f;
                         headUsability = false;
+                        // debuffLimb("playerHead");
                     }
                     else
                     {

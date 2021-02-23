@@ -86,7 +86,9 @@ public class NewPlayer : Character
         //define all variables here
         //this might be dumb, not sure
         dash = false;
-        speed = 10;
+        // speed = 10;
+        //make speed dependent on the playerHealthController's value
+        speed = playerHealthManager.characterSpeed;
         jumpForce = 6;
 
         // Tool Added stuff
