@@ -9,6 +9,10 @@ public class doorController : MonoBehaviour
     void Start()
     {
         doorAnim = GetComponent<Animator>();
+        if(doorAnim == null)
+        {
+            doorAnim = this.GetComponentInParent<Animator>();
+        }
         //doorAnim.SetBool("character_nearby", true);
 
     }

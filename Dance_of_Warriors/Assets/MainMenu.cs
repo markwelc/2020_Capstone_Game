@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -9,7 +10,8 @@ public class MainMenu : MonoBehaviour
     public AudioClip selectSound;
     public AudioClip clickSound;
     private int playCount = 0;
-
+    public GameObject loadingScreen;
+    public Slider slider;
     private void Start()
     {
         audioSource = this.GetComponent<AudioSource>();
@@ -18,8 +20,11 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         audioSource.PlayOneShot(clickSound);
-        Debug.Log("Playing Game --> Transfer to staging scene");
+
+        //Debug.Log("Playing Game --> Transfer to staging scene using async");
     }
+
+   
 
     public void viewInfo()
     {
@@ -31,6 +36,7 @@ public class MainMenu : MonoBehaviour
     {
         audioSource.PlayOneShot(clickSound);
         Debug.Log("Application Closing...");
+        Application.Quit();
     }
 
     public void playOnSelectSound()

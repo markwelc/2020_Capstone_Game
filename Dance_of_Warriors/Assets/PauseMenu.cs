@@ -14,6 +14,8 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseFirstButton;
     public NewPlayer playa;
     public AudioSource music;
+
+    public loadLevel levelLoader;
     
     private void Awake()
     {
@@ -78,13 +80,20 @@ public class PauseMenu : MonoBehaviour
     public void ResetGame()
     {
         Debug.Log("Resetting Game");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        levelLoader.loadScene(SceneManager.GetActiveScene().buildIndex);
         Resume();
     }
 
     public void QuitGame()
     {
         Debug.Log("Quitting Game");
-        Application.Quit();
+        // Application.Quit();
+        // In the arena we dont want to quit the application
+        // Instead quit to staging area
+        
+        // When quitting return to the previous scene in build index
+        levelLoader.loadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        Time.timeScale = 1f;
     }
 }
