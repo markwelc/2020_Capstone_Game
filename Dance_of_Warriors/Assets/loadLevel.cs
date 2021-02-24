@@ -15,25 +15,30 @@ public class loadLevel : MonoBehaviour
     {
         // Doing async so we can be sure everything is loaded before putting player in
         // need courintine to continue and get progress asyncronisouly
-        StartCoroutine(LoadAsync(sceneIdx));
+        StartCoroutine(asyncLoad(sceneIdx));
+        // StartCoroutine(oldLoad(sceneIdx));
     }
 
-    // Since async we want to run courontine to display progress til finished
-    IEnumerator LoadAsync(int sceneIdx)
+    
+    /**
+     * Async loading..
+     * Allows for the scene to actually get ready before allowing the player to enter
+     * in meantime just show loading screen with updates
+     */
+    IEnumerator asyncLoad(int sceneIdx)
     {
-        // our operation given the desired sceneIndex
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIdx);
-
         // enable loading screen ui
+        //operation.allowSceneActivation = false;
         loadingScreen.SetActive(true);
-        while (!operation.isDone)
+        while(!operation.isDone)
         {
-            // this instead of progress to take activation time into accound
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
             slider.value = progress;
-            Debug.Log(progress); // log or progress for now can make ui loader soon
+            //Debug.LogWarning(progress); // log or progress for now can make ui loader soon
 
             yield return null;
         }
+        Debug.LogWarning("out da loop");
     }
 }

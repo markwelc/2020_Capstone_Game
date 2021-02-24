@@ -12,6 +12,8 @@ public class MainMenu : MonoBehaviour
     private int playCount = 0;
     public GameObject loadingScreen;
     public Slider slider;
+
+    public GameObject infoScreen;
     private void Start()
     {
         audioSource = this.GetComponent<AudioSource>();
@@ -30,6 +32,15 @@ public class MainMenu : MonoBehaviour
     {
         audioSource.PlayOneShot(clickSound);
         Debug.Log("View game info and warnings");
+        infoScreen.SetActive(true);
+        this.gameObject.SetActive(false);
+    }
+
+    public void disableInfoScreen()
+    {
+        audioSource.PlayOneShot(clickSound);
+        infoScreen.SetActive(false);
+        this.gameObject.SetActive(true);
     }
 
     public void quitApplication()
@@ -47,5 +58,6 @@ public class MainMenu : MonoBehaviour
         if(playCount > 1) 
             audioSource.PlayOneShot(selectSound);
     }
+
 
 }
