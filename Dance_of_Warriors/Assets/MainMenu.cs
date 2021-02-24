@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MainMenu : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class MainMenu : MonoBehaviour
     private int playCount = 0;
     public GameObject loadingScreen;
     public Slider slider;
+
+    public GameObject regFirstSelect;
+    public GameObject altFirstSelect;
+   
 
     public GameObject infoScreen;
     private void Start()
@@ -30,6 +35,12 @@ public class MainMenu : MonoBehaviour
 
     public void viewInfo()
     {
+        // This select isnt working
+        // this is really just for controller movement on that UI screem
+        // same for the one in disable func below
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(altFirstSelect);
+
         audioSource.PlayOneShot(clickSound);
         Debug.Log("View game info and warnings");
         infoScreen.SetActive(true);
@@ -38,6 +49,9 @@ public class MainMenu : MonoBehaviour
 
     public void disableInfoScreen()
     {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(regFirstSelect);
+
         audioSource.PlayOneShot(clickSound);
         infoScreen.SetActive(false);
         this.gameObject.SetActive(true);

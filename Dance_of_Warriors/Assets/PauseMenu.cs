@@ -14,7 +14,9 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseFirstButton;
     public NewPlayer playa;
     public AudioSource music;
-    
+
+    public loadLevel levelLoader;
+
     private void Awake()
     {
         controls = new PlayerControls();    // Initialize our controls object
@@ -78,13 +80,16 @@ public class PauseMenu : MonoBehaviour
     public void ResetGame()
     {
         Debug.Log("Resetting Game");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        levelLoader.loadScene(SceneManager.GetActiveScene().buildIndex);
         Resume();
     }
 
     public void QuitGame()
     {
         Debug.Log("Quitting Game");
-        Application.Quit();
+        //Application.Quit();
+        levelLoader.loadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        Time.timeScale = 1f;
     }
 }
