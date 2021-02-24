@@ -79,7 +79,9 @@
     <Compile Include="Assets\InventoryItem.cs" />
     <Compile Include="Assets\ItemClickHandler.cs" />
     <Compile Include="Assets\ItemDragHandler.cs" />
+    <Compile Include="Assets\MainMenu.cs" />
     <Compile Include="Assets\PauseMenu.cs" />
+    <Compile Include="Assets\Sound\LightOnAnyBeat.cs" />
     <Compile Include="Assets\Sound\LightOnBeat.cs" />
     <Compile Include="Assets\Sound\musicAnalyzer.cs" />
     <Compile Include="Assets\Weapons\Guns\BulletController.cs" />
@@ -93,6 +95,7 @@
     <Compile Include="Assets\damageTester.cs" />
     <Compile Include="Assets\doorController.cs" />
     <Compile Include="Assets\loadArenaScene.cs" />
+    <Compile Include="Assets\loadLevel.cs" />
     <Compile Include="Assets\reticleController.cs" />
     <None Include="Assets\Weapons\Melee\how_melee_attack_works.txt" />
     <None Include="Assets\Sci-Fi Styled Modular Pack\Readme.txt" />
