@@ -65,7 +65,6 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        characterDamageModifier = playerHealthManager.characterDamageModifier;
         anim = GetComponentInChildren<Animator>();
         characterRigidbody = this.GetComponent<Rigidbody>(); //get rigidbody
         characterTransform = this.GetComponent<Transform>(); //get transform
@@ -82,6 +81,7 @@ public class Character : MonoBehaviour
         isDead = false;
 
         isBlocking = false;
+        characterDamageModifier = playerHealthManager.characterDamageModifier;
     }
 
 
