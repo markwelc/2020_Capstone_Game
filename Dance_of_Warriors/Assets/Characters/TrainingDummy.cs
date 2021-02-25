@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class TrainingDummy : Character
 {
-    PlayerHealthController enemyHealthController;
+   
     public float lookRadius = 10f;
     public float attackRadius = 4f;
 
@@ -91,7 +91,7 @@ public class TrainingDummy : Character
     // Update is called once per frame
     private void Update()
     {
-        agent.speed = enemyHealthController.characterSpeed * 3.5f;
+        agent.speed = playerHealthManager.characterSpeed * 3.5f;
 
         distance = Vector3.Distance(target.position, transform.position);
         if (!isDead)
