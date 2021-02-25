@@ -25,16 +25,16 @@ public class WeaponController : MonoBehaviour
         //stickActive = false;
     }
 
-    public virtual void useWeapon(string weaponName, out string animation, out int[] states, int attackType)
+    public virtual void useWeapon(string weaponName, out string animation, out int[] states, int attackType, float characterDamageModifier)
     {
         states = new int[4];
         switch(weaponName)
         {
             case "handgun":
-                handgun.useWeapon((string)null, out animation, out states, attackType); //know th
+                handgun.useWeapon((string)null, out animation, out states, attackType, characterDamageModifier); //know th
                 break;
             case "stick":
-                stick.useWeapon((string)null, out animation, out states, attackType);
+                stick.useWeapon((string)null, out animation, out states, attackType, characterDamageModifier);
                 break;
             default:
                 animation = null;
