@@ -190,11 +190,6 @@ public class PlayerHealthController : MonoBehaviour
                         bodyHealth = 0f;
                         bodyUsability = false;
                     }
-                    else
-                    {
-                        // Adding this here so if they heal that limb it can be usable again
-                        bodyUsability = true;
-                    }
                     break;
 
                 case "playerHead":
@@ -207,11 +202,6 @@ public class PlayerHealthController : MonoBehaviour
                     {
                         headHealth = 0f;
                         headUsability = false;
-                    }
-                    else
-                    {
-                        // Adding this here so if they heal that limb it can be usable again
-                        headUsability = true;
                     }
                     break;
 
