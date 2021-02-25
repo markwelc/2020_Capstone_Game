@@ -44,6 +44,7 @@ public class PlayerHealthController : MonoBehaviour
     // Changed to awake. when initialized in start the first variable was always zero
     private void Awake()
     {
+        characterSpeed = 10f;
         InItHealth();
     }
 
@@ -110,7 +111,7 @@ public class PlayerHealthController : MonoBehaviour
      */
     public void TakeDamage(string collisionTag, float attackDamage)
     {
-        characterSpeed = 10f;
+        // characterSpeed = 10f;
         if (!invincible)
         {
             // In oncollision enter with enemy object we can call this script
