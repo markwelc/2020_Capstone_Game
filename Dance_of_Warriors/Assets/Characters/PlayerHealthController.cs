@@ -44,7 +44,7 @@ public class PlayerHealthController : MonoBehaviour
     // Changed to awake. when initialized in start the first variable was always zero
     private void Awake()
     {
-        characterSpeed = 10f;
+        characterSpeed = 1.0f;
         InItHealth();
     }
 
@@ -67,6 +67,7 @@ public class PlayerHealthController : MonoBehaviour
      */
     public void InItHealth()
     {
+
         // Set initial player health
         currentHealth = initialHealth;
 
