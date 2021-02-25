@@ -292,7 +292,7 @@ public class PlayerHealthController : MonoBehaviour
                 rArmHealth += healAmount;
                 if (rArmUsability == false)
                     {
-                        characterDamageModifier += 0.15f
+                        characterDamageModifier += 0.15f;
                         rArmUsability = true;
                     }
                 break;
@@ -302,7 +302,7 @@ public class PlayerHealthController : MonoBehaviour
                 lArmHealth += healAmount;
                 if (lArmUsability == false)
                     {
-                        characterDamageModifier += 0.15f
+                        characterDamageModifier += 0.15f;
                         lArmUsability = true;
                     }
                 break;

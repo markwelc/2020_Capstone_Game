@@ -91,7 +91,7 @@ public class TrainingDummy : Character
     // Update is called once per frame
     private void Update()
     {
-        speed = enemyHealthController.characterSpeed * 3.5f;
+        agent.speed = enemyHealthController.characterSpeed * 3.5f;
 
         distance = Vector3.Distance(target.position, transform.position);
         if (!isDead)
