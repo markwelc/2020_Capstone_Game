@@ -11,7 +11,7 @@ public class Melee : WeaponController
     protected Character targetCharacter; //used to fiture out what to actually damage
     private bool canDamage = false;
 
-    public override void useWeapon(string weaponName, out string animation, out int[] states, int attackType)
+    public override void useWeapon(string weaponName, out string animation, out int[] states, int attackType, float characterDamageModifier)
     {
         if (attackType == 2)
         {

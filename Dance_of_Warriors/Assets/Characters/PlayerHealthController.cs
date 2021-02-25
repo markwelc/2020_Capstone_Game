@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerHealthController : MonoBehaviour
 {
+    public float characterSpeed;
+    public float characterDamageModifier = 1.0f;
+
     [SerializeField] private float initialHealth = 100f; //the amount of health that the character has can adjust
     private float currentHealth; // The players current health
 
@@ -41,8 +44,8 @@ public class PlayerHealthController : MonoBehaviour
     // Changed to awake. when initialized in start the first variable was always zero
     private void Awake()
     {
+        characterSpeed = 10f;
         InItHealth();
-        // hud = GameObject.Find("HUD");
     }
 
     // Update is called once per frame
@@ -118,7 +121,19 @@ public class PlayerHealthController : MonoBehaviour
              */
 
             // Subtract attackDamage from current health
+            if (bodyUsability == false || headUsability == false)
+            {
+                attackDamage *= 1.25f;
+            }
             currentHealth -= attackDamage;
+            if (lArmUsability == false || rArmUsability == false)
+            {
+                characterDamageModifier -= 0.15f;
+            }
+            if (lLegUsability == false || rLegUsability == false)
+            {
+                characterSpeed -= 0.2f;
+            }
 
             // Since there are usually 2 colliders that make up a limb
             // I set each of those to equal a tag for thata limb
