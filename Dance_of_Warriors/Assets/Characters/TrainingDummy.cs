@@ -403,10 +403,12 @@ public class TrainingDummy : Character
            // be sure they actually have access
             if (weaponAccess != null)
             {
-                // Doing random range to select the type they want
-                // since it uses else for standard attack
-                // this is just to lower the probability of a heavy attack
-                useWeapons(1);
+            // Doing random range to select the type they want
+            // since it uses else for standard attack
+            // this is just to lower the probability of a heavy attack
+                int weaponChoice = Random.Range(1, 3); //because this is the integer version, max is exclusive
+                //Debug.Log("weaponChoice = " + weaponChoice);
+                useWeapons(weaponChoice);
             }
             // Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
             // rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
