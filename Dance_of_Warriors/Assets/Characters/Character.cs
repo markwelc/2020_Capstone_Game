@@ -213,7 +213,6 @@ public class Character : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         // once done stop attack
         weaponAccess.canDealDamage(availableWeapons[equippedWeapon], false);
-
     }
 
     //start using a tool

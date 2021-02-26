@@ -38,8 +38,6 @@ public class Guns : WeaponController
                 //set the correct number of bullets in the magazine depending on which gun is being used
                 bulletsLeft = ammo;
                 shoot();
-                //play the weapon's sound from the sound manager
-                FindObjectOfType<AudioManager>().Play(weaponName);
             }
             //you've run out of ammo! reload!
             else if (bulletsLeft == 0)
@@ -49,14 +47,14 @@ public class Guns : WeaponController
                     reloading = true;
                     StartCoroutine("Reload");
                     //may want to make a switch here if we want new guns to have other reload sounds
-                    FindObjectOfType<AudioManager>().Play("reload");
+                    FindObjectOfType<AudioManager>().Play(this.transform.gameObject, "reload");
+                    
                 }
             }
             //go ahead and shoot one bullet and remove it from the magazine
             else
             {
                 shoot();
-                FindObjectOfType<AudioManager>().Play(weaponName);
             }
         }
         
@@ -73,7 +71,8 @@ public class Guns : WeaponController
 
     void shoot()
 	{
-        
+        //play the weapon's sound from the sound manager
+        FindObjectOfType<AudioManager>().Play(this.transform.gameObject, "handgun");
         bulletsLeft--;
         //Debug.Log("bullets left: " + bulletsLeft);
         Vector3 angle = UserFirepoint.rotation.eulerAngles; //figure out the angle

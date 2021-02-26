@@ -4100,29 +4100,52 @@ MonoBehaviour:
   sounds:
   - name: handgun
     clip: {fileID: 8300000, guid: 15ab875f55b3a454eae7d7d3491c03cd, type: 3}
-    volume: 0.652
+    volume: 1
     pitch: 1
     source: {fileID: 0}
+    gameObject: {fileID: 0}
   - name: reload
     clip: {fileID: 8300000, guid: e515749edda88684db324b1d4642afc9, type: 3}
-    volume: 0.652
+    volume: 1
     pitch: 1
     source: {fileID: 0}
+    gameObject: {fileID: 0}
   - name: swing
     clip: {fileID: 8300000, guid: 43b6f051f8fc32e4aaa5fbfa7670d6d4, type: 3}
-    volume: 0.652
+    volume: 1
     pitch: 1
     source: {fileID: 0}
+    gameObject: {fileID: 0}
   - name: fastswing
     clip: {fileID: 8300000, guid: a73d6b68910542140ae2fa8672e52655, type: 3}
-    volume: 0.652
+    volume: 1
     pitch: 1
     source: {fileID: 0}
+    gameObject: {fileID: 0}
   - name: dash
     clip: {fileID: 8300000, guid: 62ebe9c37136dc14d8a8bf3529b93713, type: 3}
-    volume: 0.652
+    volume: 1
     pitch: 1
     source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: cut
+    clip: {fileID: 8300000, guid: 0c651763cc71e9046a8131cddaf9ec04, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: launch
+    clip: {fileID: 8300000, guid: eecdb36dbb8dc284f89c7ccb1f9a7e1b, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: landing
+    clip: {fileID: 8300000, guid: 47accc9749ec733469150e2d98c1ed38, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
 --- !u!4 &1993559637
 Transform:
   m_ObjectHideFlags: 0

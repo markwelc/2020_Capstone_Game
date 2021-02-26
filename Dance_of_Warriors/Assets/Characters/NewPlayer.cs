@@ -140,6 +140,7 @@ public class NewPlayer : Character
                 // reset jump operations for next time and play animation
                 isJumping = false;
                 anim.SetTrigger("landJump");
+                FindObjectOfType<AudioManager>().Play(this.transform.gameObject, "landing");
                 canCheck = false;
             }
 
@@ -292,8 +293,10 @@ public class NewPlayer : Character
     }
     private IEnumerator Jumping()
     {
+        yield return new WaitForSeconds(0.2f);
+        FindObjectOfType<AudioManager>().Play(this.transform.gameObject, "launch");
         //this delays the addition of the velocity until the player has prepared to jump
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.2f);
         characterRigidbody.velocity = Vector3.up * jumpForce;
     }
 
@@ -373,7 +376,7 @@ public class NewPlayer : Character
     {
         //try to delay for 2 seconds
         yield return new WaitForSeconds(0.0f);
-        FindObjectOfType<AudioManager>().Play("dash");
+        FindObjectOfType<AudioManager>().Play(GameObject.Find("Player"), "dash");
     }
 
     private void dashingMovement()
