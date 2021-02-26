@@ -60,6 +60,7 @@ public class Character : MonoBehaviour
     [SerializeField] private UnityEngine.Animations.Rigging.Rig rig;
     private IEnumerator coroutine;
     [SerializeField] public Collider[] weaponColliders;
+    //public float characterDamageModifier; // get the current damage modifier from the health manager
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -80,6 +81,7 @@ public class Character : MonoBehaviour
         isDead = false;
 
         isBlocking = false;
+        //characterDamageModifier = playerHealthManager.characterDamageModifier;
     }
 
 
@@ -172,12 +174,15 @@ public class Character : MonoBehaviour
      * 1 if using the currently equipped weapon's primary attack
      * 2 if using the currently equipped weapon's secondary attack
      */
-    protected virtual void useWeapons(int attackType) //actually goes and uses the weapon
+     /*characterDamageModifier keeps track of the current damage scale of the player
+     * when the character's arm is debuffed, they deal 15% less damage (per arm)
+     */
+    protected virtual void useWeapons(int attackType, float characterDamageModifier) //actually goes and uses the weapon
     {
 
         string animation;
         int[] states;
-        weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states, attackType);
+        weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states, attackType, characterDamageModifier);
         weaponAccess.canDealDamage(availableWeapons[equippedWeapon], true);
 
         if (animation != null)
@@ -241,7 +246,7 @@ public class Character : MonoBehaviour
             toolActionState++; //move to the next state
             usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the appropriate value
 
-            useWeapons(toolUsed);
+            useWeapons(toolUsed, playerHealthManager.characterDamageModifier);
             char toolType = getCurrentWeaponType();
             if (toolType == 'g' && toolUsed != 1 && this.gameObject.layer == 8)
             {

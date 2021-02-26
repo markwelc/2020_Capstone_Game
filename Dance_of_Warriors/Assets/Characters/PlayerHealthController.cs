@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerHealthController : MonoBehaviour
 {
+    public float characterSpeed;
+    public float characterDamageModifier = 1.0f;
+
     [SerializeField] private float initialHealth = 100f; //the amount of health that the character has can adjust
     private float currentHealth; // The players current health
 
@@ -41,8 +44,8 @@ public class PlayerHealthController : MonoBehaviour
     // Changed to awake. when initialized in start the first variable was always zero
     private void Awake()
     {
+        characterSpeed = 1.0f;
         InItHealth();
-        // hud = GameObject.Find("HUD");
     }
 
     // Update is called once per frame
@@ -64,6 +67,7 @@ public class PlayerHealthController : MonoBehaviour
      */
     public void InItHealth()
     {
+
         // Set initial player health
         currentHealth = initialHealth;
 
@@ -108,6 +112,7 @@ public class PlayerHealthController : MonoBehaviour
      */
     public void TakeDamage(string collisionTag, float attackDamage)
     {
+        // characterSpeed = 10f;
         if (!invincible)
         {
             // In oncollision enter with enemy object we can call this script
@@ -118,6 +123,14 @@ public class PlayerHealthController : MonoBehaviour
              */
 
             // Subtract attackDamage from current health
+            if (bodyUsability == false)
+            {
+                attackDamage *= 1.25f;
+            }
+            if (headUsability == false)
+            {
+                attackDamage *= 1.25f;
+            }
             currentHealth -= attackDamage;
 
             // Since there are usually 2 colliders that make up a limb
@@ -128,61 +141,45 @@ public class PlayerHealthController : MonoBehaviour
                 case "playerRightArm":
                     Debug.Log("Hit: playerRightArm");
                     rArmHealth -= attackDamage; // Take thhe damage off of that limbs health
-                    if (rArmHealth <= 0)         // Is it still usable?
+                    if (rArmHealth <= 0 && rArmUsability)         // Is it still usable?
                     {
                         rArmHealth = 0f;
                         rArmUsability = false; // Set usability to false
-                    }
-                    else
-                    {
-                        // Adding this here so if they heal that limb it can be usable again
-                        rArmUsability = true;
-                    }
+                        characterDamageModifier -= 0.15f;
+                    }           
                     break;
 
                 // Continue with same style as prior
                 case "playerLeftArm":
                     Debug.Log("Hit: playerLeftArm");
                     lArmHealth -= attackDamage;
-                    if (lArmHealth <= 0)
+                    if (lArmHealth <= 0 && lArmUsability)
                     {
                         lArmHealth = 0f;
                         lArmUsability = false;
-                    }
-                    else
-                    {
-                        // Adding this here so if they heal that limb it can be usable again
-                        lArmUsability = true;
+                        characterDamageModifier -= 0.15f;
                     }
                     break;
 
                 case "playerRightLeg":
                     Debug.Log("Hit: playerRightLeg");
                     rLegHealth -= attackDamage;
-                    if (rLegHealth <= 0)
+                    if (rLegHealth <= 0 && rLegUsability)
                     {
                         rLegHealth = 0f;
                         rLegUsability = false;
-                    }
-                    else
-                    {
-                        // Adding this here so if they heal that limb it can be usable again
-                        rLegUsability = true;
+                        characterSpeed -= 0.25f;
                     }
                     break;
 
                 case "playerLeftLeg":
                     Debug.Log("Hit: playerLeftLeg");
                     lLegHealth -= attackDamage;
-                    if (lLegHealth <= 0)
+                    if (lLegHealth <= 0 && lLegUsability)
                     {
                         lLegHealth = 0f;
                         lLegUsability = false;
-                    }
-                    else
-                    {
-                        // Adding this here so if they heal that limb it can be usable again
-                        lLegUsability = true;
+                        characterSpeed -= 0.25f;
                     }
                     break;
 
@@ -193,11 +190,6 @@ public class PlayerHealthController : MonoBehaviour
                     {
                         bodyHealth = 0f;
                         bodyUsability = false;
-                    }
-                    else
-                    {
-                        // Adding this here so if they heal that limb it can be usable again
-                        bodyUsability = true;
                     }
                     break;
 
@@ -211,11 +203,6 @@ public class PlayerHealthController : MonoBehaviour
                     {
                         headHealth = 0f;
                         headUsability = false;
-                    }
-                    else
-                    {
-                        // Adding this here so if they heal that limb it can be usable again
-                        headUsability = true;
                     }
                     break;
 
@@ -303,27 +290,55 @@ public class PlayerHealthController : MonoBehaviour
         {
             case "playerRightArm":
                 rArmHealth += healAmount;
+                if (rArmUsability == false)
+                    {
+                        characterDamageModifier += 0.15f;
+                        rArmUsability = true;
+                    }
                 break;
 
             // Continue with same style as prior
             case "playerLeftArm":
                 lArmHealth += healAmount;
+                if (lArmUsability == false)
+                    {
+                        characterDamageModifier += 0.15f;
+                        lArmUsability = true;
+                    }
                 break;
 
             case "playerRightLeg":
                 rLegHealth += healAmount;
+                if (rLegUsability == false)
+                    {
+                        characterSpeed += 0.25f;
+                        rLegUsability = true;
+                    }
                 break;
 
             case "playerLeftLeg":
                 lLegHealth += healAmount;
+                if (lLegUsability == false)
+                    {
+                        characterSpeed += 0.25f;
+                        lLegUsability = true;
+                    }
                 break;
 
             case "playerBody":
                 bodyHealth += healAmount;
+                if (bodyUsability == false)
+                {
+                    bodyUsability = true;
+                }
                 break;
 
             case "playerHead":
                 headHealth += healAmount;
+                if (headUsability == false)
+                {
+                    headUsability = true;
+                }
                 break;
 
             default:

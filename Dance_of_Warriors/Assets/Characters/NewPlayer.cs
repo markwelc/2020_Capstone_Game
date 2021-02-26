@@ -86,7 +86,9 @@ public class NewPlayer : Character
         //define all variables here
         //this might be dumb, not sure
         dash = false;
-        speed = 10;
+        // speed = 10;
+        //make speed dependent on the playerHealthController's value
+        speed = playerHealthManager.characterSpeed * 10f;
         jumpForce = 6;
 
         // Tool Added stuff
@@ -124,6 +126,8 @@ public class NewPlayer : Character
 
     void Update()
     {
+        speed = playerHealthManager.characterSpeed * 10f;
+
         if (isDead && !deathMessageOpened)
         {
             deathMessageOpened = true;

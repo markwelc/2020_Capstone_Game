@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class TrainingDummy : Character
 {
+   
     public float lookRadius = 10f;
     public float attackRadius = 4f;
 
@@ -61,7 +62,7 @@ public class TrainingDummy : Character
 
         dashSpeed = new float[1];
         dashSpeed[0] = 11f;
-        speed = 3.5f;
+        // speed = enemyHealthController.characterSpeed * 3.5f;
 
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
@@ -90,6 +91,9 @@ public class TrainingDummy : Character
     // Update is called once per frame
     private void Update()
     {
+        // need this check because agent destroyed when dead
+        if(!isDead)
+            agent.speed = playerHealthManager.characterSpeed * 3.5f;
 
         distance = Vector3.Distance(target.position, transform.position);
         if (!isDead)
@@ -234,7 +238,7 @@ public class TrainingDummy : Character
             // Doing random range to select the type they want
             // since it uses else for standard attack
             // this is just to lower the probability of a heavy attack
-            useWeapons(1);
+            useWeapons(1, playerHealthManager.characterDamageModifier);
         }
     }
 
@@ -408,7 +412,8 @@ public class TrainingDummy : Character
             // this is just to lower the probability of a heavy attack
                 int weaponChoice = Random.Range(1, 3); //because this is the integer version, max is exclusive
                 //Debug.Log("weaponChoice = " + weaponChoice);
-                useWeapons(weaponChoice);
+                useWeapons(weaponChoice, playerHealthManager.characterDamageModifier);
+
             }
             // Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
             // rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
