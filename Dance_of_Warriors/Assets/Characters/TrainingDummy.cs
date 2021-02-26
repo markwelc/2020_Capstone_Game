@@ -91,7 +91,9 @@ public class TrainingDummy : Character
     // Update is called once per frame
     private void Update()
     {
-        agent.speed = playerHealthManager.characterSpeed * 3.5f;
+        // need this check because agent destroyed when dead
+        if(!isDead)
+            agent.speed = playerHealthManager.characterSpeed * 3.5f;
 
         distance = Vector3.Distance(target.position, transform.position);
         if (!isDead)
@@ -236,7 +238,7 @@ public class TrainingDummy : Character
             // Doing random range to select the type they want
             // since it uses else for standard attack
             // this is just to lower the probability of a heavy attack
-            useWeapons(1, characterDamageModifier);
+            useWeapons(1, playerHealthManager.characterDamageModifier);
         }
     }
 
@@ -410,7 +412,7 @@ public class TrainingDummy : Character
             // this is just to lower the probability of a heavy attack
                 int weaponChoice = Random.Range(1, 3); //because this is the integer version, max is exclusive
                 //Debug.Log("weaponChoice = " + weaponChoice);
-                useWeapons(weaponChoice, characterDamageModifier);
+                useWeapons(weaponChoice, playerHealthManager.characterDamageModifier);
 
             }
             // Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();

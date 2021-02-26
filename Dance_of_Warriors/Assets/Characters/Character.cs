@@ -60,7 +60,7 @@ public class Character : MonoBehaviour
     [SerializeField] private UnityEngine.Animations.Rigging.Rig rig;
     private IEnumerator coroutine;
     [SerializeField] public Collider[] weaponColliders;
-    public float characterDamageModifier; // get the current damage modifier from the health manager
+    //public float characterDamageModifier; // get the current damage modifier from the health manager
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -81,7 +81,7 @@ public class Character : MonoBehaviour
         isDead = false;
 
         isBlocking = false;
-        characterDamageModifier = playerHealthManager.characterDamageModifier;
+        //characterDamageModifier = playerHealthManager.characterDamageModifier;
     }
 
 
@@ -246,7 +246,7 @@ public class Character : MonoBehaviour
             toolActionState++; //move to the next state
             usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the appropriate value
 
-            useWeapons(toolUsed, characterDamageModifier);
+            useWeapons(toolUsed, playerHealthManager.characterDamageModifier);
             char toolType = getCurrentWeaponType();
             if (toolType == 'g' && toolUsed != 1 && this.gameObject.layer == 8)
             {
