@@ -4099,7 +4099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: handgun
-    clip: {fileID: 8300000, guid: 15ab875f55b3a454eae7d7d3491c03cd, type: 3}
+    clip: {fileID: 8300000, guid: 0cc5f55b570c1ae4c9155ecca40bedab, type: 3}
     volume: 1
     pitch: 1
     source: {fileID: 0}
@@ -4111,13 +4111,13 @@ MonoBehaviour:
     source: {fileID: 0}
     gameObject: {fileID: 0}
   - name: swing
-    clip: {fileID: 8300000, guid: 43b6f051f8fc32e4aaa5fbfa7670d6d4, type: 3}
+    clip: {fileID: 8300000, guid: 0b3d583ee0527914e8c8e98ffa3c584e, type: 3}
     volume: 1
     pitch: 1
     source: {fileID: 0}
     gameObject: {fileID: 0}
   - name: fastswing
-    clip: {fileID: 8300000, guid: a73d6b68910542140ae2fa8672e52655, type: 3}
+    clip: {fileID: 8300000, guid: 2d377d8702d796947bb83c5607ab40f5, type: 3}
     volume: 1
     pitch: 1
     source: {fileID: 0}
@@ -4128,8 +4128,8 @@ MonoBehaviour:
     pitch: 1
     source: {fileID: 0}
     gameObject: {fileID: 0}
-  - name: cut
-    clip: {fileID: 8300000, guid: 0c651763cc71e9046a8131cddaf9ec04, type: 3}
+  - name: sword impact 1
+    clip: {fileID: 8300000, guid: 3f00c637556693d438c91f22335282ff, type: 3}
     volume: 1
     pitch: 1
     source: {fileID: 0}
@@ -4142,6 +4142,42 @@ MonoBehaviour:
     gameObject: {fileID: 0}
   - name: landing
     clip: {fileID: 8300000, guid: 47accc9749ec733469150e2d98c1ed38, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: sword impact 2
+    clip: {fileID: 8300000, guid: b411b020f00576749b934a2150b0deb9, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: sword impact 3
+    clip: {fileID: 8300000, guid: de0c92fb8e16d2d4daf9636c589d768a, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: sword impact 4
+    clip: {fileID: 8300000, guid: 054f49b8bce18204db0acdcaa068ff1a, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: sword impact 5
+    clip: {fileID: 8300000, guid: 8d09b4526de7cc84fab417e734feb206, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: sword impact 6
+    clip: {fileID: 8300000, guid: 054f49b8bce18204db0acdcaa068ff1a, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: gun impact
+    clip: {fileID: 8300000, guid: 551db0ebc9821164ab51b17e84981b0e, type: 3}
     volume: 1
     pitch: 1
     source: {fileID: 0}
