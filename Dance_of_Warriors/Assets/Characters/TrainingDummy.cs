@@ -28,6 +28,9 @@ public class TrainingDummy : Character
     public GameObject projectile; //used for attacks
     private int numOfInRangeActions = 2;
     //states
+    private NewPlayer targetPlayer;
+    private int teabagAmount = 0;
+    private bool playerDefeatedCalled;
 
     // Can grow if needed
     // 0 = patrolling
@@ -65,6 +68,9 @@ public class TrainingDummy : Character
         // speed = enemyHealthController.characterSpeed * 3.5f;
 
         target = PlayerManager.instance.player.transform;
+        targetPlayer = player.GetComponent<NewPlayer>();
+        
+        
         agent = GetComponent<NavMeshAgent>();
         // healthMax = 5;
         // speed = 5;
@@ -99,13 +105,20 @@ public class TrainingDummy : Character
         if (!isDead)
         {
             checkBeat();
-
+            if (targetPlayer.isDead && !playerDefeatedCalled)
+            {
+                playerDefeatedCalled = true;
+                playerDefeated();
+            }
         }
         else
         {
             // Complete enemy specific death operation
             enemyDefeated();
         }
+
+
+        
     }
 
 
@@ -443,6 +456,34 @@ public class TrainingDummy : Character
             //}
         }
     }
+
+    /**
+     * The enemy successfully defeated the player
+     */
+    private void playerDefeated()
+    {
+        // so what now? yep ya guessed it
+        if (teabagAmount < 100)
+        {
+            crouch(); // start crouch
+            Invoke(nameof(CrouchDelay), 0.5f); // stay crouched for 0.5 seconds
+        }
+    }
+
+    private void CrouchDelay()
+    {
+        endCrouch(); // endcrouch
+        Invoke(nameof(crouchAgain), 0.5f); // stay upright for 0.5 seconds
+    }
+
+    private void crouchAgain()
+    {
+        teabagAmount++; // ncrement teabag amount
+        playerDefeated(); // get the next teabag
+    }
+
+
+    
 
     private void enemyDefeated()
     {

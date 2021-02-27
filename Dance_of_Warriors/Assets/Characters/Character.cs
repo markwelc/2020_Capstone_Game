@@ -18,9 +18,10 @@ public class Character : MonoBehaviour
     protected float health;
     protected float speed;//the default speed of the character
     protected float sprintSpeed;
-    protected bool isDead;  // To check if dead so player cant continue to move
+    public bool isDead;  // To check if dead so player cant continue to move
     protected bool isBlocking;
     protected bool isSprinting;
+    protected bool isCrouching;
     //public float staminaMax; //the max amount of stamina the character can have
     //protected float staminaCur; //the current amount of stamina the
 
@@ -177,6 +178,35 @@ public class Character : MonoBehaviour
     protected virtual void handleWeapons() //decides when to use weapons
     {
         //do nothing
+    }
+
+    protected virtual void crouch()
+    {
+        anim.ResetTrigger("isCrouching");
+        // do nothing
+        if(!isCrouching)
+        {
+            isCrouching = true;
+            
+           
+            anim.SetTrigger("isCrouching");
+            anim.ResetTrigger("endCrouch");
+
+        }
+        
+        
+    }
+
+    protected virtual void endCrouch()
+    {
+        if(isCrouching)
+        {
+            Debug.LogWarning("Ending the crouch");
+            isCrouching = false;
+            anim.SetTrigger("endCrouch");
+            anim.ResetTrigger("isCrouching");
+
+        }
     }
 
     /**

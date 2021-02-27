@@ -59,6 +59,8 @@ public class NewPlayer : Character
         controls.Gameplay.Block.canceled += ctx => endBlock();
         controls.Gameplay.Sprint.performed += ctx => Sprint();
         controls.Gameplay.Sprint.canceled += ctx => endSprint();
+        controls.Gameplay.Crouch.performed += ctx => crouch();
+        controls.Gameplay.Crouch.canceled += ctx => endCrouch();
 
         reticle = GameObject.Find("/Main Camera/Canvas/Reticle");
         retController = reticle.GetComponent<reticleController>();
@@ -211,8 +213,10 @@ public class NewPlayer : Character
         movement = Vector3.Normalize(movement); //be sure movement is a normal vector
 
         // if they are sprinting increase movemeent speed to sprint speed
-        if(isSprinting)
+        if (isSprinting)
             movement *= sprintSpeed;  //Move with speed
+        else if (isCrouching)
+            movement *= speed / 2;
         else
             movement *= speed;  //Move with speed
 
@@ -590,5 +594,15 @@ public class NewPlayer : Character
             anim.SetTrigger("endSprint");
             isSprinting = false;
         }
+    }
+
+    protected override void crouch()
+    {
+        base.crouch();
+    }
+
+    protected override void endCrouch()
+    {
+        base.endCrouch();
     }
 }
