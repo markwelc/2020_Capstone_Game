@@ -8,7 +8,7 @@ public class Character : MonoBehaviour
     //anything that's related to decision making should be in subclasses
     //for instance, bosses decide when/where to move very differently from the player, and so deciding when/where to move is in a subclass
     // public LayerMask whatIsGround, whatIsPlayer;
-
+    //protected Vector2 move;
     protected Rigidbody characterRigidbody; //the character's rigidbody
     protected Transform characterTransform; //the character's transform
     protected Collider characterCollider; //the character's collider
@@ -17,8 +17,10 @@ public class Character : MonoBehaviour
     public PlayerHealthController playerHealthManager;
     protected float health;
     protected float speed;//the default speed of the character
+    protected float sprintSpeed;
     protected bool isDead;  // To check if dead so player cant continue to move
     protected bool isBlocking;
+    protected bool isSprinting;
     //public float staminaMax; //the max amount of stamina the character can have
     //protected float staminaCur; //the current amount of stamina the
 
@@ -60,6 +62,8 @@ public class Character : MonoBehaviour
     [SerializeField] private UnityEngine.Animations.Rigging.Rig rig;
     private IEnumerator coroutine;
     [SerializeField] public Collider[] weaponColliders;
+    protected float stamina;
+    protected float initStamina;
     //public float characterDamageModifier; // get the current damage modifier from the health manager
 
     // Start is called before the first frame update
@@ -124,6 +128,11 @@ public class Character : MonoBehaviour
             }
         }*/
 
+        // New functions to handle sprint and stamina
+        // made in character in case we want to apply to enemy later on
+        handleSprint();
+        handleStamina();
+
     }
 
 
@@ -168,6 +177,47 @@ public class Character : MonoBehaviour
     protected virtual void handleWeapons() //decides when to use weapons
     {
         //do nothing
+    }
+
+    /**
+     * Handles continue checks if the character is sprinting
+     * whether he still has the stamina and still meets sprint conditions
+     */
+    protected void handleSprint()
+    {
+        // if they are sprinting
+        if (isSprinting)
+        {
+            // reduce stamina
+            stamina -= 1f * Time.deltaTime;
+
+            // if they are out of stamina or dont fufill sprint conditions
+            if (stamina <= 0f || !continueSprintAllowed())
+            {
+                // end the sprint action
+                endSprint();
+            }
+        }
+    }
+
+    /**
+     * Stamina regen. 
+     * regen stamina if they arent doin an action requiring stamina
+     * right now the only action that does is sprint
+     * but if more actions were made that used stamina you cann just add them 
+     * here or make a bool func to check if using stamina required action
+     */
+    protected void handleStamina()
+    {
+        
+        if (!isSprinting && stamina < initStamina)
+        {
+            stamina += 1f * Time.deltaTime;
+
+            // Since working with time we could slightly go over
+            if (stamina > initStamina)
+                stamina = initStamina;
+        }
     }
 
     /*attackType should be either 1 or 2
@@ -352,12 +402,29 @@ public class Character : MonoBehaviour
         return dashingPermits && jumpPossible && !isBlocking;
     }
 
+    protected bool sprintAllowed(Vector2 move)
+    {
+        
+        return jumpAllowed() && move.y > 0 && (move.x < 0.1 || move.x > 0.1);
+    }
+
+    protected virtual bool continueSprintAllowed()
+    {
+        // Do nothing here
+        return false;
+    }
+
     public float getHealth()
     {
         return health;
     }
 
     protected virtual void breakBlock()
+    {
+        // Override
+    }
+
+    protected virtual void endSprint()
     {
         // Override
     }

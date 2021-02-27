@@ -29,6 +29,7 @@ public class NewPlayer : Character
     private bool deathMessageOpened;
 
     private bool canCheck;
+
     /**
      * On awake we initialize our controls to tell it what to do with each
      *
@@ -56,6 +57,8 @@ public class NewPlayer : Character
         controls.Gameplay.Pickup.performed += ctx => PickupMessage();
         controls.Gameplay.Block.performed += ctx => startBlock();
         controls.Gameplay.Block.canceled += ctx => endBlock();
+        controls.Gameplay.Sprint.performed += ctx => Sprint();
+        controls.Gameplay.Sprint.canceled += ctx => endSprint();
 
         reticle = GameObject.Find("/Main Camera/Canvas/Reticle");
         retController = reticle.GetComponent<reticleController>();
@@ -89,6 +92,7 @@ public class NewPlayer : Character
         // speed = 10;
         //make speed dependent on the playerHealthController's value
         speed = playerHealthManager.characterSpeed * 10f;
+        sprintSpeed = playerHealthManager.characterSpeed * 15f;
         jumpForce = 6;
 
         // Tool Added stuff
@@ -122,11 +126,18 @@ public class NewPlayer : Character
 
         equippedWeapon = 1; //this is the starting value
         deathMessageOpened = false;
+
+        // initial stamina and active stamina
+        // setting to 5 for now essentially means
+        // doing an action that requires stamina for 5 seconds
+        initStamina = 5f;
+        stamina = initStamina;
     }
 
     void Update()
     {
         speed = playerHealthManager.characterSpeed * 10f;
+        sprintSpeed = playerHealthManager.characterSpeed * 15f;
 
         if (isDead && !deathMessageOpened)
         {
@@ -199,7 +210,12 @@ public class NewPlayer : Character
         movement.y = 0f; // set y to there to be sure we dont move up or down
         movement = Vector3.Normalize(movement); //be sure movement is a normal vector
 
-        movement *= speed;  //Move with speed
+        // if they are sprinting increase movemeent speed to sprint speed
+        if(isSprinting)
+            movement *= sprintSpeed;  //Move with speed
+        else
+            movement *= speed;  //Move with speed
+
         anim.SetFloat("speed", move.y, 1f, Time.deltaTime * 10f);
         anim.SetFloat("turn", move.x, 1f, Time.deltaTime * 10f);
 
@@ -457,6 +473,7 @@ public class NewPlayer : Character
         //if the item is not null
         if (item != null)
         {
+            
             mItemToPickup = item; //get reference to that item
             hud.OpenPickupMessagePanel(""); //open message panel to pick up item
         }
@@ -477,9 +494,12 @@ public class NewPlayer : Character
     //called when an item is picked up
     void PickupMessage()
     {
-        inventory.AddItem(mItemToPickup); //add item to player's inventory
-        mItemToPickup.OnPickup(); //call item's OnPickup() method
-        hud.ClosePickupMessagePanel(); //close the message panel
+        if (mItemToPickup != null)
+        {
+            inventory.AddItem(mItemToPickup); //add item to player's inventory
+            mItemToPickup.OnPickup(); //call item's OnPickup() method
+            hud.ClosePickupMessagePanel(); //close the message panel
+        }
     }
 
 
@@ -542,5 +562,33 @@ public class NewPlayer : Character
         else
             controls.Gameplay.Enable();
        
+    }
+
+    void Sprint()
+    {
+        // enable sprint
+        // issprinting goes to blend tree which is updated with movement
+        if (sprintAllowed(move))
+        {
+
+            isSprinting = true;
+            anim.SetTrigger("isSprinting");
+            anim.ResetTrigger("endSprint");
+        }
+        
+    }
+
+    protected override bool continueSprintAllowed()
+    {
+        // return to character to ensure conditions are still met
+        return sprintAllowed(move);
+    }
+    protected override void endSprint()
+    {
+        if (isSprinting)
+        {
+            anim.SetTrigger("endSprint");
+            isSprinting = false;
+        }
     }
 }
