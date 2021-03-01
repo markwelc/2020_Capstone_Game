@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerHealthController : MonoBehaviour
 {
+
     public float characterSpeed;
     public float characterDamageModifier = 1.0f;
 
@@ -15,19 +16,21 @@ public class PlayerHealthController : MonoBehaviour
     // Usability reflects what it should do when its been damaged all the way
     [SerializeField] private float initialLimbHealth = 40f;
     protected float rArmHealth;
-    protected bool rArmUsability;
+    public bool rArmUsability;
     protected float lArmHealth;
-    protected bool lArmUsability;
+    public bool lArmUsability;
     protected float rLegHealth;
-    protected bool rLegUsability;
+    public bool rLegUsability;
     protected float lLegHealth;
-    protected bool lLegUsability;
+    public bool lLegUsability;
     protected float bodyHealth;
-    protected bool bodyUsability;
+    public bool bodyUsability;
     protected float headHealth;
-    protected bool headUsability;
+    public bool headUsability;
     private bool invincible;
     private bool oneTimeBlock;
+
+ 
 
     //used for healing limbs
     enum limbs
@@ -46,6 +49,7 @@ public class PlayerHealthController : MonoBehaviour
     {
         characterSpeed = 1.0f;
         InItHealth();
+        
     }
 
     // Update is called once per frame
@@ -60,6 +64,8 @@ public class PlayerHealthController : MonoBehaviour
             die();
         }
     }
+
+    
 
     /**
      * Initializing our current values
@@ -146,6 +152,9 @@ public class PlayerHealthController : MonoBehaviour
                         rArmHealth = 0f;
                         rArmUsability = false; // Set usability to false
                         characterDamageModifier -= 0.15f;
+                        // Only do this for player
+                        if(this.gameObject.layer == 8)
+                            LimbUIManager.limbUIInstance.setUIMember("playerRightArm");
                     }           
                     break;
 
@@ -158,6 +167,9 @@ public class PlayerHealthController : MonoBehaviour
                         lArmHealth = 0f;
                         lArmUsability = false;
                         characterDamageModifier -= 0.15f;
+                        // Only do this for player
+                        if (this.gameObject.layer == 8)
+                            LimbUIManager.limbUIInstance.setUIMember("playerLeftArm");
                     }
                     break;
 
@@ -169,6 +181,9 @@ public class PlayerHealthController : MonoBehaviour
                         rLegHealth = 0f;
                         rLegUsability = false;
                         characterSpeed -= 0.25f;
+                        // Only do this for player
+                        if (this.gameObject.layer == 8)
+                            LimbUIManager.limbUIInstance.setUIMember("playerRightLeg");
                     }
                     break;
 
@@ -180,16 +195,22 @@ public class PlayerHealthController : MonoBehaviour
                         lLegHealth = 0f;
                         lLegUsability = false;
                         characterSpeed -= 0.25f;
+                        // Only do this for player
+                        if (this.gameObject.layer == 8)
+                            LimbUIManager.limbUIInstance.setUIMember("playerLeftLeg");
                     }
                     break;
 
                 case "playerBody":
                     Debug.Log("Hit: playerBody");
                     bodyHealth -= attackDamage;
-                    if (bodyHealth <= 0)
+                    if (bodyHealth <= 0 && bodyUsability)
                     {
                         bodyHealth = 0f;
                         bodyUsability = false;
+                        // Only do this for player
+                        if (this.gameObject.layer == 8)
+                            LimbUIManager.limbUIInstance.setUIMember("playerBody");
                     }
                     break;
 
@@ -199,17 +220,20 @@ public class PlayerHealthController : MonoBehaviour
                     // Lets do extra damage if you got hit in head
                     // Just gonna do an arbitary number for now
                     currentHealth -= 5f;
-                    if (headHealth <= 0)
+                    if (headHealth <= 0 && headUsability)
                     {
                         headHealth = 0f;
                         headUsability = false;
+                        // Only do this for player
+                        if (this.gameObject.layer == 8)
+                            LimbUIManager.limbUIInstance.setUIMember("playerHead");
                     }
                     break;
 
                 default:
                     Debug.Log("They didnt hit our player");
                     // Weird ig take away attack damage
-                    //currentHealth += attackDamage;
+                    currentHealth += attackDamage;
                     //still deal damage cause we might have hit the enemy
                     break;
             }
@@ -291,38 +315,50 @@ public class PlayerHealthController : MonoBehaviour
             case "playerRightArm":
                 rArmHealth += healAmount;
                 if (rArmUsability == false)
-                    {
-                        characterDamageModifier += 0.15f;
-                        rArmUsability = true;
-                    }
+                {
+                    characterDamageModifier += 0.15f;
+                    rArmUsability = true;
+                    // Only do this for player
+                    if (this.gameObject.layer == 8)
+                        LimbUIManager.limbUIInstance.resetUnusableUI("playerRightArm");
+                }
                 break;
 
             // Continue with same style as prior
             case "playerLeftArm":
                 lArmHealth += healAmount;
                 if (lArmUsability == false)
-                    {
-                        characterDamageModifier += 0.15f;
-                        lArmUsability = true;
-                    }
+                {
+                    characterDamageModifier += 0.15f;
+                    lArmUsability = true;
+                    // Only do this for player
+                    if (this.gameObject.layer == 8)
+                        LimbUIManager.limbUIInstance.resetUnusableUI("playerLeftArm");
+                }
                 break;
 
             case "playerRightLeg":
                 rLegHealth += healAmount;
                 if (rLegUsability == false)
-                    {
-                        characterSpeed += 0.25f;
-                        rLegUsability = true;
-                    }
+                {
+                    characterSpeed += 0.25f;
+                    rLegUsability = true;
+                    // Only do this for player
+                    if (this.gameObject.layer == 8)
+                        LimbUIManager.limbUIInstance.resetUnusableUI("playerRightLeg");
+                }
                 break;
 
             case "playerLeftLeg":
                 lLegHealth += healAmount;
                 if (lLegUsability == false)
-                    {
-                        characterSpeed += 0.25f;
-                        lLegUsability = true;
-                    }
+                {
+                    characterSpeed += 0.25f;
+                    lLegUsability = true;
+                    // Only do this for player
+                    if (this.gameObject.layer == 8)
+                        LimbUIManager.limbUIInstance.resetUnusableUI("playerLeftLeg");
+                }
                 break;
 
             case "playerBody":
@@ -330,6 +366,9 @@ public class PlayerHealthController : MonoBehaviour
                 if (bodyUsability == false)
                 {
                     bodyUsability = true;
+                    // Only do this for player
+                    if (this.gameObject.layer == 8)
+                        LimbUIManager.limbUIInstance.resetUnusableUI("playerBody");
                 }
                 break;
 
@@ -338,6 +377,9 @@ public class PlayerHealthController : MonoBehaviour
                 if (headUsability == false)
                 {
                     headUsability = true;
+                    // Only do this for player
+                    if (this.gameObject.layer == 8)
+                        LimbUIManager.limbUIInstance.resetUnusableUI("playerHead");
                 }
                 break;
 

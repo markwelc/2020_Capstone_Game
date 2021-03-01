@@ -124,6 +124,13 @@ public class Character : MonoBehaviour
             }
         }*/
 
+        /** You can use this to check unusable limbs UI
+        if (playerHealthManager.rArmUsability == true)
+            playerHealthManager.TakeDamage("playerRightArm", 1);
+        else if (playerHealthManager.lLegUsability == true)
+            playerHealthManager.TakeDamage("playerLeftLeg", 1);
+        */
+
     }
 
 
