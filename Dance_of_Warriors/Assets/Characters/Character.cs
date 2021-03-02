@@ -188,14 +188,13 @@ public class Character : MonoBehaviour
 
     protected virtual void crouch()
     {
-        anim.ResetTrigger("isCrouching");
+        
         // do nothing
-        if(!isCrouching)
+        if(!isCrouching && crouchAllowed())
         {
             isCrouching = true;
-
-
             anim.SetTrigger("isCrouching");
+            // reset trigger helps just like clear the cache basically
             anim.ResetTrigger("endCrouch");
 
         }
@@ -207,7 +206,7 @@ public class Character : MonoBehaviour
     {
         if(isCrouching)
         {
-            Debug.LogWarning("Ending the crouch");
+            
             isCrouching = false;
             anim.SetTrigger("endCrouch");
             anim.ResetTrigger("isCrouching");
@@ -440,14 +439,24 @@ public class Character : MonoBehaviour
 
     protected bool sprintAllowed(Vector2 move)
     {
+        bool dashingPermits = ((dashActionState == actionState.inactive) || (dashActionState == actionState.cooldown));
 
-        return jumpAllowed() && move.y > 0 && (move.x < 0.1 || move.x > 0.1);
+        // Checking isjumping because isgrounded causes issues in arena since multiple tiles there could be a single frame 
+        // which would cause sprintallowed to end since checked every frame while sprinting
+
+        return dashingPermits && !isJumping && !isBlocking && move.y > 0 && (move.x < 0.1 || move.x > 0.1);
     }
 
     protected virtual bool continueSprintAllowed()
     {
         // Do nothing here
         return false;
+    }
+
+    protected bool crouchAllowed()
+    {
+        bool dashingPermits = ((dashActionState == actionState.inactive) || (dashActionState == actionState.cooldown));
+        return dashingPermits && !isJumping && !isSprinting && !isBlocking;
     }
 
     public float getHealth()
