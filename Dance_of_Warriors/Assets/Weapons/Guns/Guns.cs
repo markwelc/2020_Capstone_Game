@@ -46,6 +46,9 @@ public class Guns : WeaponController
                 {
                     reloading = true;
                     StartCoroutine("Reload");
+                    //may want to make a switch here if we want new guns to have other reload sounds
+                    FindObjectOfType<AudioManager>().Play(this.transform.gameObject, "reload");
+                    
                 }
             }
             //go ahead and shoot one bullet and remove it from the magazine
@@ -59,7 +62,7 @@ public class Guns : WeaponController
 
     IEnumerator Reload()
 	{
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(2.7f);
         bulletsLeft = ammo;
         reloading = false;
     }
@@ -68,7 +71,8 @@ public class Guns : WeaponController
 
     void shoot()
 	{
-        
+        //play the weapon's sound from the sound manager
+        FindObjectOfType<AudioManager>().Play(this.transform.gameObject, "handgun");
         bulletsLeft--;
         //Debug.Log("bullets left: " + bulletsLeft);
         Vector3 angle = UserFirepoint.rotation.eulerAngles; //figure out the angle

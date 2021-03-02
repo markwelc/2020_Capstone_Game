@@ -188,7 +188,7 @@ public class Character : MonoBehaviour
 
     protected virtual void crouch()
     {
-        
+
         // do nothing
         if(!isCrouching && crouchAllowed())
         {
@@ -206,7 +206,7 @@ public class Character : MonoBehaviour
     {
         if(isCrouching)
         {
-            
+
             isCrouching = false;
             anim.SetTrigger("endCrouch");
             anim.ResetTrigger("isCrouching");
@@ -441,7 +441,7 @@ public class Character : MonoBehaviour
     {
         bool dashingPermits = ((dashActionState == actionState.inactive) || (dashActionState == actionState.cooldown));
 
-        // Checking isjumping because isgrounded causes issues in arena since multiple tiles there could be a single frame 
+        // Checking isjumping because isgrounded causes issues in arena since multiple tiles there could be a single frame
         // which would cause sprintallowed to end since checked every frame while sprinting
 
         return dashingPermits && !isJumping && !isBlocking && move.y > 0 && (move.x < 0.1 || move.x > 0.1);
