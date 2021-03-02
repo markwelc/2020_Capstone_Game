@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7054583660361988737
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7054583660361988743}
+  - component: {fileID: 7054583660361988742}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7054583660361988743
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7054583660361988737}
+  m_LocalRotation: {x: -0.032096013, y: 0.05165988, z: 0.0016611534, w: 0.9981475}
+  m_LocalPosition: {x: 0.00028419495, y: 0.3340391, z: -2.7560642}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7054583660361988742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7054583660361988737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f2e5dc28f27fed41bddf6e74455a44c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: handgun
+    clip: {fileID: 8300000, guid: 0cc5f55b570c1ae4c9155ecca40bedab, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: reload
+    clip: {fileID: 8300000, guid: e515749edda88684db324b1d4642afc9, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: swing
+    clip: {fileID: 8300000, guid: 0b3d583ee0527914e8c8e98ffa3c584e, type: 3}
+    volume: 0.7
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: fastswing
+    clip: {fileID: 8300000, guid: 2d377d8702d796947bb83c5607ab40f5, type: 3}
+    volume: 0.7
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: dash
+    clip: {fileID: 8300000, guid: 62ebe9c37136dc14d8a8bf3529b93713, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: sword impact 1
+    clip: {fileID: 8300000, guid: 3f00c637556693d438c91f22335282ff, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: launch
+    clip: {fileID: 8300000, guid: eecdb36dbb8dc284f89c7ccb1f9a7e1b, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: landing
+    clip: {fileID: 8300000, guid: 47accc9749ec733469150e2d98c1ed38, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: sword impact 2
+    clip: {fileID: 8300000, guid: b411b020f00576749b934a2150b0deb9, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: sword impact 3
+    clip: {fileID: 8300000, guid: de0c92fb8e16d2d4daf9636c589d768a, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: sword impact 4
+    clip: {fileID: 8300000, guid: 054f49b8bce18204db0acdcaa068ff1a, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: sword impact 5
+    clip: {fileID: 8300000, guid: 8d09b4526de7cc84fab417e734feb206, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: sword impact 6
+    clip: {fileID: 8300000, guid: 054f49b8bce18204db0acdcaa068ff1a, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: gun impact
+    clip: {fileID: 8300000, guid: 551db0ebc9821164ab51b17e84981b0e, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
+  - name: healing
+    clip: {fileID: 8300000, guid: 7341e981debca1e4cbd0b79717763821, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
