@@ -63,6 +63,9 @@ public class DocBag : MonoBehaviour, IInventoryItem
         Debug.Log("Current health of all limbs: " + player.playerHealthManager.getAllLimbHealth());
         // add healVal to player's health
         player.playerHealthManager.healAllLimbs(healVal);
+        GameObject temp = new GameObject();
+        Instantiate(temp, this.transform.position, Quaternion.identity);
+        FindObjectOfType<AudioManager>().Play(temp.gameObject, "healing");
         Debug.Log("Healing player limbs for " + healVal + " health");
         Debug.Log("New health value of all limbs: " + player.playerHealthManager.getAllLimbHealth());
     }
