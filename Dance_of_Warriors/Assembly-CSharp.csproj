@@ -82,8 +82,10 @@
     <Compile Include="Assets\LimbUIManager.cs" />
     <Compile Include="Assets\MainMenu.cs" />
     <Compile Include="Assets\PauseMenu.cs" />
+    <Compile Include="Assets\Sound\AudioManager.cs" />
     <Compile Include="Assets\Sound\LightOnAnyBeat.cs" />
     <Compile Include="Assets\Sound\LightOnBeat.cs" />
+    <Compile Include="Assets\Sound\Sound.cs" />
     <Compile Include="Assets\Sound\musicAnalyzer.cs" />
     <Compile Include="Assets\Weapons\Guns\BulletController.cs" />
     <Compile Include="Assets\Weapons\Guns\Bullet_Handgun.cs" />

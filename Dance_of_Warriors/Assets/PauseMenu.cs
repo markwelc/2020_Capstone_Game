@@ -61,7 +61,7 @@ public class PauseMenu : MonoBehaviour
         if(music != null)
             music.Play();
     }
-    
+
     void Pause()
     {
         PauseMenuUI.SetActive(true);
@@ -74,7 +74,7 @@ public class PauseMenu : MonoBehaviour
             playa.menuEnabled(true);
         if(music != null)
             music.Pause();
-        
+
     }
 
     public void ResetGame()

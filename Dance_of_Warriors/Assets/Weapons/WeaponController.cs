@@ -62,6 +62,6 @@ public class WeaponController : MonoBehaviour
                 // Nothing to be done here could be a gun where bullet always uses damage
                 break;
         }
-        
+
     }
 }

@@ -63,6 +63,9 @@ public class HealthPack : MonoBehaviour, IInventoryItem
         Debug.Log("Current health: " + player.playerHealthManager.getHealth());
         // add healVal to player's health
         player.playerHealthManager.healGeneralHealth(healVal);
+        GameObject temp = new GameObject();
+        Instantiate(temp, this.transform.position, Quaternion.identity);
+        FindObjectOfType<AudioManager>().Play(temp.gameObject, "healing");
         Debug.Log("Healing player for " + healVal + " health");
         Debug.Log("New health value: " + player.playerHealthManager.getHealth());
     }
