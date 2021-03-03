@@ -44,22 +44,26 @@ public class BulletController : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if (source != col)
-		{
-            Destroy(this.gameObject);
-        }
-        //Debug.Log("source = " + source);
-        //Debug.Log("col = =" + col);
-
-        if (LayerMask.LayerToName(col.gameObject.layer) == "enemy" || LayerMask.LayerToName(col.gameObject.layer) == "player")
+        if (col.gameObject.tag != "enemyOverall")
         {
-            targetCharacter = col.gameObject.GetComponent<Character>();
-            if(targetCharacter)
-			{
-                targetCharacter.playerHealthManager.TakeDamage(col.gameObject.tag, 1);
-                GameObject temp = new GameObject();
-                Instantiate(temp, bulletRigidbody.transform.position, Quaternion.identity);
-                FindObjectOfType<AudioManager>().Play(temp.gameObject, "gun impact");
+            //Debug.LogWarning(col.gameObject.name);
+            if (source != col)
+            {
+                Destroy(this.gameObject);
+            }
+            //Debug.Log("source = " + source);
+            //Debug.Log("col = =" + col);
+
+            if (LayerMask.LayerToName(col.gameObject.layer) == "enemy" || LayerMask.LayerToName(col.gameObject.layer) == "player")
+            {
+                targetCharacter = col.gameObject.GetComponentInParent<Character>();
+                if (targetCharacter)
+                {
+                    targetCharacter.playerHealthManager.TakeDamage(col.gameObject.tag, 1);
+                    GameObject temp = new GameObject();
+                    Instantiate(temp, bulletRigidbody.transform.position, Quaternion.identity);
+                    FindObjectOfType<AudioManager>().Play(temp.gameObject, "gun impact");
+                }
             }
         }
     }
