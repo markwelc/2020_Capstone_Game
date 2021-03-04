@@ -67,11 +67,7 @@ public class SettingsMenu : MonoBehaviour
             soundFXMixer.SetFloat("Volume Sound FX", defaultFXVolume);
         }
 
-        if (camScript == null)
-        {
-            Debug.LogError("ERROR: Camera Look must be assigned in inspector!");
-        }
-        else {
+        if(camScript != null) {
             camScript.setXLookScale(defaultXLookScale);
             camScript.setYLookScale(defaultYLookScale);
         }
@@ -100,7 +96,8 @@ public class SettingsMenu : MonoBehaviour
         PlayerPrefs.SetFloat(keyXSensitivity, sensitivityX);
 
         // update sensitivity
-        camScript.setXLookScale(sensitivityX);
+        if(camScript != null)
+            camScript.setXLookScale(sensitivityX);
     }
 
     public void setLookSensitivityVertical(float sensitivityY)
@@ -109,7 +106,8 @@ public class SettingsMenu : MonoBehaviour
         PlayerPrefs.SetFloat(keyYSensitivity, sensitivityY);
 
         // update sensitivity horizontal
-        camScript.setYLookScale(defaultYLookScale);
+        if(camScript != null)
+            camScript.setYLookScale(defaultYLookScale);
     }
 
 }

@@ -16,9 +16,16 @@ public class MainMenu : MonoBehaviour
 
     public GameObject regFirstSelect;
     public GameObject altFirstSelect;
-   
 
-    public GameObject infoScreen;
+    [Header("Info Items")]
+    public GameObject infoPanel;
+    public GameObject[] infoScreens;
+    // 0 = general UI
+    // 1 = keyboard controls
+    // 2 = gamepad controls
+    // 3 = settings
+    // 4 = about
+
     private void Start()
     {
         audioSource = this.GetComponent<AudioSource>();
@@ -43,7 +50,8 @@ public class MainMenu : MonoBehaviour
 
         audioSource.PlayOneShot(clickSound);
         Debug.Log("View game info and warnings");
-        infoScreen.SetActive(true);
+        if(audioSource.gameObject.activeSelf)
+            infoPanel.SetActive(true);
         this.gameObject.SetActive(false);
     }
 
@@ -52,8 +60,9 @@ public class MainMenu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(regFirstSelect);
 
-        audioSource.PlayOneShot(clickSound);
-        infoScreen.SetActive(false);
+        if(audioSource.gameObject.activeSelf)
+            audioSource.PlayOneShot(clickSound);
+        infoPanel.SetActive(false);
         this.gameObject.SetActive(true);
     }
 
@@ -73,5 +82,19 @@ public class MainMenu : MonoBehaviour
             audioSource.PlayOneShot(selectSound);
     }
 
+    public void setInfoScreenActive(int idx)
+    {
+        for(int i = 0; i < infoScreens.Length; i++)
+        {
+            if(i == idx)
+            {
+                infoScreens[i].SetActive(true);
+            }
+            else
+            {
+                infoScreens[i].SetActive(false);
+            }
+        }
+    }
 
 }
