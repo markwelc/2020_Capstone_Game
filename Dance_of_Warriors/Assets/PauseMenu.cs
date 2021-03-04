@@ -17,6 +17,8 @@ public class PauseMenu : MonoBehaviour
 
     public loadLevel levelLoader;
 
+    public GameObject settingsMenu;
+
     private void Awake()
     {
         controls = new PlayerControls();    // Initialize our controls object
@@ -53,6 +55,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        settingsMenu.SetActive(false);
         PauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         IsGamePaused = false;
@@ -92,4 +95,15 @@ public class PauseMenu : MonoBehaviour
         levelLoader.loadScene(SceneManager.GetActiveScene().buildIndex - 1);
         Time.timeScale = 1f;
     }
+
+    public void OpenSettings()
+    {
+        settingsMenu.SetActive(true);
+    }
+
+    public void CloseSettings()
+    {
+        settingsMenu.SetActive(false);
+    }
+
 }
