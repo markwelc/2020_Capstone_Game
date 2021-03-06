@@ -34,9 +34,6 @@ public class Character : MonoBehaviour
         cooldown //this means that the action and all immediate effects have finished, so it looks like the inactive state, but the action may not be activated again
     }
 
-    protected Vector3 movement;//used to hold the direction that the character should move in
-    protected bool diagonal;//whether the player is moving diagonally
-
     /*[SerializeField]*/
     protected float jumpForce; //this is how strongly the character can jump
     protected bool jumpPossible; //determines if the character can currently jump
@@ -93,16 +90,6 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        // This is just to test to see communicationn between scripts
-        // Below is testing to make sure it works, you can check it out if you want
-        /*
-        playerHealthManager.TakeDamage("playerRightArm", 1f);
-        var unusableLimbs = playerHealthManager.getUnusableLimb();
-        for(int i = 0; i < unusableLimbs.Count; i++)
-        {
-            print(unusableLimbs[i]);
-        }
-        */
         health = playerHealthManager.getHealth();
 
         checkIsDead();
@@ -116,25 +103,7 @@ public class Character : MonoBehaviour
         handleJump(); //decide when to jump
         handleAngle(); //decide where to face
         handleWeapons(); //decide when to use weapons
-
-        moveCharacter(movement);
-        /*
-        if (isJumping)
-        {
-            if (characterRigidbody.velocity.y < 0f)
-            {
-                anim.SetBool("isJumping", false);
-                anim.SetBool("doneJumping", true);
-                isJumping = false;
-            }
-        }*/
-
-        /** You can use this to check unusable limbs UI
-        if (playerHealthManager.rArmUsability == true)
-            playerHealthManager.TakeDamage("playerRightArm", 1);
-        else if (playerHealthManager.lLegUsability == true)
-            playerHealthManager.TakeDamage("playerLeftLeg", 1);
-        */
+        
         // New functions to handle sprint and stamina
         // made in character in case we want to apply to enemy later on
         handleSprint();
@@ -143,30 +112,16 @@ public class Character : MonoBehaviour
     }
 
 
-    protected void moveCharacter(Vector3 direcAndDist) //the input needs to contain both the direction and the distance
+    protected virtual void moveCharacter(Vector3 direcAndDist) //the input needs to contain both the direction and the distance
     {
-
-        //the raycasting is useful for fast moving objects that the colliders can't deal with
-        if (isDead || isBlocking)
-            direcAndDist = Vector3.zero;
-
-        direcAndDist.y = characterRigidbody.velocity.y;
-        Ray ray = new Ray(characterTransform.position, direcAndDist); //shoot a ray from current position in direction of travel
-        RaycastHit hit;
-        if (!Physics.Raycast(ray, out hit, (direcAndDist * Time.deltaTime).magnitude)) //if the ray didn't hit anything within the range that we're moving
-            characterRigidbody.MovePosition((Vector3)transform.position + direcAndDist * Time.deltaTime); //go ahead and move
-
-        else
-        {
-            characterRigidbody.MovePosition(hit.point);//otherwise, move to where the thing we hit was
-        }
+        //do nothing
     }
 
 
     //these four are only defining default behavior.They are meant to be overridden
     protected virtual void handleMovement()
     {
-        movement = new Vector3(0, 0, 0); //don't try to move anywhere
+        //don't try to move anywhere
     }
 
     protected virtual void handleJump()

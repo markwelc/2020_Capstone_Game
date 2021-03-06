@@ -7,6 +7,9 @@ using UnityEngine.XR.WSA;
 
 public class NewPlayer : Character
 {
+    //these two things used to be in Character, but the enemy never needs them
+    protected Vector3 movement;//used to hold the direction that the character should move in
+    protected bool diagonal;//whether the player is moving diagonally
 
     PlayerControls controls;    // Standard controls available to the player
     Vector2 move;               // This stores our movement from keyboard or left stick
@@ -162,6 +165,8 @@ public class NewPlayer : Character
             }
 
         }
+
+        moveCharacter(movement);
     }
 
     /**
@@ -224,6 +229,27 @@ public class NewPlayer : Character
         anim.SetFloat("speed", move.y, 1f, Time.deltaTime * 10f);
         anim.SetFloat("turn", move.x, 1f, Time.deltaTime * 10f);
 
+    }
+
+    /*
+     * this used to be in character, but now that enemies don't have a rigidbody, it doesn't really need to be there.
+     */
+    protected override void moveCharacter(Vector3 direcAndDist)
+    {
+        //the raycasting is useful for fast moving objects that the colliders can't deal with
+        if (isDead || isBlocking)
+            direcAndDist = Vector3.zero;
+
+        direcAndDist.y = characterRigidbody.velocity.y;
+        Ray ray = new Ray(characterTransform.position, direcAndDist); //shoot a ray from current position in direction of travel
+        RaycastHit hit;
+        if (!Physics.Raycast(ray, out hit, (direcAndDist * Time.deltaTime).magnitude)) //if the ray didn't hit anything within the range that we're moving
+            characterRigidbody.MovePosition((Vector3)transform.position + direcAndDist * Time.deltaTime); //go ahead and move
+
+        else
+        {
+            characterRigidbody.MovePosition(hit.point);//otherwise, move to where the thing we hit was
+        }
     }
 
     /**
