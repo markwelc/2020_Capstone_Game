@@ -6,6 +6,7 @@ public class WeaponController : MonoBehaviour
 {
     protected Handgun handgun;
     protected Stick stick;
+    protected BigStick bigStick;
 
     protected string animationName;
     protected string animationNameSecondary; //the secondary attack
@@ -20,6 +21,7 @@ public class WeaponController : MonoBehaviour
     {
         handgun = this.GetComponentInChildren<Handgun>(true);
         stick = this.GetComponentInChildren<Stick>(true);
+        bigStick = this.GetComponentInChildren<BigStick>(true);
         animationName = null;
         //handgunActive = false;
         //stickActive = false;
@@ -35,6 +37,9 @@ public class WeaponController : MonoBehaviour
                 break;
             case "stick":
                 stick.useWeapon((string)null, out animation, out states, attackType, characterDamageModifier);
+                break;
+            case "bigStick":
+                bigStick.useWeapon((string)null, out animation, out states, attackType, characterDamageModifier);
                 break;
             default:
                 animation = null;
@@ -57,6 +62,9 @@ public class WeaponController : MonoBehaviour
         {
             case "stick":
                 stick.canDealDamage(weaponName, canDamage);
+                break;
+            case "bigStick":
+                bigStick.canDealDamage(weaponName, canDamage);
                 break;
             default:
                 // Nothing to be done here could be a gun where bullet always uses damage

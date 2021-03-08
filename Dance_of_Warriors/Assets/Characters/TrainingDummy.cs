@@ -423,7 +423,7 @@ public class TrainingDummy : Character
             // Doing random range to select the type they want
             // since it uses else for standard attack
             // this is just to lower the probability of a heavy attack
-                int weaponChoice = Random.Range(1, 3); //because this is the integer version, max is exclusive
+                int weaponChoice = Random.Range(1, 4); //because this is the integer version, max is exclusive
                 //Debug.Log("weaponChoice = " + weaponChoice);
                 useWeapons(weaponChoice, playerHealthManager.characterDamageModifier);
 
