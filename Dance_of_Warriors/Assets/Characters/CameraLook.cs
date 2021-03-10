@@ -33,6 +33,9 @@ public class CameraLook : MonoBehaviour
     public float aimTransitionSpeed = 10f;
     reticleController retController;
     private Image[] crossHairpieces;
+
+    private float xLookSensitivityScale = 1f;
+    private float yLookSensitivityScale = 1f;
     private void Awake()
     {
         cameraMain = Camera.main.transform;
@@ -84,6 +87,16 @@ public class CameraLook : MonoBehaviour
                 fovTransition(55);
             }
         }
+    }
+
+    public void setXLookScale(float xLookScale)
+    {
+        this.xLookSensitivityScale = xLookScale;
+    }
+
+    public void setYLookScale(float yLookScale)
+    {
+        this.yLookSensitivityScale = yLookScale;
     }
 
     //weapon recoil
@@ -138,8 +151,8 @@ public class CameraLook : MonoBehaviour
         Vector2 r = new Vector2(rotate.x, rotate.y);
 
         // Rotate with the max angle (200 looks good i think) and the sensitivity in each direction
-        cineCam.m_XAxis.Value += r.x * 200 * xLookSensitivity * Time.deltaTime;
-        cineCam.m_YAxis.Value += r.y * yLookSensitivity * Time.deltaTime;
+        cineCam.m_XAxis.Value += r.x * 200 * (xLookSensitivity * xLookSensitivityScale) * Time.deltaTime;
+        cineCam.m_YAxis.Value += r.y * (yLookSensitivity * yLookSensitivityScale) * Time.deltaTime;
     }
 
     private void zoomIn()

@@ -2,8 +2,10 @@
 using System;
 using UnityEngine;
 
+
 public class AudioManager : MonoBehaviour
 {
+    public AudioMixer fxMixer;
     public Sound[] sounds;
 
     
@@ -31,6 +33,7 @@ public class AudioManager : MonoBehaviour
         //find the correct sound
         Sound s = Array.Find(sounds, sound => sound.name == name);
         s.source = gameObject.AddComponent<AudioSource>();
+        s.source.outputAudioMixerGroup = fxMixer.FindMatchingGroups("Sounds FX")[0];
         s.source.playOnAwake = false;
         s.source.volume = s.volume;
         s.source.pitch = s.pitch;
