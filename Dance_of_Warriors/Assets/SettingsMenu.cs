@@ -80,9 +80,15 @@ public class SettingsMenu : MonoBehaviour
             camScript.setYLookScale(defaultYLookScale);
         }
 
+        // Setting false since we just changed the slider values and dont want sample sound player
         calledFX = false;
         calledBG = false;
     }
+
+    /**
+     * Set background music volume
+     * note you need to have the music sound mixer applied on audio source which take effect by this
+     */
     public void setBackgroundVolume(float volume)
     {
         // update player prefs
@@ -93,11 +99,14 @@ public class SettingsMenu : MonoBehaviour
 
         // want to be sure not to call with slider initialization
         if (calledBG)
-            StartCoroutine(playSampleSound(volume, keyBG));
+            StartCoroutine(playSampleSound(volume, keyBG)); // Start a coroutine to decide whether we should play a sample sound
         else
             calledBG = true;
     }
 
+    /**
+     * Exact thing as background but now only targetting sounds effects mixer group
+     */
     public void setSoundFXVolume(float volume)
     {
         // update player prefs
@@ -115,6 +124,7 @@ public class SettingsMenu : MonoBehaviour
 
     /**
      * Play a sample to show how the expected volume sounds
+     * but only if they have stuck at the same place for a sec
      */
     IEnumerator playSampleSound(float inVolume, string key)
     {
@@ -131,6 +141,7 @@ public class SettingsMenu : MonoBehaviour
             // Check key to be sure we play on right one
             if (key == keyBG)
             {   
+                // example is setup in mixer group
                 bgExample.PlayOneShot(bgExample.clip);
             }
             else if (key == keyFX)
@@ -143,10 +154,13 @@ public class SettingsMenu : MonoBehaviour
     /**
      * Mixer values work logarithmic not linear
      * this allows us to convert our '0' to 1 slider val to logarithmic
+     * note the '0' cant actually be zero needs to be like 0.0001
      */
     private float convertToLogarithmic(float val)
     {
         // turns in value -80 to 0 but on logarithmic scale
+        // this just allows the adjustments to be scaled
+        // even if you change slider to -80 to 0 it still isnt scaled appropriately
         return Mathf.Log10(val) * 20;
     }
 

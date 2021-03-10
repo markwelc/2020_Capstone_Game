@@ -17,7 +17,18 @@ public class PauseMenu : MonoBehaviour
 
     public loadLevel levelLoader;
 
-    public GameObject settingsMenu;
+    public GameObject regFirstSelect;
+    public GameObject altFirstSelect;
+
+    // Info items
+    [Header("Info Items")]
+    public GameObject infoPanel;
+    public GameObject[] infoScreens;
+    // 0 = general UI
+    // 1 = keyboard controls
+    // 2 = gamepad controls
+    // 3 = settings
+    // 4 = about
 
     private void Awake()
     {
@@ -55,7 +66,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
-        settingsMenu.SetActive(false);
+        infoPanel.SetActive(false); // assery info panel inactive just in case
         PauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         IsGamePaused = false;
@@ -96,14 +107,60 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    public void OpenSettings()
+    /**
+     * Opens info panel so the user can select which to see
+     * can see control configurations, about, and edit settings
+     */
+    public void viewInfo()
     {
-        settingsMenu.SetActive(true);
+        // This select isnt working
+        // this is really just for controller movement on that UI screem
+        // same for the one in disable func below
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(altFirstSelect);
+        
+        // Set panel active
+        infoPanel.SetActive(true);
+        
     }
 
-    public void CloseSettings()
+    /**
+     * Disable info panel called from back button
+     */
+    public void disableInfoScreen()
     {
-        settingsMenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(regFirstSelect);
+
+        // disable panel
+        infoPanel.SetActive(false);
+    }
+
+    /**
+     * Set a given info screen active
+     * 5 options
+     * overall
+     * keyboard config
+     * gamepad config
+     * settings 
+     * about
+     */
+    public void setInfoScreenActive(int idx)
+    {
+        // Given index from click
+        // only one can be active at a time
+        // enable given idx set all others inactive
+        for (int i = 0; i < infoScreens.Length; i++)
+        {
+            if (i == idx)
+            {
+                infoScreens[i].SetActive(true);
+            }
+            else
+            {
+                infoScreens[i].SetActive(false);
+            }
+        }
     }
 
 }

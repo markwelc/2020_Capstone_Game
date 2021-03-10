@@ -31,15 +31,20 @@ public class MainMenu : MonoBehaviour
         audioSource = this.GetComponent<AudioSource>();
     }
 
+    /**
+     * Play the game.
+     * Just plays sound here
+     * actual level loader is called from that script on click
+     */
     public void PlayGame()
     {
         audioSource.PlayOneShot(clickSound);
-
-        //Debug.Log("Playing Game --> Transfer to staging scene using async");
     }
 
-   
-
+    /**
+     * Opens info panel so the user can select which to see
+     * can see control configurations, about, and edit settings
+     */
     public void viewInfo()
     {
         // This select isnt working
@@ -55,24 +60,38 @@ public class MainMenu : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
+    /**
+     * Disable info panel called from back button
+     */
     public void disableInfoScreen()
     {
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(regFirstSelect);
 
+        // Play click
         if(audioSource.gameObject.activeSelf)
             audioSource.PlayOneShot(clickSound);
+
+        // set info active disable standard
         infoPanel.SetActive(false);
         this.gameObject.SetActive(true);
     }
 
+    /**
+     * Quit the application
+     * This has no effect in unity play mode
+     */
     public void quitApplication()
     {
         audioSource.PlayOneShot(clickSound);
-        Debug.Log("Application Closing...");
+        Debug.LogWarning("You are quitting the application");
         Application.Quit();
     }
 
+    /**
+     * Play sound when selecting button
+     * skip the first one since selects at start
+     */
     public void playOnSelectSound()
     {
         playCount++;
@@ -82,9 +101,21 @@ public class MainMenu : MonoBehaviour
             audioSource.PlayOneShot(selectSound);
     }
 
+    /**
+     * Set a given info screen active
+     * 5 options
+     * overall
+     * keyboard config
+     * gamepad config
+     * settings 
+     * about
+     */
     public void setInfoScreenActive(int idx)
     {
-        for(int i = 0; i < infoScreens.Length; i++)
+        // Given index from click
+        // only one can be active at a time
+        // enable given idx set all others inactive
+        for (int i = 0; i < infoScreens.Length; i++)
         {
             if(i == idx)
             {
