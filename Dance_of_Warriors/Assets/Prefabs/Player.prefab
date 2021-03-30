@@ -3238,7 +3238,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7799982222090102733}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.5, z: 1}
+  m_LocalPosition: {x: 0, y: 0.064, z: 0.146}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7799982222675758622}
@@ -3354,6 +3354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealthManager: {fileID: 0}
+  isDead: 0
   weaponAccess: {fileID: 7799982222580546501}
   gunsParent: {fileID: 7799982221614976456}
   gunsParentHand: {fileID: 2482881446977405287}
@@ -3900,7 +3901,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100016, guid: cc34ae6a7e465584aa9e4dcc48852048, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400016, guid: cc34ae6a7e465584aa9e4dcc48852048, type: 3}
       propertyPath: m_LocalPosition.x
