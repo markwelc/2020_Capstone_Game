@@ -138,7 +138,10 @@ public class TrainingDummy : Character
                     enemyState = 1;
                     agent.SetDestination(target.position);
                 }
-                transform.LookAt(target.position);
+                else if (distance < attackRadius && !dash)
+                {
+                    agent.ResetPath();
+                }
             }
             else
             {
