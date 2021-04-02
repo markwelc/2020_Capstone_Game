@@ -585,6 +585,9 @@ public class NewPlayer : Character
         // issprinting goes to blend tree which is updated with movement
         if (sprintAllowed(move))
         {
+            //turn off animation rigging for guns
+            if (getCurrentWeaponType() == 'g' && this.gameObject.layer == 8) //if we're holding a gun, turn off animations
+                toggleAnimRigging(false, true);
 
             isSprinting = true;
             anim.SetTrigger("isSprinting");
@@ -598,12 +601,17 @@ public class NewPlayer : Character
         // return to character to ensure conditions are still met
         return sprintAllowed(move);
     }
+
     protected override void endSprint()
     {
         if (isSprinting)
         {
             anim.SetTrigger("endSprint");
             isSprinting = false;
+
+            //turn animation rigging for guns back on
+            if (getCurrentWeaponType() == 'g' && this.gameObject.layer == 8)
+                toggleAnimRigging(true, true);
         }
     }
 

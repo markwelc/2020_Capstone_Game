@@ -424,7 +424,7 @@ public class Character : MonoBehaviour
     //are we allowed to use a tool?
     protected bool toolAllowed()
     {
-        bool toolPermits = toolActionState == actionState.inactive;
+        bool toolPermits = (toolActionState == actionState.inactive) && (dashActionState == actionState.inactive || dashActionState == actionState.cooldown) && (!isSprinting);
 
         return toolPermits;
     }
