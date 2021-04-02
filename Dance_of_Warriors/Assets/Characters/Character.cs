@@ -429,10 +429,27 @@ public class Character : MonoBehaviour
         return toolPermits;
     }
 
+    protected bool groundCheck()
+    {
+        // Just made it return since its either true or false
+        // 1.75f is pretty much just arbitary, i thought it looked good though
+        // only if ground layer
+        return Physics.Raycast(this.transform.position, -Vector3.up, 1.75f, 1 << LayerMask.NameToLayer("staticEnvironment"));
+    }
+
     //are we allowed to jump?
     protected bool jumpAllowed()
     {
         bool dashingPermits = ((dashActionState == actionState.inactive) || (dashActionState == actionState.cooldown));
+
+        if (isJumping)
+		{
+            jumpPossible = false;
+		}
+		else
+		{
+            jumpPossible = true;
+		}
 
         return dashingPermits && jumpPossible && !isBlocking;
     }

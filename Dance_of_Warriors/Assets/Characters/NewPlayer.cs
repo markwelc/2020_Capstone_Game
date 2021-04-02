@@ -152,7 +152,7 @@ public class NewPlayer : Character
         {
             // Okay so we know they are jumping and the courintine is finished
             // check for ground so we can start jump animation
-            if (GroundCheck())
+            if (groundCheck())
             {
                 // reset jump operations for next time and play animation
                 isJumping = false;
@@ -324,13 +324,6 @@ public class NewPlayer : Character
         characterRigidbody.velocity = Vector3.up * jumpForce;
     }
 
-    private bool GroundCheck()
-    {
-        // Just made it return since its either true or false
-        // 1.75f is pretty much just arbitary, i thought it looked good though
-        // only if ground layer
-        return Physics.Raycast(this.transform.position, -Vector3.up, 1.75f, 1 << LayerMask.NameToLayer("staticEnvironment"));
-    }
 
     /**
      * Player attempts to dash, initiate dash telegraph
