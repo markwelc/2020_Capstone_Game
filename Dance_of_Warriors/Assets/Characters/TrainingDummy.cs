@@ -98,8 +98,13 @@ public class TrainingDummy : Character
     private void Update()
     {
         // need this check because agent destroyed when dead
-        if(!isDead)
-            agent.speed = playerHealthManager.characterSpeed * 3.5f;
+        if (!isDead)
+        {
+            if (dash)
+                agent.speed = playerHealthManager.characterSpeed * dashSpeed[0];
+            else 
+                agent.speed = playerHealthManager.characterSpeed * 3.5f;
+        }
 
         distance = Vector3.Distance(target.position, transform.position);
         if (!isDead)
@@ -265,7 +270,7 @@ public class TrainingDummy : Character
         playerHealthManager.setInvincible(true);
         agent.speed = dashSpeed[0];
 
-        Invoke(nameof(ResetAttack), 0.4f); // 0.25 seems to work well for dodge
+        Invoke(nameof(ResetAttack), 0.25f); // 0.25 seems to work well for dodge
         // want to dodge left right back etc?
         // could change target location for the nav mesh 
         // apply that to move vector
