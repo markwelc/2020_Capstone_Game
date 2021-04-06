@@ -344,13 +344,13 @@ public class Character : MonoBehaviour
         {
             //action
             toolActionState++; //move to the next state
-            usingTool = toolStates[(int)toolActionState - 1]; //set dashing to the appropriate value
+            usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the appropriate value
         }
         else if (toolActionState == actionState.recovery && usingTool <= 0) //if we are recovering and need to go to the cool down
         {
             //recovery
             toolActionState++; //move to the next state
-            usingTool = toolStates[(int)toolActionState - 1]; //set using tool to the appropriate value
+            usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the appropriate value
 
             char toolType = getCurrentWeaponType();
             if (toolType == 'g' && this.gameObject.layer == 8)

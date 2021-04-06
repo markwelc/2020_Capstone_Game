@@ -221,6 +221,44 @@ public class NewPlayer : Character
         else
             movement *= speed;  //Move with speed
 
+        float runTargetAngle = 0;
+        //rotate the player for the diagonal running (if there is appropriate input)
+        if (move.y > 0.1 && move.x < -0.1 || move.y < -0.1 && move.x > 0.1)
+        {
+            //the player is moving diagonal, so rotate the player for running (left diagonal)
+            runTargetAngle = characterTransform.rotation.eulerAngles.y - 70;
+            if (runTargetAngle < 0)
+            {
+                runTargetAngle = runTargetAngle + 360;
+            }
+            characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, runTargetAngle, 0), 15 * Time.fixedDeltaTime);
+        }
+        else if (move.y > 0.1 && move.x > 0.1 || move.y < -0.1 && move.x < -0.1)
+        {
+            //the player is moving diagonal, so rotate the player for running (right diagonal)
+            runTargetAngle = characterTransform.rotation.eulerAngles.y + 70;
+            runTargetAngle = runTargetAngle % 360;
+            characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, runTargetAngle, 0), 15 * Time.fixedDeltaTime);
+        }
+        else if (move.x < -0.5)
+        {
+            //the player is moving diagonal, so rotate the player for strafe (left diagonal)
+            runTargetAngle = characterTransform.rotation.eulerAngles.y - 90;
+            if (runTargetAngle < 0)
+            {
+                runTargetAngle = runTargetAngle + 360;
+            }
+            characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, runTargetAngle, 0), 15 * Time.fixedDeltaTime);
+        }
+        else if (move.x > 0.5)
+        {
+            //the player is moving diagonal, so rotate the player for strafe (right diagonal)
+            runTargetAngle = characterTransform.rotation.eulerAngles.y + 90;
+            runTargetAngle = runTargetAngle % 360;
+            characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, runTargetAngle, 0), 15 * Time.fixedDeltaTime);
+        }
+
+
         anim.SetFloat("speed", move.y, 1f, Time.deltaTime * 10f);
         anim.SetFloat("turn", move.x, 1f, Time.deltaTime * 10f);
 
