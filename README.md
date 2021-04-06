@@ -1,6 +1,6 @@
 # 2020_Capstone_Game
 
-<center><h1>Dance of Warriors<h1></center>
+<center><h1 align="center">Dance of Warriors<h1></center>
 
 This is a 3D fighting game that is inspired by popular games with fighting mechanics that can feel like the player is dancing with their opponent at times. Such games include the Dark Souls series, the Witcher, Final Fantasy 15, Dragon Age: Inquisition, and Monster Hunter.
 <p>
