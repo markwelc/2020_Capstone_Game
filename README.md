@@ -8,4 +8,4 @@ Oftentimes in video games, a boss fight can feel like a dance: the player watche
 <p>
 With this game, we intend to explore the relationship between the player and their opponent through fighting mechanics. This exploration will be aided by background music for each fight and an enemy that moves in sync with that music.
 <p>
-More in-depth description of this game and its mechanics can be found in the [Desc](/Desc/description.md) folder
+More in-depth description of this game and its mechanics can be found in the "Desc" folder
