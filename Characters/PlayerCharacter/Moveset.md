@@ -146,35 +146,55 @@
 </ol>
 <p>
 <h3>Weapon system</h3>
-1.	There are four basic attack types (all standard)
-a.	Standard
-i.	This is the standard attack with the player’s current weapon
-ii.	Left-click
-iii.	Stamina cost determined by weapon (usually standard cost)
-b.	Special
-i.	The special attack provided by the weapon
-ii.	May or may not be simply a heavy attack
-iii.	Boring specials, such as a block, are possible (though I don’t know if we should do this)
-iv.	Either this is how you zoom in with ranged weapons, or you zoom in by pressing Z (I don’t know which we should do)
-v.	Right click
-vi.	Stamina cost determined by weapon (usually heavy cost)
-c.	Item
-i.	This is where grenades, powerups, health regen (? This might be important enough to dedicate its own button to), and any other item we can think of is used
-ii.	Q
-iii.	Stamina cost determined by item used (usually tiny cost)
-d.	Quick melee 
-i.	Quick and cheap way to deal small amount of damage
-ii.	Similar to Master Chief’s bash
-iii.	Can be used regardless of weapon equipped
-iv.	F
-v.	Tiny stamina cost
-2.	Main weapon can be cycled by pressing E
-a.	If the player has a lot of weapons to choose from (hopefully they do) then before the fight they can specify which ones they want to use for the fight
-3.	Item can be cycled by pressing R
-a.	Again, if there are a lot of options, the player can choose which ones he wants before the fight
-b.	We might want to reserve this key for reloading, not sure
-4.	Any attack should work at any time unless doing a dash or a dodge
-a.	Specifically, in mid-air and while running
-5.	Certain weapons could have ‘hidden specials’ if the weapon is used after a particular movement
-a.	For instance, using a weapon’s special immediately after stopping a jet run could cause the weapon’s special to be amplified, or completely different
-b.	I call them hidden specials, but they could be told to the player, I just didn’t think of a better name for them
+<ol>
+<li>There are four basic attack types (all standard)
+<ul>
+<li>Standard
+<ul>
+<li>This is the standard attack with the player’s current weapon
+<li>Left-click
+<li>Stamina cost determined by weapon (usually standard cost)
+</ul>
+<li>Special
+<ul>
+<li>The special attack provided by the weapon
+<li>May or may not be simply a heavy attack
+<li>Boring specials, such as a block, are possible (though I don’t know if we should do this)
+<li>Either this is how you zoom in with ranged weapons, or you zoom in by pressing Z (I don’t know which we should do)
+<li>Right click
+<li>Stamina cost determined by weapon (usually heavy cost)
+</ul>
+<li>Item
+<ul>
+<li>This is where grenades, powerups, health regen (? This might be important enough to dedicate its own button to), and any other item we can think of is used
+<li>Q
+<li>Stamina cost determined by item used (usually tiny cost)
+</ul>
+<li>Quick melee 
+<ul>
+<li>Quick and cheap way to deal small amount of damage
+<li>Similar to Master Chief’s bash
+<li>Can be used regardless of weapon equipped
+<li>F
+<li>Tiny stamina cost
+</ul>
+</ul>
+<li>Main weapon can be cycled by pressing E
+<ul>
+<li>If the player has a lot of weapons to choose from (hopefully they do) then before the fight they can specify which ones they want to use for the fight
+</ul>
+<li>Item can be cycled by pressing R
+<ul>
+<li>Again, if there are a lot of options, the player can choose which ones he wants before the fight
+<li>We might want to reserve this key for reloading, not sure
+</ul>
+<li>Any attack should work at any time unless doing a dash or a dodge
+<ul>
+<li>Specifically, in mid-air and while running
+</ul>
+<li>Certain weapons could have ‘hidden specials’ if the weapon is used after a particular movement
+<ul>
+<li>For instance, using a weapon’s special immediately after stopping a jet run could cause the weapon’s special to be amplified, or completely different
+<li>I call them hidden specials, but they could be told to the player, I just didn’t think of a better name for them
+</ul>
+</ol>
