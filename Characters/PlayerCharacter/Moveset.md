@@ -19,6 +19,7 @@
 <li>Standard
 <li>No stamina cost
 <li>B
+</ul>
 <li>Standard movement</li>
 <ul>
 <li>Forward, backward, left, right
