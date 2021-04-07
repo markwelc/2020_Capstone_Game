@@ -17,7 +17,7 @@ Our project's version of Unity is 2019.4.9f1<br>
 <br>
 Next, clone the repository here and open it in Unity:<br>
 <ul>
-<li>In Unity Hub, select the "ADD" button, then browse to the cloned repository on your machine.</li><br>
-<li>Once the project is added to Unity Hub, you can open it by double-clicking the project in Unity Hub.</li><br>
-<li>Once in Unity, select the right-facing arrow at the top-center of the screen to launch the game.</li><br>
+<li>In Unity Hub, select the "ADD" button, then browse to the cloned repository on your machine.</li>
+<li>Once the project is added to Unity Hub, you can open it by double-clicking the project in Unity Hub.</li>
+<li>Once in Unity, select the right-facing arrow at the top-center of the screen to launch the game.</li>
 </ul>
