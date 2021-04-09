@@ -83,7 +83,7 @@ public class Melee : WeaponController
     }
     private IEnumerator Swing()
     {
-        yield return new WaitForSeconds(0.45f);
+        yield return new WaitForSeconds(0.85f);
         FindObjectOfType<AudioManager>().Play(this.transform.gameObject, "swing");
     }
     private IEnumerator FastSwing()
