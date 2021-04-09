@@ -117,7 +117,8 @@ public class Character : MonoBehaviour
         handleAngle(); //decide where to face
         handleWeapons(); //decide when to use weapons
 
-        moveCharacter(movement);
+        if (characterRigidbody != null)
+            moveCharacter(movement);
         /*
         if (isJumping)
         {

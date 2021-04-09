@@ -223,7 +223,7 @@ public class NewPlayer : Character
 
         float runTargetAngle = 0;
         //rotate the player for the diagonal running (if there is appropriate input)
-        if (move.y > 0.1 && move.x < -0.1 || move.y < -0.1 && move.x > 0.1)
+        if (move.y > 0.1 && (move.x < -0.1 && move.x > -1.0) || move.y < -0.1 && (move.x > 0.1 && move.x < 1.0))
         {
             //the player is moving diagonal, so rotate the player for running (left diagonal)
             runTargetAngle = characterTransform.rotation.eulerAngles.y - 70;
@@ -233,7 +233,7 @@ public class NewPlayer : Character
             }
             characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, runTargetAngle, 0), 15 * Time.fixedDeltaTime);
         }
-        else if (move.y > 0.1 && move.x > 0.1 || move.y < -0.1 && move.x < -0.1)
+        else if (move.y > 0.1 && (move.x > 0.1 && move.x < 1.0) || move.y < -0.1 && (move.x < -0.1 && move.x > -1.0))
         {
             //the player is moving diagonal, so rotate the player for running (right diagonal)
             runTargetAngle = characterTransform.rotation.eulerAngles.y + 70;
