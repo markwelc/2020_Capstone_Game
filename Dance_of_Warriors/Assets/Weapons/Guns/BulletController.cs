@@ -47,7 +47,7 @@ public class BulletController : MonoBehaviour
         if (col.gameObject.tag != "enemyOverall")
         {
             //Debug.LogWarning(col.gameObject.name);
-            if (source != col)
+            if (source != col && col.gameObject.name != "player_entry_door")
             {
                 Destroy(this.gameObject);
             }

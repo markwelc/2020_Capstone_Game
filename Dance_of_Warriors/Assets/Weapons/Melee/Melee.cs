@@ -33,7 +33,7 @@ public class Melee : WeaponController
         //Debug.Log("LayerMask.LayerToName(other.gameObject.layer) = " + LayerMask.LayerToName(other.gameObject.layer));
         if(LayerMask.LayerToName(other.gameObject.layer) == "enemy" || LayerMask.LayerToName(other.gameObject.layer) == "player")
         {
-            if (canDamage)
+            if (canDamage && !checkSelf(other))
             {
                 Debug.Log("hit a character");
                 targetCharacter = getCharacterInParents(other.gameObject);
@@ -83,7 +83,7 @@ public class Melee : WeaponController
     }
     private IEnumerator Swing()
     {
-        yield return new WaitForSeconds(0.45f);
+        yield return new WaitForSeconds(0.85f);
         FindObjectOfType<AudioManager>().Play(this.transform.gameObject, "swing");
     }
     private IEnumerator FastSwing()
@@ -113,5 +113,16 @@ public class Melee : WeaponController
         
         this.canDamage = canDamage;
         
+    }
+
+    private bool checkSelf(Collider other)
+    {
+        Transform ourRoot = this.transform.root;
+        int ourLayer = ourRoot.gameObject.layer;
+
+        Transform otherRoot = other.transform.root;
+        int otherLayer = otherRoot.gameObject.layer;
+
+        return ourLayer == otherLayer;
     }
 }
