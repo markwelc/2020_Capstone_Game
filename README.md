@@ -22,3 +22,5 @@ Next, clone the repository here and open it in Unity:<br>
 <li>Once in Unity, select the right-facing arrow at the top-center of the screen to launch the game.</li>
 </ul>
 A built and working version of this game can be found at https://tremperb.itch.io/dance-of-warriors
+<p>
+<h3>Future planned work can be found in the "Desc" folder as well.</h3>
