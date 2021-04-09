@@ -114,7 +114,7 @@ public class NewPlayer : Character
 
         dashLength = new int[4];
         dashLength[0] = 0; //length of telegraph
-        dashLength[1] = 22; //length of action
+        dashLength[1] = 40; //length of action
         dashLength[2] = 0; //length of recovery
         dashLength[3] = 100; //length of dash cool down
 
@@ -557,6 +557,10 @@ public class NewPlayer : Character
         if (sprintAllowed(move))
         {
 
+            //turn off animation rigging for guns
+            if (getCurrentWeaponType() == 'g' && this.gameObject.layer == 8) //if we're holding a gun, turn off animations
+                toggleAnimRigging(false, true);
+
             isSprinting = true;
             anim.SetTrigger("isSprinting");
             anim.ResetTrigger("endSprint");
@@ -575,6 +579,10 @@ public class NewPlayer : Character
         {
             anim.SetTrigger("endSprint");
             isSprinting = false;
+
+            //turn animation rigging for guns back on
+            if (getCurrentWeaponType() == 'g' && this.gameObject.layer == 8)
+                toggleAnimRigging(true, true);
         }
     }
 
