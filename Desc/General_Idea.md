@@ -1,7 +1,7 @@
 <h3>General Description</h3>
 This game will be designed to emphasize the feeling of dancing when fighting in video games. It will take inspiration from Dark Souls, Monster Hunter, The Witcher 3, and Final Fantasy 15.<br>
 Very often in games fighting the boss can feel like dancing with it. The player carefully watches the bosses' every move and responds accordingly. The player must wait until the enemy is done attacking before attempting to attack the boss, themselves. The player can even get into the boss's rhythm.<br>
-<p>
+<p><p>
 This game will explore this relationship. We will build a combat system based on the characteristics outlined in Characteristics.md to produce something that evokes feelings similar to those evoked when dancing. The character will engage in a relationship with the boss and it will only be through an intimate understanding of, and respect for, the boss that the player will be able to defeat him.<br>
 There are three participants in this "dance:" the player, the player’s character, and the boss. This produces three relationships (though the relationship between the player and the boss is essentially identical to the relationship between the player’s character and the boss). In order to properly evoke a feeling of dancing, each relationship must be smooth.<br>
 The first relationship is between the player and his character. The controls must be easy and intuitive while the character’s response is immediate, provides adequate feedback, shows what is happening, and allows for a flow into the next move.<br>
