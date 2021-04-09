@@ -114,7 +114,7 @@ public class NewPlayer : Character
 
         dashLength = new int[4];
         dashLength[0] = 0; //length of telegraph
-        dashLength[1] = 22; //length of action
+        dashLength[1] = 40; //length of action
         dashLength[2] = 0; //length of recovery
         dashLength[3] = 100; //length of dash cool down
 

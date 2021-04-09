@@ -336,7 +336,7 @@ public class Character : MonoBehaviour
             if (toolType == 'g' && toolUsed != 1 && this.gameObject.layer == 8)
             {
                 toggleAnimRigging(false, true);
-                Debug.Log("setting rig.weight to zero cause we've got to wait " + (toolStates[1] + toolStates[2]) + " units of time before we can use it again");
+                //Debug.Log("setting rig.weight to zero cause we've got to wait " + (toolStates[1] + toolStates[2]) + " units of time before we can use it again");
             }
             toolUsed = 0; //we're done with this, set it up for next time.
         }
