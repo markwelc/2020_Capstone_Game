@@ -88,4 +88,16 @@ public class Guns : WeaponController
             myC.AddRecoil();
         //}
     }
+
+
+    /*
+     * This function is called when the object that this script is attached to is deactivated
+     * Thus, when switching from a gun this script is called
+     */
+    void OnDisable()
+    {
+        //if we were in the middle of reloading, just undo all our progress
+        if (reloading)
+            reloading = false;
+    }
 }

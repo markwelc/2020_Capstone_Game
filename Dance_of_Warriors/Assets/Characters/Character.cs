@@ -337,7 +337,7 @@ public class Character : MonoBehaviour
             if (toolType == 'g' && toolUsed != 1 && this.gameObject.layer == 8)
             {
                 toggleAnimRigging(false, true);
-                Debug.Log("setting rig.weight to zero cause we've got to wait " + (toolStates[1] + toolStates[2]) + " units of time before we can use it again");
+                //Debug.Log("setting rig.weight to zero cause we've got to wait " + (toolStates[1] + toolStates[2]) + " units of time before we can use it again");
             }
             toolUsed = 0; //we're done with this, set it up for next time.
         }
@@ -389,12 +389,12 @@ public class Character : MonoBehaviour
         char toolType = getCurrentWeaponType();
         if (toolType == 'g' && this.gameObject.layer == 8)
         {
-            Debug.Log("turning on anim rigging");
+            //Debug.Log("turning on anim rigging");
             toggleAnimRigging(true, false);
         }
         else
         {
-            Debug.Log("turning off anim rigging");
+            //Debug.Log("turning off anim rigging");
             toggleAnimRigging(false, false);
         }
     }
@@ -425,7 +425,7 @@ public class Character : MonoBehaviour
     //are we allowed to use a tool?
     protected bool toolAllowed()
     {
-        bool toolPermits = toolActionState == actionState.inactive;
+        bool toolPermits = (toolActionState == actionState.inactive) && (dashActionState == actionState.inactive || dashActionState == actionState.cooldown) && (!isSprinting);
 
         return toolPermits;
     }
