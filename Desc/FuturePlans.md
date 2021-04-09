@@ -5,7 +5,7 @@
 <li>Path of Power, Path of Fame, Path of Honor game branches</li>
 <li>Unique bosses/enemies for each path</li>
 <ul>
-<li>unique movesets and theme music for each boss</li>
+<li>Unique movesets and theme music for each boss</li>
 </ul>
 <li>Implement each game item as an inventory item</li>
 <li>Add character progression</li>
@@ -16,8 +16,10 @@
 </ul>
 <li>Vendor(s) in staging area of game</li>
 <ul>
-<li>armor/weapons vendor</li>
-<li>healing/use item vendor</li>
+<li>Armor/weapons vendor</li>
+<li>Healing/use item vendor</li>
 </ul>
 <li>Change staging area to reflect the three different paths of the game</li>
+<li>Custom animations for each character</li>
+<li>Fine tune character syncronization with fight music</li>
 </ul>
