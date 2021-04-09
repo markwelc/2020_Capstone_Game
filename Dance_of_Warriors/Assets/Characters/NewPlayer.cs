@@ -221,6 +221,7 @@ public class NewPlayer : Character
         else
             movement *= speed;  //Move with speed
 
+        /*
         float runTargetAngle = 0;
         //rotate the player for the diagonal running (if there is appropriate input)
         if (move.y > 0.1 && (move.x < -0.1 && move.x > -1.0) || move.y < -0.1 && (move.x > 0.1 && move.x < 1.0))
@@ -257,6 +258,7 @@ public class NewPlayer : Character
             runTargetAngle = runTargetAngle % 360;
             characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, runTargetAngle, 0), 15 * Time.fixedDeltaTime);
         }
+        */
 
 
         anim.SetFloat("speed", move.y, 1f, Time.deltaTime * 10f);
@@ -384,6 +386,7 @@ public class NewPlayer : Character
                 //Debug.Log("y: " + move.y + "x: " + move.x);
             }
 
+            /*
             //rotate the player for the diagonal forward dashes (if there is appropriate input)
             if (move.y > 0.1 && move.x < -0.1 || move.y < -0.1 && move.x > 0.1)
             {
@@ -409,6 +412,7 @@ public class NewPlayer : Character
                 //Debug.Log("transform is: " + characterTransform.rotation);
                 //Debug.Log("y: " + move.y + "x: " + move.x);
             }
+            */
 
 
             movement = Vector3.ProjectOnPlane(cameraMain.forward, Vector3.up) * move.y + cameraMain.right * move.x; //figure out which direction to dash in
