@@ -13,7 +13,7 @@
 <li>Can't tell that animations are syncronized to music</li>
 <li>Limb damage mechanic is not noticable/prominent enough</li>
 </ol>
-<h4>good stuff</h4>
+<h4>Good stuff</h4>
 <ol>
 <li>Jumping breaks game less</li>
 <li>Character's head faces player's reticle</li>
