@@ -388,12 +388,12 @@ public class Character : MonoBehaviour
         char toolType = getCurrentWeaponType();
         if (toolType == 'g' && this.gameObject.layer == 8)
         {
-            Debug.Log("turning on anim rigging");
+            //Debug.Log("turning on anim rigging");
             toggleAnimRigging(true, false);
         }
         else
         {
-            Debug.Log("turning off anim rigging");
+            //Debug.Log("turning off anim rigging");
             toggleAnimRigging(false, false);
         }
     }
