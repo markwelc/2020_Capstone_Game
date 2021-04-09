@@ -152,7 +152,7 @@ public class NewPlayer : Character
         {
             // Okay so we know they are jumping and the courintine is finished
             // check for ground so we can start jump animation
-            if (GroundCheck())
+            if (groundCheck())
             {
                 // reset jump operations for next time and play animation
                 isJumping = false;
@@ -220,6 +220,8 @@ public class NewPlayer : Character
             movement *= speed / 2;
         else
             movement *= speed;  //Move with speed
+
+
 
         anim.SetFloat("speed", move.y, 1f, Time.deltaTime * 10f);
         anim.SetFloat("turn", move.x, 1f, Time.deltaTime * 10f);
@@ -324,13 +326,6 @@ public class NewPlayer : Character
         characterRigidbody.velocity = Vector3.up * jumpForce;
     }
 
-    private bool GroundCheck()
-    {
-        // Just made it return since its either true or false
-        // 1.75f is pretty much just arbitary, i thought it looked good though
-        // only if ground layer
-        return Physics.Raycast(this.transform.position, -Vector3.up, 1.75f, 1 << LayerMask.NameToLayer("staticEnvironment"));
-    }
 
     /**
      * Player attempts to dash, initiate dash telegraph
@@ -353,31 +348,7 @@ public class NewPlayer : Character
                 //Debug.Log("y: " + move.y + "x: " + move.x);
             }
 
-            //rotate the player for the diagonal forward dashes (if there is appropriate input)
-            if (move.y > 0.1 && move.x < -0.1 || move.y < -0.1 && move.x > 0.1)
-            {
-                //the player is moving diagonal, so rotate the player for the dash (left diagonal)
-                //characterTransform.rotation = Quaternion.Euler(0, -45, 0);
-                myTargetAngle = characterTransform.rotation.eulerAngles.y - 70;
-                if (myTargetAngle < 0)
-                {
-                    myTargetAngle = myTargetAngle + 360;
-                }
-                //Debug.Log("Angle: " + myTargetAngle);
-                characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, myTargetAngle, 0), 15 * Time.fixedDeltaTime);
-                //Debug.Log("transform is: " + characterTransform.rotation);
-                //Debug.Log("y: " + move.y + "x: " + move.x);
-            }
-            else if (move.y > 0.1 && move.x > 0.1 || move.y < -0.1 && move.x < -0.1)
-            {
-                //the player is moving diagonal, so rotate the player for the dash (right diagonal)
-                myTargetAngle = characterTransform.rotation.eulerAngles.y + 70;
-                myTargetAngle = myTargetAngle % 360;
-                //Debug.Log("Angle: " + myTargetAngle);
-                characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.Euler(0, myTargetAngle, 0), 15 * Time.fixedDeltaTime);
-                //Debug.Log("transform is: " + characterTransform.rotation);
-                //Debug.Log("y: " + move.y + "x: " + move.x);
-            }
+            
 
 
             movement = Vector3.ProjectOnPlane(cameraMain.forward, Vector3.up) * move.y + cameraMain.right * move.x; //figure out which direction to dash in

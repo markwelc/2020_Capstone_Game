@@ -117,7 +117,7 @@ public class Character : MonoBehaviour
         handleAngle(); //decide where to face
         handleWeapons(); //decide when to use weapons
 
-        if(characterRigidbody != null)
+        if (characterRigidbody != null)
             moveCharacter(movement);
         /*
         if (isJumping)
@@ -345,13 +345,13 @@ public class Character : MonoBehaviour
         {
             //action
             toolActionState++; //move to the next state
-            usingTool = toolStates[(int)toolActionState - 1]; //set dashing to the appropriate value
+            usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the appropriate value
         }
         else if (toolActionState == actionState.recovery && usingTool <= 0) //if we are recovering and need to go to the cool down
         {
             //recovery
             toolActionState++; //move to the next state
-            usingTool = toolStates[(int)toolActionState - 1]; //set using tool to the appropriate value
+            usingTool = toolStates[(int)toolActionState - 1]; //set usingTool to the appropriate value
 
             char toolType = getCurrentWeaponType();
             if (toolType == 'g' && this.gameObject.layer == 8)
@@ -430,10 +430,27 @@ public class Character : MonoBehaviour
         return toolPermits;
     }
 
+    protected bool groundCheck()
+    {
+        // Just made it return since its either true or false
+        // 1.75f is pretty much just arbitary, i thought it looked good though
+        // only if ground layer
+        return Physics.Raycast(this.transform.position, -Vector3.up, 1.75f, 1 << LayerMask.NameToLayer("staticEnvironment"));
+    }
+
     //are we allowed to jump?
     protected bool jumpAllowed()
     {
         bool dashingPermits = ((dashActionState == actionState.inactive) || (dashActionState == actionState.cooldown));
+
+        if (isJumping)
+		{
+            jumpPossible = false;
+		}
+		else
+		{
+            jumpPossible = true;
+		}
 
         return dashingPermits && jumpPossible && !isBlocking;
     }
