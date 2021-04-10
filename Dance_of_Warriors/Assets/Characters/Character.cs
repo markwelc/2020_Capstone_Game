@@ -49,6 +49,7 @@ public class Character : MonoBehaviour
 
     protected actionState toolActionState;
     protected int[] toolStates; //length of each phase
+    protected int[] damageStates;
     protected int usingTool; //keep track of where we are in an element of toolStates
     protected int toolUsed; //keeps track of which tool is being used (0 means no tool)
 
@@ -65,6 +66,8 @@ public class Character : MonoBehaviour
     [SerializeField] public Collider[] weaponColliders;
     protected float stamina;
     protected float initStamina;
+    private bool isAttacking;
+    private int currentAttackState = 0;
     //public float characterDamageModifier; // get the current damage modifier from the health manager
 
     // Start is called before the first frame update
@@ -140,6 +143,11 @@ public class Character : MonoBehaviour
         // made in character in case we want to apply to enemy later on
         handleSprint();
         handleStamina();
+
+        if (isAttacking)
+        {
+            canDealDamage();
+        }
 
     }
 
@@ -268,16 +276,18 @@ public class Character : MonoBehaviour
 
         string animation;
         int[] states;
+        currentAttackState = 0;
         weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states, attackType, characterDamageModifier);
         weaponAccess.canDealDamage(availableWeapons[equippedWeapon], true);
-
+       
         if (animation != null)
         {
             anim.SetTrigger(animation); //start the animation
         }
         toolStates = states;
-
-
+        damageStates = states;
+        Debug.Log("STates: " + states[0]);
+        isAttacking = true;
         // Get how long the clip is so it only does ddamage while attacking
         float time = -1;
         RuntimeAnimatorController ac = anim.runtimeAnimatorController;    //Get Animator controller
@@ -294,8 +304,33 @@ public class Character : MonoBehaviour
             // start courintine when done can no longer deal damage
             StartCoroutine(WaitForAttackComplete(time));
         }
+    }
 
-
+    private void canDealDamage()
+    {
+        if (this.gameObject.layer == 8)
+        {
+            Debug.LogWarning(currentAttackState);
+            damageStates[currentAttackState]--;
+            if (damageStates[0] > 0)
+            {
+                Debug.LogWarning("in start");
+                weaponAccess.canDealDamage(availableWeapons[equippedWeapon], false);
+            }
+            else if (damageStates[1] > 0)
+            {
+                Debug.LogWarning("in attack");
+                currentAttackState = 1;
+                weaponAccess.canDealDamage(availableWeapons[equippedWeapon], true);
+            }
+            else
+            {
+                Debug.LogWarning("Current state val: " + damageStates[currentAttackState]);
+                currentAttackState = 0;
+                isAttacking = false;
+                weaponAccess.canDealDamage(availableWeapons[equippedWeapon], false);
+            }
+        }
     }
 
     private IEnumerator WaitForAttackComplete(float waitTime)

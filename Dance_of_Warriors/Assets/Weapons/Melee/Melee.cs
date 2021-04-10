@@ -20,9 +20,21 @@ public class Melee : WeaponController
             states = weaponStatesSecondary;
             StartCoroutine("Swing");
         }
-        else
+        else if(attackType == 1)
         {
             animation = animationName;
+            states = weaponStates;
+            StartCoroutine("FastSwing");
+        }
+        else if(attackType == 3)
+        {
+            animation = animationNameUniqueOne;
+            states = weaponStatesUniqueOne;
+            StartCoroutine("FastSwing");
+        }
+        else
+        {
+            animation = animationNameUniqueTwo;
             states = weaponStates;
             StartCoroutine("FastSwing");
         }

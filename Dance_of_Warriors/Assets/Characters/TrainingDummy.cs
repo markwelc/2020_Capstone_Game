@@ -97,6 +97,8 @@ public class TrainingDummy : Character
     // Update is called once per frame
     private void Update()
     {
+        distance = Vector3.Distance(target.position, transform.position);
+
         // need this check because agent destroyed when dead
         if (!isDead)
         {
@@ -104,11 +106,8 @@ public class TrainingDummy : Character
                 agent.speed = playerHealthManager.characterSpeed * dashSpeed[0];
             else 
                 agent.speed = playerHealthManager.characterSpeed * 3.5f;
-        }
 
-        distance = Vector3.Distance(target.position, transform.position);
-        if (!isDead)
-        {
+            // Check beat
             checkBeat();
             if (targetPlayer.isDead && !playerDefeatedCalled)
             {
@@ -124,6 +123,18 @@ public class TrainingDummy : Character
 
 
         
+    }
+
+    /**
+     * Late update to get AI current speed for animator
+     */
+    private void LateUpdate()
+    {
+        if (!isDead)
+        {
+            float currentSpeed = this.agent.velocity.magnitude;
+            anim.SetFloat("turn", agent.velocity.normalized.y);
+        }
     }
 
 
@@ -143,7 +154,7 @@ public class TrainingDummy : Character
                     enemyState = 1;
                     agent.SetDestination(target.position);
                 }
-                else if (distance < attackRadius && !dash)
+                else if (distance < attackRadius &&  !dash)
                 {
                     agent.ResetPath();
                 }
@@ -158,30 +169,24 @@ public class TrainingDummy : Character
     }
 
     /**
+     * Handle weapon access, called in character update
+     * if the distance is less than attack radius the enemy can attack
+     */
+    protected override void handleWeapons()
+    {
+        if (distance <= attackRadius)
+        {
+            enemyState = 2;
+        }
+    }
+
+    /**
      * This checks based on our music analyzer class
      * if all cases are satisified an on beat action is possible
      * can then call on beat action function to select one approprite
      */
     void checkBeat()
     {
-        //// Loop in 4 steps
-        //beatCountFull = musicAnalyzer.beatCountFull % 4;
-
-        //// on beat divded by 8 to get our 4 steps
-        //for (int i = 0; i < onBeatD8.Length; i++)
-        //{
-        //    // 3 cases
-        //    // is timer greater than interval
-        //    // is it a full beat
-        //    // is the ccount equal to that in question
-        //    if (musicAnalyzer.beatD8 && beatCountFull == onFullBeat && musicAnalyzer.beatCountD8 % 8 == onBeatD8[i])
-        //    {
-        //        //Debug.Log("Do move");
-        //        // can do something
-        //        onBeatAction();
-        //    }
-        //}
-
         bool takeAction = false;
 
         for (int i = 0; i < active32ndNotes.Length && !takeAction; i++) //go through all the 32nd notes that we do something on
@@ -246,6 +251,39 @@ public class TrainingDummy : Character
 
     }
 
+    /**
+     * This will be called on beat.
+     * They are in range so what can they do?
+     */
+    private void selectInRangeAction()
+    {
+        //chase the player
+        agent.SetDestination(transform.position);
+
+        //look at the player so it doesn't look dumb
+        transform.LookAt(target);
+
+        if (!alreadyAttacked)
+        {
+            int rand = Random.Range(1, numOfInRangeActions - 1); // just picking a random for now. can fine tune later
+            alreadyAttacked = true;
+            switch (rand)
+            {
+                case 1:
+                    AttackPlayer();
+                    break;
+                case 2:
+                    Block();
+                    break;
+                default:
+                    break;
+            }
+
+
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }
+    }
+
     void shoot()
     {
 
@@ -276,51 +314,6 @@ public class TrainingDummy : Character
         // apply that to move vector
         // honestly possible just being able to get the move pos from the agent set destination may be best
         // than we can control everything manually and do what we want instead of just relying on nav mesh
-    }
-
-    /**
-     * This will be called on beat.
-     * They are in range so what can they do?
-     */
-    private void selectInRangeAction()
-    {
-        //chase the player
-        agent.SetDestination(transform.position);
-
-        //look at the player so it doesn't look dumb
-        transform.LookAt(target);
-
-        if (!alreadyAttacked)
-        {
-            int rand = Random.Range(1, numOfInRangeActions + 1); // just picking a random for now. can fine tune later
-            alreadyAttacked = true;
-            switch (rand)
-            {
-                case 1:
-                    AttackPlayer();
-                    break;
-                case 2:
-                    Block();
-                    break;
-                default:
-                    break;
-            }
-
-            
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
-        }
-    }
-
-    /**
-     * They are in range
-     * set state to notify
-     */
-    protected override void handleWeapons()
-    {
-        if (distance <= attackRadius)
-        {
-            enemyState = 2;
-        }
     }
 
     /**
@@ -431,7 +424,7 @@ public class TrainingDummy : Character
             // Doing random range to select the type they want
             // since it uses else for standard attack
             // this is just to lower the probability of a heavy attack
-                int weaponChoice = Random.Range(1, 3); //because this is the integer version, max is exclusive
+                int weaponChoice = Random.Range(3, 5); //because this is the integer version, max is exclusive
                 //Debug.Log("weaponChoice = " + weaponChoice);
                 useWeapons(weaponChoice, playerHealthManager.characterDamageModifier);
 
