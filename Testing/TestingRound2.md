@@ -11,6 +11,7 @@
 <li>Animations feel "gummy"</li>
 <li>Lighting might need a seizure warning</li>
 <li>Can't tell that animations are syncronized to music</li>
+<li>Music doesn't feel appropriate/feels too "intense" for current boss fight</li>
 <li>Limb damage mechanic is not noticable/prominent enough</li>
 </ol>
 <h4>Good stuff</h4>
