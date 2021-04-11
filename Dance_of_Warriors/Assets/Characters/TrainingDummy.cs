@@ -284,6 +284,10 @@ public class TrainingDummy : Character
         }
     }
 
+    /**
+     * Shoot
+     * Experimental not implemented currently
+     */
     void shoot()
     {
 
@@ -301,6 +305,9 @@ public class TrainingDummy : Character
         }
     }
 
+    /**
+     * Make enemy dash
+     */
     void initDashForward()
     {
         anim.SetTrigger("isDashing");
@@ -358,6 +365,9 @@ public class TrainingDummy : Character
             walkPointSet = true;
     }
 
+    /**
+     * Initialize block anim and set invincible for one hit
+     */
     private void Block()
     {
             anim.SetTrigger("isBlocking");
@@ -411,30 +421,18 @@ public class TrainingDummy : Character
      */
     private void AttackPlayer()
     {
-        //Debug.Log("Attacking Player");
-        //if (equippedWeapon != 1)
-            //cycleWeapon();
 
-        // if character has not already attacked, throw a projectile at them
-        
-       
-           // be sure they actually have access
-            if (weaponAccess != null)
-            {
+        // be sure they actually have access
+        if (weaponAccess != null)
+        {
             // Doing random range to select the type they want
             // since it uses else for standard attack
             // this is just to lower the probability of a heavy attack
-                int weaponChoice = Random.Range(3, 5); //because this is the integer version, max is exclusive
-                //Debug.Log("weaponChoice = " + weaponChoice);
-                useWeapons(weaponChoice, playerHealthManager.characterDamageModifier);
+            int weaponChoice = Random.Range(3, 5); //because this is the integer version, max is exclusive
+                                                   //Debug.Log("weaponChoice = " + weaponChoice);
+            useWeapons(weaponChoice, playerHealthManager.characterDamageModifier);
 
-            }
-            // Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            // rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            // rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-            //alreadyAttacked = true;
-          //  Invoke(nameof(ResetAttack), timeBetweenAttacks);
-        //}
+        }
     }
 
     // resets the alreadyAttacked variable used in AttackPlayer()

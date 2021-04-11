@@ -15,6 +15,8 @@ public class WeaponController : MonoBehaviour
     protected int[] weaponStates;
     protected int[] weaponStatesSecondary;
     protected int[] weaponStatesUniqueOne;
+    protected int[] weaponStatesUniqueTwo;
+
 
     //create an array to hold four values
     //in handgun.cs AND stick.cs, set those four values

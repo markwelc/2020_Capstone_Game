@@ -2668,6 +2668,7 @@ GameObject:
   - component: {fileID: 4419596013585527168}
   - component: {fileID: 6989150461705253246}
   - component: {fileID: 6989150461705253247}
+  - component: {fileID: 2803747825169757976}
   m_Layer: 8
   m_Name: RIGID - Vanguard Player
   m_TagString: Untagged
@@ -2813,6 +2814,18 @@ MonoBehaviour:
   - rig: {fileID: 7799982222733940123}
     active: 1
   m_Effectors: []
+--- !u!114 &2803747825169757976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6989150461705253184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 211fe6d4fd90c7c4ebbfdabe8f1d5c96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7084571751229154660
 GameObject:
   m_ObjectHideFlags: 0

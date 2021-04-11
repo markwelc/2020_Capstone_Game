@@ -25,10 +25,15 @@ public class Stick : Melee
 
         weaponStatesUniqueOne = new int[4];
         weaponStatesUniqueOne[0] = 5;
-        weaponStatesUniqueOne[1] = 4;
-        weaponStatesUniqueOne[2] = 3;
-        weaponStatesUniqueOne[3] = 2;
+        weaponStatesUniqueOne[1] = 5;
+        weaponStatesUniqueOne[2] = 5;
+        weaponStatesUniqueOne[3] = 5;
 
+        weaponStatesUniqueTwo = new int[4];
+        weaponStatesUniqueTwo[0] = 5;
+        weaponStatesUniqueTwo[1] = 5;
+        weaponStatesUniqueTwo[2] = 5;
+        weaponStatesUniqueTwo[3] = 5;
 
     }
 }

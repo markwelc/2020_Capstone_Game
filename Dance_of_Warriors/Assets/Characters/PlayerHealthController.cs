@@ -14,7 +14,7 @@ public class PlayerHealthController : MonoBehaviour
     // Initialize limbHealth
     // Each limb has a health variable and bool to determine whether it is usable
     // Usability reflects what it should do when its been damaged all the way
-    [SerializeField] private float initialLimbHealth = 40f;
+    [SerializeField] private float initialLimbHealth = 10f;
     protected float rArmHealth;
     public bool rArmUsability;
     protected float lArmHealth;
