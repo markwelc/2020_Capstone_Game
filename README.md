@@ -9,6 +9,10 @@ Oftentimes in video games, a boss fight can feel like a dance: the player watche
 With this game, we intend to explore the relationship between the player and their opponent through fighting mechanics. This exploration will be aided by background music for each fight and an enemy that moves in sync with that music.
 <p>
 More in-depth description of this game and its mechanics can be found in the "Desc" folder
+<p><p>
+Future planned work can be found in the "Desc" folder as well.
+<p><p>
+For testing documentation, look in the "Testing" folder.
 <p>
 <h3>Want to check out the project? Here's how:</h3>
 <p>
@@ -22,7 +26,3 @@ Next, clone the repository here and open it in Unity:<br>
 <li>Once in Unity, select the right-facing arrow at the top-center of the screen to launch the game.</li>
 </ul>
 A built and working version of this game can be found at https://tremperb.itch.io/dance-of-warriors
-<p><p>
-Future planned work can be found in the "Desc" folder as well.
-<p><p>
-For testing documentation, look in the "Testing" folder.
