@@ -19,7 +19,7 @@ public class NewPlayer : Character
 
     [SerializeField] private Vector3 lookOffset; //this is subtracted from camera position and then the character always looks in the direction from this point to itself
     [SerializeField] private float smoother; //this will slow down the speed at which the player looks toward where the camera's looking (the lower the value, the slower the movement)
-    [SerializeField] private bool useFreeRotation;
+    [SerializeField] private bool useFreeRotation; //determines whether moving the camera while the player's character isn't walking around should rotate the character
 
     [SerializeField] private LayerMask playerLayer;
 
@@ -181,10 +181,6 @@ public class NewPlayer : Character
         {
             dashingMovement();
         }
-        //else if(sprintActionState != actionState.inactive)
-        //{
-        //    sprintingMovement();
-        //}
         else //no special kind of movement
         {
             standardMovement();
@@ -403,6 +399,9 @@ public class NewPlayer : Character
         FindObjectOfType<AudioManager>().Play(GameObject.Find("Player"), "dash");
     }
 
+    /**
+     * move through all the dash action states, toggling certain animations and changing speeds accordingly
+     */
     private void dashingMovement()
     {
         movement = dashVector; //set direction and speed to whatever it was in the previous function call
@@ -465,6 +464,10 @@ public class NewPlayer : Character
         }
     }
 
+    /**
+     * I'm honestly not sure what's going on with this function.
+     * It goes against what the handleX functions usually do and seems to try to just start moving through the actions states if we're already using a tool
+     */
     protected override void handleWeapons()
     {
         if (toolActionState != actionState.inactive)
@@ -473,6 +476,12 @@ public class NewPlayer : Character
         }
     }
 
+    /**
+     * There are two camera modes.
+     * In the first mode, while standing still, looking around will not change which way the player's avatar is facing, allowing the camera to look into the character's face.
+     * In the other, while standing still, looking around will still cause the player's avatar to rotate.
+     * This function switches between the two
+     */
     private void changeViewMode()
     {
         useFreeRotation = !useFreeRotation;
@@ -598,6 +607,7 @@ public class NewPlayer : Character
         // return to character to ensure conditions are still met
         return sprintAllowed(move);
     }
+
     protected override void endSprint()
     {
         if (isSprinting)

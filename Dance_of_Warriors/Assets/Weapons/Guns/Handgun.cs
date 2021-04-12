@@ -7,6 +7,9 @@ public class Handgun : Guns
     //stuff is going to go here eventually
     //this will be where stuff like inaccuracy, telegraph time, and recover time will be saved
     
+    /**
+     * initializes stuff like the animation names, the action state lengths, and the ammo capacity
+     */
     protected override void Start()
     {
         animationName = null;

@@ -6,11 +6,11 @@ public class BulletController : MonoBehaviour
 {
     private Rigidbody bulletRigidbody;
     
-    protected float speed;
-    public float damage;
-    protected float lifespan;
+    protected float speed; //the speed of the bullet
+    public float damage; //the damage of the bullet
+    protected float lifespan; //how long until the bullet vanishes
 
-    public Collider source;
+    public Collider source; //the guy that shot the bullet
     private Character targetCharacter;
 
     // Start is called before the first frame update
@@ -27,6 +27,11 @@ public class BulletController : MonoBehaviour
     }
 
 
+    /**
+     * move the bullet forward at the correct speed
+     * use raycasting method to be sure to not go through things
+     * gravity and bullet drop are not handled here, the unity engine handles those
+     */
     void moveBullet()
     {
 
@@ -42,17 +47,18 @@ public class BulletController : MonoBehaviour
         }
     }
 
+    /**
+     * When we hit something, if it's a character, tell that character to take damage
+     * also plays a sound
+     */
     void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag != "enemyOverall")
         {
-            //Debug.LogWarning(col.gameObject.name);
             if (source != col)
             {
                 Destroy(this.gameObject);
             }
-            //Debug.Log("source = " + source);
-            //Debug.Log("col = =" + col);
 
             if (LayerMask.LayerToName(col.gameObject.layer) == "enemy" || LayerMask.LayerToName(col.gameObject.layer) == "player")
             {
@@ -66,5 +72,6 @@ public class BulletController : MonoBehaviour
                 }
             }
         }
+
     }
 }

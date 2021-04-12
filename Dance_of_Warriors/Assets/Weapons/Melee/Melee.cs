@@ -12,6 +12,9 @@ public class Melee : WeaponController
     protected Character targetCharacter; //used to fiture out what to actually damage
     private bool canDamage = false;
 
+    /**
+     * sets the animation name and the lengths of the action states
+     */
     public override void useWeapon(string weaponName, out string animation, out int[] states, int attackType, float characterDamageModifier)
     {
         if (attackType == 2)
@@ -28,6 +31,10 @@ public class Melee : WeaponController
         }
     }
 
+    /**
+     * runs whenever the weapon hits someone
+     * deals mainly with damage and audio
+     */
     protected void OnTriggerEnter(Collider other)
     {
         //Debug.Log("LayerMask.LayerToName(other.gameObject.layer) = " + LayerMask.LayerToName(other.gameObject.layer));

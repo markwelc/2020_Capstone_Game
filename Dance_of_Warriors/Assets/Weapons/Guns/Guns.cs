@@ -18,6 +18,11 @@ public class Guns : WeaponController
 
     //add limited magazines?
 
+
+    /**
+     * tries to fire the gun, or sets animation and action state lengths if swinging it.
+     * It won't be able to fire the gun if there aren't bullets left or if we're reloading
+     */
     public override void useWeapon(string weaponName, out string animation, out int[] states, int attackType, float characterDamageModifier)
     {
         if (attackType == 2)
@@ -68,7 +73,9 @@ public class Guns : WeaponController
     }
 
 
-
+    /**
+     * spawns a bullet at the right spot and makes the appropriate sound
+     */
     void shoot()
 	{
         //play the weapon's sound from the sound manager

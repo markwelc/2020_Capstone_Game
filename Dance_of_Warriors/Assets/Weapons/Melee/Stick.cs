@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Stick : Melee
 {
+    /**
+     * Initializes the action state lengths and the animation names
+     */
     protected override void Start()
     {
         animationName = "standard_stick_attack";
