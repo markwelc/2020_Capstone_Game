@@ -25,7 +25,7 @@ Lists used here to show inheritance
         <li>param canDamage: determines whether the weapon can deal damage at a specific point in time</li>
     </ul>
 </ul>
-<p>
+<p><p>
 Parent class to:
 <ul>
     <li><h4>Guns.cs</h3></li>
@@ -47,7 +47,7 @@ Parent class to:
                 <li>Spawns a bullet at the tip of the gun model, plays gun sound</li>
             </ul>
     </ul>
-    <p>
+    <p><p>
     Parent class to:
         <ul>
             <li>Handgun.cs</li>
@@ -97,7 +97,7 @@ Parent class to:
                     <li>param canDamage: See WeaponController.cs definition</li>
                 </ul>
         </ul>
-    <p>
+    <p><p>
     Parent class to:
     <ul>
         <li>Stick.cs</li>
