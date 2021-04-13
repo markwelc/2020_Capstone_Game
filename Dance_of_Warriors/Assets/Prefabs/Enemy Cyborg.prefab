@@ -6567,6 +6567,7 @@ MonoBehaviour:
   rig: {fileID: 0}
   weaponColliders:
   - {fileID: 4880195666459721711}
+  inAttackMotion: 0
   lookRadius: 20
   attackRadius: 1.75
   agent: {fileID: 4880195666970061216}

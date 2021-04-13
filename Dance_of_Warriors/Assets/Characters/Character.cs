@@ -65,6 +65,7 @@ public class Character : MonoBehaviour
     [SerializeField] public Collider[] weaponColliders;
     protected float stamina;
     protected float initStamina;
+    public bool inAttackMotion;
     //public float characterDamageModifier; // get the current damage modifier from the health manager
 
     // Start is called before the first frame update
@@ -284,6 +285,7 @@ public class Character : MonoBehaviour
      */
     public void weaponDamageAllowed()
     {
+        inAttackMotion = true;
         weaponAccess.canDealDamage(availableWeapons[equippedWeapon], true);
     }
 
@@ -292,6 +294,7 @@ public class Character : MonoBehaviour
      */
     public void weaponNoDamageAllowed()
     {
+        inAttackMotion = false;
         weaponAccess.canDealDamage(availableWeapons[equippedWeapon], false);
     }
 

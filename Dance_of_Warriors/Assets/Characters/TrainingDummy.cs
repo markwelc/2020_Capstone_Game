@@ -47,6 +47,9 @@ public class TrainingDummy : Character
     //private int beatCountFull;
     [Header("Beat Settings")]
     [Range(1, 32)] public int[] active32ndNotes;
+    private bool isOnBeat;
+    private bool blockBroken;
+    private bool alreadyCheckingAttack;
 
 
 
@@ -156,6 +159,7 @@ public class TrainingDummy : Character
                 }
                 else if (distance < attackRadius &&  !dash)
                 {
+                    trackPlayerAttack();
                     agent.ResetPath();
                 }
             }
@@ -257,6 +261,7 @@ public class TrainingDummy : Character
      */
     private void selectInRangeAction()
     {
+        isOnBeat = true;
         //chase the player
         agent.SetDestination(transform.position);
 
@@ -271,9 +276,6 @@ public class TrainingDummy : Character
             {
                 case 1:
                     AttackPlayer();
-                    break;
-                case 2:
-                    Block();
                     break;
                 default:
                     break;
@@ -366,10 +368,40 @@ public class TrainingDummy : Character
     }
 
     /**
+     * Track player attack
+     * Enemy AI knows when attack happens 
+     * so decide if we let it hit or do something about it
+     */
+    private void trackPlayerAttack()
+    {
+        // If in attack range and we are not attacking and we are not blocking
+        if(enemyState == 2 && !inAttackMotion && !isBlocking && !alreadyCheckingAttack)
+        {
+            // If player attacks you and is not on beat
+            if (targetPlayer.inAttackMotion && !isOnBeat)
+            {
+                alreadyCheckingAttack = true;
+                // Create a chance that enemy blocks
+                // Exclusive so 25% chance they block attack if off beat
+                int chanceBlock = Random.Range(1, 5);
+                if (chanceBlock == 1)
+                {
+                    Block(); // We can block
+                }
+                Invoke(nameof(ResetCheck), 0.5f); // reset check
+            }
+        }
+    }
+
+    /**
      * Initialize block anim and set invincible for one hit
      */
     private void Block()
     {
+        if (!isBlocking)
+        {
+            blockBroken = false;
+            Debug.LogWarning("doing block");
             anim.SetTrigger("isBlocking");
 
             // Trigger wern't restting for some reason before reset now
@@ -378,6 +410,8 @@ public class TrainingDummy : Character
             // They are invincible at start
             isBlocking = true;
             playerHealthManager.setInvincible(true);
+            Invoke(nameof(ResetBlock), 1f); // stay crouched for 0.5 seconds
+        }
         
     }
 
@@ -388,9 +422,12 @@ public class TrainingDummy : Character
     {
         //Debug.Log("End Block");
         // They released so end the block no longer invincible
-        anim.SetTrigger("doneBlocking");
         isBlocking = false;
-        playerHealthManager.setInvincible(false);
+        if (!blockBroken)
+        {
+            anim.SetTrigger("doneBlocking");
+            playerHealthManager.setInvincible(false);
+        }
     }
 
 
@@ -407,8 +444,10 @@ public class TrainingDummy : Character
             anim.SetTrigger("breakBlock"); // break block animation then transition back to standard
 
             // no longer invincible or blocking
-            isBlocking = false;
+            //isBlocking = false;
+            blockBroken = true;
             playerHealthManager.setInvincible(false);
+            Invoke(nameof(ResetBlock), 0.5f); // stay crouched for 0.5 seconds
         }
     }
 
@@ -438,11 +477,12 @@ public class TrainingDummy : Character
     // resets the alreadyAttacked variable used in AttackPlayer()
     private void ResetAttack()
     {
+        isOnBeat = false;
         alreadyAttacked = false;
-        if(isBlocking)
+        /*if(isBlocking)
         {
             endBlock();
-        }
+        }*/
         if(dash)
         {
             anim.SetTrigger("doneDashing");
@@ -454,6 +494,25 @@ public class TrainingDummy : Character
                 agent.speed = speed;
             //}
         }
+    }
+
+    /**
+     * Used as invoke to reset block
+     */
+    private void ResetBlock()
+    {
+        if(isBlocking)
+        {
+            endBlock();
+        }
+    }
+
+    /**
+     * Used as invoke to reset check to see if can block
+     */
+    private void ResetCheck()
+    {
+        alreadyCheckingAttack = false;
     }
 
     /**
@@ -469,21 +528,28 @@ public class TrainingDummy : Character
         }
     }
 
+    /**
+     * Used as invoke to delay
+     */
     private void CrouchDelay()
     {
         endCrouch(); // endcrouch
         Invoke(nameof(crouchAgain), 0.5f); // stay upright for 0.5 seconds
     }
 
+    /**
+     * Used as invoke to crouch again
+     */
     private void crouchAgain()
     {
         teabagAmount++; // ncrement teabag amount
         playerDefeated(); // get the next teabag
     }
 
-
-    
-
+    /**
+     * Enemy specific death operation
+     * remove agent to stop access attempts
+     */
     private void enemyDefeated()
     {
         Destroy(agent);
