@@ -29,6 +29,7 @@ public class NewPlayer : Character
     private bool deathMessageOpened;
 
     private bool canCheck;
+    private bool playerWin;
 
     /**
      * On awake we initialize our controls to tell it what to do with each
@@ -595,4 +596,25 @@ public class NewPlayer : Character
     {
         base.endCrouch();
     }
+
+    public void playerWins()
+    {
+        // Checking in case the enemy somehow died after the player was already dead
+        if (!deathMessageOpened)
+        {
+            FindObjectOfType<AudioManager>().Play(this.transform.gameObject, "youwin");
+            Time.timeScale = 0.5f;
+            Time.fixedDeltaTime = 0.02F * Time.timeScale;
+            StartCoroutine(WaitToWin(2));
+        }
+    }
+    
+    private IEnumerator WaitToWin(float waitTime)
+    {
+        yield return new WaitForSecondsRealtime(waitTime);
+        hud.OpenWinMessagePanel();
+        Time.timeScale = 0f;
+
+    }
+
 }

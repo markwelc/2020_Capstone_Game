@@ -20,12 +20,9 @@ public class doorController : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    /**
+     * If in door radius open door
+     */
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 8 && !open)
@@ -40,6 +37,9 @@ public class doorController : MonoBehaviour
         }
     }
 
+    /**
+     * Left door radius now close door
+     */
     private void OnTriggerExit(Collider other)
     {
         if(other.gameObject.layer == 8 && !close )

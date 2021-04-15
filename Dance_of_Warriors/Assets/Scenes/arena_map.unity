@@ -8168,6 +8168,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7054583660361988742, guid: 8d0b6cbdbc0c30a4785fae5300e66fc6,
+        type: 3}
+      propertyPath: sounds.Array.size
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054583660361988742, guid: 8d0b6cbdbc0c30a4785fae5300e66fc6,
+        type: 3}
+      propertyPath: sounds.Array.data[15].name
+      value: youwin
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054583660361988742, guid: 8d0b6cbdbc0c30a4785fae5300e66fc6,
+        type: 3}
+      propertyPath: sounds.Array.data[15].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: e2019fcfdb6190c4fabe9cd000c0dac3, type: 3}
+    - target: {fileID: 7054583660361988742, guid: 8d0b6cbdbc0c30a4785fae5300e66fc6,
+        type: 3}
+      propertyPath: sounds.Array.data[15].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054583660361988742, guid: 8d0b6cbdbc0c30a4785fae5300e66fc6,
+        type: 3}
+      propertyPath: sounds.Array.data[15].pitch
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7054583660361988743, guid: 8d0b6cbdbc0c30a4785fae5300e66fc6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12777,17 +12802,17 @@ PrefabInstance:
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.011570614
+      value: -0.011570633
       objectReference: {fileID: 0}
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.05168301
+      value: -0.051683042
       objectReference: {fileID: 0}
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0005988432
+      value: 0.00059884466
       objectReference: {fileID: 0}
     - target: {fileID: 2261187899067021741, guid: e8c23c6eb5cc2984c87f4d0bdc348a07,
         type: 3}

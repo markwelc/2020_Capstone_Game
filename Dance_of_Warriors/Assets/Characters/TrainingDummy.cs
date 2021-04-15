@@ -29,7 +29,7 @@ public class TrainingDummy : Character
     private int numOfInRangeActions = 2;
     //states
     private NewPlayer targetPlayer;
-    private int teabagAmount = 0;
+    private int crouchAmount = 0;
     private bool playerDefeatedCalled;
 
     // Can grow if needed
@@ -68,43 +68,33 @@ public class TrainingDummy : Character
 
         dashSpeed = new float[1];
         dashSpeed[0] = 11f;
-        // speed = enemyHealthController.characterSpeed * 3.5f;
 
         target = PlayerManager.instance.player.transform;
         targetPlayer = player.GetComponent<NewPlayer>();
         
         
         agent = GetComponent<NavMeshAgent>();
-        // healthMax = 5;
-        // speed = 5;
-        // jumpForce = 300;
-        /*
-        // Tool Added stuff
-        toolActionState = actionState.inactive;
-        usingTool = 0;
-        toolStates = new int[4];
-        toolStates[0] = 0;  //length of telegraph
-        toolStates[1] = 0;  //length of action
-        toolStates[2] = 0;  //length of recovery
-        toolStates[3] = 0;  //length of tool cooldown
-        toolUsed = 0;
-        // End tools
-        */
 
         equippedWeapon = 0; //this is the starting value
         numOfInRangeActions = 2;
+        anim.SetFloat("turn", 0);
 
 
     }
 
-    // Update is called once per frame
+    /**
+     * Handle movement speed, getting relation to play, and checking beat
+     * Also handles defeated operation
+     */
     private void Update()
     {
+        // Distance to player
         distance = Vector3.Distance(target.position, transform.position);
 
         // need this check because agent destroyed when dead
         if (!isDead)
         {
+            // Get speed for agent ini conjunction with any limits from health debufs. either regular or dash speed
             if (dash)
                 agent.speed = playerHealthManager.characterSpeed * dashSpeed[0];
             else 
@@ -121,7 +111,8 @@ public class TrainingDummy : Character
         else
         {
             // Complete enemy specific death operation
-            enemyDefeated();
+            if(agent != null) // make sure only called once
+                enemyDefeated();
         }
 
 
@@ -130,6 +121,7 @@ public class TrainingDummy : Character
 
     /**
      * Late update to get AI current speed for animator
+     * No params just controls movement animator
      */
     private void LateUpdate()
     {
@@ -144,6 +136,7 @@ public class TrainingDummy : Character
     /**
      * Handles moving the player
      * and setting their current state
+     * Overriden from charcter class fixedupdate
      */
     protected override void handleMovement()
     {
@@ -268,7 +261,7 @@ public class TrainingDummy : Character
         //look at the player so it doesn't look dumb
         transform.LookAt(target);
 
-        if (!alreadyAttacked)
+        if (!alreadyAttacked && distance < attackRadius) // Double check still in range 
         {
             int rand = Random.Range(1, numOfInRangeActions - 1); // just picking a random for now. can fine tune later
             alreadyAttacked = true;
@@ -309,6 +302,7 @@ public class TrainingDummy : Character
 
     /**
      * Make enemy dash
+     * No params, sets dash true and invincible during dash
      */
     void initDashForward()
     {
@@ -401,7 +395,6 @@ public class TrainingDummy : Character
         if (!isBlocking)
         {
             blockBroken = false;
-            Debug.LogWarning("doing block");
             anim.SetTrigger("isBlocking");
 
             // Trigger wern't restting for some reason before reset now
@@ -474,7 +467,11 @@ public class TrainingDummy : Character
         }
     }
 
-    // resets the alreadyAttacked variable used in AttackPlayer()
+    /**
+     * Handles resetting certain operation after attacking
+     * called from invoke method
+     * No Params
+     */ 
     private void ResetAttack()
     {
         isOnBeat = false;
@@ -497,8 +494,10 @@ public class TrainingDummy : Character
     }
 
     /**
-     * Used as invoke to reset block
-     */
+     * Handles resetting block
+     * called from invoke method
+     * No Params
+     */ 
     private void ResetBlock()
     {
         if(isBlocking)
@@ -508,7 +507,9 @@ public class TrainingDummy : Character
     }
 
     /**
-     * Used as invoke to reset check to see if can block
+     * Handles resetting check to see if player is attacking enemy
+     * called from invoke method
+     * No Params
      */
     private void ResetCheck()
     {
@@ -517,11 +518,12 @@ public class TrainingDummy : Character
 
     /**
      * The enemy successfully defeated the player
+     * start crouching over player to assert dominance
      */
     private void playerDefeated()
     {
         // so what now? yep ya guessed it
-        if (teabagAmount < 100)
+        if (crouchAmount < 100)
         {
             crouch(); // start crouch
             Invoke(nameof(CrouchDelay), 0.5f); // stay crouched for 0.5 seconds
@@ -542,7 +544,7 @@ public class TrainingDummy : Character
      */
     private void crouchAgain()
     {
-        teabagAmount++; // ncrement teabag amount
+        crouchAmount++; // ncrement teabag amount
         playerDefeated(); // get the next teabag
     }
 
@@ -553,6 +555,7 @@ public class TrainingDummy : Character
     private void enemyDefeated()
     {
         Destroy(agent);
+        targetPlayer.playerWins();
     }
 
     protected override void handleAngle()
@@ -560,6 +563,9 @@ public class TrainingDummy : Character
         //don't set any angle, let the two transform.LookAt lines (in handleMovement and Patrolling) do it
     }
 
+    /**
+     * Debug to visualize radius
+     */ 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

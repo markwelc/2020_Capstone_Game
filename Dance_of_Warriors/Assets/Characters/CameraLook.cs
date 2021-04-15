@@ -89,11 +89,17 @@ public class CameraLook : MonoBehaviour
         }
     }
 
+    /**
+     * Set x look scale, called from settings
+     */
     public void setXLookScale(float xLookScale)
     {
         this.xLookSensitivityScale = xLookScale;
     }
 
+    /**
+     * Set y look scale, called from settings
+     */
     public void setYLookScale(float yLookScale)
     {
         this.yLookSensitivityScale = yLookScale;
@@ -108,7 +114,9 @@ public class CameraLook : MonoBehaviour
     }
 
     /**
-     * Rotate the camera
+     * Rotate the camera.
+     * Rotates in correspondance with mouse input
+     * or right stick input on controller
      */
     void RotateCamera()
     {
@@ -155,6 +163,12 @@ public class CameraLook : MonoBehaviour
         cineCam.m_YAxis.Value += r.y * (yLookSensitivity * yLookSensitivityScale) * Time.deltaTime;
     }
 
+    /**
+     * Aim in functionality
+     * starts process of increases fov 
+     * and adjusting reticle
+     * process as in a smooth transition
+     */
     private void zoomIn()
     {
         retController.setZoomReticle(true);
@@ -166,6 +180,12 @@ public class CameraLook : MonoBehaviour
 
     }
 
+    /**
+     * Aim out functionality
+     * starts process of decreasing fov 
+     * and adjusting reticle
+     * process as in a smooth transition
+     */
     private void zoomOut()
     {
         retController.setZoomReticle(false);
@@ -177,6 +197,9 @@ public class CameraLook : MonoBehaviour
         
     }
 
+    /**
+     * Adjust field of view for camera smoothly over time
+     */
     private void fovTransition(float end)
     {
        
@@ -199,11 +222,12 @@ public class CameraLook : MonoBehaviour
                 startOutZoomTransition = false;
             }
         }
-        //Debug.Log("FOV Val :" + cineCam.m_Lens.FieldOfView);
-
         
     }
 
+    /**
+     * Chnges reticle color when over enemy
+     */
     void enableTargetCross(Color32 color)
     {
         foreach(Image cross in crossHairpieces)
