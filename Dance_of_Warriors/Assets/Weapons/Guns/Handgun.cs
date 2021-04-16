@@ -18,7 +18,7 @@ public class Handgun : Guns
         weaponStates[0] = 2;
         weaponStates[1] = 5;
         weaponStates[2] = 2;
-        weaponStates[3] = 15;
+        weaponStates[3] = 30;
 
         weaponStatesSecondary = new int[4];
         weaponStatesSecondary[0] = 5;
