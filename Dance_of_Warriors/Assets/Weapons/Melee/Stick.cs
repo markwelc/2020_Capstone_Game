@@ -8,6 +8,8 @@ public class Stick : Melee
     {
         animationName = "standard_stick_attack";
         animationNameSecondary = "heavy_stick_attack";
+        animationNameUniqueOne = "slam_attack";
+        animationNameUniqueTwo = "low_slash_attack";
         //stickActive = true;
         weaponStates = new int[4];
         weaponStates[0] = 5;
@@ -20,5 +22,18 @@ public class Stick : Melee
         weaponStatesSecondary[1] = 5;
         weaponStatesSecondary[2] = 5;
         weaponStatesSecondary[3] = 5;
+
+        weaponStatesUniqueOne = new int[4];
+        weaponStatesUniqueOne[0] = 5;
+        weaponStatesUniqueOne[1] = 5;
+        weaponStatesUniqueOne[2] = 5;
+        weaponStatesUniqueOne[3] = 5;
+
+        weaponStatesUniqueTwo = new int[4];
+        weaponStatesUniqueTwo[0] = 5;
+        weaponStatesUniqueTwo[1] = 5;
+        weaponStatesUniqueTwo[2] = 5;
+        weaponStatesUniqueTwo[3] = 5;
+
     }
 }

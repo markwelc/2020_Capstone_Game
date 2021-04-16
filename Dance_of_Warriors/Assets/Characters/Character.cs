@@ -65,6 +65,7 @@ public class Character : MonoBehaviour
     [SerializeField] public Collider[] weaponColliders;
     protected float stamina;
     protected float initStamina;
+    public bool inAttackMotion;
     //public float characterDamageModifier; // get the current damage modifier from the health manager
 
     // Start is called before the first frame update
@@ -140,7 +141,6 @@ public class Character : MonoBehaviour
         // made in character in case we want to apply to enemy later on
         handleSprint();
         handleStamina();
-
     }
 
 
@@ -256,55 +256,46 @@ public class Character : MonoBehaviour
         }
     }
 
-    /*attackType should be either 1 or 2
+    /* attackType should be either 1 or 2
      * 1 if using the currently equipped weapon's primary attack
      * 2 if using the currently equipped weapon's secondary attack
-     */
-     /*characterDamageModifier keeps track of the current damage scale of the player
+     *
+     * characterDamageModifier keeps track of the current damage scale of the player
      * when the character's arm is debuffed, they deal 15% less damage (per arm)
      */
     protected virtual void useWeapons(int attackType, float characterDamageModifier) //actually goes and uses the weapon
     {
 
         string animation;
-        int[] states;
+        int[] states = new int[4];
+        
         weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states, attackType, characterDamageModifier);
-        weaponAccess.canDealDamage(availableWeapons[equippedWeapon], true);
-
+        // weaponAccess.canDealDamage(availableWeapons[equippedWeapon], true);
+        weaponNoDamageAllowed();
         if (animation != null)
         {
             anim.SetTrigger(animation); //start the animation
         }
+        
         toolStates = states;
-
-
-        // Get how long the clip is so it only does ddamage while attacking
-        float time = -1;
-        RuntimeAnimatorController ac = anim.runtimeAnimatorController;    //Get Animator controller
-        for (int i = 0; i < ac.animationClips.Length; i++)                 //For all animations
-        {
-            if (ac.animationClips[i].name == animation)        //If it has the same name as your clip
-            {
-                time = ac.animationClips[i].length;
-            }
-        }
-        // make sure we actually got something
-        if(time != -1)
-        {
-            // start courintine when done can no longer deal damage
-            StartCoroutine(WaitForAttackComplete(time));
-        }
-
-
     }
 
-    private IEnumerator WaitForAttackComplete(float waitTime)
+    /**
+     * Called from upwards message from aniamtion trigger
+     */
+    public void weaponDamageAllowed()
     {
-        // waittime is the time of that animation
-        yield return new WaitForSeconds(waitTime);
-        // once done stop attack
-        weaponAccess.canDealDamage(availableWeapons[equippedWeapon], false);
+        inAttackMotion = true;
+        weaponAccess.canDealDamage(availableWeapons[equippedWeapon], true);
+    }
 
+    /**
+     * Called from upwards message from animation trigger
+     */
+    public void weaponNoDamageAllowed()
+    {
+        inAttackMotion = false;
+        weaponAccess.canDealDamage(availableWeapons[equippedWeapon], false);
     }
 
     //start using a tool

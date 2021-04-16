@@ -14,7 +14,7 @@ public class PlayerHealthController : MonoBehaviour
     // Initialize limbHealth
     // Each limb has a health variable and bool to determine whether it is usable
     // Usability reflects what it should do when its been damaged all the way
-    [SerializeField] private float initialLimbHealth = 40f;
+    [SerializeField] private float initialLimbHealth = 10f;
     protected float rArmHealth;
     public bool rArmUsability;
     protected float lArmHealth;
@@ -97,16 +97,28 @@ public class PlayerHealthController : MonoBehaviour
 
     }
 
+    /**
+     * Set invincible
+     * Params: boolean whether setting or disabling
+     */
     public void setInvincible(bool invincible)
     {
         this.invincible = invincible;
     }
 
+    /**
+     * If only invincible for one time
+     * Params: boolean, set or disabling
+     */
     public void setOneTimeBlock(bool val)
     {
         this.oneTimeBlock = val;
     }
 
+    /**
+     * Used to check if blocked one time 
+     * then called in character to disable block anim with hit
+     */
     public bool getOneTimeBlock()
     {
         return this.oneTimeBlock;
@@ -461,7 +473,10 @@ public class PlayerHealthController : MonoBehaviour
     }
 
 
-    //way to kill player. Basically they just turn lifeless
+    /**
+     * Player defeated trigger ragdoll state
+     * Params: boolean, enable or disable ragdoll state
+     */
     void RagDoll(bool value)
     {
         var bodyParts = GetComponentsInChildren<Rigidbody>();
@@ -472,6 +487,12 @@ public class PlayerHealthController : MonoBehaviour
         }
     }
 
+    /**
+     * Character dies
+     * disable animator and enable ragdoll state
+     * no longer enabled
+     * Params: None
+     */
     private void die()
     {
         // Disable our animator
@@ -482,7 +503,5 @@ public class PlayerHealthController : MonoBehaviour
 
         // Dont destroy yet just keep visual body in but it can't do anything
         this.enabled = false;
-
-        // But be sure to destroy it on respawn
     }
 }

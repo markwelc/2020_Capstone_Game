@@ -95,6 +95,7 @@
     <Compile Include="Assets\Weapons\Melee\Melee.cs" />
     <Compile Include="Assets\Weapons\Melee\Stick.cs" />
     <Compile Include="Assets\Weapons\WeaponController.cs" />
+    <Compile Include="Assets\animEventReceiver.cs" />
     <Compile Include="Assets\cube.cs" />
     <Compile Include="Assets\damageTester.cs" />
     <Compile Include="Assets\doorController.cs" />

@@ -15,6 +15,7 @@ public class HealthBarManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Get healthbar image and character which this health bar represents
         healthBar = GetComponent<Image>();
         Character[] myCharacters = FindObjectsOfType(typeof(Character)) as Character[];
         foreach(Character person in myCharacters) {
@@ -27,8 +28,10 @@ public class HealthBarManager : MonoBehaviour
     }
 
     // Update is called once per frame
+    // Updates health bar based on character current health and fills the bar accordingly
     void Update()
     {
+        // if null just set full health else get current health of character
         if (ourPerson == null)
             currentHealth = 100f;
         else

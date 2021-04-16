@@ -29,7 +29,7 @@ public class TrainingDummy : Character
     private int numOfInRangeActions = 2;
     //states
     private NewPlayer targetPlayer;
-    private int teabagAmount = 0;
+    private int crouchAmount = 0;
     private bool playerDefeatedCalled;
 
     // Can grow if needed
@@ -47,6 +47,9 @@ public class TrainingDummy : Character
     //private int beatCountFull;
     [Header("Beat Settings")]
     [Range(1, 32)] public int[] active32ndNotes;
+    private bool isOnBeat;
+    private bool blockBroken;
+    private bool alreadyCheckingAttack;
 
 
 
@@ -65,50 +68,39 @@ public class TrainingDummy : Character
 
         dashSpeed = new float[1];
         dashSpeed[0] = 11f;
-        // speed = enemyHealthController.characterSpeed * 3.5f;
 
         target = PlayerManager.instance.player.transform;
         targetPlayer = player.GetComponent<NewPlayer>();
         
         
         agent = GetComponent<NavMeshAgent>();
-        // healthMax = 5;
-        // speed = 5;
-        // jumpForce = 300;
-        /*
-        // Tool Added stuff
-        toolActionState = actionState.inactive;
-        usingTool = 0;
-        toolStates = new int[4];
-        toolStates[0] = 0;  //length of telegraph
-        toolStates[1] = 0;  //length of action
-        toolStates[2] = 0;  //length of recovery
-        toolStates[3] = 0;  //length of tool cooldown
-        toolUsed = 0;
-        // End tools
-        */
 
         equippedWeapon = 0; //this is the starting value
         numOfInRangeActions = 2;
+        anim.SetFloat("turn", 0);
 
 
     }
 
-    // Update is called once per frame
+    /**
+     * Handle movement speed, getting relation to play, and checking beat
+     * Also handles defeated operation
+     */
     private void Update()
     {
+        // Distance to player
+        distance = Vector3.Distance(target.position, transform.position);
+
         // need this check because agent destroyed when dead
         if (!isDead)
         {
+            // Get speed for agent ini conjunction with any limits from health debufs. either regular or dash speed
             if (dash)
                 agent.speed = playerHealthManager.characterSpeed * dashSpeed[0];
             else 
                 agent.speed = playerHealthManager.characterSpeed * 3.5f;
-        }
 
-        distance = Vector3.Distance(target.position, transform.position);
-        if (!isDead)
-        {
+            // Check beat
             checkBeat();
             if (targetPlayer.isDead && !playerDefeatedCalled)
             {
@@ -119,17 +111,32 @@ public class TrainingDummy : Character
         else
         {
             // Complete enemy specific death operation
-            enemyDefeated();
+            if(agent != null) // make sure only called once
+                enemyDefeated();
         }
 
 
         
     }
 
+    /**
+     * Late update to get AI current speed for animator
+     * No params just controls movement animator
+     */
+    private void LateUpdate()
+    {
+        if (!isDead)
+        {
+            float currentSpeed = this.agent.velocity.magnitude;
+            anim.SetFloat("turn", agent.velocity.normalized.y);
+        }
+    }
+
 
     /**
      * Handles moving the player
      * and setting their current state
+     * Overriden from charcter class fixedupdate
      */
     protected override void handleMovement()
     {
@@ -143,8 +150,9 @@ public class TrainingDummy : Character
                     enemyState = 1;
                     agent.SetDestination(target.position);
                 }
-                else if (distance < attackRadius && !dash)
+                else if (distance < attackRadius &&  !dash)
                 {
+                    trackPlayerAttack();
                     agent.ResetPath();
                 }
             }
@@ -158,30 +166,24 @@ public class TrainingDummy : Character
     }
 
     /**
+     * Handle weapon access, called in character update
+     * if the distance is less than attack radius the enemy can attack
+     */
+    protected override void handleWeapons()
+    {
+        if (distance <= attackRadius)
+        {
+            enemyState = 2;
+        }
+    }
+
+    /**
      * This checks based on our music analyzer class
      * if all cases are satisified an on beat action is possible
      * can then call on beat action function to select one approprite
      */
     void checkBeat()
     {
-        //// Loop in 4 steps
-        //beatCountFull = musicAnalyzer.beatCountFull % 4;
-
-        //// on beat divded by 8 to get our 4 steps
-        //for (int i = 0; i < onBeatD8.Length; i++)
-        //{
-        //    // 3 cases
-        //    // is timer greater than interval
-        //    // is it a full beat
-        //    // is the ccount equal to that in question
-        //    if (musicAnalyzer.beatD8 && beatCountFull == onFullBeat && musicAnalyzer.beatCountD8 % 8 == onBeatD8[i])
-        //    {
-        //        //Debug.Log("Do move");
-        //        // can do something
-        //        onBeatAction();
-        //    }
-        //}
-
         bool takeAction = false;
 
         for (int i = 0; i < active32ndNotes.Length && !takeAction; i++) //go through all the 32nd notes that we do something on
@@ -246,6 +248,41 @@ public class TrainingDummy : Character
 
     }
 
+    /**
+     * This will be called on beat.
+     * They are in range so what can they do?
+     */
+    private void selectInRangeAction()
+    {
+        isOnBeat = true;
+        //chase the player
+        agent.SetDestination(transform.position);
+
+        //look at the player so it doesn't look dumb
+        transform.LookAt(target);
+
+        if (!alreadyAttacked && distance < attackRadius) // Double check still in range 
+        {
+            int rand = Random.Range(1, numOfInRangeActions - 1); // just picking a random for now. can fine tune later
+            alreadyAttacked = true;
+            switch (rand)
+            {
+                case 1:
+                    AttackPlayer();
+                    break;
+                default:
+                    break;
+            }
+
+
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }
+    }
+
+    /**
+     * Shoot
+     * Experimental not implemented currently
+     */
     void shoot()
     {
 
@@ -263,6 +300,10 @@ public class TrainingDummy : Character
         }
     }
 
+    /**
+     * Make enemy dash
+     * No params, sets dash true and invincible during dash
+     */
     void initDashForward()
     {
         anim.SetTrigger("isDashing");
@@ -276,51 +317,6 @@ public class TrainingDummy : Character
         // apply that to move vector
         // honestly possible just being able to get the move pos from the agent set destination may be best
         // than we can control everything manually and do what we want instead of just relying on nav mesh
-    }
-
-    /**
-     * This will be called on beat.
-     * They are in range so what can they do?
-     */
-    private void selectInRangeAction()
-    {
-        //chase the player
-        agent.SetDestination(transform.position);
-
-        //look at the player so it doesn't look dumb
-        transform.LookAt(target);
-
-        if (!alreadyAttacked)
-        {
-            int rand = Random.Range(1, numOfInRangeActions + 1); // just picking a random for now. can fine tune later
-            alreadyAttacked = true;
-            switch (rand)
-            {
-                case 1:
-                    AttackPlayer();
-                    break;
-                case 2:
-                    Block();
-                    break;
-                default:
-                    break;
-            }
-
-            
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
-        }
-    }
-
-    /**
-     * They are in range
-     * set state to notify
-     */
-    protected override void handleWeapons()
-    {
-        if (distance <= attackRadius)
-        {
-            enemyState = 2;
-        }
     }
 
     /**
@@ -365,8 +361,40 @@ public class TrainingDummy : Character
             walkPointSet = true;
     }
 
+    /**
+     * Track player attack
+     * Enemy AI knows when attack happens 
+     * so decide if we let it hit or do something about it
+     */
+    private void trackPlayerAttack()
+    {
+        // If in attack range and we are not attacking and we are not blocking
+        if(enemyState == 2 && !inAttackMotion && !isBlocking && !alreadyCheckingAttack)
+        {
+            // If player attacks you and is not on beat
+            if (targetPlayer.inAttackMotion && !isOnBeat)
+            {
+                alreadyCheckingAttack = true;
+                // Create a chance that enemy blocks
+                // Exclusive so 25% chance they block attack if off beat
+                int chanceBlock = Random.Range(1, 5);
+                if (chanceBlock == 1)
+                {
+                    Block(); // We can block
+                }
+                Invoke(nameof(ResetCheck), 0.5f); // reset check
+            }
+        }
+    }
+
+    /**
+     * Initialize block anim and set invincible for one hit
+     */
     private void Block()
     {
+        if (!isBlocking)
+        {
+            blockBroken = false;
             anim.SetTrigger("isBlocking");
 
             // Trigger wern't restting for some reason before reset now
@@ -375,6 +403,8 @@ public class TrainingDummy : Character
             // They are invincible at start
             isBlocking = true;
             playerHealthManager.setInvincible(true);
+            Invoke(nameof(ResetBlock), 1f); // stay crouched for 0.5 seconds
+        }
         
     }
 
@@ -385,9 +415,12 @@ public class TrainingDummy : Character
     {
         //Debug.Log("End Block");
         // They released so end the block no longer invincible
-        anim.SetTrigger("doneBlocking");
         isBlocking = false;
-        playerHealthManager.setInvincible(false);
+        if (!blockBroken)
+        {
+            anim.SetTrigger("doneBlocking");
+            playerHealthManager.setInvincible(false);
+        }
     }
 
 
@@ -404,8 +437,10 @@ public class TrainingDummy : Character
             anim.SetTrigger("breakBlock"); // break block animation then transition back to standard
 
             // no longer invincible or blocking
-            isBlocking = false;
+            //isBlocking = false;
+            blockBroken = true;
             playerHealthManager.setInvincible(false);
+            Invoke(nameof(ResetBlock), 0.5f); // stay crouched for 0.5 seconds
         }
     }
 
@@ -418,40 +453,33 @@ public class TrainingDummy : Character
      */
     private void AttackPlayer()
     {
-        //Debug.Log("Attacking Player");
-        //if (equippedWeapon != 1)
-            //cycleWeapon();
 
-        // if character has not already attacked, throw a projectile at them
-        
-       
-           // be sure they actually have access
-            if (weaponAccess != null)
-            {
+        // be sure they actually have access
+        if (weaponAccess != null)
+        {
             // Doing random range to select the type they want
             // since it uses else for standard attack
             // this is just to lower the probability of a heavy attack
-                int weaponChoice = Random.Range(1, 3); //because this is the integer version, max is exclusive
-                //Debug.Log("weaponChoice = " + weaponChoice);
-                useWeapons(weaponChoice, playerHealthManager.characterDamageModifier);
+            int weaponChoice = Random.Range(3, 5); //because this is the integer version, max is exclusive
+                                                   //Debug.Log("weaponChoice = " + weaponChoice);
+            useWeapons(weaponChoice, playerHealthManager.characterDamageModifier);
 
-            }
-            // Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            // rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            // rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-            //alreadyAttacked = true;
-          //  Invoke(nameof(ResetAttack), timeBetweenAttacks);
-        //}
+        }
     }
 
-    // resets the alreadyAttacked variable used in AttackPlayer()
+    /**
+     * Handles resetting certain operation after attacking
+     * called from invoke method
+     * No Params
+     */ 
     private void ResetAttack()
     {
+        isOnBeat = false;
         alreadyAttacked = false;
-        if(isBlocking)
+        /*if(isBlocking)
         {
             endBlock();
-        }
+        }*/
         if(dash)
         {
             anim.SetTrigger("doneDashing");
@@ -466,36 +494,68 @@ public class TrainingDummy : Character
     }
 
     /**
+     * Handles resetting block
+     * called from invoke method
+     * No Params
+     */ 
+    private void ResetBlock()
+    {
+        if(isBlocking)
+        {
+            endBlock();
+        }
+    }
+
+    /**
+     * Handles resetting check to see if player is attacking enemy
+     * called from invoke method
+     * No Params
+     */
+    private void ResetCheck()
+    {
+        alreadyCheckingAttack = false;
+    }
+
+    /**
      * The enemy successfully defeated the player
+     * start crouching over player to assert dominance
      */
     private void playerDefeated()
     {
         // so what now? yep ya guessed it
-        if (teabagAmount < 100)
+        if (crouchAmount < 100)
         {
             crouch(); // start crouch
             Invoke(nameof(CrouchDelay), 0.5f); // stay crouched for 0.5 seconds
         }
     }
 
+    /**
+     * Used as invoke to delay
+     */
     private void CrouchDelay()
     {
         endCrouch(); // endcrouch
         Invoke(nameof(crouchAgain), 0.5f); // stay upright for 0.5 seconds
     }
 
+    /**
+     * Used as invoke to crouch again
+     */
     private void crouchAgain()
     {
-        teabagAmount++; // ncrement teabag amount
+        crouchAmount++; // ncrement teabag amount
         playerDefeated(); // get the next teabag
     }
 
-
-    
-
+    /**
+     * Enemy specific death operation
+     * remove agent to stop access attempts
+     */
     private void enemyDefeated()
     {
         Destroy(agent);
+        targetPlayer.playerWins();
     }
 
     protected override void handleAngle()
@@ -503,6 +563,9 @@ public class TrainingDummy : Character
         //don't set any angle, let the two transform.LookAt lines (in handleMovement and Patrolling) do it
     }
 
+    /**
+     * Debug to visualize radius
+     */ 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

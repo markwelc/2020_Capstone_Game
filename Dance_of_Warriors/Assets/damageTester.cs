@@ -19,12 +19,8 @@ public class damageTester : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    // ONLY USED FOR TESTING IN SAMPLE SCENE
+    // NO NEED TO ADD TO DOCUMENTATION
     private void OnCollisionEnter(Collision collision)
     {
         if (ourPerson != null)

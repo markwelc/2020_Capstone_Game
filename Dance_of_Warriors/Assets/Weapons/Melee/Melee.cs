@@ -14,16 +14,28 @@ public class Melee : WeaponController
 
     public override void useWeapon(string weaponName, out string animation, out int[] states, int attackType, float characterDamageModifier)
     {
-        if (attackType == 2)
+        if (attackType == 1)
+        {
+            animation = animationName;
+            states = weaponStates;
+            StartCoroutine("FastSwing");
+        }
+        else if(attackType == 2)
         {
             animation = animationNameSecondary;
             states = weaponStatesSecondary;
             StartCoroutine("Swing");
         }
+        else if(attackType == 3)
+        {
+            animation = animationNameUniqueOne;
+            states = weaponStatesUniqueOne;
+            StartCoroutine("FastSwing");
+        }
         else
         {
-            animation = animationName;
-            states = weaponStates;
+            animation = animationNameUniqueTwo;
+            states = weaponStatesUniqueTwo;
             StartCoroutine("FastSwing");
         }
     }

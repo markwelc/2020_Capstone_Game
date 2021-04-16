@@ -163,4 +163,12 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    /**
+     * Lock mouse cursor to screen
+     */
+    private void OnGUI()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
 }

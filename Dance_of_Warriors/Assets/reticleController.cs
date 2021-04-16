@@ -23,8 +23,7 @@ public class reticleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //ourReticle.sizeDelta = new Vector2(size, size);
-
+        // Lerping values to provide smooth transition
         if(zoomingR && movingR)
             currentSize = Mathf.Lerp(currentSize, movingAndAimingSize, Time.deltaTime * transitionSpeed);
         else if (zoomingR)
@@ -37,16 +36,30 @@ public class reticleController : MonoBehaviour
         ourReticle.sizeDelta = new Vector2(currentSize, currentSize);
     }
 
+    /**
+     * Set whether the player is zooming or not
+     * called from cam controller
+     * Params: boolean
+     */
     public void setZoomReticle(bool val)
     {
         zoomingR = val;
     }
 
+    /**
+     * Set whether reticle should react if moving
+     * called from new player when setting up movement
+     * Params: boolean
+     */
     public void setMoving(bool val)
     {
         movingR = val;
     }
 
+    /**
+     * Called when shooting. Adjusts reticle size smoothly to react with shot
+     * Params: None
+     */
     public void setShot()
     {
         currentSize = Mathf.Lerp(currentSize, currentSize + 30, Time.deltaTime * 5 * transitionSpeed);
