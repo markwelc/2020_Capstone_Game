@@ -143,7 +143,11 @@ public class Character : MonoBehaviour
         handleStamina();
     }
 
-
+    /*
+     * This functions takes a vector indicating in which direction the character should move and how far he should move and moves him that direction and distance.
+     * Vertical components of the input vector are replaced with the vertical component of the character's velocity.
+     * This makes handling moving while jumping pretty easy, but it means that this function is only useful for controlling horizontal movement.
+     */
     protected void moveCharacter(Vector3 direcAndDist) //the input needs to contain both the direction and the distance
     {
 
@@ -151,7 +155,7 @@ public class Character : MonoBehaviour
         if (isDead || isBlocking)
             direcAndDist = Vector3.zero;
 
-        direcAndDist.y = characterRigidbody.velocity.y;
+        direcAndDist.y = characterRigidbody.velocity.y; // should be here used to fix gravity issue
         Ray ray = new Ray(characterTransform.position, direcAndDist); //shoot a ray from current position in direction of travel
         RaycastHit hit;
         if (!Physics.Raycast(ray, out hit, (direcAndDist * Time.deltaTime).magnitude)) //if the ray didn't hit anything within the range that we're moving
@@ -164,12 +168,13 @@ public class Character : MonoBehaviour
     }
 
 
-    //these four are only defining default behavior.They are meant to be overridden
+    //One of the four functions for defining default behavior. They are meant to be overridden.
     protected virtual void handleMovement()
     {
         movement = new Vector3(0, 0, 0); //don't try to move anywhere
     }
 
+    //One of the four functions for defining default behavior. They are meant to be overridden.
     protected virtual void handleJump()
     {
         //do nothing
@@ -177,20 +182,25 @@ public class Character : MonoBehaviour
         //in the player character's case, this isn't really needed since you can just run the jump function when the hotkey is pressed
     }
 
+    //One of the four functions for defining default behavior. They are meant to be overridden.
     protected virtual void handleAngle()
     {
         characterTransform.eulerAngles = new Vector3(0, 0, 0); //set no particular angle
     }
 
+    //One of the four functions for defining default behavior. They are meant to be overridden.
     protected virtual void handleWeapons() //decides when to use weapons
     {
         //do nothing
     }
 
+    /*
+     * This function turns on crouching.
+     */
     protected virtual void crouch()
     {
 
-        // do nothing
+        //if we're aren't already crouching and if we're allowed to crouch
         if(!isCrouching && crouchAllowed())
         {
             isCrouching = true;
@@ -203,6 +213,9 @@ public class Character : MonoBehaviour
 
     }
 
+    /*
+     * This functions turns off crouching
+     */
     protected virtual void endCrouch()
     {
         if(isCrouching)
@@ -256,11 +269,15 @@ public class Character : MonoBehaviour
         }
     }
 
-    /* attackType should be either 1 or 2
+    /*
+     * This function initiates the specified attack.
+     * This includes both starting the animations, initializing action states, and makes the weapon able to deal damage.
+     *
+     * attackType should be either 1 or 2
      * 1 if using the currently equipped weapon's primary attack
      * 2 if using the currently equipped weapon's secondary attack
      *
-     * characterDamageModifier keeps track of the current damage scale of the player
+     * CharacterDamageModifier keeps track of the current damage scale of the player
      * when the character's arm is debuffed, they deal 15% less damage (per arm)
      */
     protected virtual void useWeapons(int attackType, float characterDamageModifier) //actually goes and uses the weapon
@@ -268,7 +285,7 @@ public class Character : MonoBehaviour
 
         string animation;
         int[] states = new int[4];
-        
+
         weaponAccess.useWeapon(availableWeapons[equippedWeapon], out animation, out states, attackType, characterDamageModifier);
         // weaponAccess.canDealDamage(availableWeapons[equippedWeapon], true);
         weaponNoDamageAllowed();
@@ -276,7 +293,7 @@ public class Character : MonoBehaviour
         {
             anim.SetTrigger(animation); //start the animation
         }
-        
+
         toolStates = states;
     }
 
@@ -390,9 +407,8 @@ public class Character : MonoBehaviour
         }
     }
 
-    //these three functions determine whether the character may jump
-    // Changed to oncollisionstay
-    // Oncollision enter wasn't always accurate and caused issues when on slant
+    // these three functions determine whether the character may jump
+   // The first two set the jumpPossible variable while the last one checks stuff like whether we're dashing
     protected virtual void OnCollisionStay(Collision collision)
     {
         if (LayerMask.LayerToName(collision.gameObject.layer) == "staticEnvironment")
@@ -435,17 +451,19 @@ public class Character : MonoBehaviour
         bool dashingPermits = ((dashActionState == actionState.inactive) || (dashActionState == actionState.cooldown));
 
         if (isJumping)
-		{
+    		{
             jumpPossible = false;
-		}
-		else
-		{
+    		}
+    		else
+    		{
             jumpPossible = true;
-		}
+    		}
 
         return dashingPermits && jumpPossible && !isBlocking;
     }
 
+    //are we allowed to use a tool?
+    //note that the direction we're trying to sprint in matters (you can't sprint backwards and you have to be trying to move to sprint)
     protected bool sprintAllowed(Vector2 move)
     {
         bool dashingPermits = ((dashActionState == actionState.inactive) || (dashActionState == actionState.cooldown));
@@ -462,6 +480,7 @@ public class Character : MonoBehaviour
         return false;
     }
 
+    //are we allowed to crouch
     protected bool crouchAllowed()
     {
         bool dashingPermits = ((dashActionState == actionState.inactive) || (dashActionState == actionState.cooldown));
@@ -499,6 +518,8 @@ public class Character : MonoBehaviour
     }
 
     /*
+     * determine what type of weapon is currently being used
+     *
      * returns 'm' if the currently equipped weapon is a melee weapon
      * returns 'g' if it's a gun
      * returns '\0' otherwise

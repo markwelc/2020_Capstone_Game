@@ -7,14 +7,14 @@ public class WeaponController : MonoBehaviour
     protected Handgun handgun;
     protected Stick stick;
 
-    protected string animationName;
-    protected string animationNameSecondary; //the secondary attack
-    protected string animationNameUniqueOne;
+    protected string animationName; //animation for the primary attack
+    protected string animationNameSecondary; //animation for the secondary attack
+    protected string animationNameUniqueOne; // and so on..
     protected string animationNameUniqueTwo;
-    protected int ammo;
-    protected int[] weaponStates;
-    protected int[] weaponStatesSecondary;
-    protected int[] weaponStatesUniqueOne;
+    protected int ammo; //this should be in Guns.cs
+    protected int[] weaponStates; //the lengths of action states
+    protected int[] weaponStatesSecondary; //the lengths of the action states for the secondary attack
+    protected int[] weaponStatesUniqueOne; // and so on...
     protected int[] weaponStatesUniqueTwo;
 
 
@@ -26,10 +26,12 @@ public class WeaponController : MonoBehaviour
         handgun = this.GetComponentInChildren<Handgun>(true);
         stick = this.GetComponentInChildren<Stick>(true);
         animationName = null;
-        //handgunActive = false;
-        //stickActive = false;
     }
 
+    /**
+     * determines what kind of gun to use and then sets the animation and the action state lengths based on the weapon being used and the attack being used
+     *
+     */
     public virtual void useWeapon(string weaponName, out string animation, out int[] states, int attackType, float characterDamageModifier)
     {
         states = new int[4];
@@ -48,12 +50,17 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-
+    /**
+     * this is just overridden by the Gun and Melee classes
+     */
     protected virtual void useWeapon()
     {
         //do nothing
     }
 
+    /**
+     * Decide if the weapon can actually deal damage
+     */
     public virtual void canDealDamage(string weaponName, bool canDamage)
     {
         //which weapon can/cant do damage?
