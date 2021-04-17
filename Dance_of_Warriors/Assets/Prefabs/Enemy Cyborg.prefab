@@ -6569,7 +6569,7 @@ MonoBehaviour:
   - {fileID: 4880195666459721711}
   inAttackMotion: 0
   lookRadius: 20
-  attackRadius: 1.75
+  attackRadius: 2
   agent: {fileID: 4880195666970061216}
   player: {fileID: 0}
   target: {fileID: 0}

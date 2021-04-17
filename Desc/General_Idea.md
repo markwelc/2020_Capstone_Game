@@ -1,0 +1,15 @@
+<h3>General Description</h3>
+This game will be designed to emphasize the feeling of dancing when fighting in video games. It will take inspiration from Dark Souls, Monster Hunter, The Witcher 3, and Final Fantasy 15.<br>
+Very often in games fighting the boss can feel like dancing with it. The player carefully watches the bosses' every move and responds accordingly. The player must wait until the enemy is done attacking before attempting to attack the boss, themselves. The player can even get into the boss's rhythm.<br>
+<p><p>
+This game will explore this relationship. We will build a combat system based on the characteristics outlined in Characteristics.md to produce something that evokes feelings similar to those evoked when dancing. The character will engage in a relationship with the boss and it will only be through an intimate understanding of, and respect for, the boss that the player will be able to defeat him.<br>
+There are three participants in this "dance:" the player, the player’s character, and the boss. This produces three relationships (though the relationship between the player and the boss is essentially identical to the relationship between the player’s character and the boss). In order to properly evoke a feeling of dancing, each relationship must be smooth.<br>
+The first relationship is between the player and his character. The controls must be easy and intuitive while the character’s response is immediate, provides adequate feedback, shows what is happening, and allows for a flow into the next move.<br>
+<p>
+The second relationship is between the boss and the player character. The boss must inform the player what they intend to do before they do it (in the same way that moves are signaled in a dance, through telegraphing). This allows for the player to know what is going to happen before it happens (potentially well before), giving them time to react. However, it should also possible for the boss to respond to the player (allowing the interaction to work both ways). The boss could employ a simple AI which chooses its actions based off of the player's repetitions. The likelier the player seems to be to make a particular move, the likelier the boss is to counter that move.
+<p>
+<h3>Additions</h3>
+Characters could experience limb damage that has active effects on their abilities. For instance, damaged legs might lower their walking speed, damaged arms might limit their offensive damage (if they are attacking with their arms), and damage to gear (such as a jet pack) might eliminate their ability to use that gear. This could apply to both the bosses and the player.
+<p>
+The player could target specific portions of the boss to limit the boss’s abilities. The boss would then have to adapt to keep up the fight, deciding to favor some attacks over others or to play more defensively.
+On the other hand, the boss may be able to target specific parts of the player (which part the boss targets would have to be decided based on the player’s actions), removing some of the players options and forcing them to adapt. It would be important to allow the player to heal their character, though.

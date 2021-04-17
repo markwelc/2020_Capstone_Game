@@ -34,6 +34,7 @@ public class PauseMenu : MonoBehaviour
     {
         controls = new PlayerControls();    // Initialize our controls object
         controls.Gameplay.PauseGame.performed += ctx => GamePause();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     /**
@@ -66,6 +67,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         infoPanel.SetActive(false); // assery info panel inactive just in case
         PauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
@@ -78,6 +80,7 @@ public class PauseMenu : MonoBehaviour
 
     void Pause()
     {
+        Cursor.lockState = CursorLockMode.None;
         PauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         IsGamePaused = true;
@@ -161,14 +164,6 @@ public class PauseMenu : MonoBehaviour
                 infoScreens[i].SetActive(false);
             }
         }
-    }
-
-    /**
-     * Lock mouse cursor to screen
-     */
-    private void OnGUI()
-    {
-        Cursor.lockState = CursorLockMode.Confined;
     }
 
 }
