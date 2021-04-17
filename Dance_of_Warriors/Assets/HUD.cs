@@ -95,6 +95,7 @@ public class HUD : MonoBehaviour
     //Open the deathMessage panel
     public void OpenDeathMessagePanel()
     {
+        Cursor.lockState = CursorLockMode.None;
         Debug.LogWarning("hhh");
         DeathMessagePanel.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
@@ -108,6 +109,7 @@ public class HUD : MonoBehaviour
      */
     public void OpenWinMessagePanel()
     {
+        Cursor.lockState = CursorLockMode.None;
         WinMessagePanel.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(winMessageFirstButton);

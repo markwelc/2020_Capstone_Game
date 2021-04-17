@@ -86,6 +86,7 @@ public class Inventory : MonoBehaviour
         {
             if (inventory.activeSelf) // if inventory is active when the button is pressed
             {
+                Cursor.lockState = CursorLockMode.Locked;
                 inventory.SetActive(false); //deactivate it in game
                 cam.isCamMovementAllowed = true; // allow camera movement
                 if(playa != null)
@@ -93,6 +94,7 @@ public class Inventory : MonoBehaviour
             }
             else //if inventory is not active when button is pressed
             {
+                Cursor.lockState = CursorLockMode.None;
                 inventory.SetActive(true); //activate it in game
                 cam.isCamMovementAllowed = false; //disallow camera movement
                 EventSystem.current.SetSelectedGameObject(null);
