@@ -265,6 +265,12 @@ MonoBehaviour:
     pitch: 1
     source: {fileID: 0}
     gameObject: {fileID: 0}
+  - name: youwin
+    clip: {fileID: 8300000, guid: e2019fcfdb6190c4fabe9cd000c0dac3, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    gameObject: {fileID: 0}
 --- !u!1 &8732674874694292107
 GameObject:
   m_ObjectHideFlags: 0
