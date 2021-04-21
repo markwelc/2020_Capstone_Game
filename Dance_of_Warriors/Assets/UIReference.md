@@ -11,6 +11,7 @@
                     <li>Updates health bar based on character's current health and fills the bar accordingly</li>
                 </ul>
         </ul>
+    <p><p>
     <li>LimbUIManager.cs</li>
         <ul>
             <li>Handles display of damages limbs to player</li>
@@ -40,6 +41,7 @@
                     <li>param name: string holding the name of the limb that has been healed</li>
                 </ul>
         </ul>
+    <p><p>
     <li>MainMenu.cs</li>
         <ul>
             <li>Handles main game menu functionality</li>
@@ -73,6 +75,7 @@
                     <li>param idx: holds reference to which button player selected</li>
                 </ul>
         </ul>
+    <p><p>
     <li>SettingsMenu.cs</li>
         <ul>
             <li>Handles the settings menu from both the pause menu and the main menu</li>
@@ -113,6 +116,7 @@
                     <li>param sensitivityY: converts value from menu bar into a float value for game engine to handle</li>
                 </ul>
         </ul>
+    <p><p>
     <li>PauseMenu.cs</li>
         <ul>
             <li>Handles Pause Menu functionality</li>
@@ -164,6 +168,7 @@
                     <li>param idx: holds reference to which button player selected</li>
                 </ul>
         </ul>
+    <p><p>
     <li>reticleController.cs</li>
         <ul>
             <li>Handles the player's aiming reticle in game</li>
@@ -190,6 +195,7 @@
                     <li>Handles reticle bloom when shooting.</li>
                 </ul>
         </ul>
+    <p><p>
     <li>PlayerHealthController.cs</li>
         <ul>
             <li>Handles character health within game</li>

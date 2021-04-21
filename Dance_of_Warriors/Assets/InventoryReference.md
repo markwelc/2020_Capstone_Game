@@ -27,6 +27,7 @@
                     <li>Handles displaying the inventory and disabling camera movement while inventory is active.</li>
                 </ul>
         </ul>
+    <p><p>
     <li>InventoryItem.cs</li>
         Provides interface to implement inventory items
         <ul>
@@ -56,6 +57,7 @@
                     <li>Unused</li>
                 </ul>
         </ul>
+    <p><p>
     <li>ItemClickHandler.cs</li>
         <ul>
             <li>Handles item references when selected wtih the cursor</li>
@@ -63,10 +65,12 @@
                 <li>Public Void OnItemClicked(): Gets reference to item being selected in inventory, and calls item's OnUse() method.</li>
             </ul>
         </ul>
+    <p><p>
     <li>ItemDragHandler.cs</li>
         <ul>
             <li>Handles dragging items to and from inventory with the cursor</li>
         </ul>
+    <p><p>
     <li>HUD.cs</li>
         <ul>
             <li>void Start()</li>
