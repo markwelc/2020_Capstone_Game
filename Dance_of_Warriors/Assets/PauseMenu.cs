@@ -68,7 +68,7 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        infoPanel.SetActive(false); // assery info panel inactive just in case
+        infoPanel.SetActive(false); // assert info panel inactive just in case
         PauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         IsGamePaused = false;
