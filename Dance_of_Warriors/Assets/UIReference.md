@@ -96,9 +96,9 @@
                 </ul>
             <li>IEnumerator playSampleSound(float inVolume, string key)</li>
                 <ul>
-                    <li></li>
-                    <li>param inVolume:</li>
-                    <li>param key:</li>
+                    <li>plays a sound while the character is changing the sound settings so that they know how loud they're making it</li>
+                    <li>param inVolume: helps keep track of the current volume setting and how long it's beend since it's been changed</li>
+                    <li>param key: used to keep track of whether we're changing the sound effects volume or the background volume</li>
                 </ul>
             <li>private float convertToLogarithmic(float val)</li>
                 <ul>
