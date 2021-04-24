@@ -469,7 +469,6 @@ public class NewPlayer : Character
         //if the item is not null
         if (item != null)
         {
-            
             mItemToPickup = item; //get reference to that item
             hud.OpenPickupMessagePanel(""); //open message panel to pick up item
         }
