@@ -138,7 +138,7 @@ Parent class to:
         </ul>
         <p><p>
         Parent class to:
-        <li>Bullet_Handgun.cs</li>
+        <li><h4>Bullet_Handgun.cs</h3></li>
         <ul>
             <li>protected override void Start()</li>
             <ul>
