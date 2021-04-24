@@ -109,4 +109,44 @@ Parent class to:
             </ul>
     </ul>
 </ul>
+    <li><h3>BulletController.cs</h3></li>
+    <ul>
+        <li>used to manage bullets after they've been fired.</li>
+        <li>protected virtual void Start()</li>
+        <ul>
+            <li>sets reference to the instance of the bullet and sets timer before bullet destroys itself</li>
+        </ul>
+        <li>void FixedUpdate()</li>
+        <ul>
+            <li>calls moveBullet</li>
+        </ul>
+        <li>void moveBullet()</li>
+        <ul>
+            <li>moves bullet forward at it's speed</li>
+            <li>uses raycasting to prevent moving through thin objects</li>
+        </ul>
+        <li>void OnTriggerEnter(Collider col)</li>
+        <ul>
+            <li>Handles:</li>
+            <ul>
+                <li>destroying the bullet</li>
+                <li>telling the character we hit to take damage if we hit a character</li>
+                <li>playing a sound</li>
+                <li>and making a dummy bullet to help in making a sound.</li>
+            </ul>
+            <li>param col: the collider of the game object we hit</li>
+        </ul>
+        <p><p>
+        Parent class to:
+        <ul>
+            <li>Bullet_Handgun.cs</li>
+            <ul>
+                <li>protected override void Start()</li>
+                <ul>
+                    <li>initializes the speed of the bullet, the damage of the bullet, and the max lifetime of the bullet</li>
+                    <li>calls the parent's start function</li>
+                </ul>
+            </ul>
+        </ul>
+    </ul>
 </ul>
