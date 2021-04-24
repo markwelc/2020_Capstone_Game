@@ -138,14 +138,12 @@ Parent class to:
         </ul>
         <p><p>
         Parent class to:
+        <li>Bullet_Handgun.cs</li>
         <ul>
-            <li>Bullet_Handgun.cs</li>
+            <li>protected override void Start()</li>
             <ul>
-                <li>protected override void Start()</li>
-                <ul>
-                    <li>initializes the speed of the bullet, the damage of the bullet, and the max lifetime of the bullet</li>
-                    <li>calls the parent's start function</li>
-                </ul>
+                <li>initializes the speed of the bullet, the damage of the bullet, and the max lifetime of the bullet</li>
+                <li>calls the parent's start function</li>
             </ul>
         </ul>
     </ul>
