@@ -22,6 +22,8 @@ public class Guns : WeaponController
     /**
      * tries to fire the gun, or sets animation and action state lengths if swinging it.
      * It won't be able to fire the gun if there aren't bullets left or if we're reloading
+     * parameters are for the weapon we are using, the name of the animation, the weapons states (time for various actions), 
+     * which attack type is being performed (light/heavy), and the amount of damage the weapon does
      */
     public override void useWeapon(string weaponName, out string animation, out int[] states, int attackType, float characterDamageModifier)
     {
@@ -65,6 +67,9 @@ public class Guns : WeaponController
         
     }
 
+    /*
+     * Delays the addition of ammunition to the gun magazine until a full reload is done  
+     */
     IEnumerator Reload()
 	{
         yield return new WaitForSeconds(2.7f);

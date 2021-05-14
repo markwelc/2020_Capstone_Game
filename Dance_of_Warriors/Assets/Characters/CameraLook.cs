@@ -105,7 +105,9 @@ public class CameraLook : MonoBehaviour
         this.yLookSensitivityScale = yLookScale;
     }
 
-    //weapon recoil
+    /*
+     * Add recoil each time the gun fires
+     */
     public void AddRecoil()
 	{
         ImpulseSource.GenerateImpulse(Camera.main.transform.up);
@@ -117,6 +119,7 @@ public class CameraLook : MonoBehaviour
      * Rotate the camera.
      * Rotates in correspondance with mouse input
      * or right stick input on controller
+     * Additionally, lowers sensitivity if the player is targeting an enemy
      */
     void RotateCamera()
     {
@@ -226,7 +229,7 @@ public class CameraLook : MonoBehaviour
     }
 
     /**
-     * Chnges reticle color when over enemy
+     * Changes reticle color when over enemy
      */
     void enableTargetCross(Color32 color)
     {

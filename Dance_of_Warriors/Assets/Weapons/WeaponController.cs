@@ -30,7 +30,8 @@ public class WeaponController : MonoBehaviour
 
     /**
      * determines what kind of gun to use and then sets the animation and the action state lengths based on the weapon being used and the attack being used
-     *
+     * parameters are for the weapon we are using, the name of the animation, the weapons states (time for various actions), 
+     * which attack type is being performed (light/heavy), and the amount of damage the weapon does
      */
     public virtual void useWeapon(string weaponName, out string animation, out int[] states, int attackType, float characterDamageModifier)
     {
@@ -60,6 +61,7 @@ public class WeaponController : MonoBehaviour
 
     /**
      * Decide if the weapon can actually deal damage
+     * The parameters are for the weapon name and whether it can deal damage at this time
      */
     public virtual void canDealDamage(string weaponName, bool canDamage)
     {

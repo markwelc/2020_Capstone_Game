@@ -5,6 +5,9 @@ using UnityEngine;
 public class Bullet_Handgun : BulletController
 {
     // Start is called before the first frame update
+    /*
+     * Initiates characteristics of the bullet
+     */
     protected override void Start()
     {
 

@@ -66,6 +66,9 @@ public class Melee : WeaponController
         }
     }
 
+    /*
+     * Play a random sword impact sound each time the sword hits a character
+     */
     private IEnumerator ImpactAudio()
 	{
         //still playing at weird times. this happens because canDamage is enabled, and collisions happen during the build-up as well as the actual attack.
@@ -100,11 +103,19 @@ public class Melee : WeaponController
         yield return new WaitForSeconds(GetComponent<AudioSource>().clip.length);
         impactPlaying = false;
     }
+
+    /*
+     * Delay the sound of the heavy swing until appropriate
+     */
     private IEnumerator Swing()
     {
         yield return new WaitForSeconds(0.85f);
         FindObjectOfType<AudioManager>().Play(this.transform.gameObject, "swing");
     }
+
+    /*
+     * Delay the sound of the light (fast) swing until appropriate
+     */
     private IEnumerator FastSwing()
     {
         yield return new WaitForSeconds(0.33f);
@@ -127,6 +138,9 @@ public class Melee : WeaponController
         return res;
     }
 
+    /*
+     * Enables the sword to deal damage
+     */
     public override void canDealDamage(string weaponN, bool canDamage)
     {
         
