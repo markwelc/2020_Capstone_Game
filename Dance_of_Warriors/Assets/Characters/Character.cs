@@ -315,8 +315,11 @@ public class Character : MonoBehaviour
         weaponAccess.canDealDamage(availableWeapons[equippedWeapon], false);
     }
 
-    //start using a tool
-    //this is in Character.cs because it is similar for every character
+    /**
+     * Start using a tool
+     * This is in Character.cs because it is similar for every character
+     * The toolNum parameter describes which tool (gun, sword, etc.) is being used by the character
+    */
     protected void initiateTool(int toolNum)
     {
         if (toolAllowed())
@@ -330,8 +333,10 @@ public class Character : MonoBehaviour
         }
     }
 
-    //move through all the tool action states
-    //this is in Character.cs because it is similar for every character
+    /*
+     * Use the tool (gun, sword, etc.) and go through all the tool action states
+     * This is in Character.cs because it is similar for every character
+    */
     protected void toolUse()
     {
         if (toolActionState == actionState.telegraph && usingTool <= 0) //if we're in the telegraph phase and need to switch
@@ -421,7 +426,9 @@ public class Character : MonoBehaviour
             jumpPossible = false;
     }
 
-    //are we allowed to dash?
+    /*
+     * Check to see if we are allowed to dash
+     */
     protected bool dashAllowed()
     {
         bool dashingPermits = dashActionState == actionState.inactive;
@@ -429,7 +436,9 @@ public class Character : MonoBehaviour
         return dashingPermits && !isBlocking;
     }
 
-    //are we allowed to use a tool?
+    /*
+     * Check to see if we are allowed to use the current tool
+     */
     protected bool toolAllowed()
     {
         bool toolPermits = (toolActionState == actionState.inactive) && (dashActionState == actionState.inactive || dashActionState == actionState.cooldown) && (!isSprinting);
@@ -437,6 +446,9 @@ public class Character : MonoBehaviour
         return toolPermits;
     }
 
+    /*
+     * Check to see if the character is grounded (for use with the landing animation and such)
+     */
     protected bool groundCheck()
     {
         // Just made it return since its either true or false
@@ -445,7 +457,9 @@ public class Character : MonoBehaviour
         return Physics.Raycast(this.transform.position, -Vector3.up, 1.75f, 1 << LayerMask.NameToLayer("staticEnvironment"));
     }
 
-    //are we allowed to jump?
+    /*
+     * Check to see if we are allowed to jump
+     */
     protected bool jumpAllowed()
     {
         bool dashingPermits = ((dashActionState == actionState.inactive) || (dashActionState == actionState.cooldown));

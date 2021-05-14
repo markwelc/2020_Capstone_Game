@@ -306,6 +306,9 @@ public class NewPlayer : Character
         }
     }
 
+    /**
+     * Coroutine that delays checking for the ground until the player has jumped and is in mid-air
+     */
     private IEnumerator Landing()
     {
         //try to delay for 2 seconds
@@ -314,6 +317,10 @@ public class NewPlayer : Character
         // Just setting can check so we know we can check during our update func
         canCheck = true;
     }
+
+    /**
+     * Coroutine that delays the player jump sound and the addition of vertical velocity
+     */
     private IEnumerator Jumping()
     {
         yield return new WaitForSeconds(0.2f);
@@ -364,6 +371,9 @@ public class NewPlayer : Character
         }
     }
 
+    /**
+     * Coroutine that plays the dashing sound
+     */
     private IEnumerator DashSound()
     {
         //try to delay for 2 seconds
