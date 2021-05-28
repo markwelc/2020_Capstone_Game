@@ -110,7 +110,7 @@ public class CameraLook : MonoBehaviour
      */
     public void AddRecoil()
 	{
-        ImpulseSource.GenerateImpulse(Camera.main.transform.up);
+        ImpulseSource.GenerateImpulse(new Vector3(0, 0.2f, 0));
         retController.setShot();
        // Debug.Log("impulse!");
     }
