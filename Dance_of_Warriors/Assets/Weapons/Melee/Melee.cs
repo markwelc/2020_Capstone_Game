@@ -11,6 +11,7 @@ public class Melee : WeaponController
     protected int selection; //integer that holds the random clip to play
     protected Character targetCharacter; //used to fiture out what to actually damage
     private bool canDamage = false;
+    protected bool previousAttack;
 
     /**
      * sets the animation name and the lengths of the action states
@@ -21,13 +22,19 @@ public class Melee : WeaponController
         {
             animation = animationName;
             states = weaponStates;
-            StartCoroutine("FastSwing");
+            if (previousAttack == false)
+			{
+                StartCoroutine("FastSwing");
+            }
         }
         else if(attackType == 2)
         {
             animation = animationNameSecondary;
             states = weaponStatesSecondary;
-            StartCoroutine("Swing");
+            if (previousAttack == false)
+            {
+                StartCoroutine("Swing");
+            }
         }
         else if(attackType == 3)
         {
@@ -109,8 +116,11 @@ public class Melee : WeaponController
      */
     private IEnumerator Swing()
     {
+        previousAttack = true;
         yield return new WaitForSeconds(0.85f);
         FindObjectOfType<AudioManager>().Play(this.transform.gameObject, "swing");
+        yield return new WaitForSeconds(0.95f);
+        previousAttack = false;
     }
 
     /*
@@ -118,9 +128,14 @@ public class Melee : WeaponController
      */
     private IEnumerator FastSwing()
     {
+        previousAttack = true;
         yield return new WaitForSeconds(0.33f);
         FindObjectOfType<AudioManager>().Play(this.transform.gameObject, "fastswing");
+        yield return new WaitForSeconds(1.1f);
+        previousAttack = false;
     }
+
+    
 
     private Character getCharacterInParents(GameObject start)
     {
